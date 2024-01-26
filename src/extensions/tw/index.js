@@ -81,6 +81,105 @@ class TurboWarpBlocks {
                             defaultValue: ''
                         }
                     }
+                },
+                {
+                    opcode: 'exponentiation',
+                    text: formatMessage({
+                        id: 'tw.blocks.exponentiation',
+                        default: '[ONE] ** [TWO]',
+                        description: 'Block that performs exponentiation'
+                    }),
+                    blockType: BlockType.REPORTER,
+                    arguments: {
+                        ONE: {
+                            type: ArgumentType.NUMBER,
+                            defaultValue: ''
+                        },
+                        TWO: {
+                            type: ArgumentType.NUMBER,
+                            defaultValue: ''
+                        }
+                    }
+                },
+                {
+                    opcode: 'regex',
+                    text: formatMessage({
+                        id: 'tw.block.regex',
+                        default: 'execute regex [REGEX] on [STRING]',
+                        description: 'Block that executes regex on a string.'
+                    }),
+                    blockType: BlockType.REPORTER,
+                    arguments: {
+                        REGEX: {
+                            type: ArgumentType.STRING,
+                            defaultValue: ''
+                        },
+                        STRING: {
+                            type: ArgumentType.STRING,
+                            defaultValue: ''
+                        }
+                    }
+                },
+                {
+                    opcode: 'replaceOperation',
+                    text: formatMessage({
+                        id: 'tw.block.replace',
+                        default: 'in [STRING] replace [ONE] with [TWO]',
+                        description: 'Block that does a replace operation on a string.'
+                    }),
+                    blockType: BlockType.REPORTER,
+                    arguments: {
+                        STRING: {
+                            type: ArgumentType.STRING,
+                            defaultValue: ''
+                        },
+                        ONE: {
+                            type: ArgumentType.STRING,
+                            defaultValue: ''
+                        },
+                        TWO: {
+                            type: ArgumentType.STRING,
+                            defaultValue: ''
+                        }
+                    }
+                },
+                {
+                    opcode: 'true',
+                    text: formatMessage({
+                        id: 'tw.block.true',
+                        default: 'true',
+                        description: 'Block that returns true.'
+                    }),
+                    blockType: BlockType.BOOLEAN,
+                },
+                {
+                    opcode: 'false',
+                    text: formatMessage({
+                        id: 'tw.block.false',
+                        default: 'false',
+                        description: 'Block that returns false.'
+                    }),
+                    blockType: BlockType.BOOLEAN,
+                },
+                {
+                    opcode: 'strictlyEquals',
+                    text: formatMessage({
+                        id: 'tw.block.strictlyEquals',
+                        default: '[ONE] strictly equals [TWO]',
+                        description: 'Block that returns true only if it strictly equals it.'
+                    }),
+                    blockType: BlockType.BOOLEAN,
+                    arguments: {
+                        ONE: {
+                            type: ArgumentType.STRING,
+                            defaultValue: ''
+                        },
+                        TWO: {
+                            type: ArgumentType.STRING,
+                            defaultValue: ''
+                        }
+                    }
+
                 }
             ],
             menus: {
@@ -132,6 +231,30 @@ class TurboWarpBlocks {
 
     startHats (args, util) {
         util.startHats(args.HAT_TYPE);
+    }
+
+    exponentiation (args, util) {
+        return args.ONE ** args.TWO;
+    } 
+
+    regex (args, util) {
+        return args.STRING.match(new RegExp(args.REGEX));
+    }
+
+    replaceOperation (args, util) {
+        return args.STRING.replace(args.ONE, args.TWO);
+    }
+
+    true (args, util) {
+        return true;
+    }
+ 
+    false (args, util) {
+        return false;
+    }
+
+    strictlyEquals (args, util) {
+        return args.ONE === args.TWO;
     }
 }
 
