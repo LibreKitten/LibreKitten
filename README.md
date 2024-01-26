@@ -1,4 +1,4 @@
-## ACat/LibreKitten-vm
+## LibreKitten/LibreKitten-vm
 
 Modified TurboWarp VM.
 
