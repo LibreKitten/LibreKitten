@@ -1,6 +1,6 @@
-## TurboWarp/scratch-vm
+## ACat/LibreKitten-vm
 
-Modified Scratch VM with a JIT compiler and more features.
+Modified TurboWarp VM.
 
 This is a drop-in replacement for LLK/scratch-vm.
 
