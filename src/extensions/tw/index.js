@@ -45,9 +45,9 @@ class TurboWarpBlocks {
                 {
                     opcode: 'checkDarkMode',
                     text: formatMessage({
-                        id: 'lk.blocks.checkDarkMode',
+                        id: 'tw.blocks.checkDarkMode',
                         default: 'is system dark mode on?',
-                        description: 'Block that returns if the system dark mode is on.'
+                        description: 'Block that returns if the system dark mode is on'
                     }),
                     blockType: BlockType.BOOLEAN
                 },
@@ -64,6 +64,21 @@ class TurboWarpBlocks {
                             type: ArgumentType.NUMBER,
                             menu: 'mouseButton',
                             defaultValue: '0'
+                        }
+                    }
+                },
+                {
+                    opcode: 'startHats',
+                    text: formatMessage({
+                        id: 'tw.blocks.startHats',
+                        default: 'execute all scripts with the hat type [HAT_TYPE]',
+                        description: 'Block that executes all scripts with a certain hat type'
+                    }),
+                    blockType: BlockType.COMMAND,
+                    arguments: {
+                        HAT_TYPE: {
+                            type: ArgumentType.STRING,
+                            defaultValue: ''
                         }
                     }
                 }
@@ -113,6 +128,10 @@ class TurboWarpBlocks {
 
     checkDarkMode (args, util) {
         return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+
+    startHats (args, util) {
+        util.startHats(args.HAT_TYPE);
     }
 }
 
