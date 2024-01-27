@@ -118,11 +118,15 @@ class Scratch3ProcedureBlocks {
         const value = util.getParam(args.VALUE);
         if (value === null) {
             // tw: implement is compiled? and is turbowarp?
+            // lk: implement is librekitten?
             const lowercaseValue = String(args.VALUE).toLowerCase();
             if (util.target.runtime.compilerOptions.enabled && lowercaseValue === 'is compiled?') {
                 return true;
             }
             if (lowercaseValue === 'is turbowarp?') {
+                return true;
+            }
+            if (lowercaseValue === 'is librekitten?') {
                 return true;
             }
             // When the parameter is not found in the most recent procedure
