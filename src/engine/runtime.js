@@ -452,8 +452,8 @@ class Runtime extends EventEmitter {
 
         this.runtimeOptions = {
             maxClones: Runtime.MAX_CLONES,
-            miscLimits: true,
-            fencing: true
+            miscLimits: false,
+            fencing: false
         };
 
         this.compilerOptions = {
@@ -536,7 +536,7 @@ class Runtime extends EventEmitter {
      */
     static get STAGE_WIDTH () {
         // tw: stage size is set per-runtime, this is only the initial value
-        return 480;
+        return 640;
     }
 
     /**

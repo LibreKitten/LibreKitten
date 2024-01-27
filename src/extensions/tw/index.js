@@ -83,6 +83,15 @@ class TurboWarpBlocks {
                     }
                 },
                 {
+                    opcode: 'greenFlag',
+                    text: formatMessage({
+                        id: 'tw.blocks.greenFlag',
+                        default: 'restart',
+                        description: 'Block that restarts the project.'
+                    }),
+                    blockType: BlockType.COMMAND,
+                },
+                {
                     opcode: 'exponentiation',
                     text: formatMessage({
                         id: 'tw.blocks.exponentiation',
@@ -144,6 +153,29 @@ class TurboWarpBlocks {
                     }
                 },
                 {
+                    opcode: 'substring',
+                    text: formatMessage({
+                        id: 'tw.block.substring',
+                        default: 'from [STRING] get letters [BEGINNING] to [END]',
+                        description: 'Block that does a replace operation on a string.'
+                    }),
+                    blockType: BlockType.REPORTER,
+                    arguments: {
+                        STRING: {
+                            type: ArgumentType.STRING,
+                            defaultValue: 'LibreKitten'
+                        },
+                        BEGINNING: {
+                            type: ArgumentType.NUMBER,
+                            defaultValue: '1'
+                        },
+                        END: {
+                            type: ArgumentType.NUMBER,
+                            defaultValue: '6'
+                        }
+                    }
+                },
+                {
                     opcode: 'true',
                     text: formatMessage({
                         id: 'tw.block.true',
@@ -172,7 +204,7 @@ class TurboWarpBlocks {
                     arguments: {
                         REPORTER: {
                             type: ArgumentType.STRING,
-                            defaultValue: 'true'
+                            defaultValue: ''
                         }
                     }
                 },
@@ -274,6 +306,14 @@ class TurboWarpBlocks {
 
     booleanify (args, util) {
         return args.REPORTER;
+    }
+
+    substring (args, util) {
+        return args.STRING.substring(args.BEGINNING - 1, args.END - 1);
+    }
+
+    greenFlag (args, util) {
+        vm.greenFlag();
     }
 }
 
