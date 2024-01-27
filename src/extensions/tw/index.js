@@ -162,6 +162,21 @@ class TurboWarpBlocks {
                     blockType: BlockType.BOOLEAN,
                 },
                 {
+                    opcode: 'booleanify',
+                    text: formatMessage({
+                        id: 'tw.block.booleanify',
+                        default: '[REPORTER]',
+                        description: 'Boolean that returns its input.'
+                    }),
+                    blockType: BlockType.BOOLEAN,
+                    arguments: {
+                        REPORTER: {
+                            type: ArgumentType.STRING,
+                            defaultValue: 'true'
+                        }
+                    }
+                },
+                {
                     opcode: 'strictlyEquals',
                     text: formatMessage({
                         id: 'tw.block.strictlyEquals',
@@ -255,6 +270,10 @@ class TurboWarpBlocks {
 
     strictlyEquals (args, util) {
         return args.ONE === args.TWO;
+    }
+
+    booleanify (args, util) {
+        return args.REPORTER;
     }
 }
 
