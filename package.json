@@ -23,7 +23,7 @@
     "translate:sync:src": "tx-push-src scratch-editor blocks msg/json/en.json",
     "translate:sync:translations": "node i18n/sync_tx_translations.js",
     "translate:update": "npm run translate:sync:src && npm run translate:sync:translations",
-    "postinstall": "npm run prepublish"
+    "prepare": "npm run prepublish"
   },
   "dependencies": {
     "exports-loader": "0.7.0",
