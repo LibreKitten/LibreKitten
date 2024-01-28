@@ -2420,7 +2420,7 @@ class Runtime extends EventEmitter {
      * Start all threads that start with the green flag.
      */
     greenFlag () {
-        this.stopAll();
+        this.stopCompletely();
         this.emit(Runtime.PROJECT_START);
         this.updateCurrentMSecs();
         this.ioDevices.clock.resetProjectTimer();
@@ -2433,9 +2433,17 @@ class Runtime extends EventEmitter {
     }
 
     /**
-     * Stop "everything."
+     * Stop everything and start when stop clicked hats.
      */
     stopAll () {
+        this.stopCompletely();
+        this.startHats('event_whenstopclicked');
+    }
+
+    /**
+     * Stop "everything."
+     */
+    stopCompletely () {
         // Emit stop event to allow blocks to clean up any state.
         this.emit(Runtime.PROJECT_STOP_ALL);
 

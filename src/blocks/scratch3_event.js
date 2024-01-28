@@ -7,7 +7,7 @@ class Scratch3EventBlocks {
          * @type {Runtime}
          */
         this.runtime = runtime;
-
+        this
         this.runtime.on('KEY_PRESSED', key => {
             this.runtime.startHats('event_whenkeypressed', {
                 KEY_OPTION: key
@@ -24,6 +24,7 @@ class Scratch3EventBlocks {
      */
     getPrimitives () {
         return {
+            event_whenstopclicked: this.whenStopClicked,
             event_whentouchingobject: this.touchingObject,
             event_broadcast: this.broadcast,
             event_broadcastandwait: this.broadcastAndWait,
@@ -34,6 +35,9 @@ class Scratch3EventBlocks {
     getHats () {
         return {
             event_whenflagclicked: {
+                restartExistingThreads: true
+            },
+            event_whenstopclicked: {
                 restartExistingThreads: true
             },
             event_whenkeypressed: {
@@ -60,6 +64,10 @@ class Scratch3EventBlocks {
                 restartExistingThreads: true
             }
         };
+    }
+
+    whenStopClicked (args, util) {
+        return true;
     }
 
     touchingObject (args, util) {

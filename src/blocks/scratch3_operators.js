@@ -20,6 +20,7 @@ class Scratch3OperatorsBlocks {
             operator_subtract: this.subtract,
             operator_multiply: this.multiply,
             operator_divide: this.divide,
+            operator_exponent: this.exponent,
             operator_lt: this.lt,
             operator_equals: this.equals,
             operator_gt: this.gt,
@@ -39,6 +40,10 @@ class Scratch3OperatorsBlocks {
 
     add (args) {
         return Cast.toNumber(args.NUM1) + Cast.toNumber(args.NUM2);
+    }
+
+    exponent (args) {
+        return Cast.toNumber(args.NUM1) ** Cast.toNumber(args.NUM2);
     }
 
     subtract (args) {

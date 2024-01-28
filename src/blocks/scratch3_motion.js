@@ -19,6 +19,7 @@ class Scratch3MotionBlocks {
         return {
             motion_movesteps: this.moveSteps,
             motion_gotoxy: this.goToXY,
+            motion_changexyby: this.changeXYby,
             motion_goto: this.goTo,
             motion_turnright: this.turnRight,
             motion_turnleft: this.turnLeft,
@@ -76,6 +77,12 @@ class Scratch3MotionBlocks {
         const x = Cast.toNumber(args.X);
         const y = Cast.toNumber(args.Y);
         util.target.setXY(x, y);
+    }
+
+    changeXYby (args, util) {
+        const dx = Cast.toNumber(args.DX);
+        const dy = Cast.toNumber(args.DY);
+        util.target.setXY(util.target.x + dx, util.target.y + dy);
     }
 
     getTargetXY (targetName, util) {

@@ -508,6 +508,9 @@ class JSGenerator {
         case 'op.add':
             // Needs to be marked as NaN because Infinity + -Infinity === NaN
             return new TypedInput(`(${this.descendInput(node.left).asNumber()} + ${this.descendInput(node.right).asNumber()})`, TYPE_NUMBER_NAN);
+        case 'op.exponent':
+            // Needs to be marked as NaN because Infinity + -Infinity === NaN
+            return new TypedInput(`(${this.descendInput(node.left).asNumber()} ** ${this.descendInput(node.right).asNumber()})`, TYPE_NUMBER_NAN);
         case 'op.and':
             return new TypedInput(`(${this.descendInput(node.left).asBoolean()} && ${this.descendInput(node.right).asBoolean()})`, TYPE_BOOLEAN);
         case 'op.asin':
@@ -826,6 +829,11 @@ class JSGenerator {
             }
             this.source += `}\n`;
             break;
+        case 'control.switch':
+            this.source += `switch (${this.descendInput(node.value)}) {\n`;
+            this.descendStack(node.contents, new Frame(false));
+            this.source += `\n}\n`;
+            break;
         case 'control.repeat': {
             const i = this.localVariables.next();
             this.source += `for (var ${i} = ${this.descendInput(node.times).asNumber()}; ${i} >= 0.5; ${i}--) {\n`;
@@ -1033,6 +1041,9 @@ class JSGenerator {
             break;
         case 'motion.changeY':
             this.source += `target.setXY(target.x, target.y + ${this.descendInput(node.dy).asNumber()});\n`;
+            break;
+        case 'motion.changeXY':
+            this.source += `target.setXY(target.x + ${this.descendInput(node.dx).asNumber()}, target.y + ${this.descendInput(node.dy).asNumber()});\n`;
             break;
         case 'motion.ifOnEdgeBounce':
             this.source += `runtime.ext_scratch3_motion._ifOnEdgeBounce(target);\n`;

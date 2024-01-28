@@ -319,6 +319,12 @@ class ScriptTreeGenerator {
                 left: this.descendInputOfBlock(block, 'NUM1'),
                 right: this.descendInputOfBlock(block, 'NUM2')
             };
+        case 'operator_exponent':
+            return {
+                kind: 'op.exponent',
+                left: this.descendInputOfBlock(block, 'NUM1'),
+                right: this.descendInputOfBlock(block, 'NUM2')
+            };
         case 'operator_and':
             return {
                 kind: 'op.and',
@@ -743,6 +749,12 @@ class ScriptTreeGenerator {
                 whenTrue: this.descendSubstack(block, 'SUBSTACK'),
                 whenFalse: []
             };
+        case 'control_switch':
+            return {
+                kind: 'control.switch',
+                value: this.descendInputOfBlock(block, 'VALUE'),
+                contents: this.descendSubstack(block, 'CONTENTS')
+            };
         case 'control_if_else':
             return {
                 kind: 'control.if',
@@ -997,6 +1009,12 @@ class ScriptTreeGenerator {
         case 'motion_changeyby':
             return {
                 kind: 'motion.changeY',
+                dy: this.descendInputOfBlock(block, 'DY')
+            };
+        case 'motion_changexyby':
+            return {
+                kind: 'motion.changeXY',
+                dx: this.descendInputOfBlock(block, 'DX'),
                 dy: this.descendInputOfBlock(block, 'DY')
             };
         case 'motion_gotoxy':
