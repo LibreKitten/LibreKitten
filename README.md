@@ -1,4 +1,6 @@
-# TurboWarp/scratch-blocks
+# LibreKitten/LibreKitten-blocks
+
+Based on [TurboWarp's scratch-blocks](https://github.com/TurboWarp/scratch-blocks)
 
 ## Playgrounds
 

@@ -52,6 +52,7 @@ Blockly.Blocks['operator_add'] = {
   }
 };
 
+
 Blockly.Blocks['operator_subtract'] = {
   /**
    * Block for subtracting two numbers.
@@ -108,6 +109,30 @@ Blockly.Blocks['operator_divide'] = {
   init: function() {
     this.jsonInit({
       "message0": Blockly.Msg.OPERATORS_DIVIDE,
+      "args0": [
+        {
+          "type": "input_value",
+          "name": "NUM1"
+        },
+        {
+          "type": "input_value",
+          "name": "NUM2"
+        }
+      ],
+      "category": Blockly.Categories.operators,
+      "extensions": ["colours_operators", "output_number"]
+    });
+  }
+};
+
+Blockly.Blocks['operator_exponent'] = {
+  /**
+   * Block for raising the power of a number to another number. 
+   * @this Blockly.Block
+   */
+  init: function() {
+    this.jsonInit({
+      "message0": Blockly.Msg.OPERATORS_EXPONENT,
       "args0": [
         {
           "type": "input_value",

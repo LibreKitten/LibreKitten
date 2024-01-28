@@ -132,6 +132,35 @@ Blockly.Blocks['control_if'] = {
   }
 };
 
+Blockly.Blocks['control_switch'] = {
+  /**
+   * Block for switch.
+   * @this Blockly.Block
+   */
+  init: function() {
+    this.jsonInit({
+      "id": "control_switch",
+      "message0": Blockly.Msg.CONTROL_SWITCH,
+      "message1": "%1", // Statement
+      "message2": "%1", // Statement
+      "args0": [
+        {
+          "type": "input_value",
+          "name": "VALUE"
+        }
+      ],
+      "args1": [
+        {
+          "type": "input_statement",
+          "name": "CONTENTS"
+        }
+      ],
+      "category": Blockly.Categories.control,
+      "extensions": ["colours_control", "shape_statement"]
+    });
+  }
+};
+
 Blockly.Blocks['control_if_else'] = {
   /**
    * Block for if-else.

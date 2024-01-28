@@ -194,6 +194,30 @@ Blockly.Blocks['motion_goto_menu'] = {
   }
 };
 
+Blockly.Blocks['motion_changexyby'] = {
+  /**
+   * Block to cange X, Y by.
+   * @this Blockly.Block
+   */
+  init: function() {
+    this.jsonInit({
+      "message0": Blockly.Msg.MOTION_CHANGEXYBY,
+      "args0": [
+        {
+          "type": "input_value",
+          "name": "DX"
+        },
+        {
+          "type": "input_value",
+          "name": "DY"
+        }
+      ],
+      "category": Blockly.Categories.motion,
+      "extensions": ["colours_motion", "shape_statement"]
+    });
+  }
+};
+
 Blockly.Blocks['motion_gotoxy'] = {
   /**
    * Block to go to X, Y.
