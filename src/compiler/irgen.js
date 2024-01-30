@@ -753,7 +753,7 @@ class ScriptTreeGenerator {
             return {
                 kind: 'control.switch',
                 value: this.descendInputOfBlock(block, 'VALUE'),
-                contents: this.descendSubstack(block, 'CONTENTS')
+                contents: this.descendSubstack(block, 'SUBSTACK')
             };
         case 'control_if_else':
             return {
