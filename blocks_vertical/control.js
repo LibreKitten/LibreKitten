@@ -139,10 +139,8 @@ Blockly.Blocks['control_switch'] = {
    */
   init: function() {
     this.jsonInit({
-      "id": "control_switch",
       "message0": Blockly.Msg.CONTROL_SWITCH,
       "message1": "%1", // Statement
-      "message2": "%1", // Statement
       "args0": [
         {
           "type": "input_value",
@@ -152,7 +150,7 @@ Blockly.Blocks['control_switch'] = {
       "args1": [
         {
           "type": "input_statement",
-          "name": "CONTENTS"
+          "name": "SUBSTACK"
         }
       ],
       "category": Blockly.Categories.control,
