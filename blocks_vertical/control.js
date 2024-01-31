@@ -159,6 +159,49 @@ Blockly.Blocks['control_switch'] = {
   }
 };
 
+Blockly.Blocks['control_case'] = {
+  /**
+   * Block for case.
+   * @this Blockly.Block
+   */
+  init: function() {
+    this.jsonInit({
+      "message0": Blockly.Msg.CONTROL_CASE,
+      "message1": "%1", // Statement
+      "args0": [
+        {
+          "type": "input_value",
+          "name": "VALUE"
+        }
+      ],
+      "args1": [
+        {
+          "type": "input_statement",
+          "name": "SUBSTACK"
+        }
+      ],
+      "category": Blockly.Categories.control,
+      "extensions": ["colours_control", "shape_statement"]
+    });
+  }
+};
+
+Blockly.Blocks['control_break'] = {
+  /**
+   * Block for break
+   * @this Blockly.Block
+   */
+  init: function() {
+    this.jsonInit({
+      "message0": Blockly.Msg.CONTROL_BREAK,
+      "args0": [
+      ],
+      "category": Blockly.Categories.control,
+      "extensions": ["colours_control", "shape_end"]
+    });
+  }
+};
+
 Blockly.Blocks['control_if_else'] = {
   /**
    * Block for if-else.
@@ -554,6 +597,23 @@ Blockly.Blocks['control_all_at_once'] = {
       ],
       "category": Blockly.Categories.control,
       "extensions": ["colours_control", "shape_statement"]
+    });
+  }
+};
+
+
+Blockly.Blocks['control_green_flag'] = {
+  /**
+   * Block for restart
+   * @this Blockly.Block
+   */
+  init: function() {
+    this.jsonInit({
+      "message0": Blockly.Msg.CONTROL_GREEN_FLAG,
+      "args0": [
+      ],
+      "category": Blockly.Categories.control,
+      "extensions": ["colours_control", "shape_end"]
     });
   }
 };

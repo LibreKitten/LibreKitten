@@ -37,7 +37,9 @@ goog.require('Blockly.Msg');
 Blockly.Msg.CONTROL_FOREVER = 'forever';
 Blockly.Msg.CONTROL_REPEAT = 'repeat %1';
 Blockly.Msg.CONTROL_IF = 'if %1 then';
-Blockly.Msg.CONTROL_IF = 'switch %1';
+Blockly.Msg.CONTROL_SWITCH = 'switch %1';
+Blockly.Msg.CONTROL_CASE = 'case %1';
+Blockly.Msg.CONTROL_BREAK = 'break';
 Blockly.Msg.CONTROL_ELSE = 'else';
 Blockly.Msg.CONTROL_STOP = 'stop';
 Blockly.Msg.CONTROL_STOP_ALL = 'all';
@@ -56,6 +58,7 @@ Blockly.Msg.CONTROL_COUNTER = 'counter';
 Blockly.Msg.CONTROL_INCRCOUNTER = 'increment counter';
 Blockly.Msg.CONTROL_CLEARCOUNTER = 'clear counter';
 Blockly.Msg.CONTROL_ALLATONCE = 'all at once';
+Blockly.Msg.CONTROL_GREEN_FLAG = 'restart';
 
 // Data blocks
 Blockly.Msg.DATA_SETVARIABLETO = 'set %1 to %2';
@@ -197,6 +200,8 @@ Blockly.Msg.OPERATORS_AND = '%1 and %2';
 Blockly.Msg.OPERATORS_OR = '%1 or %2';
 Blockly.Msg.OPERATORS_NOT = 'not %1';
 Blockly.Msg.OPERATORS_JOIN = 'join %1 %2';
+Blockly.Msg.OPERATORS_REPLACE = 'in %1 replace %2 with %3'
+Blockly.Msg.OPERATORS_GET_FROM_STRING = 'from %1 get letters %2 to %3'
 Blockly.Msg.OPERATORS_JOIN_APPLE = 'apple';
 Blockly.Msg.OPERATORS_JOIN_BANANA = 'banana';
 Blockly.Msg.OPERATORS_LETTEROF = 'letter %1 of %2';
