@@ -574,6 +574,10 @@ class JSGenerator {
         }
         case 'op.join':
             return new TypedInput(`(${this.descendInput(node.left).asString()} + ${this.descendInput(node.right).asString()})`, TYPE_STRING);
+        case `op.replace`:
+            return new TypedInput(`${this.descendInput(node.string).asString()}.replace(${this.descendInput(node.one).asString()}, ${this.descendInput(node.two).asString()})`, TYPE_STRING)
+        case `op.getFromString`:
+            return new TypedInput(`${this.descendInput(node.string).asString()}.substring(${this.descendInput(node.one).asNumber()} - 1, ${this.descendInput(node.two).asNumber()} - 1)`, TYPE_STRING)
         case 'op.length':
             return new TypedInput(`${this.descendInput(node.string).asString()}.length`, TYPE_NUMBER);
         case 'op.less': {
@@ -830,9 +834,16 @@ class JSGenerator {
             this.source += `}\n`;
             break;
         case 'control.switch':
-            this.source += `switch (${this.descendInput(node.value)}) {\n`;
+            this.source += `switch (${this.descendInput(node.value).asString()}) {\n`;
             this.descendStack(node.contents, new Frame(false));
-            this.source += `\n}\n`;
+            this.source += `}\n`;
+            break;
+        case 'control.case':
+            this.source += `case ${this.descendInput(node.value).asString()}:\n`;
+            this.descendStack(node.contents, new Frame(false));
+            break;
+        case 'control.break':
+            this.source += `break;`
             break;
         case 'control.repeat': {
             const i = this.localVariables.next();
@@ -890,7 +901,9 @@ class JSGenerator {
         case 'counter.increment':
             this.source += 'runtime.ext_scratch3_control._counter++;\n';
             break;
-
+        case 'control.greenFlag':
+            this.source += 'vm.greenFlag();\n';
+            break;
         case 'hat.edge':
             this.isInHat = true;
             this.source += '{\n';

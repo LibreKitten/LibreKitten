@@ -34,7 +34,9 @@ class Scratch3OperatorsBlocks {
             operator_contains: this.contains,
             operator_mod: this.mod,
             operator_round: this.round,
-            operator_mathop: this.mathop
+            operator_mathop: this.mathop,
+            operator_replace: this.replace,
+            operator_get_from_string: this.substring
         };
     }
 
@@ -156,6 +158,14 @@ class Scratch3OperatorsBlocks {
         case '10 ^': return Math.pow(10, n);
         }
         return 0;
+    }
+
+    replace (args, util) {
+        return args.STRING.replace(args.ONE, args.TWO);
+    }
+
+    substring (args, util) {
+        return args.STRING.substring(args.ONE - 1, args.TWO - 1);
     }
 }
 

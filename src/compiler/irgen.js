@@ -361,6 +361,20 @@ class ScriptTreeGenerator {
                 left: this.descendInputOfBlock(block, 'STRING1'),
                 right: this.descendInputOfBlock(block, 'STRING2')
             };
+        case 'operator_replace':
+            return {
+                kind: 'op.replace',
+                string: this.descendInputOfBlock(block, 'STRING'),
+                one: this.descendInputOfBlock(block, 'ONE'),
+                two: this.descendInputOfBlock(block, 'TWO')
+            };
+        case 'operator_get_from_string':
+            return {
+                kind: 'op.getFromString',
+                string: this.descendInputOfBlock(block, 'STRING'),
+                one: this.descendInputOfBlock(block, 'ONE'),
+                two: this.descendInputOfBlock(block, 'TWO')
+            };
         case 'operator_length':
             return {
                 kind: 'op.length',
@@ -755,6 +769,16 @@ class ScriptTreeGenerator {
                 value: this.descendInputOfBlock(block, 'VALUE'),
                 contents: this.descendSubstack(block, 'SUBSTACK')
             };
+        case 'control_case':
+            return {
+                kind: 'control.case',
+                value: this.descendInputOfBlock(block, 'VALUE'),
+                contents: this.descendSubstack(block, 'SUBSTACK')
+            };
+        case 'control_break':
+            return {
+                kind: 'control.break'
+            };
         case 'control_if_else':
             return {
                 kind: 'control.if',
@@ -833,6 +857,11 @@ class ScriptTreeGenerator {
                 do: this.descendSubstack(block, 'SUBSTACK'),
                 // We should consider analyzing this like we do for control_repeat_until
                 warpTimer: false
+            };
+
+        case 'control_green_flag':
+            return {
+                kind: 'control.greenFlag'
             };
 
         case 'data_addtolist':
