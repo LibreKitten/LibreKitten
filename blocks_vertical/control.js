@@ -186,6 +186,27 @@ Blockly.Blocks['control_case'] = {
   }
 };
 
+Blockly.Blocks['control_default'] = {
+  /**
+   * Block for default.
+   * @this Blockly.Block
+   */
+  init: function() {
+    this.jsonInit({
+      "message0": Blockly.Msg.CONTROL_DEFAULT,
+      "message1": "%1", // Statement
+      "args1": [
+        {
+          "type": "input_statement",
+          "name": "SUBSTACK"
+        }
+      ],
+      "category": Blockly.Categories.control,
+      "extensions": ["colours_control", "shape_end"]
+    });
+  }
+};
+
 Blockly.Blocks['control_break'] = {
   /**
    * Block for break

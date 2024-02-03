@@ -245,6 +245,36 @@ Blockly.Blocks['operator_gt'] = {
   }
 };
 
+Blockly.Blocks['operator_true'] = {
+  /**
+   * Block for true.
+   * @this Blockly.Block
+   */
+  init: function() {
+    this.jsonInit({
+      "message0": Blockly.Msg.OPERATORS_TRUE,
+      "args0": [],
+      "category": Blockly.Categories.operators,
+      "extensions": ["colours_operators", "output_boolean"]
+    });
+  }
+};
+
+Blockly.Blocks['operator_false'] = {
+  /**
+   * Block for false.
+   * @this Blockly.Block
+   */
+  init: function() {
+    this.jsonInit({
+      "message0": Blockly.Msg.OPERATORS_FALSE,
+      "args0": [],
+      "category": Blockly.Categories.operators,
+      "extensions": ["colours_operators", "output_boolean"]
+    });
+  }
+};
+
 Blockly.Blocks['operator_and'] = {
   /**
    * Block for "and" boolean comparator.
