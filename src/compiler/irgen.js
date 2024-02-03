@@ -470,6 +470,14 @@ class ScriptTreeGenerator {
                 left: this.descendInputOfBlock(block, 'NUM1'),
                 right: this.descendInputOfBlock(block, 'NUM2')
             };
+        case 'operator_true':
+            return {
+                kind: 'op.true'
+            };
+        case 'operator_false':
+            return {
+                kind: 'op.false'
+            };
         case 'operator_not':
             return {
                 kind: 'op.not',
@@ -773,6 +781,11 @@ class ScriptTreeGenerator {
             return {
                 kind: 'control.case',
                 value: this.descendInputOfBlock(block, 'VALUE'),
+                contents: this.descendSubstack(block, 'SUBSTACK')
+            };
+        case 'control_default':
+            return {
+                kind: 'control.default',
                 contents: this.descendSubstack(block, 'SUBSTACK')
             };
         case 'control_break':

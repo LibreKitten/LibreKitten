@@ -613,6 +613,10 @@ class JSGenerator {
         case 'op.multiply':
             // Needs to be marked as NaN because Infinity * 0 === NaN
             return new TypedInput(`(${this.descendInput(node.left).asNumber()} * ${this.descendInput(node.right).asNumber()})`, TYPE_NUMBER_NAN);
+        case 'op.true':
+            return new TypedInput(`true`, TYPE_BOOLEAN);
+        case 'op.false':
+            return new TypedInput(`false`, TYPE_BOOLEAN);
         case 'op.not':
             return new TypedInput(`!${this.descendInput(node.operand).asBoolean()}`, TYPE_BOOLEAN);
         case 'op.or':
@@ -840,6 +844,10 @@ class JSGenerator {
             break;
         case 'control.case':
             this.source += `case ${this.descendInput(node.value).asString()}:\n`;
+            this.descendStack(node.contents, new Frame(false));
+            break;
+        case 'control.default': 
+            this.source += `default:\n`;
             this.descendStack(node.contents, new Frame(false));
             break;
         case 'control.break':
