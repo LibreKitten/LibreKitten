@@ -514,6 +514,7 @@ Blockly.Blocks['operator_mod'] = {
           "name": "NUM2"
         }
       ],
+      "tooltip": "I'm the operator for the remainder of a division",
       "category": Blockly.Categories.operators,
       "extensions": ["colours_operators", "output_number"]
     });
