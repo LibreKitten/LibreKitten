@@ -34,7 +34,7 @@ goog.provide('Blockly.Msg.en');
 goog.require('Blockly.Msg');
 
 // Control blocks
-Blockly.Msg.CONTROL_FOREVER = 'forever';
+Blockly.Msg.CONTROL_FOREVER = 'forever until terminated';
 Blockly.Msg.CONTROL_REPEAT = 'repeat %1';
 Blockly.Msg.CONTROL_IF = 'if %1 then';
 Blockly.Msg.CONTROL_SWITCH = 'switch %1';
