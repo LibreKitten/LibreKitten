@@ -230,7 +230,7 @@ runtimeFunctions.toBoolean = `const toBoolean = value => {
         return value;
     }
     if (typeof value === 'string') {
-        if (value === '' || value === '0' || value.toLowerCase() === 'false') {
+        if (value === '' || value === '0' || value.toLowerCase() === 'false' || value.toLowerCase() === 'no') {
             return false;
         }
         return true;

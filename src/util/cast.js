@@ -76,6 +76,7 @@ class Cast {
             // These specific strings are treated as false in Scratch.
             if ((value === '') ||
                 (value === '0') ||
+                (value.toLowerCase() === 'no') ||
                 (value.toLowerCase() === 'false')) {
                 return false;
             }
