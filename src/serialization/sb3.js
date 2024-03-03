@@ -439,6 +439,7 @@ const serializeCostume = function (costume) {
 
     obj.bitmapResolution = costumeToSerialize.bitmapResolution;
     obj.dataFormat = costumeToSerialize.dataFormat.toLowerCase();
+    obj.data = btoa(String.fromCharCode.apply(null, costumeToSerialize.asset.data));
 
     obj.assetId = costumeToSerialize.assetId;
 
@@ -785,6 +786,7 @@ const serialize = function (runtime, targetId, {allowOptimization = true} = {}) 
     meta.semver = '3.0.0';
     // TW: There isn't a good reason to put the full version number in the json, so we don't.
     meta.vm = '0.2.0';
+    meta.lk = true;
     if (runtime.origin) {
         meta.origin = runtime.origin;
     }
@@ -1106,6 +1108,8 @@ const parseScratchAssets = function (object, runtime, zip) {
             costumeSource.md5ext : `${costumeSource.assetId}.${dataFormat}`;
         costume.md5 = costumeMd5Ext;
         costume.dataFormat = dataFormat;
+        costume.data = costumeSource.data;
+
         // deserializeCostume should be called on the costume object we're
         // creating above instead of the source costume object, because this way
         // we're always loading the 'sb3' representation of the costume

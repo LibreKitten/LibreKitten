@@ -1,6 +1,15 @@
 const JSZip = require('jszip');
 const log = require('../util/log');
 
+const base64ToArrayBuffer = base64 => {
+    const binaryString = atob(base64);
+    const u8 = new Uint8Array(binaryString.length);
+    for (let i = 0; i < binaryString.length; i++) {
+        u8[i] = binaryString.charCodeAt(i);
+    }
+    return u8;
+};
+
 /**
  * Deserializes sound from file into storage cache so that it can
  * be loaded into the runtime.
@@ -114,8 +123,8 @@ const deserializeCostume = function (costume, runtime, zip, assetFileName, textL
     }
 
     if (!costumeFile) {
-        log.error(`Could not find costume file associated with the ${costume.name} costume.`);
-        return Promise.resolve(null);
+        log.warn(`Could not find costume file associated with the ${costume.name} costume.`);
+        log.info(costume.data);
     }
     let assetType = null;
     const costumeFormat = costume.dataFormat.toLowerCase();
@@ -154,22 +163,41 @@ const deserializeCostume = function (costume, runtime, zip, assetFileName, textL
         textLayerFilePromise = Promise.resolve(null);
     }
 
-    return Promise.all([textLayerFilePromise,
-        costumeFile.async('uint8array')
-            .then(data => storage.createAsset(
-                assetType,
-                // TODO eventually we want to map non-png's to their actual file types?
-                costumeFormat,
-                data,
-                null,
-                true
-            ))
-            .then(asset => {
+    if (costumeFile) {
+        return Promise.all([textLayerFilePromise,
+            costumeFile.async('uint8array')
+                .then(data => storage.createAsset(
+                    assetType,
+                    // TODO eventually we want to map non-png's to their actual file types?
+                    costumeFormat,
+                    data,
+                    null,
+                    true
+                ))
+                .then(asset => {
+                    costume.asset = asset;
+                    costume.assetId = asset.assetId;
+                    costume.md5 = `${asset.assetId}.${asset.dataFormat}`;
+                })
+        ]);
+    } else {
+        return Promise.all([textLayerFilePromise,
+            ((costume) => {
+                storage.createAsset(
+                    assetType,
+                    // TODO eventually we want to map non-png's to their actual file types?
+                    costumeFormat,
+                    base64ToArrayBuffer(costume.data),
+                    null,
+                    true
+                )
                 costume.asset = asset;
                 costume.assetId = asset.assetId;
                 costume.md5 = `${asset.assetId}.${asset.dataFormat}`;
-            })
-    ]);
+            })(costume)
+        ]);
+    }
+
 };
 
 module.exports = {

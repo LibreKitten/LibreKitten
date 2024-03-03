@@ -2,6 +2,8 @@
 
 Modified TurboWarp VM.
 
+Based on [TurboWarp's scratch-vm.](https://github.com/TurboWarp/scratch-vm)
+
 This is a drop-in replacement for LLK/scratch-vm.
 
 ## Setup
