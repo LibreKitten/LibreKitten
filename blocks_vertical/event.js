@@ -104,6 +104,15 @@ Blockly.Blocks['event_whenstopclicked'] = {
     this.jsonInit({
       "id": "event_whenstopclicked",
       "message0": Blockly.Msg.EVENT_WHENSTOPCLICKED,
+      "args0": [
+        {
+          "type": "field_image",
+          "src": Blockly.mainWorkspace.options.pathToMedia + "stop.svg",
+          "width": 24,
+          "height": 24,
+          "alt": "flag"
+        }
+      ],
       "tooltip": "I run my contents under me when the project stops.",
       "category": Blockly.Categories.event,
       "extensions": ["colours_event", "shape_hat"]
