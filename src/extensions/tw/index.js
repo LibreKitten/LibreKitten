@@ -194,6 +194,24 @@ class TurboWarpBlocks {
                     blockType: BlockType.BOOLEAN,
                 },
                 {
+                    opcode: 'pi',
+                    text: formatMessage({
+                        id: 'tw.block.pi',
+                        default: 'π',
+                        description: 'Block that returns pi'
+                    }),
+                    blockType: BlockType.REPORTER,
+                },
+                {
+                    opcode: 'e',
+                    text: formatMessage({
+                        id: 'tw.block.e',
+                        default: 'e',
+                        description: 'Block that returns eulers number'
+                    }),
+                    blockType: BlockType.REPORTER,
+                },
+                {
                     opcode: 'booleanify',
                     text: formatMessage({
                         id: 'tw.block.booleanify',
@@ -294,6 +312,12 @@ class TurboWarpBlocks {
 
     true (args, util) {
         return true;
+    }
+    pi (args, util) {
+        return '3.141592653589793238462643383279502884197';
+    }
+    e (args, util) {
+        return '2.7182818284590452353602874713527';
     }
  
     false (args, util) {
