@@ -520,7 +520,8 @@ Blockly.Blocks['looks_backdropnumbername'] = {
           "name": "NUMBER_NAME",
           "options": [
             [Blockly.Msg.LOOKS_NUMBERNAME_NUMBER, 'number'],
-            [Blockly.Msg.LOOKS_NUMBERNAME_NAME, 'name']
+            [Blockly.Msg.LOOKS_NUMBERNAME_NAME, 'name'],
+            [Blockly.Msg.LOOKS_NUMBERNAME_AMOUNT, 'amount']
           ]
         }
       ],
@@ -545,7 +546,8 @@ Blockly.Blocks['looks_costumenumbername'] = {
           "name": "NUMBER_NAME",
           "options": [
             [Blockly.Msg.LOOKS_NUMBERNAME_NUMBER, 'number'],
-            [Blockly.Msg.LOOKS_NUMBERNAME_NAME, 'name']
+            [Blockly.Msg.LOOKS_NUMBERNAME_NAME, 'name'],
+            [Blockly.Msg.LOOKS_NUMBERNAME_AMOUNT, 'amount']
           ]
         }
       ],

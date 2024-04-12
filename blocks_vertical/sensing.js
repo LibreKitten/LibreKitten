@@ -186,8 +186,10 @@ Blockly.Blocks['sensing_answer'] = {
     this.jsonInit({
       "message0": Blockly.Msg.SENSING_ANSWER,
       "category": Blockly.Categories.sensing,
+      "output": null,
+      "outputShape": Blockly.OUTPUT_SHAPE_ROUND,
       "checkboxInFlyout": true,
-      "extensions": ["colours_sensing", "output_number"]
+      "extensions": ["colours_sensing"],
     });
   }
 };

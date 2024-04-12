@@ -26,6 +26,37 @@ goog.require('Blockly.Blocks');
 goog.require('Blockly.Colours');
 goog.require('Blockly.ScratchBlocks.VerticalExtensions');
 
+Blockly.Blocks['control_ternary_if'] = {
+  /**
+   * Block for ternary if.
+   * @this Blockly.Block
+   */
+  init: function() {
+    this.jsonInit({
+      "message0": Blockly.Msg.CONTROL_TERNARY_IF,
+      "args0": [
+        {
+          "type": "input_value",
+          "check": "Boolean",
+          "name": "VALUE"
+        },
+        {
+          "type": "input_value",
+          "name": "LEFT"
+        },
+        {
+          "type": "input_value",
+          "name": "RIGHT"
+        }
+      ],
+      "output": null,
+      "outputShape": Blockly.OUTPUT_SHAPE_SQUARE,
+      "category": Blockly.Categories.operators,
+      "extensions": ["colours_control"],
+      "tooltip": "I return the content that's returned from my first reporter input if my inputted boolean value is true, otherwise I return the content that's returned from my second reporter input."
+    });
+  }
+};
 
 Blockly.Blocks['control_forever'] = {
   /**

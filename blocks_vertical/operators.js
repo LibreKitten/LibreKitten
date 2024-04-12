@@ -221,6 +221,31 @@ Blockly.Blocks['operator_equals'] = {
   }
 };
 
+Blockly.Blocks['operator_strictly_equals'] = {
+  /**
+   * Block for equals comparator.
+   * @this Blockly.Block
+   */
+  init: function() {
+    this.jsonInit({
+      "message0": Blockly.Msg.OPERATORS_STRICTLYEQUALS,
+      "args0": [
+        {
+          "type": "input_value",
+          "name": "OPERAND1"
+        },
+        {
+          "type": "input_value",
+          "name": "OPERAND2"
+        }
+      ],
+      "category": Blockly.Categories.operators,
+      "extensions": ["colours_operators", "output_boolean"],
+      "tooltip": "I return true if my first inputted value EXACTLY matches my second inputted value, otherwise I return false."
+    });
+  }
+};
+
 Blockly.Blocks['operator_gt'] = {
   /**
    * Block for greater than comparator.
