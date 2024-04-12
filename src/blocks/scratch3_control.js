@@ -40,7 +40,8 @@ class Scratch3ControlBlocks {
             control_incr_counter: this.incrCounter,
             control_clear_counter: this.clearCounter,
             control_all_at_once: this.allAtOnce,
-            control_green_flag: this.greenFlagBlock
+            control_green_flag: this.greenFlagBlock,
+            control_ternary_if: this.ternaryIf,
         };
     }
 
@@ -206,6 +207,15 @@ class Scratch3ControlBlocks {
 
     greenFlagBlock (args, util) {
         vm.greenFlag();
+    }
+
+    ternaryIf (args, util) {
+        const condition = Cast.toBoolean(args.VALUE);
+        if (condition) {
+            return args.LEFT;
+        } else {
+            return args.RIGHT;
+        }
     }
 }
 

@@ -231,7 +231,13 @@ class ScriptTreeGenerator {
             return {
                 kind: 'counter.get'
             };
-
+        case 'control_ternary_if':
+            return {
+                kind: 'control.ternaryIf',
+                value: this.descendInputOfBlock(block, 'VALUE'),
+                left: this.descendInputOfBlock(block, 'LEFT'),
+                right: this.descendInputOfBlock(block, 'RIGHT')
+            };
         case 'data_variable':
             return {
                 kind: 'var.get',
@@ -278,23 +284,45 @@ class ScriptTreeGenerator {
         }
 
         case 'looks_backdropnumbername':
-            if (block.fields.NUMBER_NAME.value === 'number') {
-                return {
-                    kind: 'looks.backdropNumber'
-                };
+            switch (block.fields.NUMBER_NAME.value) {
+                case 'number':
+                    return {
+                        kind: 'looks.backdropNumber'
+                    };
+                case 'name':
+                    return {
+                        kind: 'looks.backdropName'
+                    };
+                case 'amount':
+                    return {
+                        kind: 'looks.backdropAmount'
+                    };
+                default:
+                    return {
+                        kind: 'constant',
+                        value: 0
+                    };
             }
-            return {
-                kind: 'looks.backdropName'
-            };
         case 'looks_costumenumbername':
-            if (block.fields.NUMBER_NAME.value === 'number') {
-                return {
-                    kind: 'looks.costumeNumber'
-                };
+            switch (block.fields.NUMBER_NAME.value) {
+                case 'number':
+                    return {
+                        kind: 'looks.costumeNumber'
+                    };
+                case 'name':
+                    return {
+                        kind: 'looks.costumeName'
+                    };
+                case 'amount':
+                    return {
+                        kind: 'looks.costumeAmount'
+                    };
+                default:
+                    return {
+                        kind: 'constant',
+                        value: 0
+                    };
             }
-            return {
-                kind: 'looks.costumeName'
-            };
         case 'looks_size':
             return {
                 kind: 'looks.size'
@@ -346,6 +374,12 @@ class ScriptTreeGenerator {
         case 'operator_equals':
             return {
                 kind: 'op.equals',
+                left: this.descendInputOfBlock(block, 'OPERAND1'),
+                right: this.descendInputOfBlock(block, 'OPERAND2')
+            };
+        case 'operator_strictly_equals':
+            return {
+                kind: 'op.strictlyEquals',
                 left: this.descendInputOfBlock(block, 'OPERAND1'),
                 right: this.descendInputOfBlock(block, 'OPERAND2')
             };

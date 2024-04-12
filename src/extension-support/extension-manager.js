@@ -27,6 +27,7 @@ const defaultBuiltinExtensions = {
     gdxfor: () => require('../extensions/scratch3_gdx_for'),
     // tw: core extension
     tw: () => require('../extensions/tw'),
+    // lk: App Utilities extension
     appmaker: () => require('../extensions/lk_appmaker')
 };
 

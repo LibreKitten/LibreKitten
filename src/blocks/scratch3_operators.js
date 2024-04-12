@@ -23,6 +23,7 @@ class Scratch3OperatorsBlocks {
             operator_exponent: this.exponent,
             operator_lt: this.lt,
             operator_equals: this.equals,
+            operator_strictly_equals: this.strictlyEquals,
             operator_gt: this.gt,
             operator_and: this.and,
             operator_or: this.or,
@@ -36,7 +37,9 @@ class Scratch3OperatorsBlocks {
             operator_round: this.round,
             operator_mathop: this.mathop,
             operator_replace: this.replace,
-            operator_get_from_string: this.substring
+            operator_get_from_string: this.substring,
+            operator_true: this.true,
+            operator_false: this.false,
         };
     }
 
@@ -66,6 +69,10 @@ class Scratch3OperatorsBlocks {
 
     equals (args) {
         return Cast.compare(args.OPERAND1, args.OPERAND2) === 0;
+    }
+
+    strictlyEquals (args) {
+        return args.OPERAND1 === args.OPERAND2;
     }
 
     gt (args) {
@@ -166,6 +173,14 @@ class Scratch3OperatorsBlocks {
 
     substring (args, util) {
         return args.STRING.substring(args.ONE - 1, args.TWO - 1);
+    }
+
+    true () {
+        return true;
+    }
+
+    false () {
+        return false;
     }
 }
 

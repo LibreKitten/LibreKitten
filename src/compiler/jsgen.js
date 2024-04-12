@@ -449,8 +449,9 @@ class JSGenerator {
             return new TypedInput('runtime.ext_scratch3_control._counter', TYPE_NUMBER);
 
         case 'keyboard.pressed':
-            return new TypedInput(`runtime.ioDevices.keyboard.getKeyIsDown(${this.descendInput(node.key).asSafe()})`, TYPE_BOOLEAN);
-
+            return new TypedInput(`runtime.ioDevices.keyboard.getKeyIsDown(${this.descendInput(node.key).asSafe()})`, TYPE_UNKNOWN);
+        case 'control.ternaryIf':
+            return new TypedInput(`${this.descendInput(node.value).asBoolean()} ? ${this.descendInput(node.left).asUnknown()} : ${this.descendInput(node.right).asUnknown()}`, TYPE_UNKNOWN);
         case 'list.contains':
             return new TypedInput(`listContains(${this.referenceVariable(node.list)}, ${this.descendInput(node.item).asUnknown()})`, TYPE_BOOLEAN);
         case 'list.contents':
@@ -478,11 +479,14 @@ class JSGenerator {
             return new TypedInput('stage.getCostumes()[stage.currentCostume].name', TYPE_STRING);
         case 'looks.backdropNumber':
             return new TypedInput('(stage.currentCostume + 1)', TYPE_NUMBER);
+        case 'looks.backdropAmount':
+            return new TypedInput('stage.getCostumes().length', TYPE_NUMBER);
         case 'looks.costumeName':
             return new TypedInput('target.getCostumes()[target.currentCostume].name', TYPE_STRING);
         case 'looks.costumeNumber':
             return new TypedInput('(target.currentCostume + 1)', TYPE_NUMBER);
-
+        case 'looks.costumeAmount':
+            return new TypedInput('target.getCostumes().length', TYPE_NUMBER);
         case 'motion.direction':
             return new TypedInput('target.direction', TYPE_NUMBER);
         case 'motion.x':
@@ -550,6 +554,9 @@ class JSGenerator {
             // No compile-time optimizations possible - use fallback method.
             return new TypedInput(`compareEqual(${left.asUnknown()}, ${right.asUnknown()})`, TYPE_BOOLEAN);
         }
+        case 'op.strictlyEquals':
+            return new TypedInput(`(${this.descendInput(node.left).asUnknown()} === ${this.descendInput(node.right).asUnknown()})`, TYPE_BOOLEAN);
+        case 'op.atan2':
         case 'op.e^':
             return new TypedInput(`Math.exp(${this.descendInput(node.value).asNumber()})`, TYPE_NUMBER);
         case 'op.floor':
@@ -614,9 +621,9 @@ class JSGenerator {
             // Needs to be marked as NaN because Infinity * 0 === NaN
             return new TypedInput(`(${this.descendInput(node.left).asNumber()} * ${this.descendInput(node.right).asNumber()})`, TYPE_NUMBER_NAN);
         case 'op.true':
-            return new TypedInput(`true`, TYPE_BOOLEAN);
+            return new TypedInput(true, TYPE_BOOLEAN);
         case 'op.false':
-            return new TypedInput(`false`, TYPE_BOOLEAN);
+            return new TypedInput(false, TYPE_BOOLEAN);
         case 'op.not':
             return new TypedInput(`!${this.descendInput(node.operand).asBoolean()}`, TYPE_BOOLEAN);
         case 'op.or':
