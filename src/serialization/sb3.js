@@ -783,10 +783,21 @@ const serialize = function (runtime, targetId, {allowOptimization = true} = {}) 
 
     // Assemble metadata
     const meta = Object.create(null);
-    meta.semver = '3.0.0';
+    meta.semver = '0.5.0';
     // TW: There isn't a good reason to put the full version number in the json, so we don't.
     meta.vm = '0.2.0';
-    meta.lk = true;
+    meta.lk = true
+    meta.modifiedAt = Date.now();
+
+    // lk: Assemble platform metadata for compatibility with TurboWarp in the future.
+    const platform = Object.create(null);
+    platform.name = 'LibreKitten';
+    // Unless you're making a LibreKitten mod, NEVER CHANGE THE IDENTIFIER.
+    platform.permanentID = 'lk';
+    platform.url = 'https://librekitten.org/';
+    platform.version = 'not-specified';
+    meta.platform = platform;
+
     if (runtime.origin) {
         meta.origin = runtime.origin;
     }

@@ -247,6 +247,45 @@ class TurboWarpBlocks {
                         }
                     },
                     hideFromPalette: true,
+                },
+                {
+                    opcode: 'comment',
+                    text: formatMessage({
+                        id: 'tw.block.comment',
+                        default: 'explain code [COMMENT]',
+                        description: 'Block that is a comment.'
+                    }),
+                    blockType: BlockType.COMMAND,
+                    arguments: {
+                        COMMENT: {
+                            type: ArgumentType.STRING,
+                            defaultValue: 'This program says "Hello world!"'
+                        }
+                    },
+                },
+                {
+                    opcode: 'commentCBlock',
+                    text: formatMessage({
+                        id: 'tw.block.commentCBlock',
+                        default: 'explain code [COMMENT]',
+                        description: 'Block that is a comment.'
+                    }),
+                    blockType: BlockType.CONDITIONAL,
+                    arguments: {
+                        COMMENT: {
+                            type: ArgumentType.STRING,
+                            defaultValue: 'This program says "Hello world!"'
+                        }
+                    },
+                },
+                {
+                    opcode: 'noOpCBlock',
+                    text: formatMessage({
+                        id: 'tw.block.noOpCBlock',
+                        default: 'comment out',
+                        description: 'Block that is no-op.'
+                    }),
+                    blockType: BlockType.CONDITIONAL,
                 }
             ],
             menus: {
@@ -341,6 +380,20 @@ class TurboWarpBlocks {
     greenFlag (args, util) {
         vm.greenFlag();
     }
+
+    comment () {
+        // no-op
+    }
+
+    commentCBlock () {
+        return true;
+    }
+
+
+    noOpCBlock () {
+        // no-op
+    }
+
 }
 
 module.exports = TurboWarpBlocks;

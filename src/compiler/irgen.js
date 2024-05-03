@@ -271,6 +271,12 @@ class ScriptTreeGenerator {
                 kind: 'list.contents',
                 list: this.descendVariable(block, 'LIST', LIST_TYPE)
             };
+        case 'data_listcontentsfirstclass':
+            return {
+                kind: 'list.contentsFirstClass',
+                list: this.descendVariable(block, 'LIST', LIST_TYPE)
+            };
+
 
         case 'event_broadcast_menu': {
             const broadcastOption = block.fields.BROADCAST_OPTION;
@@ -401,6 +407,11 @@ class ScriptTreeGenerator {
                 string: this.descendInputOfBlock(block, 'STRING'),
                 one: this.descendInputOfBlock(block, 'ONE'),
                 two: this.descendInputOfBlock(block, 'TWO')
+            };
+        case 'operator_reverse':
+            return {
+                kind: 'op.reverse',
+                string: this.descendInputOfBlock(block, 'STRING')
             };
         case 'operator_get_from_string':
             return {

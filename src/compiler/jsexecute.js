@@ -533,6 +533,18 @@ runtimeFunctions.listContents = `const listContents = list => {
     return list.value.join('');
 }`;
 
+runtimeFunctions.listContentsFirstClass = `const listContents = list => {
+    for (let i = 0; i < list.value.length; i++) {
+        const listItem = list.value[i];
+        // this is an intentional break from what scratch 3 does to address our automatic string -> number conversions
+        // it fixes more than it breaks
+        if ((listItem + '').length !== 1) {
+            return list.value.join(' ');
+        }
+    }
+    return list.value.join('\\n');
+}`;
+
 /**
  * Convert a color to an RGB list
  * @param {*} color The color value to convert
