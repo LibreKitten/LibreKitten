@@ -172,6 +172,31 @@ Blockly.Blocks['data_listcontents'] = {
   }
 };
 
+Blockly.Blocks['data_listcontentsfirstclass'] = {
+  /**
+   * First class list reporter.
+   * @this Blockly.Block
+   */
+  init: function() {
+    this.jsonInit({
+      "message0": Blockly.Msg.DATA_LISTCONTENTSFIRSTCLASS,
+      "args0": [
+        {
+          "type": "field_variable_getter",
+          "text": "",
+          "name": "LIST",
+          "variableType": Blockly.LIST_VARIABLE_TYPE
+        }
+      ],
+      "category": Blockly.Categories.dataLists,
+      "output": null,
+      "extensions": ["contextMenu_getListBlock", "colours_data_lists"],
+      "checkboxInFlyout": true,
+      "outputShape": Blockly.OUTPUT_SHAPE_SQUARE
+    });
+  }
+};
+
 Blockly.Blocks['data_listindexall'] = {
   /**
    * List index menu, with all option.

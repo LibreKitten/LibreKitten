@@ -81,6 +81,7 @@ Blockly.Msg.DATA_HIDELIST = 'hide list %1';
 Blockly.Msg.DATA_INDEX_ALL = 'all';
 Blockly.Msg.DATA_INDEX_LAST = 'last';
 Blockly.Msg.DATA_INDEX_RANDOM = 'random';
+Blockly.Msg.DATA_LISTCONTENTSFIRSTCLASS = 'report [%1] with line breaks as seperator';
 
 // Event blocks
 Blockly.Msg.EVENT_WHENFLAGCLICKED = 'when %1 clicked';
@@ -206,8 +207,9 @@ Blockly.Msg.OPERATORS_AND = '%1 and %2';
 Blockly.Msg.OPERATORS_OR = '%1 or %2';
 Blockly.Msg.OPERATORS_NOT = 'not %1';
 Blockly.Msg.OPERATORS_JOIN = 'join %1 %2';
-Blockly.Msg.OPERATORS_REPLACE = 'in %1 replace %2 with %3'
-Blockly.Msg.OPERATORS_GET_FROM_STRING = 'from %1 get letters %2 to %3'
+Blockly.Msg.OPERATORS_REPLACE = 'in %1 replace %2 with %3';
+Blockly.Msg.OPERATORS_REVERSE = 'reverse %1';
+Blockly.Msg.OPERATORS_GET_FROM_STRING = 'from %1 get letters %2 to %3';
 Blockly.Msg.OPERATORS_JOIN_APPLE = 'apple';
 Blockly.Msg.OPERATORS_JOIN_BANANA = 'banana';
 Blockly.Msg.OPERATORS_LETTEROF = 'letter %1 of %2';

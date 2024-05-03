@@ -425,6 +425,26 @@ Blockly.Blocks['operator_replace'] = {
   }
 };
 
+Blockly.Blocks['operator_reverse'] = {
+  /**
+   * Block for string replace operator.
+   * @this Blockly.Block
+   */
+  init: function() {
+    this.jsonInit({
+      "message0": Blockly.Msg.OPERATORS_REVERSE,
+      "args0": [
+        {
+          "type": "input_value",
+          "name": "STRING"
+        }
+      ],
+      "category": Blockly.Categories.operators,
+      "extensions": ["colours_operators", "output_string"]
+    });
+  }
+};
+
 Blockly.Blocks['operator_get_from_string'] = {
   /**
    * Block for string get operator.
