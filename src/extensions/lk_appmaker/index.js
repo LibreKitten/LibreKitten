@@ -3,6 +3,7 @@ const BlockType = require('../../extension-support/block-type');
 const ArgumentType = require('../../extension-support/argument-type');
 const Cast = require('../../util/cast');
 const { setupUnsandboxedExtensionAPI } = require('../../extension-support/tw-unsandboxed-extension-runner')
+const vm = require('../../virtual-machine.js');    
 
 const Swal = require('sweetalert2');
 
@@ -230,23 +231,23 @@ class AppMaker {
 
 
     executeJS(args) {
-        if (this.runtime.isPackaged || new URL(location.href).searchParams.has('danger')) {
-            (Scratch => {eval(args.JS)})(Scratch);
+        if (this.runtime.isPackaged) {
+            new Function(args.JS)();
         } else {
             if (confirm(`Do you want to execute this JavaScript code? (if you don't understand it don't run it):
 ${args.JS}`)) {
-                (Scratch => {eval(args.JS)})(Scratch);
+                new Function(args.JS)();
             }
         }
     }
     executeJSReporter(args) {
-        if (this.runtime.isPackaged || new URL(location.href).searchParams.has('danger')) {
-            return (Scratch => {return eval(args.JS)})(Scratch);
+        if (this.runtime.isPackaged) {
+            return new Function(args.JS)();
         } else {
             if (confirm(`Do you want to execute this JavaScript code? (if you don't understand it don't run it):
 ${args.JS}`)) {
-                return (Scratch => {return eval(args.JS)})(Scratch);
-            }
+                return new Function(args.JS)();
+            };
         }
     }
 }

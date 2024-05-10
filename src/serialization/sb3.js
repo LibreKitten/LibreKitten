@@ -790,14 +790,6 @@ const serialize = function (runtime, targetId, {allowOptimization = true} = {}) 
     meta.lk = true
     meta.modifiedAt = Date.now();
 
-    // lk: Assemble platform metadata for compatibility with TurboWarp in the future.
-    const platform = Object.create(null);
-    platform.name = 'LibreKitten';
-    // Unless you're making a LibreKitten mod, NEVER CHANGE THE IDENTIFIER.
-    platform.permanentID = 'lk';
-    platform.url = 'https://librekitten.org/';
-    meta.platform = platform;
-
     if (runtime.origin) {
         meta.origin = runtime.origin;
     }
