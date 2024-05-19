@@ -213,6 +213,15 @@ class TurboWarpBlocks {
                     blockType: BlockType.REPORTER,
                 },
                 {
+                    opcode: 'infinity',
+                    text: formatMessage({
+                        id: 'tw.block.infinity',
+                        default: '∞',
+                        description: 'Block that returns Infinity'
+                    }),
+                    blockType: BlockType.REPORTER,
+                },
+                {
                     opcode: 'booleanify',
                     text: formatMessage({
                         id: 'tw.block.booleanify',
@@ -359,6 +368,10 @@ class TurboWarpBlocks {
     }
     e (args, util) {
         return '2.7182818284590452353602874713527';
+    }
+
+    infinity (args, util) {
+        return Infinity;
     }
  
     false (args, util) {
