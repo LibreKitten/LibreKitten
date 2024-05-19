@@ -128,9 +128,6 @@ class Sequencer {
                     }
                     this.stepThread(activeThread);
                     activeThread.warpTimer = null;
-                    if (activeThread.isKilled) {
-                        i--; // if the thread is removed from the list (killed), do not increase index
-                    }
                 }
                 if (activeThread.status === Thread.STATUS_RUNNING) {
                     numActiveThreads++;
@@ -236,6 +233,9 @@ class Sequencer {
                 return;
             } else if (thread.status === Thread.STATUS_YIELD_TICK) {
                 // stepThreads will reset the thread to Thread.STATUS_RUNNING
+                return;
+            } else if (thread.status === Thread.STATUS_DONE) {
+                // Nothing more to execute.
                 return;
             }
             // If no control flow has happened, switch to next block.
