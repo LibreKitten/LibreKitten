@@ -784,7 +784,7 @@ const serialize = function (runtime, targetId, {allowOptimization = true} = {}) 
 
     // Assemble metadata
     const meta = Object.create(null);
-    meta.semver = '0.4.0';
+    meta.semver = '0.5.0';
     // TW: There isn't a good reason to put the full version number in the json, so we don't.
     meta.vm = '0.2.0';
     meta.lk = true
