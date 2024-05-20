@@ -2,6 +2,7 @@ const EventEmitter = require('events');
 const fs = require('fs');
 const VirtualMachine = require('../index');
 const http = require('http');
+const makeTestStorage = require('../../test/fixtures/make-test-storage');
 let server;
 let event;
 
@@ -22,7 +23,9 @@ global.prompt = (ignored, blahblahblah) => { return ''; };
 
 
 const runProject = async buffer => {
-    const vm = new VirtualMachine();
+    const vm = new VirtualMachine()
+    vm.attachStorage(makeTestStorage());
+
     vm.runtime.on('SAY', (target, type, text) => {
         console.log(text);
     });
