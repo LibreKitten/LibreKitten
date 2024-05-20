@@ -1,3 +1,8 @@
+/* 
+This is a web server for LibreKitten included in the LibreKitten Virtual Machine.
+It is used to run projects with web server capabilities on a web server.
+*/
+
 const EventEmitter = require('events');
 const fs = require('fs');
 const VirtualMachine = require('../index');
@@ -24,8 +29,8 @@ global.prompt = (ignored, blahblahblah) => { return ''; };
 
 const runProject = async buffer => {
     const vm = new VirtualMachine()
+    vm.convertToPackagedRuntime();
     vm.attachStorage(makeTestStorage());
-
     vm.runtime.on('SAY', (target, type, text) => {
         console.log(text);
     });
