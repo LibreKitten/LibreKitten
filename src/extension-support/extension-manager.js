@@ -28,7 +28,9 @@ const defaultBuiltinExtensions = {
     // tw: core extension
     tw: () => require('../extensions/tw'),
     // lk: App Utilities extension
-    appmaker: () => require('../extensions/lk_appmaker')
+    appmaker: () => require('../extensions/lk_appmaker'),
+    // lk: LibreKitten on server extension
+    server: () => require('../extensions/lk_server')
 };
 
 /**
