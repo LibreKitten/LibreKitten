@@ -23,6 +23,7 @@ class Server {
         this.url = null;
         this.ip = '';
         this.requestMethod = '';
+
         
         runtime.on('serverRequest', (page, ip, method) => {
             this.url = page;
@@ -65,7 +66,7 @@ class Server {
                     opcode: 'returnContent',
                     text: formatMessage({
                         id: 'lk_server.blocks.returnContent',
-                        default: 'return content [CONTENT] as [MIME] with the status [STATUS]',
+                        default: 'return content [CONTENT] as [MIME] with the status [STATUS] and headers [EXTRA_HEADERS]',
                         description: 'Hat that executes the the code under it when a certain page is requested.'
                     }),
                     blockType: BlockType.COMMAND,
@@ -84,8 +85,20 @@ class Server {
                             type: ArgumentType.NUMBER,
                             defaultValue: '200'
                         },
+                        EXTRA_HEADERS: {
+                            type: ArgumentType.STRING,
+                            defaultValue: '{}'
+                        },
                     },
-                    isEdgeActivated: true
+                },
+                {
+                    opcode: 'page',
+                    text: formatMessage({
+                        id: 'lk_server.blocks.page',
+                        default: 'page',
+                        description: 'Block that returns the requested page URL.'
+                    }),
+                    blockType: BlockType.REPORTER,
                 },
                 {
                     opcode: 'ipAddress',
@@ -116,15 +129,23 @@ class Server {
     }
 
     whenPageIsRequested({PAGE}) {
+        let shouldReturn = false;
         if (PAGE === this.url) {
             this.url = null;
+            runtime.emit('requestNoticed');
             return true;
+
         }
+        this.runtime.on('requestNoticed', () => { shouldReturn = true; })
+        if (shouldReturn === true) return false;
+        if (PAGE === '*') return true;
         return false;
     }
+    
 
-    returnContent({CONTENT, MIME, STATUS}) {
-        this.runtime.emit('serverResponse', CONTENT, MIME, STATUS);
+    returnContent({CONTENT, MIME, STATUS, EXTRA_HEADERS}) {
+        console.log(CONTENT);
+        this.runtime.emit('serverResponse', CONTENT, MIME, STATUS, EXTRA_HEADERS);
     }
 
     ipAddress() {
@@ -133,6 +154,10 @@ class Server {
 
     method() {
         return this.requestMethod;
+    }
+
+    page() {
+        return this.url ?? '';
     }
 }
 

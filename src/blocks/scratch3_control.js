@@ -42,6 +42,7 @@ class Scratch3ControlBlocks {
             control_all_at_once: this.allAtOnce,
             control_green_flag: this.greenFlagBlock,
             control_ternary_if: this.ternaryIf,
+            control_break: this.break,
         };
     }
 
@@ -206,7 +207,7 @@ class Scratch3ControlBlocks {
     }
 
     greenFlagBlock (args, util) {
-        vm.greenFlag();
+        this.runtime.greenFlag();
     }
 
     ternaryIf (args, util) {
@@ -216,6 +217,10 @@ class Scratch3ControlBlocks {
         } else {
             return args.RIGHT;
         }
+    }
+
+    break(args, util) {
+
     }
 }
 

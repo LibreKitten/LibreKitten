@@ -586,7 +586,7 @@ class JSGenerator {
             case `op.replace`:
                 return new TypedInput(`${this.descendInput(node.string).asString()}.replace(${this.descendInput(node.one).asString()}, ${this.descendInput(node.two).asString()})`, TYPE_STRING)
             case `op.reverse`:
-                return new TypedInput(`(() => {const djfsdjfdsjlfjdslkfdsjlafjdsfjlakfdaljkjkl = ${this.descendInput(node.string).asString()};return [...djfsdjfdsjlfjdslkfdsjlafjdsfjlakfdaljkjkl].reverse().join('');})()`, TYPE_STRING)
+                return new TypedInput(`${this.descendInput(node.string).asString()}.split('').reverse().join('')`, TYPE_STRING)
             case `op.getFromString`:
                 return new TypedInput(`${this.descendInput(node.string).asString()}.substring(${this.descendInput(node.one).asNumber()} - 1, ${this.descendInput(node.two).asNumber()} - 1)`, TYPE_STRING)
             case 'op.length':
@@ -921,7 +921,7 @@ class JSGenerator {
                 this.source += 'runtime.ext_scratch3_control._counter++;\n';
                 break;
             case 'control.greenFlag':
-                this.source += 'vm.greenFlag();\n';
+                this.source += 'runtime.greenFlag();\n';
                 break;
             case 'hat.edge':
                 this.isInHat = true;

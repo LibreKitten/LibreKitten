@@ -167,7 +167,7 @@ class AppMaker {
                     arguments: {
                         JS: {
                             type: ArgumentType.STRING,
-                            defaultValue: 'true;'
+                            defaultValue: 'return true;'
                         }
                     }
                 },

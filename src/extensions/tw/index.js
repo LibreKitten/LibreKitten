@@ -4,7 +4,7 @@ const ArgumentType = require('../../extension-support/argument-type');
 const Cast = require('../../util/cast');
 
 /**
- * Class for TurboWarp blocks
+ * Class for LibreKitten blocks
  * @constructor
  */
 class TurboWarpBlocks {
@@ -391,7 +391,7 @@ class TurboWarpBlocks {
     }
 
     greenFlag (args, util) {
-        vm.greenFlag();
+        this.runtime.greenFlag();
     }
 
     comment () {

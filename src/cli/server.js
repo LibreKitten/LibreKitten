@@ -7,7 +7,7 @@ const EventEmitter = require('events');
 const fs = require('fs');
 const VirtualMachine = require('../index');
 const http = require('http');
-const makeTestStorage = require('../../test/fixtures/make-test-storage');
+const makeTestStorage = require('../../test/fixtures/make-test-storage'); // Dirty hack to make storage work.
 let server;
 let event;
 
@@ -23,20 +23,13 @@ if (!file) {
 
 // Extension compatibility
 global.confirm = ignored => { return true; };
-global.alert = ignored => {};
+global.alert = ignored => { console.log(ignored); };
 global.prompt = (ignored, blahblahblah) => { return ''; };
 
 
 const runProject = async buffer => {
     const vm = new VirtualMachine();
     vm.convertToPackagedRuntime();
-    vm.attachStorage(makeTestStorage());
-    vm.runtime.on('SAY', (target, type, text) => {
-        console.log(text);
-    });
-    vm.runtime.on('serverResponse', (content, mime, status) => {
-        event.content = [content, mime, status];
-    });
     server = http.createServer((req, res) => {
         /* res.writeHead(200, {
             'Content-Type': 'text/plain'
@@ -49,11 +42,19 @@ const runProject = async buffer => {
             },
             set content(array) {
                 res.writeHead(array[2], {
-                    'Content-Type': array[1]
+                    'Content-Type': array[1],
+                    ...array[3]
                 });
                 res.end(array[0]);
             }
         };
+    });
+    vm.attachStorage(makeTestStorage());
+    vm.runtime.on('SAY', (target, type, text) => {
+        console.log(text);
+    });
+    vm.runtime.on('serverResponse', (content, mime, status, extraHeaders) => {
+        event.content = [content, mime, status, JSON.parse(extraHeaders)];
     });
     vm.setCompatibilityMode(false);
     vm.setTurboMode(true);
