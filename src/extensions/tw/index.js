@@ -3,12 +3,15 @@ const BlockType = require('../../extension-support/block-type');
 const ArgumentType = require('../../extension-support/argument-type');
 const Cast = require('../../util/cast');
 
+const markdown = require('markdown-it/dist/markdown-it.min.js');
+const DOMPurify = require('dompurify');
+
 /**
  * Class for LibreKitten blocks
  * @constructor
  */
 class TurboWarpBlocks {
-    constructor (runtime) {
+    constructor(runtime) {
         /**
          * The runtime instantiating this block package.
          * @type {Runtime}
@@ -19,7 +22,7 @@ class TurboWarpBlocks {
     /**
      * @returns {object} metadata for this extension and its blocks.
      */
-    getInfo () {
+    getInfo() {
         return {
             id: 'tw',
             name: 'Misc',
@@ -295,6 +298,51 @@ class TurboWarpBlocks {
                         description: 'Block that is no-op.'
                     }),
                     blockType: BlockType.CONDITIONAL,
+                },
+                {
+                    opcode: 'renderMarkdown',
+                    text: formatMessage({
+                        id: 'tw.block.renderMarkdown',
+                        default: 'render Markdown to HTML [MARKDOWN]',
+                        description: 'Block that renders Markdown to HTML.'
+                    }),
+                    blockType: BlockType.REPORTER,
+                    arguments: {
+                        MARKDOWN: {
+                            type: ArgumentType.STRING,
+                            defaultValue: '*Hello* **World**!'
+                        }
+                    }
+                },
+                {
+                    opcode: 'sanitizeXML',
+                    text: formatMessage({
+                        id: 'tw.block.sanitizeXML',
+                        default: 'sanitize HTML/XML [XML]',
+                        description: 'Block that sanitizes JavaScript out of XML.'
+                    }),
+                    blockType: BlockType.REPORTER,
+                    arguments: {
+                        XML: {
+                            type: ArgumentType.STRING,
+                            defaultValue: '<img src="sillylittleimage.webp" onerror="alert(\'Silly little XSS :P\')">'
+                        }
+                    }
+                },
+                {
+                    opcode: 'escapeXML',
+                    text: formatMessage({
+                        id: 'tw.block.escapeXML',
+                        default: 'escape HTML/XML [XML]',
+                        description: 'Block that converts XML to text.'
+                    }),
+                    blockType: BlockType.REPORTER,
+                    arguments: {
+                        XML: {
+                            type: ArgumentType.STRING,
+                            defaultValue: '<img src="sillylittleimage.webp" onerror="alert(\'Silly little XSS :P\')">'
+                        }
+                    }
                 }
             ],
             menus: {
@@ -331,80 +379,115 @@ class TurboWarpBlocks {
         };
     }
 
-    getLastKeyPressed (args, util) {
+    getLastKeyPressed(args, util) {
         return util.ioQuery('keyboard', 'getLastKeyPressed');
     }
 
-    getButtonIsDown (args, util) {
+    getButtonIsDown(args, util) {
         const button = Cast.toNumber(args.MOUSE_BUTTON);
         return util.ioQuery('mouse', 'getButtonIsDown', [button]);
     }
 
-    checkDarkMode (args, util) {
+    checkDarkMode(args, util) {
         return window.matchMedia('(prefers-color-scheme: dark)').matches;
     }
 
-    startHats (args, util) {
+    startHats(args, util) {
         util.startHats(args.HAT_TYPE);
     }
 
-    exponentiation (args, util) {
+    exponentiation(args, util) {
         return args.ONE ** args.TWO;
-    } 
+    }
 
-    regex (args, util) {
+    regex(args, util) {
         return args.STRING.match(new RegExp(args.REGEX));
     }
 
-    replaceOperation (args, util) {
+    replaceOperation(args, util) {
         return args.STRING.replace(args.ONE, args.TWO);
     }
 
-    true (args, util) {
+    true(args, util) {
         return true;
     }
-    pi (args, util) {
+    pi(args, util) {
         return '3.141592653589793238462643383279502884197';
     }
-    e (args, util) {
+    e(args, util) {
         return '2.7182818284590452353602874713527';
     }
 
-    infinity (args, util) {
+    infinity(args, util) {
         return Infinity;
     }
- 
-    false (args, util) {
+
+    false(args, util) {
         return false;
     }
 
-    strictlyEquals (args, util) {
+    strictlyEquals(args, util) {
         return args.ONE === args.TWO;
     }
 
-    booleanify (args, util) {
+    booleanify(args, util) {
         return args.REPORTER;
     }
 
-    substring (args, util) {
+    substring(args, util) {
         return args.STRING.substring(args.BEGINNING - 1, args.END - 1);
     }
 
-    greenFlag (args, util) {
+    greenFlag(args, util) {
         this.runtime.greenFlag();
     }
 
-    comment () {
+    comment() {
         // no-op
     }
 
-    commentCBlock () {
+    commentCBlock() {
         return true;
     }
 
 
-    noOpCBlock () {
+    noOpCBlock() {
         // no-op
+    }
+
+    renderMarkdown(args) {
+        return markdown().render(args.MARKDOWN);
+    }
+
+    sanitizeXML(args) {
+        return DOMPurify.sanitize(args.XML);
+    }
+
+    escapeXML(args) {
+        let safe = String();
+        [...String(args.XML)].forEach((char, i) => {
+            switch (char) {
+                case '<':
+                    safe = safe + '&lt;';
+                    break;
+                case '>':
+                    safe = safe + '&gt;';
+                    break;
+                case '&':
+                    safe = safe + '&amp;';
+                    break;
+                case '"':
+                    safe = safe + '&quot;';
+                    break;
+                case '\'':
+                    safe = safe + '&apos;';
+                    break;
+                default:
+                    safe = safe + char;
+                    break;
+            }
+        });
+        return safe;
     }
 
 }

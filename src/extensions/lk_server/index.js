@@ -38,7 +38,7 @@ class Server {
     getInfo() {
         return {
             id: 'server',
-            name: 'Web Server',
+            name: 'Web Server (Subject to change)',
             color1: '#7000d9',
             color2: '#5400a3',
             color3: '#39006e',
@@ -99,6 +99,7 @@ class Server {
                         description: 'Block that returns the requested page URL.'
                     }),
                     blockType: BlockType.REPORTER,
+                    disableMonitor: true,
                 },
                 {
                     opcode: 'ipAddress',
@@ -108,6 +109,7 @@ class Server {
                         description: 'Block that returns the IP Address from the request.'
                     }),
                     blockType: BlockType.REPORTER,
+                    disableMonitor: true,
                 },
                 {
                     opcode: 'method',
@@ -117,6 +119,7 @@ class Server {
                         description: 'Block that returns the request method.'
                     }),
                     blockType: BlockType.REPORTER,
+                    disableMonitor: true,
                 },
             ],
             menus: {
@@ -129,16 +132,11 @@ class Server {
     }
 
     whenPageIsRequested({PAGE}) {
-        let shouldReturn = false;
         if (PAGE === this.url) {
             this.url = null;
-            runtime.emit('requestNoticed');
             return true;
 
         }
-        this.runtime.on('requestNoticed', () => { shouldReturn = true; })
-        if (shouldReturn === true) return false;
-        if (PAGE === '*') return true;
         return false;
     }
     

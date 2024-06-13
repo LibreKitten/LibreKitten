@@ -16,7 +16,7 @@ const base = {
     },
     module: {
         rules: [{
-            test: /\.js$/,
+            test: /\.[m]js$/,
             loader: 'babel-loader',
             include: path.resolve(__dirname, 'src'),
             query: {
@@ -73,7 +73,8 @@ module.exports = [
             'jszip': true,
             'scratch-parser': true,
             'socket.io-client': true,
-            'text-encoding': true
+            'text-encoding': true,
+            'markdown-it': true
         }
     }),
     // Playground
