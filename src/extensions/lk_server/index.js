@@ -23,6 +23,8 @@ class Server {
         this.url = null;
         this.ip = '';
         this.requestMethod = '';
+        this.requestHeaders = '{}';
+        this.requestData = '';
 
         
         runtime.on('serverRequest', (page, ip, method, headers, data) => {
