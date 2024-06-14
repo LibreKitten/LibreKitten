@@ -25,10 +25,12 @@ class Server {
         this.requestMethod = '';
 
         
-        runtime.on('serverRequest', (page, ip, method) => {
+        runtime.on('serverRequest', (page, ip, method, headers, data) => {
             this.url = page;
             this.ip = ip;
             this.requestMethod = method;
+            this.requestHeaders = headers;
+            this.requestData = data;
         });
     }
 
@@ -121,6 +123,26 @@ class Server {
                     blockType: BlockType.REPORTER,
                     disableMonitor: true,
                 },
+                {
+                    opcode: 'headers',
+                    text: formatMessage({
+                        id: 'lk_server.blocks.headers',
+                        default: 'request headers',
+                        description: 'Block that returns the request headers.'
+                    }),
+                    blockType: BlockType.REPORTER,
+                    disableMonitor: true,
+                },
+                {
+                    opcode: 'data',
+                    text: formatMessage({
+                        id: 'lk_server.blocks.data',
+                        default: 'request data',
+                        description: 'Block that returns the request data.'
+                    }),
+                    blockType: BlockType.REPORTER,
+                    disableMonitor: true,
+                },
             ],
             menus: {
                 MIME_MENU: {
@@ -156,6 +178,14 @@ class Server {
 
     page() {
         return this.url ?? '';
+    }
+
+    headers() {
+        return this.requestHeaders;
+    }
+
+    data() {
+        return this.requestData;
     }
 }
 

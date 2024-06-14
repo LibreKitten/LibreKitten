@@ -40,19 +40,25 @@ const runProject = async buffer => {
             'Content-Type': 'text/plain'
         });
         res.end('Hello World\n'); */
-        vm.runtime.emit('serverRequest', req.url, req.socket.remoteAddress, req.method);
-        event = {
-            get content() {
-                return null;
-            },
-            set content(array) {
-                res.writeHead(array[2], {
-                    'Content-Type': array[1],
-                    ...JSON.parse(array[3])
-                });
-                res.end(String(array[0]));
-            }
-        };
+        let data = '';
+        req.on('data', (chunk) => {
+            data = chunk;
+        })
+        req.on('end', () => {
+            vm.runtime.emit('serverRequest', req.url, req.socket.remoteAddress, req.method, JSON.stringify(req.headers), data);
+            event = {
+                get content() {
+                    return null;
+                },
+                set content(array) {
+                    res.writeHead(array[2], {
+                        'Content-Type': array[1],
+                        ...JSON.parse(array[3])
+                    });
+                    res.end(String(array[0]));
+                }
+            };
+        })
     });
     vm.runtime.on('SAY', (target, type, text) => {
         console.log(text);
