@@ -50,7 +50,7 @@ const runProject = async buffer => {
                     'Content-Type': array[1],
                     ...JSON.parse(array[3])
                 });
-                res.end(array[0]);
+                res.end(String(array[0]));
             }
         };
     });
@@ -60,6 +60,24 @@ const runProject = async buffer => {
     vm.runtime.on('serverResponse', (content, mime, status, extraHeaders) => {
         event.content = [content, mime, status, extraHeaders];
     });
+    vm.securityManager.getSandboxMode = (url) => {
+        return Promise.resolve('unsandboxed');
+    };
+    vm.securityManager.canAutomaticallyLoadExtension = (url) => {
+        return Promise.resolve(true);
+    };
+    vm.securityManager.canFetch = (url) => {
+        return Promise.resolve(true);
+    };
+    vm.securityManager.canOpenWindow = (url) => {
+        return Promise.resolve(true);
+    };
+    vm.securityManager.canRedirect = (url) => {
+        return Promise.resolve(true);
+    };
+    vm.securityManager.canLoadExtensionFromProject = (url) => {
+        return Promise.resolve(true);
+    }
     vm.setCompatibilityMode(false);
     vm.setTurboMode(true);
     vm.clear();

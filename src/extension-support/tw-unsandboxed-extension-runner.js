@@ -152,15 +152,22 @@ const teardownUnsandboxedExtensionAPI = () => {
  * @param {Virtualmachine} vm
  * @returns {Promise<object[]>} Resolves with a list of extension objects if the extension was loaded successfully.
  */
-const loadUnsandboxedExtension = (extensionURL, vm) => new Promise((resolve, reject) => {
+const loadUnsandboxedExtension = (extensionURL, vm) => new Promise(async (resolve, reject) => {
     setupUnsandboxedExtensionAPI(vm).then(resolve);
 
-    const script = document.createElement('script');
-    script.onerror = () => {
-        reject(new Error(`Error in unsandboxed script ${extensionURL}. Check the console for more information.`));
-    };
-    script.src = extensionURL;
-    document.body.appendChild(script);
+    if (process) {
+        const extension = await fetch(extensionURL);
+        const data = await extension.text();
+        const run = Function('a', data);
+        run(global.Scratch);
+    } else {
+        const script = document.createElement('script');
+        script.onerror = () => {
+            reject(new Error(`Error in unsandboxed script ${extensionURL}. Check the console for more information.`));
+        };
+        script.src = extensionURL;
+        document.body.appendChild(script);
+    }
 }).then(objects => {
     teardownUnsandboxedExtensionAPI();
     return objects;
