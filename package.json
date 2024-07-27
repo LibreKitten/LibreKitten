@@ -65,11 +65,12 @@
     "@turbowarp/scratch-svg-renderer": "^1.0.0-202312300007-62fe825"
   },
   "devDependencies": {
-    "@babel/core": "7.13.10",
-    "@babel/preset-env": "7.14.8",
+    "@babel/core": "7.24.9",
+    "@babel/plugin-transform-nullish-coalescing-operator": "^7.24.7",
+    "@babel/preset-env": "7.25.0",
     "adm-zip": "0.4.11",
     "babel-eslint": "10.1.0",
-    "babel-loader": "8.2.2",
+    "babel-loader": "8.3.0",
     "callsite": "1.0.0",
     "copy-webpack-plugin": "4.5.4",
     "docdash": "1.2.0",

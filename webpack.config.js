@@ -19,8 +19,8 @@ const base = {
             test: /\.[m]js$/,
             loader: 'babel-loader',
             include: path.resolve(__dirname, 'src'),
-            query: {
-                presets: [['@babel/preset-env']]
+            options: {
+                presets: [['@babel/preset-env', { targets: 'defaults' }]],
             }
         },
         {
@@ -75,6 +75,23 @@ module.exports = [
             'text-encoding': true,
             'markdown-it': true
         }
+    }),
+    // Server
+    defaultsDeep({}, base, {
+        target: 'node',
+        entry: {
+            'scratch-vm': './src/cli/server.js'
+        },
+        output: {
+            filename: '[name].js',
+            libraryTarget: 'commonjs2',
+            path: path.resolve('dist', 'server')
+        },
+        plugins: base.plugins.concat([
+            new CopyWebpackPlugin([{
+                from: 'package.json'
+            }])
+        ])
     }),
     // Playground
     defaultsDeep({}, base, {

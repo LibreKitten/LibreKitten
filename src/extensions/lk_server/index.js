@@ -25,9 +25,20 @@ class Server {
         this.requestMethod = '';
         this.requestHeaders = '{}';
         this.requestData = '';
+        this.fourZeroFour = false
 
         
         runtime.on('serverRequest', (page, ip, method, headers, data) => {
+            this.fourZeroFour = false
+            this.url = page;
+            this.ip = ip;
+            this.requestMethod = method;
+            this.requestHeaders = headers;
+            this.requestData = data;
+        });
+
+        runtime.on('server404', (page, ip, method, headers, data) => {
+            this.fourZeroFour = true;
             this.url = page;
             this.ip = ip;
             this.requestMethod = method;
@@ -64,6 +75,16 @@ class Server {
                             defaultValue: '/'
                         }
                     },
+                    isEdgeActivated: true
+                },
+                {
+                    opcode: 'whenPageIsNotFound',
+                    text: formatMessage({
+                        id: 'lk_server.blocks.whenPageIsNotFound',
+                        default: 'when page is not found',
+                        description: 'Hat that executes the the code under it when a certain page is not fouund.'
+                    }),
+                    blockType: BlockType.HAT,
                     isEdgeActivated: true
                 },
                 {
@@ -145,6 +166,36 @@ class Server {
                     blockType: BlockType.REPORTER,
                     disableMonitor: true,
                 },
+                {
+                    opcode: 'executeJS',
+                    text: formatMessage({
+                        id: 'lk_appmaker.blocks.executeJS',
+                        default: 'execute JavaScript [JS]',
+                        description: 'Block that executes JavaScript'
+                    }),
+                    blockType: BlockType.COMMAND,
+                    arguments: {
+                        JS: {
+                            type: ArgumentType.STRING,
+                            defaultValue: 'alert("Hello!");'
+                        }
+                    }
+                },
+                {
+                    opcode: 'executeJSReporter',
+                    text: formatMessage({
+                        id: 'lk_appmaker.blocks.executeJSReporter',
+                        default: 'execute JavaScript [JS]',
+                        description: 'Block that executes JavaScript'
+                    }),
+                    blockType: BlockType.BOOLEAN,
+                    arguments: {
+                        JS: {
+                            type: ArgumentType.STRING,
+                            defaultValue: 'return true;'
+                        }
+                    }
+                },
             ],
             menus: {
                 MIME_MENU: {
@@ -156,7 +207,7 @@ class Server {
     }
 
     whenPageIsRequested({PAGE}) {
-        if (PAGE === this.url) {
+        if (PAGE === this.url && !this.fourZeroFour) {
             this.url = null;
             return true;
 
@@ -164,6 +215,15 @@ class Server {
         return false;
     }
     
+    whenPageIsNotFound({PAGE}) {
+        if (this.fourZeroFour) {
+            this.fourZeroFour = false;
+            return true;
+
+        }
+        return false;
+    }
+
 
     returnContent({CONTENT, MIME, STATUS, EXTRA_HEADERS}) {
         console.log(CONTENT);
@@ -188,6 +248,17 @@ class Server {
 
     data() {
         return this.requestData;
+    }
+
+    executeJS(args) {
+        if (this.runtime.isPackaged) {
+            new Function(args.JS)();
+        }
+    }
+    executeJSReporter(args) {
+        if (this.runtime.isPackaged) {
+            return new Function(args.JS)();
+        }
     }
 }
 

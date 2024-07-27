@@ -15,8 +15,6 @@ let event;
 /* eslint-env node */
 /* eslint-disable no-console */
 
-const events = new EventEmitter();
-
 const file = process.argv[2];
 if (!file) {
     throw new Error('Invalid file');
@@ -32,6 +30,7 @@ global.prompt = (ignored, blahblahblah) => { return ''; };
 
 
 const runProject = async buffer => {
+    let codeForPage = true;
     const vm = new VirtualMachine();
     vm.convertToPackagedRuntime();
     vm.attachStorage(makeTestStorage());
@@ -46,11 +45,13 @@ const runProject = async buffer => {
         })
         req.on('end', () => {
             vm.runtime.emit('serverRequest', req.url, req.socket.remoteAddress, req.method, JSON.stringify(req.headers), data);
+            codeForPage = false;
             event = {
                 get content() {
                     return null;
                 },
                 set content(array) {
+                    codeForPage = true;
                     res.writeHead(array[2], {
                         'Content-Type': array[1],
                         ...JSON.parse(array[3])
@@ -58,6 +59,25 @@ const runProject = async buffer => {
                     res.end(String(array[0]));
                 }
             };
+            setTimeout(() => {
+                if (!codeForPage) {
+                    vm.runtime.emit('server404', req.url, req.socket.remoteAddress, req.method, JSON.stringify(req.headers), data);
+                    codeForPage = true;
+                    event = {
+                        get content() {
+                            return null;
+                        },
+                        set content(array) {
+                            codeForPage = true;
+                            res.writeHead(array[2], {
+                                'Content-Type': array[1],
+                                ...JSON.parse(array[3])
+                            });
+                            res.end(String(array[0]));
+                        }
+                    };
+                }
+            }, 50);
         })
     });
     vm.runtime.on('SAY', (target, type, text) => {
@@ -93,6 +113,7 @@ const runProject = async buffer => {
 };
 
 runProject(fs.readFileSync(file));
-server.listen(process.argv[3] ?? 8080, () => {
-    console.log(`LibreKitten on server has started.`);
+const port = process.argv[3] ?? 8080
+server.listen(port, () => {
+    console.log(`LibreKitten on server has started at port ${port}.`);
 })
