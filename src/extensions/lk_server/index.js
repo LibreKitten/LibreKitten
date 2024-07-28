@@ -27,7 +27,7 @@ class Server {
         this.requestData = '';
         this.fourZeroFour = false
 
-        
+
         runtime.on('serverRequest', (page, ip, method, headers, data) => {
             this.fourZeroFour = false
             this.url = page;
@@ -167,6 +167,40 @@ class Server {
                     disableMonitor: true,
                 },
                 {
+                    opcode: 'readFile',
+                    text: formatMessage({
+                        id: 'lk_server.blocks.readFile',
+                        default: 'read file from [PATH]',
+                        description: 'Block that reads a file.'
+                    }),
+                    blockType: BlockType.REPORTER,
+                    arguments: {
+                        PATH: {
+                            type: ArgumentType.STRING,
+                            defaultValue: '/home/user/apple.banana'
+                        }
+                    }
+                },
+                {
+                    opcode: 'writeFile',
+                    text: formatMessage({
+                        id: 'lk_server.blocks.writeFile',
+                        default: 'write [CONTENT] to [PATH]',
+                        description: 'Block that writes content to a file.'
+                    }),
+                    blockType: BlockType.COMMAND,
+                    arguments: {
+                        PATH: {
+                            type: ArgumentType.STRING,
+                            defaultValue: '/home/user/apple.banana'
+                        },
+                        CONTENT: {
+                            type: ArgumentType.STRING,
+                            defaultValue: 'apple'
+                        }
+                    }
+                },
+                {
                     opcode: 'executeJS',
                     text: formatMessage({
                         id: 'lk_appmaker.blocks.executeJS',
@@ -206,7 +240,7 @@ class Server {
         };
     }
 
-    whenPageIsRequested({PAGE}) {
+    whenPageIsRequested({ PAGE }) {
         if (PAGE === this.url && !this.fourZeroFour) {
             this.url = null;
             return true;
@@ -214,8 +248,8 @@ class Server {
         }
         return false;
     }
-    
-    whenPageIsNotFound({PAGE}) {
+
+    whenPageIsNotFound({ PAGE }) {
         if (this.fourZeroFour) {
             this.fourZeroFour = false;
             return true;
@@ -225,7 +259,7 @@ class Server {
     }
 
 
-    returnContent({CONTENT, MIME, STATUS, EXTRA_HEADERS}) {
+    returnContent({ CONTENT, MIME, STATUS, EXTRA_HEADERS }) {
         console.log(CONTENT);
         this.runtime.emit('serverResponse', CONTENT, MIME, STATUS, EXTRA_HEADERS);
     }
@@ -258,6 +292,31 @@ class Server {
     executeJSReporter(args) {
         if (this.runtime.isPackaged) {
             return new Function(args.JS)();
+        }
+    }
+
+    readFile({ PATH }) {
+        // Bail out in the editor.
+        if (!this.runtime.isPackaged) return;
+        // WARNING: Very InSecURe eval coming up (It's not taking any user input):
+        const fs = eval('require(\'fs\')');
+        let data;
+        try {
+            return fs.readFileSync(PATH, 'utf8');
+        } catch (err) {
+            console.error(err)
+        }
+    }
+
+    writeFile({ PATH, CONTENT }) {
+        // Bail out in the editor.
+        if (!this.runtime.isPackaged) return;
+        // WARNING: Very InSecURe eval coming up (It's not taking any user input):
+        const fs = eval('require(\'fs\')');
+        try {
+            fs.writeFileSync(PATH, String(CONTENT));
+        } catch (err) {
+            console.error(err)
         }
     }
 }
