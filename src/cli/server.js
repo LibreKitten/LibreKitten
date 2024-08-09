@@ -24,9 +24,9 @@ global.window = new JSDOM('').window;
 global.document = window.document;
 
 // Extension compatibility
-global.confirm = ignored => { return true; };
-global.alert = ignored => { console.log(ignored); };
-global.prompt = (ignored, blahblahblah) => { return ''; };
+global.confirm = (...ignored) => { return true; };
+global.alert = (ignored, ...ignored2) => { console.log(ignored); };
+global.prompt = (...ignored) => { return ''; };
 
 
 const runProject = async buffer => {
@@ -43,7 +43,20 @@ const runProject = async buffer => {
         req.on('data', (chunk) => {
             data = chunk;
         })
-        req.on('end', () => {
+        req.on('end', async () => {
+            if (dev && req.url === '/_lk_devServer_updateLb') {
+                vm.clear();
+                await vm.loadProject(data).catch((err) => {
+                    throw new Error(err);
+                });
+                vm.start();
+                vm.greenFlag();
+                res.writeHead(200, {
+                    'Content-Type': 'text/plain',
+                    'access-control-allow-origin': String(req.headers.origin) === 'http://localhost:8601' || String(req.headers.origin).endsWith('librekitten.org') ? req.headers.origin : 'http://invalid'
+                });
+                return res.end('success');
+            };
             vm.runtime.emit('serverRequest', req.url, req.socket.remoteAddress, req.method, JSON.stringify(req.headers), data);
             codeForPage = false;
             event = {
@@ -95,11 +108,13 @@ const runProject = async buffer => {
     vm.securityManager.canFetch = (url) => {
         return Promise.resolve(true);
     };
+    // we literally can't so no
     vm.securityManager.canOpenWindow = (url) => {
-        return Promise.resolve(true);
+        return Promise.resolve(false);
     };
+    // we literally can't so no
     vm.securityManager.canRedirect = (url) => {
-        return Promise.resolve(true);
+        return Promise.resolve(false);
     };
     vm.securityManager.canLoadExtensionFromProject = (url) => {
         return Promise.resolve(true);
@@ -114,6 +129,7 @@ const runProject = async buffer => {
 
 runProject(fs.readFileSync(file));
 const port = process.argv[3] ?? 8080
+const dev = process.argv[4] === '--dev';
 server.listen(port, () => {
     console.log(`LibreKitten on server has started at port ${port}.`);
 })

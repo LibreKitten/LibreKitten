@@ -284,7 +284,13 @@ class Blocks {
         }
 
         for (const id in this._blocks) {
-            if (!Object.prototype.hasOwnProperty.call(this._blocks, id)) continue;
+            if (!Object.prototype.hasOwnProperty.call(this._blocks, id)) {
+                if (!Object.prototype.hasOwnProperty.call(this._blocks, id)) {
+                    const data = runtime.getTargetForStage().blocks.getProcedureDefinition(name);
+                    if (!data) continue;
+                    return data;
+                };
+            };
             const block = this._blocks[id];
             if (block.opcode === 'procedures_definition') {
                 // tw: make sure that populateProcedureCache is kept up to date with this method
@@ -321,7 +327,11 @@ class Blocks {
         }
 
         for (const id in this._blocks) {
-            if (!Object.prototype.hasOwnProperty.call(this._blocks, id)) continue;
+            if (!Object.prototype.hasOwnProperty.call(this._blocks, id)) {
+                const data = runtime.getTargetForStage().blocks.getProcedureParamNamesIdsAndDefaults(name);
+                if (!data) continue;
+                return data;
+            };
             const block = this._blocks[id];
             if (block.opcode === 'procedures_prototype' &&
                 block.mutation.proccode === name) {
