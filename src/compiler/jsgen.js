@@ -433,14 +433,9 @@ class JSGenerator {
             case 'addons.call':
                 return new TypedInput(`(${this.descendAddonCall(node)})`, TYPE_UNKNOWN);
 
-            case 'args.boolean':
-                return new TypedInput(`toBoolean(p${node.index})`, TYPE_BOOLEAN);
-            case 'args.stringNumber':
-                return new TypedInput(`p${node.index}`, TYPE_UNKNOWN);
-
-            case 'compat':
-                // Compatibility layer inputs never use flags.
-                return new TypedInput(`(${this.generateCompatibilityLayerCall(node, false)})`, TYPE_UNKNOWN);
+        case 'compat':
+            // Compatibility layer inputs never use flags.
+            return new TypedInput(`(${this.generateCompatibilityLayerCall(node, false)})`, TYPE_UNKNOWN);
 
             case 'constant':
                 return this.safeConstantInput(node.value);
@@ -676,17 +671,19 @@ class JSGenerator {
                 }
                 const joinedArgs = args.join(',');
 
-                const yieldForRecursion = !this.isWarp && procedureCode === this.script.procedureCode;
-                const yieldForHat = this.isInHat;
-                if (yieldForRecursion || yieldForHat) {
-                    const runtimeFunction = procedureData.yields ? 'yieldThenCallGenerator' : 'yieldThenCall';
-                    return new TypedInput(`(yield* ${runtimeFunction}(${procedureReference}, ${joinedArgs}))`, TYPE_UNKNOWN);
-                }
-                if (procedureData.yields) {
-                    return new TypedInput(`(yield* ${procedureReference}(${joinedArgs}))`, TYPE_UNKNOWN);
-                }
-                return new TypedInput(`${procedureReference}(${joinedArgs})`, TYPE_UNKNOWN);
+            const yieldForRecursion = !this.isWarp && procedureCode === this.script.procedureCode;
+            const yieldForHat = this.isInHat;
+            if (yieldForRecursion || yieldForHat) {
+                const runtimeFunction = procedureData.yields ? 'yieldThenCallGenerator' : 'yieldThenCall';
+                return new TypedInput(`(yield* ${runtimeFunction}(${procedureReference}, ${joinedArgs}))`, TYPE_UNKNOWN);
             }
+            if (procedureData.yields) {
+                return new TypedInput(`(yield* ${procedureReference}(${joinedArgs}))`, TYPE_UNKNOWN);
+            }
+            return new TypedInput(`${procedureReference}(${joinedArgs})`, TYPE_UNKNOWN);
+        }
+        case 'procedures.argument':
+            return new TypedInput(`p${node.index}`, TYPE_UNKNOWN);
 
             case 'sensing.answer':
                 return new TypedInput(`runtime.ext_scratch3_sensing._answer`, TYPE_STRING);
