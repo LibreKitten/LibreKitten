@@ -59,7 +59,7 @@ if (process.platform === 'win32') {
   }
 } else {
   // Python 3 is usually installed as python3
-  var python3 = which('python3');
+  var python3 = which('pypy3') || which('python3');
   if (python3) {
     run(python3, argv);
   } else {

@@ -238,10 +238,27 @@ Blockly.BlockSvg.prototype.setGlowStack = function(isGlowingStack) {
   if (this.isGlowingStack_ && !svg.hasAttribute('filter')) {
     var stackGlowFilterId = this.workspace.options.stackGlowFilterId || 'blocklyStackGlowFilter';
     svg.setAttribute('filter', 'url(#' + stackGlowFilterId + ')');
+  } else if (!this.isGlowingStack_ && svg.hasAttribute('filter') && svg.getAttribute('filter') !== `url(#${this.workspace.options.errorGlowFilterId})`) {
+    svg.removeAttribute('filter');
+  }
+};
+
+/**
+ * Glow the stack starting with this block, to highlight it visually as if it had an error.
+ * @param {boolean} isGlowingStack Whether the stack starting with this block should glow.
+ */
+Blockly.BlockSvg.prototype.setGlowError = function(isGlowingStack) {
+  this.isGlowingStack_ = isGlowingStack;
+  // Update the applied SVG filter if the property has changed
+  var svg = this.getSvgRoot();
+  if (this.isGlowingStack_ && (!svg.hasAttribute('filter') || svg.getAttribute('filter') === `url(#${this.workspace.options.stackGlowFilterId})`)) {
+    var errorGlowFilterId = this.workspace.options.errorGlowFilterId || 'blocklyErrorGlowFilter';
+    svg.setAttribute('filter', 'url(#' + errorGlowFilterId + ')');
   } else if (!this.isGlowingStack_ && svg.hasAttribute('filter')) {
     svg.removeAttribute('filter');
   }
 };
+
 
 /**
  * Block's mutator icon (if any).

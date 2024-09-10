@@ -177,6 +177,57 @@ Blockly.createDom_ = function(container, options) {
       },
       stackGlowFilter);
 
+  // Error glow filter
+
+  // Using a dilate distorts the block shape.
+  // Instead use a gaussian blur, and then set all alpha to 1 with a transfer.
+  var errorGlowFilter = Blockly.utils.createSvgElement('filter',
+      {
+        'id': 'blocklyErrorGlowFilter' + rnd,
+        'height': '160%',
+        'width': '180%',
+        y: '-30%',
+        x: '-40%'
+      },
+      defs);
+  options.errorGlowFilterId =  'blocklyErrorGlowFilter' + rnd;
+  options.errorGlowBlur = Blockly.utils.createSvgElement('feGaussianBlur',
+      {
+        'in': 'SourceGraphic',
+        'stdDeviation': Blockly.Colours.stackGlowSize
+      },
+      errorGlowFilter);
+  // Set all gaussian blur pixels to 1 opacity before applying flood
+  var errorComponentTransfer = Blockly.utils.createSvgElement('feComponentTransfer', {'result': 'outBlur'}, errorGlowFilter);
+  Blockly.utils.createSvgElement('feFuncA',
+      {
+        'type': 'table',
+        'tableValues': '0' + goog.string.repeat(' 1', 16)
+      },
+      errorComponentTransfer);
+  // Color the highlight
+  Blockly.utils.createSvgElement('feFlood',
+      {
+        'flood-color': '#ff0000',
+        'flood-opacity': Blockly.Colours.stackGlowOpacity,
+        'result': 'outColor'
+      },
+      errorGlowFilter);
+  Blockly.utils.createSvgElement('feComposite',
+      {
+        'in': 'outColor',
+        'in2': 'outBlur',
+        'operator': 'in',
+        'result': 'outGlow'
+      },
+      errorGlowFilter);
+  Blockly.utils.createSvgElement('feComposite',
+      {
+        'in': 'SourceGraphic',
+        'in2': 'outGlow',
+        'operator': 'over'
+      },
+      errorGlowFilter);
   // Filter for replacement marker
   var replacementGlowFilter = Blockly.utils.createSvgElement('filter',
       {
