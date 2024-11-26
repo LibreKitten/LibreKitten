@@ -735,6 +735,14 @@ class Runtime extends EventEmitter {
     }
 
     /**
+     * lk: Event name for block error glow.
+     * @const {string}
+     */
+    static get ERROR_GLOW () {
+        return 'ERROR_GLOW';
+    }
+
+    /**
      * Event name for project loaded report.
      * @const {string}
      */
@@ -2001,7 +2009,6 @@ class Runtime extends EventEmitter {
         thread.blockContainer = thread.updateMonitor ?
             this.monitorBlocks :
             target.blocks;
-
         thread.pushStack(id);
         this.threads.push(thread);
         if (!thread.stackClick && !thread.updateMonitor) {
@@ -2481,6 +2488,8 @@ class Runtime extends EventEmitter {
         this.threadMap.clear();
 
         this.resetRunId();
+        
+        this.errorGlow(null, false);
     }
 
     _renderInterpolatedPositions () {
@@ -3086,6 +3095,15 @@ class Runtime extends EventEmitter {
      */
     visualReport (blockId, value) {
         this.emit(Runtime.VISUAL_REPORT, {id: blockId, value: String(value)});
+    }
+
+    /**
+     * lk: Emit error glow to show in the blocks.
+     * @param {string} blockId ID for the block.
+     * @param {string} value Value to show associated with the block.
+     */
+    errorGlow (blockId, value) {
+        this.emit(Runtime.ERROR_GLOW, {id: blockId, glow: value});
     }
 
     /**

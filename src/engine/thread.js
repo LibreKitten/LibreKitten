@@ -1,5 +1,7 @@
 const log = require('../util/log');
 
+const Runtime = require('./runtime');
+
 /**
  * Recycle bin for empty stackFrame objects
  * @type Array<_StackFrame>
@@ -501,6 +503,10 @@ class Thread {
                 log.error('cannot compile script', this.target.getName(), error);
                 if (canCache) {
                     blocks.cacheCompileError(topBlock, error);
+                }
+                if (!this.target.runtime.isPackaged) {
+                    this.target.runtime.errorGlow(this.topBlock, true);
+                    return;
                 }
                 this.target.runtime.emitCompileError(this.target, error);
                 return;

@@ -113,6 +113,10 @@ class VirtualMachine extends EventEmitter {
         this.runtime.on(Runtime.VISUAL_REPORT, visualReport => {
             this.emit(Runtime.VISUAL_REPORT, visualReport);
         });
+        // lk: Added error glow.
+        this.runtime.on(Runtime.ERROR_GLOW, errorGlow => {
+            this.emit(Runtime.ERROR_GLOW, errorGlow);
+        });
         this.runtime.on(Runtime.TARGETS_UPDATE, emitProjectChanged => {
             this.emitTargetsUpdate(emitProjectChanged);
         });
