@@ -17,6 +17,7 @@ const MathUtil = require('../util/math-util');
 const StringUtil = require('../util/string-util');
 const VariableUtil = require('../util/variable-util');
 const compress = require('./tw-compress-sb3');
+const Base64Util = require('../util/base64-util.js');
 
 const {loadCostume} = require('../import/load-costume.js');
 const {loadSound} = require('../import/load-sound.js');
@@ -440,7 +441,7 @@ const serializeCostume = function (costume) {
 
     obj.bitmapResolution = costumeToSerialize.bitmapResolution;
     obj.dataFormat = costumeToSerialize.dataFormat.toLowerCase();
-    obj.data = btoa(String.fromCharCode.apply(null, costumeToSerialize.asset.data));
+    obj.data = Base64Util.uint8ArrayToBase64(costumeToSerialize.asset.data);
 
     obj.assetId = costumeToSerialize.assetId;
 
