@@ -1,7 +1,5 @@
 const log = require('../util/log');
 
-const Runtime = require('./runtime');
-
 /**
  * Recycle bin for empty stackFrame objects
  * @type Array<_StackFrame>
