@@ -52,6 +52,11 @@ const BlockType = {
     REPORTER: 'reporter',
 
     /**
+     * General reporter with any value
+     */
+    UNIVERSAL: 'universal',
+
+    /**
      * Arbitrary scratch-blocks XML.
      */
     XML: 'xml'

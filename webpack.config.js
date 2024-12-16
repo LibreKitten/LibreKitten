@@ -50,7 +50,14 @@ module.exports = [
             rules: base.module.rules.concat([
                 {
                     test: require.resolve('./src/index.js'),
-                    loader: 'expose-loader?VirtualMachine'
+                    use: [
+                        {
+                            loader: 'expose-loader',
+                            options: {
+                                exposes: 'VirtualMachine'
+                            }
+                        }
+                    ]
                 }
             ])
         }
@@ -108,11 +115,25 @@ module.exports = [
             rules: base.module.rules.concat([
                 {
                     test: require.resolve('./src/index.js'),
-                    loader: 'expose-loader?VirtualMachine'
+                    use: [
+                        {
+                            loader: 'expose-loader',
+                            options: {
+                                exposes: 'VirtualMachine'
+                            }
+                        }
+                    ]
                 },
                 {
                     test: require.resolve('./src/extensions/scratch3_video_sensing/debug.js'),
-                    loader: 'expose-loader?Scratch3VideoSensingDebug'
+                    use: [
+                        {
+                            loader: 'expose-loader',
+                            options: {
+                                exposes: 'Scratch3VideoSensingDebug'
+                            }
+                        }
+                    ]
                 },
                 {
                     test: require.resolve('stats.js/build/stats.min.js'),
@@ -120,19 +141,47 @@ module.exports = [
                 },
                 {
                     test: require.resolve('scratch-blocks/dist/vertical.js'),
-                    loader: 'expose-loader?Blockly'
+                    use: [
+                        {
+                            loader: 'expose-loader',
+                            options: {
+                                exposes: 'Blockly'
+                            }
+                        }
+                    ]
                 },
                 {
                     test: require.resolve('scratch-audio/src/index.js'),
-                    loader: 'expose-loader?AudioEngine'
+                    use: [
+                        {
+                            loader: 'expose-loader',
+                            options: {
+                                exposes: 'AudioEngine'
+                            }
+                        }
+                    ]
                 },
                 {
                     test: require.resolve('scratch-storage/src/index.js'),
-                    loader: 'expose-loader?ScratchStorage'
+                    use: [
+                        {
+                            loader: 'expose-loader',
+                            options: {
+                                exposes: 'ScratchStorage'
+                            }
+                        }
+                    ]
                 },
                 {
                     test: require.resolve('scratch-render/src/index.js'),
-                    loader: 'expose-loader?ScratchRender'
+                    use: [
+                        {
+                            loader: 'expose-loader',
+                            options: {
+                                exposes: 'ScratchRender'
+                            }
+                        }
+                    ]
                 }
             ])
         },

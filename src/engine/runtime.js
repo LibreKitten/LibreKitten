@@ -1348,6 +1348,7 @@ class Runtime extends EventEmitter {
             type: extendedOpcode,
             inputsInline: true,
             category: categoryInfo.name,
+            tooltip: blockInfo.tooltip,
             extensions: [],
             colour: blockInfo.color1 ?? categoryInfo.color1,
             colourSecondary: blockInfo.color2 ?? categoryInfo.color2,
@@ -1412,6 +1413,10 @@ class Runtime extends EventEmitter {
         case BlockType.REPORTER:
             blockJSON.output = blockInfo.allowDropAnywhere ? null : 'String'; // TODO: distinguish number & string here?
             blockJSON.outputShape = ScratchBlocksConstants.OUTPUT_SHAPE_ROUND;
+            break;
+        case BlockType.UNIVERSAL:
+            blockJSON.output = null;
+            blockJSON.outputShape = ScratchBlocksConstants.OUTPUT_SHAPE_SQUARE;
             break;
         case BlockType.BOOLEAN:
             blockJSON.output = 'Boolean';

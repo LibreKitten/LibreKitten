@@ -16,6 +16,9 @@ const iconURI = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vc
  * @constructor
  */
 class AppMaker {
+    showAdvanced = false;
+    projectTrusted = false;
+
     constructor (runtime) {
         /**
          * The runtime instantiating this block package.
@@ -163,13 +166,42 @@ class AppMaker {
                         default: 'execute JavaScript [JS]',
                         description: 'Block that executes JavaScript'
                     }),
-                    blockType: BlockType.BOOLEAN,
+                    blockType: BlockType.UNIVERSAL,
                     arguments: {
                         JS: {
                             type: ArgumentType.STRING,
                             defaultValue: 'return true;'
                         }
                     }
+                },
+                {
+                    func: 'showAdvancedButton',
+                    text: formatMessage({
+                        id: 'lk_appmaker.blocks.showAdvancedButton',
+                        default: 'Show advanced options',
+                        description: 'Button that shows advanced options.'
+                    }),
+                    blockType: BlockType.BUTTON,
+                    hideFromPalette: this.showAdvanced
+                },
+                {
+                    text: formatMessage({
+                        id: 'lk_appmaker.blocks.advancedOptionsText',
+                        default: 'Advanced options',
+                        description: 'Button that shows advanced options.'
+                    }),
+                    blockType: BlockType.LABEL,
+                    hideFromPalette: !this.showAdvanced
+                },
+                {
+                    func: 'trustProject',
+                    text: formatMessage({
+                        id: 'lk_appmaker.blocks.trustProject',
+                        default: 'Trust this project\'s JavaScript',
+                        description: 'Button that trusts a project\'s JavaScript.'
+                    }),
+                    blockType: BlockType.BUTTON,
+                    hideFromPalette: !this.showAdvanced
                 },
             ],
             menus: {
@@ -182,6 +214,19 @@ class AppMaker {
                 }
             }
         };
+    }
+
+    showAdvancedButton() {
+        if (confirm('Clicking this button will show you advanced options which you shoudn\'t use without caution and knowledge. Are you sure you want to continue?')) {
+            this.showAdvanced = true;
+            this.runtime.extensionManager.refreshBlocks();
+        }
+    }
+
+    trustProject() {
+        if (confirm('Clicking this button will trust this project\'s JavaScript. Only trust projects that you\'ve reviewed the latest version of yourself, or your own projects, otherwise they can delete your settings, steal passwords, delete your restore points, and other bad stuff.\nAre you sure you want to continue?')) {
+            this.projectTrusted = true;
+        }
     }
 
     /**
@@ -263,7 +308,7 @@ class AppMaker {
 
 
     executeJS(args) {
-        if (this.runtime.isPackaged) {
+        if (this.projectTrusted || this.runtime.isPackaged) {
             new Function(args.JS)();
         } else {
             if (confirm(`Do you want to execute this JavaScript code? (if you don't understand it don't run it):
@@ -273,7 +318,7 @@ ${args.JS}`)) {
         }
     }
     executeJSReporter(args) {
-        if (this.runtime.isPackaged) {
+        if (this.projectTrusted || this.runtime.isPackaged) {
             return new Function(args.JS)();
         } else {
             if (confirm(`Do you want to execute this JavaScript code? (if you don't understand it don't run it):

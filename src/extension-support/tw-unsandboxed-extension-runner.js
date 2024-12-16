@@ -155,10 +155,10 @@ const teardownUnsandboxedExtensionAPI = () => {
 const loadUnsandboxedExtension = (extensionURL, vm) => new Promise(async (resolve, reject) => {
     setupUnsandboxedExtensionAPI(vm).then(resolve);
 
-    if (process) {
+    if (typeof process !== 'undefined') {
         const extension = await fetch(extensionURL);
         const data = await extension.text();
-        const run = Function('a', data);
+        const run = Function('Scratch', data);
         run(global.Scratch);
     } else {
         const script = document.createElement('script');

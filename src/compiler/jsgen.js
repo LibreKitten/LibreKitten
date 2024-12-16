@@ -1171,7 +1171,7 @@ class JSGenerator {
                 break;
             }
             case 'procedures.return':
-                this.stopScriptAndReturn(this.descendInput(node.value).asSafe());
+                this.stopScriptAndReturn(this.descendInput(node.value).asSafe(), node.value);
                 break;
 
             case 'timer.reset':
@@ -1303,11 +1303,11 @@ class JSGenerator {
     /**
      * @param {string} valueJS JS code of value to return.
      */
-    stopScriptAndReturn(valueJS) {
+    stopScriptAndReturn(valueJS, rawValue) {
         if (this.isProcedure) {
             this.source += `return ${valueJS};\n`;
         } else {
-            this.retire();
+            this.descendStackedBlock({ kind: 'visualReport', input: rawValue })
         }
     }
 
