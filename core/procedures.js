@@ -229,10 +229,12 @@ Blockly.Procedures.flyoutCategory = function(workspace) {
   for (var i = 0; i < mutations.length; i++) {
     var mutation = mutations[i].cloneNode(false);
     var procCode = mutation.getAttribute('proccode');
+    var procColour = mutation.getAttribute('colour');
     var returnType = Blockly.Procedures.getProcedureReturnType(procCode, workspace);
     if (returnType !== Blockly.PROCEDURES_CALL_TYPE_STATEMENT) {
       mutation.setAttribute('return', returnType);
     }
+    mutation.setAttribute('colour', procColour);
     // <block type="procedures_call">
     //   <mutation ...></mutation>
     // </block>
@@ -416,6 +418,7 @@ Blockly.Procedures.newProcedureMutation = function() {
       ' argumentnames="[]"' +
       ' argumentdefaults="[]"' +
       ' warp="false">' +
+      ' colour="null">' +
       '</mutation>' +
       '</xml>';
   return Blockly.Xml.textToDom(mutationText).firstChild;
@@ -444,6 +447,8 @@ Blockly.Procedures.createProcedureCallbackFactory_ = function(workspace) {
     if (mutation) {
       var blockText = '<xml>' +
           '<block type="procedures_definition">' +
+          '<mutation colour=' + JSON.stringify(mutation.getAttribute('colour') || 'null') + '>' + 
+	        '</mutation>' +
           '<statement name="custom_block">' +
           '<shadow type="procedures_prototype">' +
           Blockly.Xml.domToText(mutation) +

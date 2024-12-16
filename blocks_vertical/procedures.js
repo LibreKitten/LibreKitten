@@ -20,6 +20,10 @@
 
 /**
  * @fileoverview Procedure blocks for Scratch.
+ * 
+ * LibreKitten Changes
+ * -------------------
+ * - Added custom procedures colours.
  */
 'use strict';
 
@@ -47,6 +51,45 @@ Blockly.ScratchBlocks.ProcedureUtils.parseReturnMutation = function(xmlElement) 
 };
 
 /**
+ * Renders colour on a block.
+ * @this Blockly.Block
+ */
+Blockly.ScratchBlocks.ProcedureUtils.renderColour = function() {
+  Blockly.ScratchBlocks.ProcedureUtils.renderColourExternal(this);
+};
+
+/**
+ * Renders colour on a block. External.
+ * @param {Blockly.Block} self
+ */
+Blockly.ScratchBlocks.ProcedureUtils.renderColourExternal = function(self) {
+  alert('Override needed at Blockly.ScratchBlocks.ProcedureUtils.renderColourExternal.');
+};
+
+/**
+ * Create XML to represent the name and arguments of a procedure
+ * definition block.
+ * @return {!Element} XML storage element.
+ * @this Blockly.Block
+ */
+Blockly.ScratchBlocks.ProcedureUtils.defineMutationToDom = function() {
+  var container = document.createElement('mutation');
+  container.setAttribute('colour', this.procColour_);
+  return container;
+};
+
+/**
+ * Parse XML to restore the name and arguments of a procedure
+ * definition block.
+ * @param {!Element} xmlElement XML storage element.
+ * @this Blockly.Block
+ */
+Blockly.ScratchBlocks.ProcedureUtils.defineDomToMutation = function(xmlElement) {
+  this.procColour_ = xmlElement.getAttribute('colour');
+  this.renderColour();
+};
+
+/**
  * Create XML to represent the (non-editable) name and arguments of a procedure
  * call block.
  * @return {!Element} XML storage element.
@@ -60,6 +103,7 @@ Blockly.ScratchBlocks.ProcedureUtils.callerMutationToDom = function() {
   if (this.return_ !== Blockly.PROCEDURES_CALL_TYPE_STATEMENT) {
     container.setAttribute('return', this.return_);
   }
+  container.setAttribute('colour', this.procColour_);
   return container;
 };
 
@@ -76,6 +120,7 @@ Blockly.ScratchBlocks.ProcedureUtils.callerDomToMutation = function(xmlElement) 
   this.argumentIds_ = JSON.parse(xmlElement.getAttribute('argumentids'));
   this.warp_ = JSON.parse(xmlElement.getAttribute('warp'));
   this.return_ = Blockly.ScratchBlocks.ProcedureUtils.parseReturnMutation(xmlElement);
+  this.procColour_ = xmlElement.getAttribute('colour');
   if (this.return_ !== Blockly.PROCEDURES_CALL_TYPE_STATEMENT) {
     this.workspace.enableProcedureReturns();
   }
@@ -103,6 +148,7 @@ Blockly.ScratchBlocks.ProcedureUtils.definitionMutationToDom = function(
   container.setAttribute('argumentdefaults',
       JSON.stringify(this.argumentDefaults_));
   container.setAttribute('warp', JSON.stringify(this.warp_));
+  container.setAttribute('colour', this.procColour_);
   return container;
 };
 
@@ -115,6 +161,7 @@ Blockly.ScratchBlocks.ProcedureUtils.definitionMutationToDom = function(
 Blockly.ScratchBlocks.ProcedureUtils.definitionDomToMutation = function(xmlElement) {
   this.procCode_ = xmlElement.getAttribute('proccode');
   this.warp_ = JSON.parse(xmlElement.getAttribute('warp'));
+  this.procColour_ = xmlElement.getAttribute('colour');
 
   var prevArgIds = this.argumentIds_;
   var prevDisplayNames = this.displayNames_;
@@ -158,6 +205,8 @@ Blockly.ScratchBlocks.ProcedureUtils.updateDisplay_ = function() {
 
   this.createAllInputs_(connectionMap);
   this.deleteShadows_(connectionMap);
+
+  this.renderColour();
 
   if (!wasRendered && this.getReturn) {
     this.setInputsInline(true);
@@ -415,6 +464,8 @@ Blockly.ScratchBlocks.ProcedureUtils.createArgumentReporter_ = function(
   Blockly.Events.disable();
   try {
     var newBlock = this.workspace.newBlock(blockType);
+    newBlock.procColour_ = this.procColour_;
+    newBlock.renderColour();
     newBlock.setShadow(true);
     newBlock.setFieldValue(displayName, 'VALUE');
     if (!this.isInsertionMarker()) {
@@ -667,6 +718,19 @@ Blockly.ScratchBlocks.ProcedureUtils.addLabelExternal = function() {
 };
 
 /**
+ * Externally-visible function to add a label to the procedure declaration.
+ * @public
+ */
+Blockly.ScratchBlocks.ProcedureUtils.setColourExternal = function(colour) {
+  if (colour.includes('<') || colour.includes('>') || colour.includes('"') || !colour.startsWith('#')) {
+    throw 'Invalid colour string';
+  };
+  this.procColour_ = colour;
+  this.updateDisplay_();
+  this.focusLastEditor_();
+};
+
+/**
  * Externally-visible function to add a boolean argument to the procedure
  * declaration.
  * @public
@@ -840,7 +904,14 @@ Blockly.Blocks['procedures_definition'] = {
       ],
       "extensions": ["colours_more", "shape_hat", "procedure_def_contextmenu"]
     });
-  }
+    this.procColour_ = 'null';
+  },
+  // Shared
+  renderColour: Blockly.ScratchBlocks.ProcedureUtils.renderColour,
+
+  // Exist on all three blocks, but have different implementations.
+  mutationToDom: Blockly.ScratchBlocks.ProcedureUtils.defineMutationToDom,
+  domToMutation: Blockly.ScratchBlocks.ProcedureUtils.defineDomToMutation,
 };
 
 Blockly.Blocks['procedures_call'] = {
@@ -856,8 +927,10 @@ Blockly.Blocks['procedures_call'] = {
     this.argumentIds_ = [];
     this.warp_ = false;
     this.return_ = Blockly.PROCEDURES_CALL_TYPE_STATEMENT;
+    this.procColour_ = 'null';
   },
-  // Shared.
+  // Shared
+  renderColour: Blockly.ScratchBlocks.ProcedureUtils.renderColour,
   getProcCode: Blockly.ScratchBlocks.ProcedureUtils.getProcCode,
   removeAllInputs_: Blockly.ScratchBlocks.ProcedureUtils.removeAllInputs_,
   disconnectOldBlocks_: Blockly.ScratchBlocks.ProcedureUtils.disconnectOldBlocks_,
@@ -894,8 +967,10 @@ Blockly.Blocks['procedures_prototype'] = {
     this.argumentIds_ = [];
     this.argumentDefaults_ = [];
     this.warp_ = false;
+    this.procColour_ = 'null';
   },
-  // Shared.
+  // Shared
+  renderColour: Blockly.ScratchBlocks.ProcedureUtils.renderColour,
   getProcCode: Blockly.ScratchBlocks.ProcedureUtils.getProcCode,
   removeAllInputs_: Blockly.ScratchBlocks.ProcedureUtils.removeAllInputs_,
   disconnectOldBlocks_: Blockly.ScratchBlocks.ProcedureUtils.disconnectOldBlocks_,
@@ -929,8 +1004,10 @@ Blockly.Blocks['procedures_declaration'] = {
     this.argumentIds_ = [];
     this.argumentDefaults_ = [];
     this.warp_ = false;
+    this.procColour_ = 'null';
   },
-  // Shared.
+  // Shared
+  renderColour: Blockly.ScratchBlocks.ProcedureUtils.renderColour,
   getProcCode: Blockly.ScratchBlocks.ProcedureUtils.getProcCode,
   removeAllInputs_: Blockly.ScratchBlocks.ProcedureUtils.removeAllInputs_,
   disconnectOldBlocks_: Blockly.ScratchBlocks.ProcedureUtils.disconnectOldBlocks_,
@@ -953,6 +1030,7 @@ Blockly.Blocks['procedures_declaration'] = {
   getWarp: Blockly.ScratchBlocks.ProcedureUtils.getWarp,
   setWarp: Blockly.ScratchBlocks.ProcedureUtils.setWarp,
   addLabelExternal: Blockly.ScratchBlocks.ProcedureUtils.addLabelExternal,
+  setColourExternal: Blockly.ScratchBlocks.ProcedureUtils.setColourExternal,
   addBooleanExternal: Blockly.ScratchBlocks.ProcedureUtils.addBooleanExternal,
   addStringNumberExternal: Blockly.ScratchBlocks.ProcedureUtils.addStringNumberExternal,
   onChangeFn: Blockly.ScratchBlocks.ProcedureUtils.updateDeclarationProcCode_
@@ -970,7 +1048,14 @@ Blockly.Blocks['argument_reporter_boolean'] = {
       ],
       "extensions": ["colours_more", "output_boolean"]
     });
-  }
+    this.procColour_ = 'null';
+  },
+  // Shared
+  renderColour: Blockly.ScratchBlocks.ProcedureUtils.renderColour,
+
+  // Exist on all three blocks, but have different implementations.
+  mutationToDom: Blockly.ScratchBlocks.ProcedureUtils.defineMutationToDom,
+  domToMutation: Blockly.ScratchBlocks.ProcedureUtils.defineDomToMutation,
 };
 
 Blockly.Blocks['argument_reporter_string_number'] = {
@@ -985,7 +1070,14 @@ Blockly.Blocks['argument_reporter_string_number'] = {
       ],
       "extensions": ["colours_more", "output_number", "output_string"]
     });
-  }
+    this.procColour_ = 'null';
+  },
+  // Shared
+  renderColour: Blockly.ScratchBlocks.ProcedureUtils.renderColour,
+
+  // Exist on all three blocks, but have different implementations.
+  mutationToDom: Blockly.ScratchBlocks.ProcedureUtils.defineMutationToDom,
+  domToMutation: Blockly.ScratchBlocks.ProcedureUtils.defineDomToMutation,
 };
 
 Blockly.Blocks['argument_editor_boolean'] = {

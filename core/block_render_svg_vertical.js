@@ -121,7 +121,7 @@ Blockly.BlockSvg.NOTCH_HEIGHT = 2 * Blockly.BlockSvg.GRID_UNIT;
  * Rounded corner radius.
  * @const
  */
-Blockly.BlockSvg.CORNER_RADIUS = 1 * Blockly.BlockSvg.GRID_UNIT;
+Blockly.BlockSvg.CORNER_RADIUS = (1 * Blockly.BlockSvg.GRID_UNIT * 2.25 * 100) / 100;
 
 /**
  * Minimum width of statement input edge on the left, in px.
@@ -133,7 +133,7 @@ Blockly.BlockSvg.STATEMENT_INPUT_EDGE_WIDTH = 4 * Blockly.BlockSvg.GRID_UNIT;
  * Inner space between edge of statement input and notch.
  * @const
  */
-Blockly.BlockSvg.STATEMENT_INPUT_INNER_SPACE = 2 * Blockly.BlockSvg.GRID_UNIT;
+Blockly.BlockSvg.STATEMENT_INPUT_INNER_SPACE = 2.8 * Blockly.BlockSvg.GRID_UNIT - 0.9 * Blockly.BlockSvg.GRID_UNIT * 2.25;
 
 /**
  * Height of the top hat.
@@ -173,6 +173,7 @@ Blockly.BlockSvg.NOTCH_PATH_LEFT = (
  * @const
  */
 Blockly.BlockSvg.NOTCH_PATH_RIGHT = (
+  'h -5 ' +
   'c -2,0 -3,1 -4,2 ' +
   'l -4,4 ' +
   'c -1,1 -2,2 -4,2 ' +
