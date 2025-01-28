@@ -851,15 +851,17 @@ class JSGenerator {
             this.source += `}\n`;
             break;
         case 'control.case':
-            this.source += `case ${this.descendInput(node.value).asString()}:\n`;
+            this.source += `case ${this.descendInput(node.value).asString()}: {\n`;
             this.descendStack(node.contents, new Frame(false));
+            this.source += '}\n'
             break;
         case 'control.default':
-            this.source += `default:\n`;
+            this.source += `default: {\n`;
             this.descendStack(node.contents, new Frame(false));
+            this.source += `}\n`;
             break;
         case 'control.break':
-            this.source += `break;`;
+            this.source += `break;\n`;
             break;
         case 'control.repeat': {
             const i = this.localVariables.next();
