@@ -40,7 +40,7 @@ const CORE_EXTENSIONS = [
     // 'operators',
     // 'variables',
     // 'myBlocks'
-    'tw',
+    'tw'
 ];
 
 // Disable missing translation warnings in console

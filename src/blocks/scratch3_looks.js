@@ -597,27 +597,27 @@ class Scratch3LooksBlocks {
     getBackdropNumberName (args) {
         const stage = this.runtime.getTargetForStage();
         switch (args.NUMBER_NAME) {
-            case 'number':
-                return stage.currentCostume + 1;
-            case 'name':
-                return stage.getCostumes()[stage.currentCostume].name;
-            case 'amount':
-                return stage.getCostumes().length;
-            default:
-                return 0;
+        case 'number':
+            return stage.currentCostume + 1;
+        case 'name':
+            return stage.getCostumes()[stage.currentCostume].name;
+        case 'amount':
+            return stage.getCostumes().length;
+        default:
+            return 0;
         }
     }
 
     getCostumeNumberName (args, util) {
         switch (args.NUMBER_NAME) {
-            case 'number':
-                return util.target.currentCostume + 1;
-            case 'name':
-                return util.target.getCostumes()[util.target.currentCostume].name;
-            case 'amount':
-                return util.target.getCostumes().length;
-            default:
-                return 0;
+        case 'number':
+            return util.target.currentCostume + 1;
+        case 'name':
+            return util.target.getCostumes()[util.target.currentCostume].name;
+        case 'amount':
+            return util.target.getCostumes().length;
+        default:
+            return 0;
         }
     }
 }

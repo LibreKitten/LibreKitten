@@ -1,4 +1,4 @@
-var unzip = require('./unzip');
+const unzip = require('./unzip');
 
 const Buffer = require('buffer').Buffer;
 
@@ -19,7 +19,7 @@ module.exports = function (input, isSprite, callback) {
     }
 
     // Validate input type
-    var typeError = 'Input must be a Buffer or a string.';
+    const typeError = 'Input must be a Buffer or a string.';
     if (!Buffer.isBuffer(input)) {
         try {
             input = new Buffer(input);
@@ -33,9 +33,9 @@ module.exports = function (input, isSprite, callback) {
     // information is unavailable from Scratch's project CDN. Instead, we look
     // at the first few bytes from the provided buffer (byte signature).
     // https://en.wikipedia.org/wiki/List_of_file_signatures
-    var signature = input.slice(0, 3).join(' ');
-    var isLegacy = false;
-    var isZip = false;
+    const signature = input.slice(0, 3).join(' ');
+    let isLegacy = false;
+    let isZip = false;
 
     if (signature.indexOf('83 99 114') === 0) isLegacy = true;
     if (signature.indexOf('80 75') === 0) isZip = true;

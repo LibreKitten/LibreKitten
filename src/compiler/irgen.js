@@ -211,7 +211,11 @@ class ScriptTreeGenerator {
             const name = block.fields.VALUE.value;
             const index = this.script.arguments.lastIndexOf(name);
             if (index === -1) {
-                if (name.toLowerCase() === 'is compiled?' || name.toLowerCase() === 'is turbowarp?' || name.toLowerCase() === 'is librekitten?') {
+                if (
+                    name.toLowerCase() === 'is compiled?'
+                    || name.toLowerCase() === 'is turbowarp?'
+                    || name.toLowerCase() === 'is librekitten?'
+                ) {
                     return {
                         kind: 'constant',
                         value: true
@@ -292,43 +296,43 @@ class ScriptTreeGenerator {
 
         case 'looks_backdropnumbername':
             switch (block.fields.NUMBER_NAME.value) {
-                case 'number':
-                    return {
-                        kind: 'looks.backdropNumber'
-                    };
-                case 'name':
-                    return {
-                        kind: 'looks.backdropName'
-                    };
-                case 'amount':
-                    return {
-                        kind: 'looks.backdropAmount'
-                    };
-                default:
-                    return {
-                        kind: 'constant',
-                        value: 0
-                    };
+            case 'number':
+                return {
+                    kind: 'looks.backdropNumber'
+                };
+            case 'name':
+                return {
+                    kind: 'looks.backdropName'
+                };
+            case 'amount':
+                return {
+                    kind: 'looks.backdropAmount'
+                };
+            default:
+                return {
+                    kind: 'constant',
+                    value: 0
+                };
             }
         case 'looks_costumenumbername':
             switch (block.fields.NUMBER_NAME.value) {
-                case 'number':
-                    return {
-                        kind: 'looks.costumeNumber'
-                    };
-                case 'name':
-                    return {
-                        kind: 'looks.costumeName'
-                    };
-                case 'amount':
-                    return {
-                        kind: 'looks.costumeAmount'
-                    };
-                default:
-                    return {
-                        kind: 'constant',
-                        value: 0
-                    };
+            case 'number':
+                return {
+                    kind: 'looks.costumeNumber'
+                };
+            case 'name':
+                return {
+                    kind: 'looks.costumeName'
+                };
+            case 'amount':
+                return {
+                    kind: 'looks.costumeAmount'
+                };
+            default:
+                return {
+                    kind: 'constant',
+                    value: 0
+                };
             }
         case 'looks_size':
             return {

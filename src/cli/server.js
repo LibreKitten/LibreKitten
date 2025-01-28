@@ -1,19 +1,18 @@
-/* 
+/*
 This is a web client for LibreKitten included in the LibreKitten Virtual Machine.
 It is used to run projects with website capabilities on a web server.
 */
 
-const EventEmitter = require('events');
+/* eslint-env node */
+/* eslint-disable no-console */
+
 const fs = require('fs');
 const VirtualMachine = require('../index');
 const http = require('http');
 const makeTestStorage = require('../../test/fixtures/make-test-storage'); // Dirty hack to make storage work.
-const { JSDOM } = require('jsdom');
+const {JSDOM} = require('jsdom');
 let server;
 let event;
-
-/* eslint-env node */
-/* eslint-disable no-console */
 
 const file = process.argv[2];
 if (!file) {
@@ -24,10 +23,17 @@ global.window = new JSDOM('').window;
 global.document = window.document;
 
 // Extension compatibility
-global.confirm = (...ignored) => { return true; };
-global.alert = (ignored, ...ignored2) => { console.log(ignored); };
-global.prompt = (...ignored) => { return ''; };
+/* eslint-disable-next-line no-unused-vars */
+global.confirm = (...ignored) => true;
+/* eslint-disable-next-line no-unused-vars */
+global.alert = (ignored, ...ignored2) => {
+    console.log(ignored);
+};
+/* eslint-disable-next-line no-unused-vars */
+global.prompt = (...ignored) => '';
 
+const port = process.argv[3] ?? 8080;
+const dev = process.argv[4] === '--dev';
 
 const runProject = async buffer => {
     let codeForPage = true;
@@ -40,30 +46,32 @@ const runProject = async buffer => {
         });
         res.end('Hello World\n'); */
         let data = '';
-        req.on('data', (chunk) => {
+        req.on('data', chunk => {
             data = chunk;
-        })
+        });
         req.on('end', async () => {
             if (dev && req.url === '/_lk_devServer_updateLb') {
                 vm.clear();
-                await vm.loadProject(data).catch((err) => {
+                await vm.loadProject(data).catch(err => {
                     throw new Error(err);
                 });
                 vm.start();
                 vm.greenFlag();
                 res.writeHead(200, {
                     'Content-Type': 'text/plain',
-                    'access-control-allow-origin': String(req.headers.origin) === 'http://localhost:8601' || String(req.headers.origin).endsWith('librekitten.org') ? req.headers.origin : 'http://invalid'
+                    'access-control-allow-origin': String(req.headers.origin) === 'http://localhost:8601'
+                        || String(req.headers.origin).endsWith('librekitten.org')
+                        ? req.headers.origin : 'http://invalid'
                 });
                 return res.end('success');
-            };
+            }
             vm.runtime.emit('serverRequest', req.url, req.socket.remoteAddress, req.method, JSON.stringify(req.headers), data);
             codeForPage = false;
             event = {
-                get content() {
+                get content () {
                     return null;
                 },
-                set content(array) {
+                set content (array) {
                     codeForPage = true;
                     res.writeHead(array[2], {
                         'Content-Type': array[1],
@@ -74,13 +82,20 @@ const runProject = async buffer => {
             };
             setTimeout(() => {
                 if (!codeForPage) {
-                    vm.runtime.emit('server404', req.url, req.socket.remoteAddress, req.method, JSON.stringify(req.headers), data);
+                    vm.runtime.emit(
+                        'server404',
+                        req.url,
+                        req.socket.remoteAddress,
+                        req.method,
+                        JSON.stringify(req.headers),
+                        data
+                    );
                     codeForPage = true;
                     event = {
-                        get content() {
+                        get content () {
                             return null;
                         },
-                        set content(array) {
+                        set content (array) {
                             codeForPage = true;
                             res.writeHead(array[2], {
                                 'Content-Type': array[1],
@@ -91,7 +106,7 @@ const runProject = async buffer => {
                     };
                 }
             }, 50);
-        })
+        });
     });
     vm.runtime.on('SAY', (target, type, text) => {
         console.log(text);
@@ -99,26 +114,14 @@ const runProject = async buffer => {
     vm.runtime.on('serverResponse', (content, mime, status, extraHeaders) => {
         event.content = [content, mime, status, extraHeaders];
     });
-    vm.securityManager.getSandboxMode = (url) => {
-        return Promise.resolve('unsandboxed');
-    };
-    vm.securityManager.canAutomaticallyLoadExtension = (url) => {
-        return Promise.resolve(true);
-    };
-    vm.securityManager.canFetch = (url) => {
-        return Promise.resolve(true);
-    };
+    vm.securityManager.getSandboxMode = () => Promise.resolve('unsandboxed');
+    vm.securityManager.canAutomaticallyLoadExtension = () => Promise.resolve(true);
+    vm.securityManager.canFetch = () => Promise.resolve(true);
     // we literally can't so no
-    vm.securityManager.canOpenWindow = (url) => {
-        return Promise.resolve(false);
-    };
+    vm.securityManager.canOpenWindow = () => Promise.resolve(false);
     // we literally can't so no
-    vm.securityManager.canRedirect = (url) => {
-        return Promise.resolve(false);
-    };
-    vm.securityManager.canLoadExtensionFromProject = (url) => {
-        return Promise.resolve(true);
-    }
+    vm.securityManager.canRedirect = () => Promise.resolve(false);
+    vm.securityManager.canLoadExtensionFromProject = () => Promise.resolve(true);
     vm.setCompatibilityMode(false);
     vm.setTurboMode(true);
     vm.clear();
@@ -128,8 +131,6 @@ const runProject = async buffer => {
 };
 
 runProject(fs.readFileSync(file));
-const port = process.argv[3] ?? 8080
-const dev = process.argv[4] === '--dev';
 server.listen(port, () => {
     console.log(`LibreKitten on server has started at port ${port}.`);
-})
+});

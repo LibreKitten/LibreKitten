@@ -7,7 +7,6 @@ class Scratch3EventBlocks {
          * @type {Runtime}
          */
         this.runtime = runtime;
-        this
         this.runtime.on('KEY_PRESSED', key => {
             this.runtime.startHats('event_whenkeypressed', {
                 KEY_OPTION: key
@@ -66,7 +65,7 @@ class Scratch3EventBlocks {
         };
     }
 
-    whenStopClicked (args, util) {
+    whenStopClicked () {
         return true;
     }
 

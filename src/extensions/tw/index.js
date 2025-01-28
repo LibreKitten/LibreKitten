@@ -11,7 +11,7 @@ const DOMPurify = require('dompurify');
  * @constructor
  */
 class TurboWarpBlocks {
-    constructor(runtime) {
+    constructor (runtime) {
         /**
          * The runtime instantiating this block package.
          * @type {Runtime}
@@ -22,7 +22,7 @@ class TurboWarpBlocks {
     /**
      * @returns {object} metadata for this extension and its blocks.
      */
-    getInfo() {
+    getInfo () {
         return {
             id: 'tw',
             name: 'Misc',
@@ -87,7 +87,7 @@ class TurboWarpBlocks {
                         description: 'Block that restarts the project.'
                     }),
                     blockType: BlockType.COMMAND,
-                    hideFromPalette: true,
+                    hideFromPalette: true
                 },
                 {
                     opcode: 'exponentiation',
@@ -107,7 +107,7 @@ class TurboWarpBlocks {
                             defaultValue: ''
                         }
                     },
-                    hideFromPalette: true,
+                    hideFromPalette: true
                 },
                 {
                     opcode: 'regex',
@@ -127,7 +127,7 @@ class TurboWarpBlocks {
                             defaultValue: ''
                         }
                     },
-                    hideFromPalette: true,
+                    hideFromPalette: true
                 },
                 {
                     opcode: 'replaceOperation',
@@ -151,7 +151,7 @@ class TurboWarpBlocks {
                             defaultValue: ''
                         }
                     },
-                    hideFromPalette: true,
+                    hideFromPalette: true
                 },
                 {
                     opcode: 'substring',
@@ -175,7 +175,7 @@ class TurboWarpBlocks {
                             defaultValue: '6'
                         }
                     },
-                    hideFromPalette: true,
+                    hideFromPalette: true
                 },
                 {
                     opcode: 'true',
@@ -185,7 +185,7 @@ class TurboWarpBlocks {
                         description: 'Block that returns true.'
                     }),
                     blockType: BlockType.BOOLEAN,
-                    hideFromPalette: true,
+                    hideFromPalette: true
                 },
                 {
                     opcode: 'false',
@@ -195,7 +195,7 @@ class TurboWarpBlocks {
                         description: 'Block that returns false.'
                     }),
                     blockType: BlockType.BOOLEAN,
-                    hideFromPalette: true,
+                    hideFromPalette: true
                 },
                 {
                     opcode: 'pi',
@@ -204,7 +204,7 @@ class TurboWarpBlocks {
                         default: 'π',
                         description: 'Block that returns pi'
                     }),
-                    blockType: BlockType.REPORTER,
+                    blockType: BlockType.REPORTER
                 },
                 {
                     opcode: 'e',
@@ -213,7 +213,7 @@ class TurboWarpBlocks {
                         default: 'e',
                         description: 'Block that returns eulers number'
                     }),
-                    blockType: BlockType.REPORTER,
+                    blockType: BlockType.REPORTER
                 },
                 {
                     opcode: 'infinity',
@@ -222,7 +222,7 @@ class TurboWarpBlocks {
                         default: '∞',
                         description: 'Block that returns Infinity'
                     }),
-                    blockType: BlockType.REPORTER,
+                    blockType: BlockType.REPORTER
                 },
                 {
                     opcode: 'booleanify',
@@ -238,7 +238,7 @@ class TurboWarpBlocks {
                             defaultValue: ''
                         }
                     },
-                    hideFromPalette: true,
+                    hideFromPalette: true
                 },
                 {
                     opcode: 'strictlyEquals',
@@ -258,7 +258,7 @@ class TurboWarpBlocks {
                             defaultValue: ''
                         }
                     },
-                    hideFromPalette: true,
+                    hideFromPalette: true
                 },
                 {
                     opcode: 'comment',
@@ -273,7 +273,7 @@ class TurboWarpBlocks {
                             type: ArgumentType.STRING,
                             defaultValue: 'This program says "Hello world!"'
                         }
-                    },
+                    }
                 },
                 {
                     opcode: 'commentCBlock',
@@ -288,7 +288,7 @@ class TurboWarpBlocks {
                             type: ArgumentType.STRING,
                             defaultValue: 'This program says "Hello world!"'
                         }
-                    },
+                    }
                 },
                 {
                     opcode: 'noOpCBlock',
@@ -297,7 +297,7 @@ class TurboWarpBlocks {
                         default: 'comment out',
                         description: 'Block that is no-op.'
                     }),
-                    blockType: BlockType.CONDITIONAL,
+                    blockType: BlockType.CONDITIONAL
                 },
                 {
                     opcode: 'renderMarkdown',
@@ -379,112 +379,112 @@ class TurboWarpBlocks {
         };
     }
 
-    getLastKeyPressed(args, util) {
+    getLastKeyPressed (args, util) {
         return util.ioQuery('keyboard', 'getLastKeyPressed');
     }
 
-    getButtonIsDown(args, util) {
+    getButtonIsDown (args, util) {
         const button = Cast.toNumber(args.MOUSE_BUTTON);
         return util.ioQuery('mouse', 'getButtonIsDown', [button]);
     }
 
-    checkDarkMode(args, util) {
+    checkDarkMode (args, util) {
         return window.matchMedia('(prefers-color-scheme: dark)').matches;
     }
 
-    startHats(args, util) {
+    startHats (args, util) {
         util.startHats(args.HAT_TYPE);
     }
 
-    exponentiation(args, util) {
+    exponentiation (args, util) {
         return args.ONE ** args.TWO;
     }
 
-    regex(args, util) {
+    regex (args, util) {
         return args.STRING.match(new RegExp(args.REGEX));
     }
 
-    replaceOperation(args, util) {
+    replaceOperation (args, util) {
         return args.STRING.replace(args.ONE, args.TWO);
     }
 
-    true(args, util) {
+    true (args, util) {
         return true;
     }
-    pi(args, util) {
+    pi (args, util) {
         return '3.141592653589793238462643383279502884197';
     }
-    e(args, util) {
+    e (args, util) {
         return '2.7182818284590452353602874713527';
     }
 
-    infinity(args, util) {
+    infinity (args, util) {
         return Infinity;
     }
 
-    false(args, util) {
+    false (args, util) {
         return false;
     }
 
-    strictlyEquals(args, util) {
+    strictlyEquals (args, util) {
         return args.ONE === args.TWO;
     }
 
-    booleanify(args, util) {
+    booleanify (args, util) {
         return args.REPORTER;
     }
 
-    substring(args, util) {
+    substring (args, util) {
         return args.STRING.substring(args.BEGINNING - 1, args.END - 1);
     }
 
-    greenFlag(args, util) {
+    greenFlag (args, util) {
         this.runtime.greenFlag();
     }
 
-    comment() {
+    comment () {
         // no-op
     }
 
-    commentCBlock() {
+    commentCBlock () {
         return true;
     }
 
 
-    noOpCBlock() {
+    noOpCBlock () {
         // no-op
     }
 
-    renderMarkdown(args) {
+    renderMarkdown (args) {
         return markdown().render(args.MARKDOWN);
     }
 
-    sanitizeXML(args) {
+    sanitizeXML (args) {
         return DOMPurify.sanitize(args.XML);
     }
 
-    escapeXML(args) {
+    escapeXML (args) {
         let safe = String();
         [...String(args.XML)].forEach((char, i) => {
             switch (char) {
-                case '<':
-                    safe = safe + '&lt;';
-                    break;
-                case '>':
-                    safe = safe + '&gt;';
-                    break;
-                case '&':
-                    safe = safe + '&amp;';
-                    break;
-                case '"':
-                    safe = safe + '&quot;';
-                    break;
-                case '\'':
-                    safe = safe + '&apos;';
-                    break;
-                default:
-                    safe = safe + char;
-                    break;
+            case '<':
+                safe = `${safe}&lt;`;
+                break;
+            case '>':
+                safe = `${safe}&gt;`;
+                break;
+            case '&':
+                safe = `${safe}&amp;`;
+                break;
+            case '"':
+                safe = `${safe}&quot;`;
+                break;
+            case '\'':
+                safe = `${safe}&apos;`;
+                break;
+            default:
+                safe = safe + char;
+                break;
             }
         });
         return safe;

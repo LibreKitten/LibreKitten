@@ -39,7 +39,7 @@ class Scratch3OperatorsBlocks {
             operator_replace: this.replace,
             operator_get_from_string: this.substring,
             operator_true: this.true,
-            operator_false: this.false,
+            operator_false: this.false
         };
     }
 
@@ -167,11 +167,11 @@ class Scratch3OperatorsBlocks {
         return 0;
     }
 
-    replace (args, util) {
+    replace (args) {
         return args.STRING.replace(args.ONE, args.TWO);
     }
 
-    substring (args, util) {
+    substring (args) {
         return args.STRING.substring(args.ONE - 1, args.TWO - 1);
     }
 

@@ -20,7 +20,7 @@ const base = {
             loader: 'babel-loader',
             include: path.resolve(__dirname, 'src'),
             options: {
-                presets: [['@babel/preset-env', { targets: 'defaults' }]],
+                presets: [['@babel/preset-env', {targets: 'defaults'}]]
             }
         },
         {

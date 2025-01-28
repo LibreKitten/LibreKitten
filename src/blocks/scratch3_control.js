@@ -1,5 +1,4 @@
 const Cast = require('../util/cast');
-const VirtualMachine = require('../virtual-machine');
 
 class Scratch3ControlBlocks {
     constructor (runtime) {
@@ -42,7 +41,7 @@ class Scratch3ControlBlocks {
             control_all_at_once: this.allAtOnce,
             control_green_flag: this.greenFlagBlock,
             control_ternary_if: this.ternaryIf,
-            control_break: this.break,
+            control_break: this.break
         };
     }
 
@@ -206,20 +205,20 @@ class Scratch3ControlBlocks {
         util.startBranch(1, false);
     }
 
-    greenFlagBlock (args, util) {
+    greenFlagBlock () {
         this.runtime.greenFlag();
     }
 
-    ternaryIf (args, util) {
+    ternaryIf (args) {
         const condition = Cast.toBoolean(args.VALUE);
         if (condition) {
             return args.LEFT;
-        } else {
-            return args.RIGHT;
         }
+        return args.RIGHT;
+        
     }
 
-    break(args, util) {
+    break (/* args, util */) {
 
     }
 }

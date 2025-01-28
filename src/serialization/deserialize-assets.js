@@ -180,23 +180,23 @@ const deserializeCostume = function (costume, runtime, zip, assetFileName, textL
                     costume.md5 = `${asset.assetId}.${asset.dataFormat}`;
                 })
         ]);
-    } else {
-        return Promise.all([textLayerFilePromise,
-            ((costume) => {
-                storage.createAsset(
-                    assetType,
-                    // TODO eventually we want to map non-png's to their actual file types?
-                    costumeFormat,
-                    base64ToArrayBuffer(costume.data),
-                    null,
-                    true
-                )
-                costume.asset = asset;
-                costume.assetId = asset.assetId;
-                costume.md5 = `${asset.assetId}.${asset.dataFormat}`;
-            })(costume)
-        ]);
     }
+    return Promise.all([textLayerFilePromise,
+        (costume => {
+            storage.createAsset(
+                assetType,
+                // TODO eventually we want to map non-png's to their actual file types?
+                costumeFormat,
+                base64ToArrayBuffer(costume.data),
+                null,
+                true
+            );
+            costume.asset = asset;
+            costume.assetId = asset.assetId;
+            costume.md5 = `${asset.assetId}.${asset.dataFormat}`;
+        })(costume)
+    ]);
+    
 
 };
 
