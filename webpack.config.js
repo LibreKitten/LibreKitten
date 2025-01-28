@@ -2,6 +2,9 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const defaultsDeep = require('lodash.defaultsdeep');
 const path = require('path');
 
+const { EsbuildPlugin } = require('esbuild-loader');
+const { optimize } = require('webpack');
+
 const base = {
     mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
     devServer: {
@@ -16,11 +19,11 @@ const base = {
     },
     module: {
         rules: [{
-            test: /\.[m]js$/,
-            loader: 'babel-loader',
+            test: /\.[tjm]js$/,
+            loader: 'esbuild-loader',
             include: path.resolve(__dirname, 'src'),
             options: {
-                presets: [['@babel/preset-env', {targets: 'defaults'}]]
+                target: 'es2020'
             }
         },
         {
@@ -30,6 +33,14 @@ const base = {
                 outputPath: 'media/music/'
             }
         }]
+    },
+    optimization: {
+        minimizer: [
+            new EsbuildPlugin({
+                target: 'es2020',
+                minify: true
+            })
+        ]
     },
     plugins: []
 };

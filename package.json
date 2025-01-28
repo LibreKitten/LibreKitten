@@ -49,6 +49,7 @@
     "domhandler": "2.4.2",
     "domparser": "^0.1.1",
     "dompurify": "^3.1.5",
+    "esbuild-loader": "^4.2.2",
     "format-message": "6.2.1",
     "htmlparser2": "3.10.0",
     "immutable": "3.8.2",
