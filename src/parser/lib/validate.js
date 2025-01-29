@@ -1,4 +1,5 @@
-const ajv = require('ajv')();
+const ajvRequire = require('ajv');
+const ajv = new ajvRequire();
 const sb2Defs = require('./sb2_definitions.json');
 const sb3Defs = require('./sb3_definitions.json');
 const sb2Schema = require('./sb2_schema.json');

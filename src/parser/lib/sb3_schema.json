@@ -1,6 +1,6 @@
 {
     "$id": "https://scratch.mit.edu/sb3_schema.json",
-    "$schema": "http://json-schema.org/schema#",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "description": "Scratch 3.0 Project Schema",
     "type": "object",
     "properties": {
@@ -39,6 +39,7 @@
             "additionalItems": {
                 "allOf": [
                     {"$ref": "sb3_definitions.json#/definitions/sprite"},
+                    {"$ref": "sb3_definitions.json#/definitions/library"},
                     {"$ref": "sb3_definitions.json#/definitions/target"}
                 ]
             }

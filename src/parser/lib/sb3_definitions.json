@@ -1,6 +1,6 @@
 {
     "$id": "https://scratch.mit.edu/sb3_definitions.json",
-    "$schema": "http://json-schema.org/schema#",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "description": "Scratch 3.0 Project and Sprite Schema Definitions",
     "definitions": {
         "optionalString": {
@@ -329,6 +329,10 @@
                     "type": "boolean",
                     "enum": [true]
                 },
+                "isLibrary": {
+                    "type": "boolean",
+                    "enum": [false]
+                },
                 "tempo": {
                     "type": "number"
                 },
@@ -350,6 +354,28 @@
                 "isStage"
             ]
         },
+        "library": {
+            "type": "object",
+            "description": "A library is a type of target consisting of custom blocks that are accessible to every target.",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "not": {"enum": ["_stage_"]}
+                },
+                "isStage": {
+                    "type": "boolean",
+                    "enum": [false]
+                },
+                "isLibrary": {
+                    "type": "boolean",
+                    "enum": [true]
+                }
+            },
+            "required": [
+                "name",
+                "isStage"
+            ]
+        },
         "sprite": {
             "type": "object",
             "description": "Description of property (and/or property/value pairs) for sprites.",
@@ -359,6 +385,10 @@
                     "not": {"enum": ["_stage_"]}
                 },
                 "isStage": {
+                    "type": "boolean",
+                    "enum": [false]
+                },
+                "isLibrary": {
                     "type": "boolean",
                     "enum": [false]
                 },
@@ -397,7 +427,7 @@
         },
         "target": {
             "type": "object",
-            "description" : "Properties common to both Scratch 3.0 Stage and Sprite",
+            "description" : "Properties common to both Scratch 3.0 Stage, Sprite, and Library",
             "properties": {
                 "currentCostume": {
                     "type": "integer",
