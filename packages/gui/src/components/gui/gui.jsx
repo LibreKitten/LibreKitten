@@ -12,6 +12,7 @@ import Blocks from '../../containers/blocks.jsx';
 import CostumeTab from '../../containers/costume-tab.jsx';
 import TargetPane from '../../containers/target-pane.jsx';
 import SoundTab from '../../containers/sound-tab.jsx';
+import ResourceTab from '../../containers/resource-tab.tsx';
 import StageWrapper from '../../containers/stage-wrapper.jsx';
 import Loader from '../loader/loader.jsx';
 import Box from '../box/box.jsx';
@@ -47,7 +48,8 @@ import {isRendererSupported, isBrowserSupported} from '../../lib/tw-environment-
 import {
     BLOCKS_TAB_INDEX,
     COSTUMES_TAB_INDEX,
-    SOUNDS_TAB_INDEX
+    SOUNDS_TAB_INDEX,
+    RESOURCES_TAB_INDEX
 } from '../../reducers/editor-tab';
 
 import styles from './gui.css';
@@ -55,6 +57,8 @@ import addExtensionIcon from './icon--extensions.svg';
 import codeIcon from '!../../lib/tw-recolor/build!./icon--code.svg';
 import costumesIcon from '!../../lib/tw-recolor/build!./icon--costumes.svg';
 import soundsIcon from '!../../lib/tw-recolor/build!./icon--sounds.svg';
+import resourcesIcon from '!../../lib/tw-recolor/build!./icon--resources.svg';
+
 import WelcomeModal from '../../containers/lk-welcome-modal.jsx';
 
 import styleResets from '../../css/lk-style-resets.css';
@@ -136,6 +140,7 @@ const GUIComponent = props => {
         onToggleLoginOpen,
         onActivateCostumesTab,
         onActivateSoundsTab,
+        onActivateResourcesTab,
         onActivateTab,
         onClickLogo,
         onExtensionButtonClick,
@@ -156,6 +161,7 @@ const GUIComponent = props => {
         showOpenFilePicker,
         showSaveFilePicker,
         soundsTabVisible,
+        resourcesTabVisible,
         stageSizeMode,
         targetIsStage,
         telemetryModalVisible,
@@ -396,6 +402,21 @@ const GUIComponent = props => {
                                             id="gui.gui.soundsTab"
                                         />
                                     </Tabs.Trigger>
+                                    {/* lk: Added resources tab. */}
+                                    <Tabs.Trigger
+                                        className={tabClassNames.tab}
+                                        value={RESOURCES_TAB_INDEX}
+                                    >
+                                        <img
+                                            draggable={false}
+                                            src={resourcesIcon()}
+                                        />
+                                        <FormattedMessage
+                                            defaultMessage="Resources"
+                                            description="Button to get to the Resources panel"
+                                            id="gui.gui.resourcesTab"
+                                        />
+                                    </Tabs.Trigger>
                                 </Tabs.List>
                                 <Tabs.Content
                                     className={tabClassNames.tabPanel}
@@ -444,6 +465,12 @@ const GUIComponent = props => {
                                     value={SOUNDS_TAB_INDEX}
                                 >
                                     <SoundTab vm={vm} />
+                                </Tabs.Content>
+                                <Tabs.Content
+                                    className={tabClassNames.tabPanel}
+                                    value={RESOURCES_TAB_INDEX}
+                                >
+                                    <ResourceTab vm={vm} />
                                 </Tabs.Content>
                             </Tabs.Root>
                             {backpackVisible ? (
@@ -518,6 +545,7 @@ GUIComponent.propTypes = {
     logo: PropTypes.string,
     onActivateCostumesTab: PropTypes.func,
     onActivateSoundsTab: PropTypes.func,
+    onActivateResourcesTab: PropTypes.func,
     onActivateTab: PropTypes.func,
     onClickAccountNav: PropTypes.func,
     onClickAddonSettings: PropTypes.func,
@@ -548,6 +576,7 @@ GUIComponent.propTypes = {
     showOpenFilePicker: PropTypes.func,
     showSaveFilePicker: PropTypes.func,
     soundsTabVisible: PropTypes.bool,
+    resourcesTabVisible: PropTypes.bool,
     stageSizeMode: PropTypes.oneOf(Object.keys(STAGE_SIZE_MODES)),
     targetIsStage: PropTypes.bool,
     telemetryModalVisible: PropTypes.bool,

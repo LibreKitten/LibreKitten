@@ -36,11 +36,14 @@ const Selector = props => {
     if (buttons.length > 0) {
         const {img, title, onClick} = buttons[0];
         const moreButtons = buttons.slice(1);
+        const mainButton = buttons[0];
         newButtonSection = (
             <Box className={styles.newButtons}>
                 <ActionMenu
                     img={img}
                     moreButtons={moreButtons}
+                    // lk: Added single button file selection.
+                    mainButton={mainButton}
                     title={title}
                     tooltipPlace={isRtl ? 'left' : 'right'}
                     onClick={onClick}
