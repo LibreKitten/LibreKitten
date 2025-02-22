@@ -395,19 +395,21 @@ class TurboWarpBlocks {
     }
 
     startHats (args, util) {
-        util.startHats(args.HAT_TYPE);
+        util.startHats(Cast.toString(args.HAT_TYPE));
     }
 
     exponentiation (args, util) {
-        return args.ONE ** args.TWO;
+        return Cast.toNumber(args.ONE) ** Cast.toNumber(args.TWO);
     }
 
     regex (args, util) {
-        return args.STRING.match(new RegExp(args.REGEX));
+        return Cast.toString(args.STRING)
+            .match(new RegExp(Cast.toString(args.REGEX)));
     }
 
     replaceOperation (args, util) {
-        return args.STRING.replace(args.ONE, args.TWO);
+        return Cast.toString(args.STRING)
+            .replace(Cast.toNumber(args.ONE), Cast.toNumber(args.TWO));
     }
 
     true (args, util) {
@@ -429,15 +431,16 @@ class TurboWarpBlocks {
     }
 
     strictlyEquals (args, util) {
+        // We don't cast on purpose for compatibility reasons.
         return args.ONE === args.TWO;
     }
 
     booleanify (args, util) {
-        return args.REPORTER;
+        return Cast.toBoolean(args.REPORTER);
     }
 
     substring (args, util) {
-        return args.STRING.substring(args.BEGINNING - 1, args.END - 1);
+        return Cast.toString(args.STRING).substring(Cast.toNumber(args.BEGINNING) - 1, Cast.toNumber(args.END) - 1);
     }
 
     greenFlag (args, util) {
@@ -458,15 +461,15 @@ class TurboWarpBlocks {
     }
 
     renderMarkdown (args) {
-        return markdown().render(args.MARKDOWN);
+        return markdown().render(Cast.toString(args.MARKDOWN));
     }
 
     sanitizeXML (args) {
-        return DOMPurify.sanitize(args.XML);
+        return DOMPurify.sanitize(Cast.toString(args.XML));
     }
 
     escapeXML (args) {
-        return xmlEscape(args.XML);
+        return xmlEscape(Cast.toString(args.XML));
     }
 
 }
