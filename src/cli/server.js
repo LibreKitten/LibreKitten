@@ -51,6 +51,12 @@ const runProject = async buffer => {
         });
         req.on('end', async () => {
             if (dev && req.url === '/_lk_devServer_updateLb') {
+                if (
+                    String(req.headers.origin) === 'http://localhost:8601'
+                    || String(req.headers.origin).endsWith('librekitten.org')
+                ) {
+                    return;
+                }
                 vm.clear();
                 await vm.loadProject(data).catch(err => {
                     throw new Error(err);

@@ -3,6 +3,8 @@ const BlockType = require('../../extension-support/block-type');
 const ArgumentType = require('../../extension-support/argument-type');
 const Cast = require('../../util/cast');
 
+const xmlEscape = require('../../util/xml-escape');
+
 const markdown = require('markdown-it/dist/markdown-it.min.js');
 const DOMPurify = require('dompurify');
 
@@ -464,30 +466,7 @@ class TurboWarpBlocks {
     }
 
     escapeXML (args) {
-        let safe = String();
-        [...String(args.XML)].forEach((char, i) => {
-            switch (char) {
-            case '<':
-                safe = `${safe}&lt;`;
-                break;
-            case '>':
-                safe = `${safe}&gt;`;
-                break;
-            case '&':
-                safe = `${safe}&amp;`;
-                break;
-            case '"':
-                safe = `${safe}&quot;`;
-                break;
-            case '\'':
-                safe = `${safe}&apos;`;
-                break;
-            default:
-                safe = safe + char;
-                break;
-            }
-        });
-        return safe;
+        return xmlEscape(args.XML);
     }
 
 }
