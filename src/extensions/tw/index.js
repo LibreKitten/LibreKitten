@@ -48,6 +48,11 @@ class TurboWarpBlocks {
                         default: 'is system dark mode on?',
                         description: 'Block that returns if the system dark mode is on'
                     }),
+                    tooltip: formatMessage({
+                        id: 'tw.blockTooltip.checkDarkMode',
+                        default: 'I check if the system-wide dark mode is on.',
+                        description: 'Tooltip for a block that returns if the system dark mode is on.'
+                    }),
                     blockType: BlockType.BOOLEAN
                 },
                 {
@@ -269,6 +274,11 @@ class TurboWarpBlocks {
                         default: 'explain code [COMMENT]',
                         description: 'Block that is a comment.'
                     }),
+                    tooltip: formatMessage({
+                        id: 'tw.blockTooltip.comment',
+                        default: 'I am a note about the code below me for people to read. I don\'t have any other purpose.',
+                        description: 'Tooltip for a block that is a comment.'
+                    }),
                     blockType: BlockType.COMMAND,
                     arguments: {
                         COMMENT: {
@@ -283,6 +293,11 @@ class TurboWarpBlocks {
                         id: 'tw.block.commentCBlock',
                         default: 'explain code [COMMENT]',
                         description: 'Block that is a comment.'
+                    }),
+                    tooltip: formatMessage({
+                        id: 'tw.blockTooltip.commentCBlock',
+                        default: 'I am a note about the code inside me for people to read. I run the code inside me every time.',
+                        description: 'Tooltip for a block that is a comment.'
                     }),
                     blockType: BlockType.CONDITIONAL,
                     arguments: {
@@ -299,14 +314,25 @@ class TurboWarpBlocks {
                         default: 'comment out',
                         description: 'Block that is no-op.'
                     }),
+                    tooltip: formatMessage({
+                        id: 'tw.blockTooltip.noOpCBlock',
+                        default: 'I make the code inside me not run.',
+                        description: 'Tooltip for a block that is no-op.'
+                    }),
                     blockType: BlockType.CONDITIONAL
                 },
+                // lk: TODO: Move these into a HTML extension.
                 {
                     opcode: 'renderMarkdown',
                     text: formatMessage({
                         id: 'tw.block.renderMarkdown',
                         default: 'render Markdown to HTML [MARKDOWN]',
                         description: 'Block that renders Markdown to HTML.'
+                    }),
+                    tooltip: formatMessage({
+                        id: 'tw.blockTooltip.renderMarkdown',
+                        default: 'I convert Markdown to HTML.',
+                        description: 'Tooltip for a block that renders Markdown to HTML.'
                     }),
                     blockType: BlockType.REPORTER,
                     arguments: {
@@ -323,6 +349,11 @@ class TurboWarpBlocks {
                         default: 'sanitize HTML/XML [XML]',
                         description: 'Block that sanitizes JavaScript out of XML.'
                     }),
+                    tooltip: formatMessage({
+                        id: 'tw.blockTooltip.sanitizeXML',
+                        default: 'I neutralize XML/SGML-like markup with JavaScript (HTML, SVG, and etc.) by stripping out JavaScript. Useful for security.',
+                        description: 'Tooltip for a block that sanitizes JavaScript out of XML.'
+                    }),
                     blockType: BlockType.REPORTER,
                     arguments: {
                         XML: {
@@ -337,6 +368,11 @@ class TurboWarpBlocks {
                         id: 'tw.block.escapeXML',
                         default: 'escape HTML/XML [XML]',
                         description: 'Block that converts XML to text.'
+                    }),
+                    tooltip: formatMessage({
+                        id: 'tw.blockTooltip.escapeXML',
+                        default: 'I neutralize XML/SGML-like markup (HTML, XML, and etc.) by converting the unsafe characters to the equivelant character entity references. Useful for security.',
+                        description: 'Tooltip for a block that converts XML to text.'
                     }),
                     blockType: BlockType.REPORTER,
                     arguments: {
