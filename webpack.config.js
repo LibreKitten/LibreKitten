@@ -19,7 +19,7 @@ const base = {
     },
     module: {
         rules: [{
-            test: /\.[tjm]js$/,
+            test: /\.[tj]s$/,
             loader: 'esbuild-loader',
             include: path.resolve(__dirname, 'src'),
             options: {
