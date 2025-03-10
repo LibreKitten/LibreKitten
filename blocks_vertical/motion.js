@@ -42,7 +42,7 @@ Blockly.Blocks['motion_movesteps'] = {
           "name": "STEPS"
         }
       ],
-      "tooltip": "I move my sprite by the amount of pixels set in my inputted value in the direction it's facing.",
+      "tooltip": Blockly.Msg.MOTION_MOVESTEPS_TOOLTIP,
       "category": Blockly.Categories.motion,
       "extensions": ["colours_motion", "shape_statement"]
     });

@@ -88,7 +88,7 @@ Blockly.Blocks['event_whenflagclicked'] = {
           "alt": "flag"
         }
       ],
-      "tooltip": "I run my contents under me when the project starts.",
+      "tooltip": Blockly.Msg.EVENT_WHENFLAGCLICKED_TOOLTIP,
       "category": Blockly.Categories.event,
       "extensions": ["colours_event", "shape_hat"]
     });
@@ -113,7 +113,7 @@ Blockly.Blocks['event_whenstopclicked'] = {
           "alt": "flag"
         }
       ],
-      "tooltip": "I run my contents under me when the project stops.",
+      "tooltip": Blockly.Msg.EVENT_WHENSTOPCLICKED_TOOLTIP,
       "category": Blockly.Categories.event,
       "extensions": ["colours_event", "shape_hat"]
     });

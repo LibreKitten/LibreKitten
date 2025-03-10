@@ -61,6 +61,30 @@ Blockly.Msg.CONTROL_INCRCOUNTER = 'increment counter';
 Blockly.Msg.CONTROL_CLEARCOUNTER = 'clear counter';
 Blockly.Msg.CONTROL_ALLATONCE = 'all at once';
 Blockly.Msg.CONTROL_GREEN_FLAG = 'restart';
+// Control blocks tooltips
+Blockly.Msg.CONTROL_TERNARY_IF_TOOLTIP = "I return the content that's returned from my first reporter input if my inputted boolean value is true, otherwise I return the content that's returned from my second reporter input.";
+Blockly.Msg.CONTROL_FOREVER_TOOLTIP = "I run my contents inside me forever until I'm terminated.";
+Blockly.Msg.CONTROL_REPEAT_TOOLTIP = "I repeatably run my contents inside me for how many times that is specified in my inputted value.";
+Blockly.Msg.CONTROL_IF_TOOLTIP = "I run my contents inside me if my inputted value is true, otherwise I do nothing.";
+Blockly.Msg.CONTROL_SWITCH_TOOLTIP = "I run my cases inside me that match with my inputted value. If a case is not terminated, I'll move to the next case even if it doesn't match.";
+Blockly.Msg.CONTROL_CASE_TOOLTIP = "I run my contents inside me when I match with the value inputted in the switch block.";
+Blockly.Msg.CONTROL_DEFAULT_TOOLTIP = "I run my contents inside me when there is no case for the value inputted in the switch block.";
+Blockly.Msg.CONTROL_BREAK_TOOLTIP = "I terminate a loop or a check.";
+Blockly.Msg.CONTROL_IF_ELSE_TOOLTIP = "I run the contents inside my first branch if my inputted value is true, otherwise I run the contents inside my second branch.";
+Blockly.Msg.CONTROL_WAIT_TOOLTIP = "I pause the script for how many seconds that is specified in my inputted value.";
+Blockly.Msg.CONTROL_WAITUNTIL_TOOLTIP = "I pause the script until my inputted value is true.";
+Blockly.Msg.CONTROL_REPEATUNTIL_TOOLTIP = "I repeatedly run my contents inside me while my inputted value is false.";
+Blockly.Msg.CONTROL_WHILE_TOOLTIP = "I repeatedly run my contents inside me while my inputted value is true.";
+Blockly.Msg.CONTROL_FOREACH_TOOLTIP = "I repeatably run my contents inside me for how many times that is specified in my inputted value while also increasing the selected variable by one.";
+Blockly.Msg.CONTROL_STARTASCLONE_TOOLTIP = "I run my contents under me when my sprite starts as a clone.";
+Blockly.Msg.CONTROL_CREATECLONEOF_MENU_TOOLTIP = "I run my contents when my sprite starts as a clone.";
+Blockly.Msg.CONTROL_CREATECLONEOF_TOOLTIP = "I create a clone of the selected sprite.";
+Blockly.Msg.CONTROL_DELETETHISCLONE_TOOLTIP = "I delete my sprite if it's a clone.";
+Blockly.Msg.CONTROL_COUNTER_TOOLTIP = "I get the counter value.";
+Blockly.Msg.CONTROL_INCRCOUNTER_TOOLTIP = "I add one to the counter.";
+Blockly.Msg.CONTROL_CLEARCOUNTER_TOOLTIP = "I clear the counter.";
+Blockly.Msg.CONTROL_ALLATONCE_TOOLTIP = "WARNING! I don't function anymore. This feature was removed in place of custom blocks marked \"run without screen refresh\". Please don't use me.";
+Blockly.Msg.CONTROL_GREEN_FLAG_TOOLTIP = "I restart the project.";
 
 // Data blocks
 Blockly.Msg.DATA_SETVARIABLETO = 'set %1 to %2';
@@ -103,6 +127,9 @@ Blockly.Msg.EVENT_WHENKEYPRESSED_RIGHT = 'right arrow';
 Blockly.Msg.EVENT_WHENKEYPRESSED_DOWN = 'down arrow';
 Blockly.Msg.EVENT_WHENKEYPRESSED_UP = 'up arrow';
 Blockly.Msg.EVENT_WHENKEYPRESSED_ANY = 'any';
+// Event blocks tooltips
+Blockly.Msg.EVENT_WHENFLAGCLICKED_TOOLTIP = "I run my contents under me when the project starts.";
+Blockly.Msg.EVENT_WHENSTOPCLICKED_TOOLTIP = "I run my contents under me when the project stops.";
 
 // Looks blocks
 Blockly.Msg.LOOKS_SAYFORSECS = 'say %1 for %2 seconds';
@@ -189,6 +216,8 @@ Blockly.Msg.MOTION_ALIGNSCENE_TOPRIGHT = 'top-right';
 Blockly.Msg.MOTION_XSCROLL = 'x scroll';
 Blockly.Msg.MOTION_YSCROLL = 'y scroll';
 Blockly.Msg.MOTION_STAGE_SELECTED = 'Stage selected: no motion blocks';
+// Motion blocks tooltips
+Blockly.Msg.MOTION_MOVESTEPS_TOOLTIP = "I move my sprite by the amount of pixels set in my inputted value in the direction it's facing."
 
 // Operators blocks
 Blockly.Msg.OPERATORS_ADD = '%1 + %2';
@@ -233,6 +262,9 @@ Blockly.Msg.OPERATORS_MATHOP_LN = 'ln';
 Blockly.Msg.OPERATORS_MATHOP_LOG = 'log';
 Blockly.Msg.OPERATORS_MATHOP_EEXP = 'e ^';
 Blockly.Msg.OPERATORS_MATHOP_10EXP = '10 ^';
+// Operator blocks tooltips
+Blockly.Msg.OPERATORS_STRICTLYEQUALS_TOOLTIP = "I return true if my first inputted value EXACTLY matches my second inputted value, otherwise I return false.";
+Blockly.Msg.OPERATORS_MOD_TOOLTIP = "I'm the operator for the remainder of a division";
 
 // Procedures blocks
 Blockly.Msg.PROCEDURES_DEFINITION = 'define %1';

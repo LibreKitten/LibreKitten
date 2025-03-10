@@ -241,7 +241,7 @@ Blockly.Blocks['operator_strictly_equals'] = {
       ],
       "category": Blockly.Categories.operators,
       "extensions": ["colours_operators", "output_boolean"],
-      "tooltip": "I return true if my first inputted value EXACTLY matches my second inputted value, otherwise I return false."
+      "tooltip": Blockly.Msg.OPERATORS_STRICTLYEQUALS_TOOLTIP
     });
   }
 };
@@ -559,7 +559,7 @@ Blockly.Blocks['operator_mod'] = {
           "name": "NUM2"
         }
       ],
-      "tooltip": "I'm the operator for the remainder of a division",
+      "tooltip": Blockly.Msg.OPERATORS_MOD_TOOLTIP,
       "category": Blockly.Categories.operators,
       "extensions": ["colours_operators", "output_number"]
     });

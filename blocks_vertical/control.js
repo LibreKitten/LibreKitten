@@ -53,7 +53,7 @@ Blockly.Blocks['control_ternary_if'] = {
       "outputShape": Blockly.OUTPUT_SHAPE_SQUARE,
       "category": Blockly.Categories.operators,
       "extensions": ["colours_control"],
-      "tooltip": "I return the content that's returned from my first reporter input if my inputted boolean value is true, otherwise I return the content that's returned from my second reporter input."
+      "tooltip": Blockly.Msg.CONTROL_TERNARY_IF_TOOLTIP
     });
   }
 };
@@ -87,7 +87,7 @@ Blockly.Blocks['control_forever'] = {
           "flip_rtl": true
         }
       ],
-      "tooltip": "I run my contents inside me forever until I'm terminated.",
+      "tooltip": Blockly.Msg.CONTROL_FOREVER_TOOLTIP,
       "category": Blockly.Categories.control,
       "extensions": ["colours_control", "shape_statement"]
     });
@@ -129,7 +129,7 @@ Blockly.Blocks['control_repeat'] = {
           "flip_rtl": true
         }
       ],
-      "tooltip": "I repeatably run my contents inside me for how many times that is specified in my inputted value.",
+      "tooltip": Blockly.Msg.CONTROL_REPEAT_TOOLTIP,
       "category": Blockly.Categories.control,
       "extensions": ["colours_control", "shape_statement"]
     });
@@ -159,7 +159,7 @@ Blockly.Blocks['control_if'] = {
           "name": "SUBSTACK"
         }
       ],
-      "tooltip": "I run my contents inside me if my inputted value is true, otherwise I do nothing.",
+      "tooltip": Blockly.Msg.CONTROL_IF_TOOLTIP,
       "category": Blockly.Categories.control,
       "extensions": ["colours_control", "shape_statement"]
     });
@@ -187,7 +187,7 @@ Blockly.Blocks['control_switch'] = {
           "name": "SUBSTACK"
         }
       ],
-      "tooltip": "I run my cases inside me that match with my inputted value. If a case is not terminated, I'll move to the next case even if it doesn't match.",
+      "tooltip": Blockly.Msg.CONTROL_SWITCH_TOOLTIP,
       "category": Blockly.Categories.control,
       "extensions": ["colours_control", "shape_statement"]
     });
@@ -215,7 +215,7 @@ Blockly.Blocks['control_case'] = {
           "name": "SUBSTACK"
         }
       ],
-      "tooltip": "I run my contents inside me when I match with the value inputted in the switch block.",
+      "tooltip": Blockly.Msg.CONTROL_CASE_TOOLTIP,
       "category": Blockly.Categories.control,
       "extensions": ["colours_control", "shape_statement"]
     });
@@ -238,7 +238,7 @@ Blockly.Blocks['control_default'] = {
         }
       ],
       "category": Blockly.Categories.control,
-      "tooltip": "I run my contents inside me when there is no case for the value inputted in the switch block.",
+      "tooltip": Blockly.Msg.CONTROL_DEFAULT_TOOLTIP,
       "extensions": ["colours_control", "shape_end"]
     });
   }
@@ -255,7 +255,7 @@ Blockly.Blocks['control_break'] = {
       "args0": [
       ],
       "category": Blockly.Categories.control,
-      "tooltip": "I terminate a loop or a switch case.",
+      "tooltip": Blockly.Msg.CONTROL_BREAK_TOOLTIP,
       "extensions": ["colours_control", "shape_end"]
     });
   }
@@ -292,7 +292,7 @@ Blockly.Blocks['control_if_else'] = {
           "name": "SUBSTACK2"
         }
       ],
-      "tooltip": "I run the contents inside my first branch if my inputted value is true, otherwise I run the contents inside my second branch.",
+      "tooltip": Blockly.Msg.CONTROL_IF_ELSE_TOOLTIP,
       "category": Blockly.Categories.control,
       "extensions": ["colours_control", "shape_statement"]
     });
@@ -370,7 +370,7 @@ Blockly.Blocks['control_wait'] = {
           "name": "DURATION"
         }
       ],
-      "tooltip": "I pause the script for how many seconds that is specified in my inputted value.",
+      "tooltip": Blockly.Msg.CONTROL_WAIT_TOOLTIP,
       "category": Blockly.Categories.control,
       "extensions": ["colours_control", "shape_statement"]
     });
@@ -393,7 +393,7 @@ Blockly.Blocks['control_wait_until'] = {
         }
       ],
       "category": Blockly.Categories.control,
-      "tooltip": "I pause the script until my inputted value is true.",
+      "tooltip": Blockly.Msg.CONTROL_WAITUNTIL_TOOLTIP,
       "extensions": ["colours_control", "shape_statement"]
     });
   }
@@ -433,7 +433,7 @@ Blockly.Blocks['control_repeat_until'] = {
           "flip_rtl": true
         }
       ],
-      "tooltip": 'I repeatedly run my contents inside me while my inputted value is false.',
+      "tooltip": Blockly.Msg.CONTROL_REPEATUNTIL_TOOLTIP,
       "category": Blockly.Categories.control,
       "extensions": ["colours_control", "shape_statement"]
     });
@@ -474,7 +474,7 @@ Blockly.Blocks['control_while'] = {
           "flip_rtl": true
         }
       ],
-      "tooltip": 'I repeatedly run my contents inside me while my inputted value is true.',
+      "tooltip": Blockly.Msg.CONTROL_WHILE_TOOLTIP,
       "category": Blockly.Categories.control,
       "extensions": ["colours_control", "shape_statement"]
     });
@@ -508,7 +508,7 @@ Blockly.Blocks['control_for_each'] = {
           "name": "SUBSTACK"
         }
       ],
-      "tooltip": "I repeatably run my contents inside me for how many times that is specified in my inputted value while also increasing the selected variable by one.",
+      "tooltip": Blockly.Msg.CONTROL_FOREACH_TOOLTIP,
       "category": Blockly.Categories.control, 
       "extensions": ["colours_control", "shape_statement"]
     });
@@ -526,7 +526,7 @@ Blockly.Blocks['control_start_as_clone'] = {
       "message0": Blockly.Msg.CONTROL_STARTASCLONE,
       "args0": [
       ],
-      "tooltip": "I run my contents under me when my sprite starts as a clone.",
+      "tooltip": Blockly.Msg.CONTROL_STARTASCLONE_TOOLTIP,
       "category": Blockly.Categories.control,
       "extensions": ["colours_control", "shape_hat"]
     });
@@ -550,7 +550,7 @@ Blockly.Blocks['control_create_clone_of_menu'] = {
           ]
         }
       ],
-      "tooltip": "I run my contents when my sprite starts as a clone.",
+      "tooltip": Blockly.Msg.CONTROL_CREATECLONEOF_MENU_TOOLTIP,
       "extensions": ["colours_control", "output_string"]
     });
   }
@@ -571,7 +571,7 @@ Blockly.Blocks['control_create_clone_of'] = {
           "name": "CLONE_OPTION"
         }
       ],
-      "tooltip": "I create a clone of the selected sprite.",
+      "tooltip": Blockly.Msg.CONTROL_CREATECLONEOF_TOOLTIP,
       "category": Blockly.Categories.control,
       "extensions": ["colours_control", "shape_statement"]
     });
@@ -588,7 +588,7 @@ Blockly.Blocks['control_delete_this_clone'] = {
       "message0": Blockly.Msg.CONTROL_DELETETHISCLONE,
       "args0": [
       ],
-      "tooltip": "I delete my sprite if it's a clone.",
+      "tooltip": Blockly.Msg.CONTROL_DELETETHISCLONE_TOOLTIP,
       "category": Blockly.Categories.control,
       "extensions": ["colours_control", "shape_statement"]
     });
@@ -605,7 +605,7 @@ Blockly.Blocks['control_get_counter'] = {
     this.jsonInit({
       "message0": Blockly.Msg.CONTROL_COUNTER,
       "category": Blockly.Categories.control,
-      "tooltip": "I get the counter value.",
+      "tooltip": Blockly.Msg.CONTROL_COUNTER_TOOLTIP,
       "extensions": ["colours_control", "output_number"]
     });
   }
@@ -620,7 +620,7 @@ Blockly.Blocks['control_incr_counter'] = {
   init: function() {
     this.jsonInit({
       "message0": Blockly.Msg.CONTROL_INCRCOUNTER,
-      "tooltip": "I add one to the counter.",
+      "tooltip": Blockly.Msg.CONTROL_INCRCOUNTER_TOOLTIP,
       "category": Blockly.Categories.control,
       "extensions": ["colours_control", "shape_statement"]
     });
@@ -636,7 +636,7 @@ Blockly.Blocks['control_clear_counter'] = {
   init: function() {
     this.jsonInit({
       "message0": Blockly.Msg.CONTROL_CLEARCOUNTER,
-      "tooltip": "I clear the counter.",
+      "tooltip": Blockly.Msg.CONTROL_CLEARCOUNTER_TOOLTIP,
       "category": Blockly.Categories.control,
       "extensions": ["colours_control", "shape_statement"]
     });
@@ -667,7 +667,7 @@ Blockly.Blocks['control_all_at_once'] = {
           "name": "SUBSTACK"
         }
       ],
-      "tooltip": "WARNING! I don't function anymore. This feature was removed in place of custom blocks marked \"run without screen refresh\". Please don't use me.",
+      "tooltip": Blockly.Msg.CONTROL_ALLATONCE_TOOLTIP,
       "category": Blockly.Categories.control,
       "extensions": ["colours_control", "shape_statement"]
     });
@@ -685,7 +685,7 @@ Blockly.Blocks['control_green_flag'] = {
       "message0": Blockly.Msg.CONTROL_GREEN_FLAG,
       "args0": [
       ],
-      "tooltip": "I restart the project.",
+      "tooltip": Blockly.Msg.CONTROL_GREEN_FLAG_TOOLTIP,
       "category": Blockly.Categories.control,
       "extensions": ["colours_control", "shape_end"]
     });
