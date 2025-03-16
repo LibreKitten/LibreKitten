@@ -15,20 +15,21 @@ applyGuiColors(detectTheme());
 document.documentElement.lang = 'en';
 
 const Index = () => (
-    <main className={styles.main}>
+    <>
         <Header />
-        <header className={styles.headerContainer}>
-            <h1 className={styles.headerText}>
-                LibreKitten - A powerful block-based visual programming language.
-            </h1>
-            <p>
-                LibreKitten is an <strong>alpha quality</strong> block-based visual programming language based on <a href="https://turbowarp.org/">TurboWarp</a> that supports server-side execution.
-            </p>
-            <a href="/editor.html" className={myStyles.primaryButton}>
-                Try now!
-            </a>
-        </header>
-        {/* <div class="notification">
+        <main className={styles.main}>
+            <header className={styles.headerContainer}>
+                <h1 className={styles.headerText}>
+                    LibreKitten - A powerful block-based visual programming language.
+                </h1>
+                <p>
+                    LibreKitten is an <strong>alpha quality</strong> block-based visual programming language based on <a href="https://turbowarp.org/">TurboWarp</a> that supports server-side execution.
+                </p>
+                <a href="/editor.html" className={myStyles.primaryButton}>
+                    Try now!
+                </a>
+            </header>
+            {/* <div class="notification">
             <p>
                 <div class="flex-img">
                     <img width="32px" height="32px" src="/images/happy-librekitty-white.svg" />
@@ -38,18 +39,19 @@ const Index = () => (
                 <a class="button" href="https://codeberg.org/LibreKitten">Contribute</a>
             </p>
         </div> */}
-        <section id="prototype">
-            <h1>Zoooooom! Quickly develop something and deploy it.</h1>
-            <p>
-                With block-based programming, you can quickly prototype something from start to finish without worrying about that missing semicolon or those messy sphagetti nodes.
-            </p>
-        </section>
-        <section id="license">
-            <h1>LibreKitten editor is licensed under the GPL v3.</h1>
-            <a href="/LICENSE.txt">View</a>
-        </section>
-        <Footer />
-    </main>
+            <section id="prototype">
+                <h1>Zoooooom! Quickly develop something and deploy it.</h1>
+                <p>
+                    With block-based programming, you can quickly prototype something from start to finish without worrying about that missing semicolon or those messy sphagetti nodes.
+                </p>
+            </section>
+            <section id="license">
+                <h1>LibreKitten editor is licensed under the GPL v3.</h1>
+                <a href="/LICENSE.txt">View</a>
+            </section>
+            <Footer />
+        </main>
+    </>
 );
 
 render(<Index />);

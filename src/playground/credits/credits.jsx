@@ -60,102 +60,104 @@ UserList.propTypes = {
 };
 
 const Credits = () => (
-    <main className={styles.main}>
+    <>
         <Header />
-        <header className={styles.headerContainer}>
-            <h1 className={styles.headerText}>
-                {APP_NAME} Credits
-            </h1>
-        </header>
-        <section>
-            <p>
-                The {APP_NAME} project is made possible by TurboWarp and Scratch. To them, thank you.
-                Without them, coding would have been less accessible to people, and people would have had to learn confusing languages with syntax errors as their first programming language.
-            </p>
-            <p>
-                <i>
-                    Individual contributors are listed in no particular order.
-                    The order is randomized each visit.
-                </i>
-            </p>
-        </section>
-        {APP_NAME !== 'LibreKitten' && (
-            // Be kind and considerate. Don't remove this :) (The TurboWarp one was replaced by a more detailed version.)
+        <main className={styles.main}>
+            <header className={styles.headerContainer}>
+                <h1 className={styles.headerText}>
+                    {APP_NAME} Credits
+                </h1>
+            </header>
             <section>
-                <h2>LibreKitten</h2>
                 <p>
-                    {APP_NAME} is based on the work of the <a href="https://librekitten.org/credits.html">LibreKitten contributors</a> but is not endorsed by LibreKitten in any way.
+                    The {APP_NAME} project is made possible by TurboWarp and Scratch. To them, thank you.
+                    Without them, coding would have been less accessible to people, and people would have had to learn confusing languages with syntax errors as their first programming language.
+                </p>
+                <p>
+                    <i>
+                        Individual contributors are listed in no particular order.
+                        The order is randomized each visit.
+                    </i>
                 </p>
             </section>
-        )}
-        <section>
-            <h2>TurboWarp</h2>
-            <p>
-                {APP_NAME} is based on the work of the <a href="https://turbowarp.org/credits.html">TurboWarp contributors</a> but is not endorsed by TurboWarp in any way.
-            </p>
-            <p>
-                <a href="https://github.com/sponsors/GarboMuffin">
-                    Donate to support TurboWarp.
-                </a>
-            </p>
-        </section>
-        <section>
-            <h2>Scratch</h2>
-            <p>
-                {APP_NAME} & TurboWarp is based on the work of the <a href="https://scratch.mit.edu/credits">Scratch contributors</a> but is not endorsed by Scratch in any way.
-            </p>
-            <p>
-                <a href="https://scratch.mit.edu/donate">
-                    Donate to support Scratch.
-                </a>
-            </p>
-        </section>
-        <section>
-            <h2>Icon</h2>
-            The current icon is a vectorized version of an icon contributed by <a href="https://scratch.mit.edu/users/Eason_9/">Eason_9</a> from a <a href="https://scratch.mit.edu/discuss/post/8154030/">forum post</a>.
-        </section>
-        <section>
-            <h2>Contributors</h2>
-            <UserList users={UserData.contributors} />
-        </section>
-        <section>
-            <h2>Addons</h2>
-            <UserList users={UserData.addonDevelopers} />
-        </section>
-        <section>
-            <h2>TurboWarp Extension Gallery</h2>
-            <UserList users={UserData.extensionDevelopers} />
-        </section>
-        <section>
-            <h2>Documentation</h2>
-            <UserList users={UserData.docs} />
-        </section>
-        <section>
-            <h2>Translators</h2>
-            <p>
-                Sadly, {APP_NAME} is only maintained by 1 person at the time of this being written, and that person only knows English.
-            </p>
-        </section>
-        <section>
-            <h2>Extra credits</h2>
-            <p>
+            {APP_NAME !== 'LibreKitten' && (
+                // Be kind and considerate. Don't remove this :) (The TurboWarp one was replaced by a more detailed version.)
+                <section>
+                    <h2>LibreKitten</h2>
+                    <p>
+                        {APP_NAME} is based on the work of the <a href="https://librekitten.org/credits.html">LibreKitten contributors</a> but is not endorsed by LibreKitten in any way.
+                    </p>
+                </section>
+            )}
+            <section>
+                <h2>TurboWarp</h2>
                 <p>
-                    Most importantly of all, you. Thank you for using LibreKitten, or at least giving it a try. We appreciate that.
+                    {APP_NAME} is based on the work of the <a href="https://turbowarp.org/credits.html">TurboWarp contributors</a> but is not endorsed by TurboWarp in any way.
                 </p>
-            </p>
-        </section>
-        <section>
-            <p>
-                <img
-                    src={librekitty}
-                    alt='The Librekitty (ginger ailuromorphic/cat-shaped being) purring with a love heart.'
-                />
-            </p>
-            <i>The  Librekitty purring from your usage of LibreKitten.</i>
-            <p>- The Librekitty.</p>
-        </section>
-        <Footer />
-    </main>
+                <p>
+                    <a href="https://github.com/sponsors/GarboMuffin">
+                        Donate to support TurboWarp.
+                    </a>
+                </p>
+            </section>
+            <section>
+                <h2>Scratch</h2>
+                <p>
+                    {APP_NAME} & TurboWarp is based on the work of the <a href="https://scratch.mit.edu/credits">Scratch contributors</a> but is not endorsed by Scratch in any way.
+                </p>
+                <p>
+                    <a href="https://scratch.mit.edu/donate">
+                        Donate to support Scratch.
+                    </a>
+                </p>
+            </section>
+            <section>
+                <h2>Icon</h2>
+                The current icon is a vectorized version of an icon contributed by <a href="https://scratch.mit.edu/users/Eason_9/">Eason_9</a> from a <a href="https://scratch.mit.edu/discuss/post/8154030/">forum post</a>.
+            </section>
+            <section>
+                <h2>Contributors</h2>
+                <UserList users={UserData.contributors} />
+            </section>
+            <section>
+                <h2>Addons</h2>
+                <UserList users={UserData.addonDevelopers} />
+            </section>
+            <section>
+                <h2>TurboWarp Extension Gallery</h2>
+                <UserList users={UserData.extensionDevelopers} />
+            </section>
+            <section>
+                <h2>Documentation</h2>
+                <UserList users={UserData.docs} />
+            </section>
+            <section>
+                <h2>Translators</h2>
+                <p>
+                    Sadly, {APP_NAME} is only maintained by 1 person at the time of this being written, and that person only knows English.
+                </p>
+            </section>
+            <section>
+                <h2>Extra credits</h2>
+                <p>
+                    <p>
+                        Most importantly of all, you. Thank you for using LibreKitten, or at least giving it a try. We appreciate that.
+                    </p>
+                </p>
+            </section>
+            <section>
+                <p>
+                    <img
+                        src={librekitty}
+                        alt='The Librekitty (ginger ailuromorphic/cat-shaped being) purring with a love heart.'
+                    />
+                </p>
+                <i>The  Librekitty purring from your usage of LibreKitten.</i>
+                <p>- The Librekitty.</p>
+            </section>
+            <Footer />
+        </main>
+    </>
 );
 
 render(<Credits />);
