@@ -1,38 +1,21 @@
 @import "../../css/colors.css";
 
-section {
-    text-align: center;
-}
-
 .notification {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--tertiary);
+    background-color: $data-primary;
     color: white;
-    height: 53px;
+    font-weight: bold;
+    height: 3rem;
 }
 
-.primary-button {
+.notification-button {
     background-color: white;
-    color: $looks-secondary !important;
-    border-radius: 8px;
-    padding: 16px;
-    text-decoration: none;
-    font-weight: 700;
-    display: inline-block;
-}
-
-.button {
-    background-color: $motion-tertiary;
-    color: white;
-    border-radius: 8px;
-    padding: 16px;
+    color: $data-primary;
+    border-radius: 99rem;
+    padding: 0.25em 0.5em;
+    margin-left: 0.5em;
     text-decoration: none;
     display: inline-block;
-}
-
-.button:hover {
-    color: black;
-    background-color: rgb(163, 163, 163);
 }

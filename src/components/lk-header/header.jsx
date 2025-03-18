@@ -27,7 +27,7 @@ const Header = () => {
                 <a href="/credits.html" className={classNames(styles.headerItem, styles.hoverable)}>
                     Credits
                 </a>
-                <a href="https://codeberg.org/LibreKitten" className={classNames(styles.headerItem, styles.hoverable)}>
+                <a href="/for-contributors.html" className={classNames(styles.headerItem, styles.hoverable)}>
                     Contribute
                 </a>
                 <div className={styles.headerItem}>

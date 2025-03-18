@@ -49,6 +49,7 @@ const base = {
         historyApiFallback: {
             rewrites: [
                 {from: /^\/\d+\/\/?$/, to: '/'},
+                {from: /^\/\d+\/for-contributors\/?$/, to: '/for-contributors.html'},
                 {from: /^\/\d+\/projects\/?$/, to: '/projects.html'},
                 {from: /^\/\d+\/fullscreen\/?$/, to: '/fullscreen.html'},
                 {from: /^\/\d+\/editor\/?$/, to: '/editor.html'},
@@ -162,6 +163,7 @@ module.exports = [
             'fullscreen': './src/playground/fullscreen.jsx',
             'embed': './src/playground/embed.jsx',
             'addon-settings': './src/playground/addon-settings.jsx',
+            'for-contributors': './src/playground/for-contributors/for-contributors.jsx',
             'credits': './src/playground/credits/credits.jsx',
             'not_found': './src/playground/not_found/not_found.jsx',
             'index': './src/playground/index/index.jsx'
@@ -240,6 +242,13 @@ module.exports = [
                 template: 'src/playground/simple.ejs',
                 filename: 'addons.html',
                 title: `Addon Settings - ${APP_NAME}`,
+                ...htmlWebpackPluginCommon
+            }),
+            new HtmlWebpackPlugin({
+                chunks: ['for-contributors'],
+                template: 'src/playground/simple.ejs',
+                filename: 'for-contributors.html',
+                title: `Contributing to ${APP_NAME} - ${APP_NAME}`,
                 ...htmlWebpackPluginCommon
             }),
             new HtmlWebpackPlugin({

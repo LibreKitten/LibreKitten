@@ -18,6 +18,16 @@ const Index = () => (
     <>
         <Header />
         <main className={styles.main}>
+            <div className={myStyles.notification}>
+                <p>
+                    <span>
+                        If you know at least a little bit of web technologies and git, please contribute to LibreKitten. It will help make LibreKitten better!
+                    </span>
+                    <a href="/for-contributors.html" className={myStyles.notificationButton}>
+                        Contribute! 😻
+                    </a>
+                </p>
+            </div>
             <header className={styles.headerContainer}>
                 <h1 className={styles.headerText}>
                     LibreKitten - A powerful block-based visual programming language.
@@ -25,29 +35,29 @@ const Index = () => (
                 <p>
                     LibreKitten is an <strong>alpha quality</strong> block-based visual programming language based on <a href="https://turbowarp.org/">TurboWarp</a> that supports server-side execution.
                 </p>
-                <a href="/editor.html" className={myStyles.primaryButton}>
+                <a href="/editor.html" className={styles.primaryButton}>
                     Try now!
                 </a>
             </header>
-            {/* <div class="notification">
-            <p>
-                <div class="flex-img">
-                    <img width="32px" height="32px" src="/images/happy-librekitty-white.svg" />
-                </div>
-                <span style="margin-left: 5px; margin-right: 5px;">If you know at least a little bit of JavaScript and git, please contribute to LibreKitten. Even without knowing
-                    those, you can still help. It will help make LibreKitten better!</span>
-                <a class="button" href="https://codeberg.org/LibreKitten">Contribute</a>
-            </p>
-        </div> */}
+            <section id="what">
+                <h1>What is LibreKitten?</h1>
+                <p>
+                    LibreKitten is a block-based visual programming language based on <a href="https://turbowarp.org/">TurboWarp</a>.
+                    Its primary feature is server-side execution support, but it is also an experimentation ground to push the limits of block-based languages.
+                </p>
+            </section>
             <section id="prototype">
-                <h1>Zoooooom! Quickly develop something and deploy it.</h1>
+                <h1>Zoooooom! Quickly build something.</h1>
                 <p>
                     With block-based programming, you can quickly prototype something from start to finish without worrying about that missing semicolon or those messy sphagetti nodes.
                 </p>
             </section>
             <section id="license">
-                <h1>LibreKitten editor is licensed under the GPL v3.</h1>
-                <a href="/LICENSE.txt">View</a>
+                <h1>LibreKitten is free software.</h1>
+                <p>The LibreKitten editor is licensed under the GNU General Public License v3.</p>
+                <div className={styles.buttonContainer}>
+                    <a href="/LICENSE.txt" className={styles.button}>View</a>
+                </div>
             </section>
             <Footer />
         </main>
