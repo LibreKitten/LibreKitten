@@ -1,0 +1,23 @@
+{
+    "$id": "https://scratch.mit.edu/sprite2_schema.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "description": "Scratch 2.0 project schema",
+    "type": "object",
+    "allOf": [
+        {"$ref": "sb2_definitions.json#/definitions/sprite_object"},
+        {
+            "type": "object",
+            "properties": {
+                "scratchX": {"type": "number"},
+                "scratchY": {"type": "number"},
+                "scale": {"type": "number"},
+                "direction": {"type": "number"},
+                "rotationStyle": {"type": "string"},
+                "isDraggable": {"type": "boolean"},
+                "indexInLibrary": {"type": "number"},
+                "visible": {"type": "boolean"},
+                "spriteInfo": {"type": "object"}
+            }
+        }
+    ]
+}
