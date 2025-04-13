@@ -1,0 +1,37 @@
+const manifest = {
+    "name": "Blockly Developer Tools (LibreKitten version)",
+    "description": "Adds buttons next to blocks in the editor that allow you to collapse, force delete and modify their XML data.",
+    "userscripts": [
+      {
+        "url": "userscript.js",
+        "matches": ["projects"]
+      }
+    ],
+    "userstyles": [
+      {
+        "url": "style.css",
+        "matches": ["projects"]
+      }
+    ],
+    "credits": [
+      {
+        "name": "ZXMushroom63",
+        "link": "https://github.com/ZXMushroom63"
+      },
+      {
+        "name": "Forked by o97doge",
+        "link": "https://scratch.mit.edu/users/o97doge"
+      }
+    ],
+    "info": [
+      {
+        "type": "warning",
+        "text": "This addon can cause project corruption if used without caution. Only enable it if you know what you're doing.",
+        "id": "blocklydevwarning"
+      }
+    ],
+    "versionAdded": "1.36.0",
+    "tags": ["editor", "codeEditor", "danger"],
+    "enabledByDefault": false
+}
+export default manifest;

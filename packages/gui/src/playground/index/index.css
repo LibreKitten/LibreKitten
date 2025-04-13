@@ -1,0 +1,21 @@
+@import "../../css/colors.css";
+
+.notification {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $data-primary;
+    color: white;
+    font-weight: bold;
+    height: 3rem;
+}
+
+.notification-button {
+    background-color: white;
+    color: $data-primary;
+    border-radius: 99rem;
+    padding: 0.25em 0.5em;
+    margin-left: 0.5em;
+    text-decoration: none;
+    display: inline-block;
+}

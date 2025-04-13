@@ -1,0 +1,67 @@
+# Based on https://codeberg.org/Codeberg-CI/examples/src/branch/main/NodeJS/.woodpecker.yaml
+# The original license:
+# Copyright (C) YEAR by AUTHOR EMAIL
+
+# Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted.
+
+# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+# https://cjerrington.codeberg.page/eleventy-base-blog-site/blog/codebergpagesbuild/
+#
+# This file would typically be .woodpecker.yml in the root of your repository.
+#
+#
+# SECRETS
+# https://woodpecker-ci.org/docs/usage/secrets
+# CBTOKEN needs a codeberg access token as secret in woodpecker config
+# CBMAIL with email address for git config
+# SOURCEREPO must be replaced with the source repo
+# DESTREPO must be replaced with the target codeberg pages repo
+# CBUSERNAME must be replaced with the user/org
+#
+#
+# We also assume a domains file in the source repo that gets copied to
+# .domains in the target repo so codeberg pages works for custom domains
+#
+
+steps:
+  - name: build
+    when:
+      - event: push
+        branch: develop
+    # Use the official jekyll build container
+    image: node
+    environment:
+      CBTOKEN:
+        from_secret: cbtoken
+    commands:
+      # Am i even allowed to do this?
+      - apt-get update && apt-get install pypy3 default-jre-headless --no-install-recommends -y
+      # Avoid permission denied errors
+      - chmod -R a+w .
+      # Set up git in a working way
+      - git config --global --add safe.directory /woodpecker/src/codeberg.org/LibreKitten/LibreKitten-gui/build
+      - git config --global user.email "no@thankyou.com"
+      - git config --global user.name "CI Builder"
+      # clone and move the target repo
+      - git clone --depth=1 https://codeberg.org/LibreKitten/pages.git build
+      - chmod -R a+w build
+      - cd build
+      # Prepare for push
+      - git rm -r -f ./**/*
+      - git remote set-url origin https://$CBTOKEN@codeberg.org/LibreKitten/pages.git
+      - git commit -m 'Woodpecker CI - Clean up.'
+      - cd ..
+      # Run build stage
+      - npm install pnpm -g
+      - pnpm install --shamefully-hoist
+      - pnpm run prepublish
+      - NODE_ENV=production pnpm run ci-build
+      # Only needed for custom domains
+      #- cp domains _site/.domains
+      # Push to target
+      - cd build
+      - echo "librekitten.org" > .domains
+      - git add --all
+      - git commit -m "Woodpecker CI Build at $( env TZ=America/Chicago date +"%Y-%m-%d %X %Z" )"
+      - git push -u origin main

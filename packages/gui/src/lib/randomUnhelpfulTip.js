@@ -1,0 +1,20 @@
+export const tip = [
+    'LibreKitten was started at January 6, 2024.',
+    'Fact: Capybaras and cats rule, humans drool.',
+    'The name of the LibreKitten cat is "Librekitty".',
+    'Tip: If you\'re having trouble with your project, ask someone for help.',
+    'Tip: These tips are unhelpful.',
+    'Fact: Your code is the cat\'s meow, keep going.',
+    'Fact: This is a sentence.',
+    'Fact: Capybaras look chill, but they\'re actually not, they\'re planning WORLD DOMINATION.',
+    'Crazy? I was crazy once. They locked me in a room, a rubber room. A rubber room with rats. And rats make me crazy.',
+    'Meow! Purrrrrr. :3',
+    'Also check out <a href="https://turbowarp.org">TurboWarp</a>!',
+    'Also check out <a href="https://alpha.unsandboxed.org">Unsandboxed</a>!',
+    'Cats are cute.',
+    'Look behind you >:3',
+    'Fun fact: Every website recieves your IP address.',
+    'I know what you did on January 6th 2015.',
+    '<iframe width="200" height="112" src="https://www.youtube-nocookie.com/embed/sRuCvdT8H_Y?si=v248pEf_sXgEDMBq&autoplay=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+    '<b>Did you know?</b> LGBT Pride Month is celebrated every June.'
+];
