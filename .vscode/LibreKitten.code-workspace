@@ -1,0 +1,21 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		},
+		{
+			"path": "../packages/gui"
+		},
+		{
+			"path": "../packages/vm"
+		},
+		{
+			"path": "../packages/blocks"
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"*.css": "scss"
+		}
+	}
+}

@@ -1,0 +1,78 @@
+# MacOS
+.DS_Store
+
+# NPM
+node_modules
+npm-*
+
+# PNPM
+pnpm-lock.yaml
+
+# for act
+.secrets
+
+### COMMON ###
+# NPM
+packages/*/node_modules
+packages/*/npm-*
+
+# Testing
+packages/*/.nyc_output
+packages/*/coverage
+
+# Build
+packages/*/build
+packages/*/dist
+packages/*/.opt-in
+
+# Translations
+packages/*/locale
+packages/*/translations
+
+### GUI ###
+packages/gui/src/generated
+packages/gui/static/microbit
+
+### VM ###
+packages/vm/playground
+packages/vm/benchmark
+
+### BLOCKS ###
+# Translations
+packages/blocks/common.pyc
+packages/blocks/.settings
+packages/blocks/.project
+packages/blocks/*.pyc
+packages/blocks/*.komodoproject
+packages/blocks/nbproject/private/
+
+# Unused by blocks
+packages/blocks/dart_compressed.js
+packages/blocks/javascript_compressed.js
+packages/blocks/lua_compressed.js
+packages/blocks/php_compressed.js
+packages/blocks/python_compressed.js
+
+packages/blocks/accessible/*
+packages/blocks/dist
+packages/blocks/msg/js/*
+!packages/blocks/msg/js/en.js
+packages/blocks/msg/json/*
+!packages/blocks/msg/json/en.json
+packages/blocks/blockly_compressed_horizontal.js
+packages/blocks/blockly_compressed_vertical.js
+packages/blocks/blockly_uncompressed_horizontal.js
+packages/blocks/blockly_uncompressed_vertical.js
+packages/blocks/blocks_compressed_horizontal.js
+packages/blocks/blocks_compressed_vertical.js
+packages/blocks/blocks_compressed.js
+packages/blocks/gh-pages/main.js
+packages/blocks/gh-pages/playgrounds
+packages/blocks/gh-pages/Gemfile.lock
+packages/blocks/gh-pages/closure-library
+packages/blocks/gh-pages/_site
+packages/blocks/*compiler*.jar
+packages/blocks/local_blockly_compressed_vertical.js
+packages/blocks/chromedriver
+# Flag files used on Windows
+packages/blocks/*.config
