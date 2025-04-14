@@ -41,6 +41,17 @@ class Sprite {
          */
         this.costumes_ = [];
         /**
+         * List of resources for this sprite.
+         * Each entry is an object, e.g.,
+         * {
+         *      name: "Costume Name",
+         *      mime: "text/plain",
+         *      text: "Hello World!"
+         * }
+         * @type {Array.<!Object>}
+         */
+        this.resources_ = [];
+        /**
          * List of sounds for this sprite.
         */
         this.sounds = [];
@@ -78,6 +89,27 @@ class Sprite {
     }
 
     /**
+     * Add an array of resources, taking care to avoid duplicate names.
+     * @param {!Array<object>} resources Array of objects representing resources.
+     */
+    set resources (resources) {
+        this.resources_ = [];
+        for (const resource of resources) {
+            this.addCostumeAt(resource, this.resources_.length);
+        }
+    }
+
+    /**
+     * Get full resources list
+     * @return {object[]} list of resources. Note that mutating the returned list will not
+     *     mutate the list on the sprite. The sprite list should be mutated by calling
+     *     addResourceAt, deleteResourceAt, or setting resources.
+     */
+    get resources () {
+        return this.resources_;
+    }
+
+    /**
      * Add a costume at the given index, taking care to avoid duplicate names.
      * @param {!object} costumeObject Object representing the costume.
      * @param {!int} index Index at which to add costume
@@ -98,6 +130,29 @@ class Sprite {
      */
     deleteCostumeAt (index) {
         return this.costumes.splice(index, 1)[0];
+    }
+
+    /**
+     * Add a resource at the given index, taking care to avoid duplicate names.
+     * @param {!object} resourceObject Object representing the resource.
+     * @param {!int} index Index at which to add resource
+     */
+    addResourceAt (resourceObject, index) {
+        if (!resourceObject.name) {
+            resourceObject.name = '';
+        }
+        const usedNames = this.resources_.map(resource => resource.name);
+        resourceObject.name = StringUtil.unusedName(resourceObject.name, usedNames);
+        this.resources_.splice(index, 0, resourceObject);
+    }
+
+    /**
+     * Delete a resource by index.
+     * @param {number} index Resource index to be deleted
+     * @return {?object} The deleted resource
+     */
+    deleteResourceAt (index) {
+        return this.resources.splice(index, 1)[0];
     }
 
     /**

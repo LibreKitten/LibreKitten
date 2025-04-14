@@ -528,6 +528,76 @@ class RenderedTarget extends Target {
     }
 
     /**
+     * Get full resource list
+     * @return {object[]} list of resources
+     */
+    getResources () { // used by compiler
+        return this.sprite.resources;
+    }
+
+    /**
+     * Add a resource, taking care to avoid duplicate names.
+     * @param {!object} resourceObject Object representing the resource.
+     * @param {?int} index Index at which to add resource
+     */
+    addResource (resourceObject, index) {
+        if (typeof index === 'number' && !isNaN(index)) {
+            this.sprite.addResourceAt(resourceObject, index);
+        } else {
+            this.sprite.addResourceAt(resourceObject, this.sprite.resources.length);
+        }
+    }
+
+    /**
+     * Rename a resource, taking care to avoid duplicate names.
+     * @param {int} resourceIndex - the index of the resource to be renamed.
+     * @param {string} newName - the desired new name of the resource (will be modified if already in use).
+     */
+    renameResource (resourceIndex, newName) {
+        const usedNames = this.sprite.resources
+            .filter((resource, index) => resourceIndex !== index)
+            .map(resource => resource.name);
+        const oldName = this.getResources()[resourceIndex].name;
+        const newUnusedName = StringUtil.unusedName(newName, usedNames);
+        this.getResources()[resourceIndex].name = newUnusedName;
+    }
+
+    /**
+     * Delete a resource by index.
+     * @param {number} index Resource index to be deleted
+     * @return {?object} The resource that was deleted or null
+     * if the index was out of bounds of the resources list.
+     */
+    deleteResource (index) {
+        const originalResourceCount = this.sprite.costumes.length;
+
+        if (index < 0 || index >= originalResourceCount) {
+            return null;
+        }
+
+        const deletedResource = this.sprite.deleteResourceAt(index);
+
+        this.runtime.requestTargetsUpdate(this);
+        return deletedResource;
+    }
+
+    /**
+     * Get a resource index of this rendered target, by name of the resource.
+     * @param {?string} resourcesName Name of a resource.
+     * @return {number} Index of the named costume, or -1 if not present.
+     */
+    getResourceIndexByName (resourcesName) {
+        const resources = this.getResources();
+        for (let i = 0; i < resources.length; i++) {
+            if (resources[i].name === resourcesName) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+
+    /**
      * Add a sound, taking care to avoid duplicate names.
      * @param {!object} soundObject Object representing the sound.
      * @param {?int} index Index at which to add costume
