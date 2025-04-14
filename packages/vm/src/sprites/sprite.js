@@ -95,7 +95,7 @@ class Sprite {
     set resources (resources) {
         this.resources_ = [];
         for (const resource of resources) {
-            this.addCostumeAt(resource, this.resources_.length);
+            this.addResourceAt(resource, this.resources_.length);
         }
     }
 
