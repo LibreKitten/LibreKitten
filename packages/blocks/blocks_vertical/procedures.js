@@ -55,6 +55,7 @@ Blockly.ScratchBlocks.ProcedureUtils.parseReturnMutation = function(xmlElement) 
  * @this Blockly.Block
  */
 Blockly.ScratchBlocks.ProcedureUtils.renderColour = function() {
+  if (this.isInsertionMarker()) return; // This stops a coloured insertion marker from happening.
   Blockly.ScratchBlocks.ProcedureUtils.renderColourExternal(this);
 };
 
