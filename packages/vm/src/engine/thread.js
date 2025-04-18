@@ -216,6 +216,12 @@ class Thread {
         this.procedures = null;
         this.executableHat = false;
         this.compatibilityStackFrame = null;
+
+        /**
+         * lk: The context of the thread for blocks to use (e.g. inside of a C block).
+         * @type {Map.<string, object>}
+         */
+        this._blockContext = new Map();
     }
 
     /**
@@ -438,6 +444,11 @@ class Thread {
      */
     goToNextBlock () {
         const nextBlockId = this.target.blocks.getNextBlock(this.peekStack());
+        const parentOfNextBlockId = this.target.blocks.findParentBlock(nextBlockId);
+        const parentBlockId = this.target.blocks.findParentBlock(this.peekStack());
+        if (parentOfNextBlockId !== this.peekStack() || parentOfNextBlockId !== parentBlockId) {
+            this.deleteBlockContext(parentBlockId ?? parentOfNextBlockId);
+        }
         this.reuseStackForNextBlock(nextBlockId);
     }
 
@@ -460,6 +471,53 @@ class Thread {
             if (--callCount < 0) return false;
         }
         return false;
+    }
+
+    /**
+     * lk: Find the block context of a block.
+     * @param {string} blockId The ID of the block.
+     * @returns {object | undefined} The block context, or undefined if nothing was found.
+     */
+    getBlockContext (blockId) {
+        return this._blockContext.get(blockId);
+    }
+
+    /**
+     * lk: Set the block context of a block.
+     * @param {string} blockId The ID of the block.
+     * @param {object} value The value we want to set the block context to.
+     * @throws {Error} Value must be an object.
+     */
+    setBlockContext (blockId, value) {
+        if (typeof value !== 'object') throw new Error('Invalid value.');
+        this._blockContext.set(blockId, value);
+    }
+
+    /**
+     * lk: Delete the block context of a block.
+     * @param {string} blockId The ID of the block.
+     */
+    deleteBlockContext (blockId) {
+        return this._blockContext.delete(blockId);
+    }
+
+    /**
+     * lk: Find the block context parent block of certain type, moving up from a child block.
+     * @param {string | null} opcode Opcode of the block that we're looking for (optional.)
+     * @param {string} childId The ID of the block to move up from.
+     * @return {object | undefined} The block context of the block we have found, or undefined if we didn't find anything.
+     * @throws {Error} "opcode" must be a string or null.
+     */
+    getBlockContextOfParent (opcode, childId) {
+        if (typeof opcode !== 'string' && opcode !== null) throw new Error('Invalid value for "opcode".');
+        let blockId;
+        if (opcode) {
+            blockId = this.target.blocks.findParentBlockOfType(opcode, childId);
+        } else {
+            blockId = this.target.blocks.findParentBlock(childId);
+        }
+        if (blockId === null) return undefined;
+        return this.getBlockContext(blockId);
     }
 
     /**
