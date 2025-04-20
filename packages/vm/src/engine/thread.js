@@ -444,13 +444,22 @@ class Thread {
      */
     goToNextBlock () {
         const nextBlockId = this.target.blocks.getNextBlock(this.peekStack());
-        const parentOfNextBlockId = this.target.blocks.findParentBlock(nextBlockId);
-        const parentBlockId = this.target.blocks.findParentBlock(this.peekStack());
-        if (parentOfNextBlockId !== this.peekStack() || parentOfNextBlockId !== parentBlockId) {
-            this.deleteBlockContext(parentBlockId ?? parentOfNextBlockId);
+        const parentBlock = this.target.blocks.findParentBlock(this.peekStack());
+        // lk: Clear block context for a parent block after we move on to the blocks below it.
+        let parentOfNextBlock;
+        if (parentBlock) {
+            parentOfNextBlock = this.target.blocks.findParentBlockOfType(parentBlock.opcode, nextBlockId);
+        } else {
+            parentOfNextBlock = this.target.blocks.findParentBlock(nextBlockId);
+        }
+        if (!parentOfNextBlock) return this.reuseStackForNextBlock(nextBlockId);
+
+        if (parentOfNextBlock?.id !== parentBlock?.id) {
+            this.deleteBlockContext(parentBlock?.id ?? parentOfNextBlock?.id);
         }
         this.reuseStackForNextBlock(nextBlockId);
     }
+
 
     /**
      * Attempt to determine whether a procedure call is recursive,
