@@ -351,6 +351,36 @@ class Thread {
     }
 
     /**
+     * lk: Pop back down the stack frame until we go past the block we're breaking or the stack frame is emptied.
+     */
+    break () {
+        const blocks = this.target.blocks;
+
+        const breakableBlocks = this.target.runtime.getBreakableBlocksRegExp();
+        const parentBlock = blocks.findParentBlockOfType(breakableBlocks, this.peekStack());
+        if (parentBlock === null) return;
+
+        if (parentBlock.opcode === 'control_case' || parentBlock.opcode === 'control_default') {
+            const switchBlock = blocks.findParentBlockOfType('control_switch', parentBlock.id);
+            const switchBlockContext = this.getBlockContext(switchBlock.id);
+            
+            if (switchBlockContext && switchBlockContext.fallthrough) {
+                delete switchBlockContext.fallthrough;
+                this.setBlockContext(switchBlock.id, switchBlockContext);
+            }
+        }
+        
+        while (blocks.getBlock(this.peekStack())?.opcode !== parentBlock.opcode) {
+            this.popStack();
+            if (this.peekStack() === null) return this.stopThisScript();
+        }
+
+        this.peekStackFrame().isLoop = false;
+        this.goToNextBlock();
+    }
+
+
+    /**
      * Get top stack item.
      * @return {?string} Block ID on top of stack.
      */
@@ -519,14 +549,14 @@ class Thread {
      */
     getBlockContextOfParent (opcode, childId) {
         if (typeof opcode !== 'string' && opcode !== null) throw new Error('Invalid value for "opcode".');
-        let blockId;
+        let block;
         if (opcode) {
-            blockId = this.target.blocks.findParentBlockOfType(opcode, childId);
+            block = this.target.blocks.findParentBlockOfType(opcode, childId);
         } else {
-            blockId = this.target.blocks.findParentBlock(childId);
+            block = this.target.blocks.findParentBlock(childId);
         }
-        if (blockId === null) return undefined;
-        return this.getBlockContext(blockId);
+        if (block === null) return undefined;
+        return this.getBlockContext(block.id);
     }
 
     /**

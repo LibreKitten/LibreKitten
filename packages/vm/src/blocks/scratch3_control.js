@@ -83,6 +83,10 @@ class Scratch3ControlBlocks {
         }
     }
 
+    break (args, util) {
+        util.thread.break();
+    }
+
     repeat (args, util) {
         const times = Math.round(Cast.toNumber(args.TIMES));
         // Initialize loop
@@ -246,10 +250,6 @@ class Scratch3ControlBlocks {
         }
         return args.RIGHT;
         
-    }
-
-    break (/* args, util */) {
-
     }
 }
 
