@@ -67,10 +67,18 @@ class Scratch3ControlBlocks {
 
     case (args, util) {
         const thread = util.thread;
-        const blockContext = thread.getBlockContextOfParent('control_switch', thread.peekStack());
+        const blocks = util.target.blocks;
+        
+        const block = blocks.findParentBlockOfType('control_switch', thread.peekStack());
+        if (!block) return;
+        const blockContext = thread.getBlockContext(block.id);
         if (!blockContext || blockContext.type !== 'switch') return;
         
-        if (blockContext.value === Cast.toString(args.VALUE)) {
+        if (blockContext.value === Cast.toString(args.VALUE) || blockContext.fallthrough) {
+            thread.setBlockContext(block.id, {
+                ...blockContext,
+                fallthrough: true
+            });
             util.startBranch(1, false);
         }
     }
