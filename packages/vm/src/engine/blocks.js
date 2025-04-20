@@ -111,11 +111,6 @@ class Blocks {
          * @type {boolean}
          */
         this.forceNoGlow = optNoGlow || false;
-
-        /**
-         * @type {Map.<string | object, string>}
-         */
-        this._parentBlockCache = new Map();
     }
 
     /**
@@ -175,25 +170,21 @@ class Blocks {
     /**
      * lk: Find the parent block for a child block in an input.
      * @param {string} childId The ID of the block to move up from.
-     * @return {string | null} The ID of the block we have found, or null if we didn't find anything.
+     * @return {object | null} The ID of the block we have found, or null if we didn't find anything.
      */
     findParentBlock (childId) {
-        const cache = this._parentBlockCache.get(childId);
-        if (typeof cache !== 'undefined') {
-            return cache;
-        }
-        
         let block = this.getBlock(childId);
         if (!block) return null;
         if (typeof block.parent !== 'string') return null;
-        while (block.parent) {
-            block = this.getBlock(block.parent);
+        while (block.parent !== null) {
+            block = this._blocks[block.parent];
             if (typeof block.inputs !== 'object') continue;
             for (let value of Object.values(block.inputs)) {
-                if (value.block !== this.getNextBlock(block.id)) {
-                    this._parentBlockCache = this._parentBlockCache.set(childId, block.id);
-                    
-                    return block.id;
+                if (value.block !== block.next) {
+                    return {
+                        id: block.id,
+                        opcode: block.opcode
+                    };
                 };
             }
         }
@@ -202,32 +193,33 @@ class Blocks {
 
     /**
      * lk: Find the parent block of a certain type for a child block in an input.
-     * @param {string} opcode Opcode of the block that we're looking for.
+     * @param {string | RegExp} opcode Opcode of the block that we're looking for.
      * @param {string} childId The ID of the block to move up from.
-     * @return {string | null} The ID of the block we have found, or null if we didn't find anything.
+     * @return {object | null} The ID of the block we have found, or null if we didn't find anything.
      */
     findParentBlockOfType (opcode, childId) {
-        const cache = this._parentBlockCache.get({opcode, childId});
-        if (typeof cache !== 'undefined') {
-            return cache;
-        }
-
         let block = this.getBlock(childId);
         if (!block) return null;
+        if (typeof opcode !== 'string' && !(opcode instanceof RegExp)) return null;
         if (typeof block.parent !== 'string') return null;
         // lk: TODO: Is there a way to avoid using a while loop?
-        while (block.parent) {
-            block = this.getBlock(block.parent);
+        while (block.parent !== null) {
+            block = this._blocks[block.parent];
             if (typeof block.inputs !== 'object') {
                 continue;
             };
-            if (block.opcode !== opcode) {
+            if (typeof opcode === 'string' && block.opcode !== opcode) {
+                continue;
+            };
+            if (opcode instanceof RegExp && !block.opcode.match(opcode)) {
                 continue;
             };
             for (let value of Object.values(block.inputs)) {
-                if (value.block !== this.getNextBlock(block.id)) {
-                    this._parentBlockCache = this._parentBlockCache.set({opcode, childId}, block.id);
-                    return block.id;
+                if (value.block !== block.next) {
+                    return {
+                        id: block.id,
+                        opcode: block.opcode
+                    };
                 };
             }
         }
@@ -702,9 +694,6 @@ class Blocks {
         this._cache.compiledScripts = {};
         this._cache.compiledProcedures = {};
         this._cache.proceduresPopulated = false;
-
-        // lk: Clear parent block cache as well.
-        this._parentBlockCache = this._parentBlockCache.clear();
     }
 
     /**
