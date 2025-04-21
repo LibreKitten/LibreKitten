@@ -89,7 +89,22 @@ const base = {
     },
     module: {
         rules: [{
-            test: /\.[tj]sx?$/,
+            test: /\.js$/,
+            loader: 'swc-loader',
+            include: [
+                path.resolve(__dirname, 'src'),
+                /node_modules[\\/]scratch-[^\\/]+[\\/]src/,
+                /node_modules[\\/]pify/,
+                /node_modules[\\/]@vernier[\\/]godirect/
+            ],
+            options: {
+                jsc: {
+                    target: 'es2020'
+                }
+            }
+        },
+        {
+            test: /\.jsx$/,
             loader: 'swc-loader',
             include: [
                 path.resolve(__dirname, 'src'),
@@ -100,7 +115,44 @@ const base = {
             options: {
                 jsc: {
                     parser: {
-                        jsx: true,
+                        jsx: true
+                    },
+                    target: 'es2020'
+                }
+            }
+        },
+        {
+            test: /\.ts$/,
+            loader: 'swc-loader',
+            include: [
+                path.resolve(__dirname, 'src'),
+                /node_modules[\\/]scratch-[^\\/]+[\\/]src/,
+                /node_modules[\\/]pify/,
+                /node_modules[\\/]@vernier[\\/]godirect/
+            ],
+            options: {
+                jsc: {
+                    parser: {
+                        syntax: 'typescript'
+                    },
+                    target: 'es2020'
+                }
+            }
+        },
+        {
+            test: /\.tsx$/,
+            loader: 'swc-loader',
+            include: [
+                path.resolve(__dirname, 'src'),
+                /node_modules[\\/]scratch-[^\\/]+[\\/]src/,
+                /node_modules[\\/]pify/,
+                /node_modules[\\/]@vernier[\\/]godirect/
+            ],
+            options: {
+                jsc: {
+                    parser: {
+                        syntax: 'typescript',
+                        tsx: true
                     },
                     target: 'es2020'
                 }
