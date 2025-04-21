@@ -1,3 +1,4 @@
+// lk: Modified to run code related to the "category" option when "clickandcreate" is selected.
 export default async function ({ addon, console, msg }) {
   let placeHolderDiv = null;
   let lockObject = null;
@@ -49,7 +50,7 @@ export default async function ({ addon, console, msg }) {
   function autoLock() {
     const option = addon.settings.get("lockLoad");
     if (option) {
-      if (getToggleSetting() === "category") {
+      if (getToggleSetting() === "category" || getToggleSetting() === "clickandcreate") {
         toggle = true;
       } else {
         flyoutLock = option;
@@ -138,14 +139,14 @@ export default async function ({ addon, console, msg }) {
       }
     });
 
-    if (addon.self.enabledLate && getToggleSetting() === "category" && !addon.settings.get("lockLoad")) {
+    if (addon.self.enabledLate && (getToggleSetting() === "category" || getToggleSetting() === "clickandcreate") && !addon.settings.get("lockLoad")) {
       Blockly.getMainWorkspace().getToolbox().selectedItem_.setSelected(false);
     }
     addon.self.addEventListener("disabled", () => {
       Blockly.getMainWorkspace().getToolbox().selectedItem_.setSelected(true);
     });
     addon.self.addEventListener("reenabled", () => {
-      if (getToggleSetting() === "category" && !addon.settings.get("lockLoad")) {
+      if ((getToggleSetting() === "category" || getToggleSetting() === "clickandcreate") && !addon.settings.get("lockLoad")) {
         Blockly.getMainWorkspace().getToolbox().selectedItem_.setSelected(false);
         onmouseleave(null, 0);
         toggle = false;
@@ -154,7 +155,7 @@ export default async function ({ addon, console, msg }) {
 
     addon.settings.addEventListener("change", () => {
       if (addon.self.disabled) return;
-      if (getToggleSetting() === "category") {
+      if (getToggleSetting() === "category" || getToggleSetting() === "clickandcreate") {
         // switching to category click mode
         // close the flyout unless it's locked
         if (flyoutLock) {
@@ -183,7 +184,7 @@ export default async function ({ addon, console, msg }) {
     Blockly.Toolbox.prototype.setSelectedItem = function (item, shouldScroll = true) {
       const previousSelection = this.selectedItem_;
       oldSetSelectedItem.call(this, item, shouldScroll);
-      if (addon.self.disabled || getToggleSetting() !== "category") return;
+      if (addon.self.disabled || (getToggleSetting() !== "category" && getToggleSetting() !== "clickandcreate")) return;
       if (!shouldScroll && !toggle) {
         // ignore initial selection when updating the toolbox
         item.setSelected(false);
@@ -205,7 +206,7 @@ export default async function ({ addon, console, msg }) {
     Blockly.Toolbox.prototype.selectCategoryById = function (...args) {
       // called after populating the toolbox
       // ignore if the palette is closed
-      if (!addon.self.disabled && getToggleSetting() === "category" && !toggle) return;
+      if (!addon.self.disabled && (getToggleSetting() === "category" || getToggleSetting() === "clickandcreate") && !toggle) return;
       return oldSelectCategoryById.call(this, ...args);
     };
 
@@ -220,6 +221,25 @@ export default async function ({ addon, console, msg }) {
       }
       return oldStepScrollAnimation.apply(this, args);
     };
+
+    // lk: Added option for hiding on block create, useful for phones.
+    const hideOnBlockCreate = addon.tab.traps.getWorkspace()?.addChangeListener(e => {
+      // Validate event
+      if (typeof e !== "object") return;
+      if (typeof e.type !== "string") return;
+
+      // If it is not enabled, bail out. 
+      if (getToggleSetting() !== "clickandcreate") return;
+
+      // If it's already collasped, don't bother.
+      if (!toggle) return;
+
+      if (e.type !== "create") return;
+
+      Blockly.getMainWorkspace().getToolbox().selectedItem_.setSelected(false);
+      onmouseleave();
+      toggle = false;
+    })
   }
 
   while (true) {
