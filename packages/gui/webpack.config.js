@@ -11,9 +11,11 @@ const autoprefixer = require('autoprefixer');
 const postcssVars = require('postcss-simple-vars');
 const postcssImport = require('postcss-import');
 
+// SWC
+const { SwcMinifyWebpackPlugin } = require('swc-minify-webpack-plugin');
+
 const STATIC_PATH = process.env.STATIC_PATH || '/static';
 const {APP_NAME} = require('./src/lib/brand');
-const { EsbuildPlugin } = require('esbuild-loader');
 
 const root = process.env.ROOT || '';
 if (root.length > 0 && !root.endsWith('/')) {
@@ -88,7 +90,7 @@ const base = {
     module: {
         rules: [{
             test: /\.[tj]sx?$/,
-            loader: 'esbuild-loader',
+            loader: 'swc-loader',
             include: [
                 path.resolve(__dirname, 'src'),
                 /node_modules[\\/]scratch-[^\\/]+[\\/]src/,
@@ -96,7 +98,12 @@ const base = {
                 /node_modules[\\/]@vernier[\\/]godirect/
             ],
             options: {
-                target: 'es2020'
+                jsc: {
+                    parser: {
+                        jsx: true
+                    },
+                    target: 'es2020'
+                }
             }
         },
         {
@@ -186,9 +193,9 @@ module.exports = [
         },
         optimization: {
             minimizer: [
-                new EsbuildPlugin({
-                    target: 'es2020',
-                    minify: true
+                new SwcMinifyWebpackPlugin({
+                    compress: true,
+                    mangle: true
                 })
             ],
             splitChunks: {

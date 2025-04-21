@@ -20,10 +20,12 @@ const base = {
     module: {
         rules: [{
             test: /\.[tj]s$/,
-            loader: 'esbuild-loader',
+            loader: 'swc-loader',
             include: path.resolve(__dirname, 'src'),
             options: {
-                target: 'es2020'
+                jsc: {
+                    target: 'es2020'
+                }
             }
         },
         {
@@ -36,9 +38,9 @@ const base = {
     },
     optimization: {
         minimizer: [
-            new EsbuildPlugin({
-                target: 'es2020',
-                minify: true
+            new SwcMinifyWebpackPlugin({
+                compress: true,
+                mangle: true
             })
         ]
     },
