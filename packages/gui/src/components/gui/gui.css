@@ -60,7 +60,7 @@
 }
 
 .editor-wrapper-phone {
-    flex-basis: none;
+    flex-basis: calc(408px - (($space + $stage-standard-border-width) * 2));
 }
 
 .tab-list {

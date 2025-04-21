@@ -328,7 +328,7 @@ const GUIComponent = props => {
                 />
                 <Box className={classNames(styles.bodyWrapper, isPhone() ? styles.bodyWrapperPhone : null)}>
                     <Box className={classNames(styles.flexWrapper, isPhone() ? styles.flexWrapperPhone : null)}>
-                        <Box className={styles.editorWrapper}>
+                        <Box className={classNames(styles.editorWrapper, isPhone() ? styles.editorWrapperPhone : null)}>
                             <Tabs
                                 forceRenderTabPanel
                                 className={tabClassNames.tabs}
