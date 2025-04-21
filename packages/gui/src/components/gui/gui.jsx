@@ -305,6 +305,7 @@ const GUIComponent = props => {
                     enableCommunity={enableCommunity}
                     isShared={isShared}
                     isTotallyNormal={isTotallyNormal}
+                    isPhone={isPhone()}
                     logo={logo}
                     renderLogin={renderLogin}
                     showComingSoon={showComingSoon}

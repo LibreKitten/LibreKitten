@@ -9,3 +9,9 @@
 .see-inside-button-icon {
     height: 1.25rem;
 }
+
+@media only screen and (max-width: 1124px) {
+    .collapsible-label {
+        display: none;
+    }
+}

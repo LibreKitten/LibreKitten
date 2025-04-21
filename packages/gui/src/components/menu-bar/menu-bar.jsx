@@ -1016,30 +1016,33 @@ class MenuBar extends React.Component {
                     {/* tw: add a feedback button
                         lk: make that feedback button link to the LibreKitten forum topic.
                     */}
-                    <div className={styles.menuBarItem}>
-                        <a
-                            className={styles.feedbackLink}
-                            href="https://scratch.mit.edu/discuss/topic/772797/"
-                            rel="noopener noreferrer"
-                            target="_blank"
-                        >
-                            {/* todo: icon */}
-                            <Button className={styles.feedbackButton}>
-                                <FormattedMessage
-                                    defaultMessage="{APP_NAME} forum topic (for feedback)"
-                                    description="Button to give feedback in the menu bar"
-                                    id="tw.feedbackButton"
-                                    values={{
-                                        APP_NAME
-                                    }}
-                                />
-                            </Button>
-                        </a>
-                    </div>
+                    {!this.props.isPhone && (
+                        <div className={styles.menuBarItem}>
+                            <a
+                                className={styles.feedbackLink}
+                                href="https://scratch.mit.edu/discuss/topic/772797/"
+                                rel="noopener noreferrer"
+                                target="_blank"
+                            >
+                                {/* todo: icon */}
+                                <Button className={styles.feedbackButton}>
+                                    <FormattedMessage
+                                        defaultMessage="{APP_NAME} forum topic (for feedback)"
+                                        description="Button to give feedback in the menu bar"
+                                        id="tw.feedbackButton"
+                                        values={{
+                                            APP_NAME
+                                        }}
+                                    />
+                                </Button>
+                            </a>
+                        </div>
+                    )}
                 </div>
 
                 <div className={styles.accountInfoGroup}>
                     <TWSaveStatus
+                        isPhone={this.props.isPhone}
                         showSaveFilePicker={this.props.showSaveFilePicker}
                     />
                 </div>
@@ -1084,6 +1087,7 @@ MenuBar.propTypes = {
     fileMenuOpen: PropTypes.bool,
     handleSaveProject: PropTypes.func,
     intl: intlShape,
+    isPhone: PropTypes.bool,
     isPlayerOnly: PropTypes.bool,
     isRtl: PropTypes.bool,
     isShared: PropTypes.bool,

@@ -8,3 +8,9 @@
     height: 1.25rem;
     filter: var(--icon-filter);
 }
+
+@media only screen and (max-width: 1124px) {
+    .collapsible-label {
+        display: none;
+    }
+}

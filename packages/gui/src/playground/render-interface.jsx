@@ -44,6 +44,8 @@ import InvalidEmbed from '../components/tw-invalid-embed/invalid-embed.jsx';
 import Footer from '../components/lk-footer/footer.jsx';
 import {APP_NAME} from '../lib/brand.js';
 
+import isPhone from '../lib/isPhone.ts';
+
 import styles from './interface.css';
 
 const isInvalidEmbed = window.parent !== window;
@@ -135,6 +137,7 @@ class Interface extends React.Component {
                             canChangeTheme
                             enableSeeInside
                             onClickAddonSettings={handleClickAddonSettings}
+                            isPhone={isPhone()}
                         />
                         {canaryMode ? (
                             <p className={styles.notice}>

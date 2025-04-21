@@ -8,9 +8,12 @@ import {filterInlineAlerts} from '../../reducers/alerts';
 
 import MenuLabel from './tw-menu-label.jsx';
 
+import saveIcon from './icon--save.svg';
+
 const TWSaveStatus = ({
     alertsList,
     fileHandle,
+    isPhone,
     projectChanged,
     showSaveFilePicker
 }) => (
@@ -33,6 +36,13 @@ const TWSaveStatus = ({
                                 file: fileHandle.name
                             }}
                         />
+                    ) : isPhone ? (
+                        <img
+                            src={saveIcon}
+                            draggable={false}
+                            width={20}
+                            height={20}
+                        />
                     ) : (
                         <FormattedMessage
                             defaultMessage="Save to your computer"
@@ -50,6 +60,7 @@ TWSaveStatus.propTypes = {
     fileHandle: PropTypes.shape({
         name: PropTypes.string
     }),
+    isPhone: PropTypes.bool,
     projectChanged: PropTypes.bool,
     showSaveFilePicker: PropTypes.func
 };

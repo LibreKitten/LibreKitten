@@ -3,6 +3,7 @@ import {FormattedMessage} from 'react-intl';
 import keyMirror from 'keymirror';
 
 import successImage from '../assets/icon--success.svg';
+import isPhone from '../isPhone';
 
 const AlertTypes = keyMirror({
     STANDARD: null,
@@ -161,7 +162,13 @@ const alerts = [
         alertType: AlertTypes.INLINE,
         clearList: ['saveSuccess', 'saving', 'savingError', 'twCreatingRestorePoint',
             'twRestorePointSuccess', 'twRestorePointError'],
-        content: (
+        content: isPhone() ? (
+            <FormattedMessage
+                defaultMessage="Done"
+                description="A short message indicating that project was successfully saved to the phone of the user's disk"
+                id="lk.alerts.savedToPhone"
+            />
+        ) : (
             <FormattedMessage
                 defaultMessage="Saved to your computer."
                 description="Message indicating that project was successfully saved to the user's disk"
@@ -177,7 +184,7 @@ const alerts = [
         alertType: AlertTypes.INLINE,
         clearList: ['saveSuccess', 'saving', 'savingError', 'twSaveToDiskSuccess',
             'twCreatingRestorePoint', 'twRestorePointSuccess', 'twRestorePointError'],
-        content: (
+        content: isPhone() ? null : (
             <FormattedMessage
                 defaultMessage="Saving project…"
                 description="Message indicating that project is in process of saving"
