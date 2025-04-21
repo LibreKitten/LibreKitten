@@ -43,6 +43,7 @@ import {resolveStageSize} from '../../lib/screen-utils';
 import {Theme} from '../../lib/themes';
 
 import {isRendererSupported, isBrowserSupported} from '../../lib/tw-environment-support-prober';
+import isPhone from '../../lib/isPhone.ts';
 
 import styles from './gui.css';
 import addExtensionIcon from './icon--extensions.svg';
@@ -174,11 +175,11 @@ const GUIComponent = props => {
         tabSelected: classNames(tabStyles.reactTabsTabSelected, styles.isSelected)
     };
 
-    const unconstrainedWidth = (
+    const unconstrainedWidth = isPhone() ? (
         UNCONSTRAINED_NON_STAGE_WIDTH +
         FIXED_WIDTH +
         Math.max(0, customStageSize.width - FIXED_WIDTH)
-    );
+    ) : 0;
     return (<MediaQuery minWidth={unconstrainedWidth}>{isUnconstrained => {
         const stageSize = resolveStageSize(stageSizeMode, isUnconstrained);
 
@@ -228,7 +229,7 @@ const GUIComponent = props => {
                 className={styles.pageWrapper}
                 dir={isRtl ? 'rtl' : 'ltr'}
                 style={{
-                    minWidth: 1024 + Math.max(0, customStageSize.width - 480),
+                    minWidth: isPhone() ? null : 1024 + Math.max(0, customStageSize.width - 480),
                     minHeight: 640 + Math.max(0, customStageSize.height - 360)
                 }}
                 {...componentProps}
@@ -325,8 +326,8 @@ const GUIComponent = props => {
                     onStartSelectingFileUpload={onStartSelectingFileUpload}
                     onToggleLoginOpen={onToggleLoginOpen}
                 />
-                <Box className={styles.bodyWrapper}>
-                    <Box className={styles.flexWrapper}>
+                <Box className={classNames(styles.bodyWrapper, isPhone() ? styles.bodyWrapperPhone : null)}>
+                    <Box className={classNames(styles.flexWrapper, isPhone() ? styles.flexWrapperPhone : null)}>
                         <Box className={styles.editorWrapper}>
                             <Tabs
                                 forceRenderTabPanel
@@ -433,19 +434,24 @@ const GUIComponent = props => {
                         </Box>
 
                         <Box className={classNames(styles.stageAndTargetWrapper, styles[stageSize])}>
+                            {/* lk: TODO: (mobile) Fix sprite pane */}
                             <StageWrapper
                                 isFullScreen={isFullScreen}
                                 isRendererSupported={isRendererSupported()}
                                 isRtl={isRtl}
+                                isPhone={isPhone()}
                                 stageSize={stageSize}
+                                spriteLibraryVisible={false}
                                 vm={vm}
                             />
-                            <Box className={styles.targetWrapper}>
-                                <TargetPane
-                                    stageSize={stageSize}
-                                    vm={vm}
-                                />
-                            </Box>
+                            {isPhone() ? null : (
+                                <Box className={styles.targetWrapper}>
+                                    <TargetPane
+                                        stageSize={stageSize}
+                                        vm={vm}
+                                    />
+                                </Box>
+                            )}
                         </Box>
                     </Box>
                 </Box>

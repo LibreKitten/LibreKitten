@@ -22,6 +22,7 @@ import settingsIcon from './icon--settings.svg';
 import styles from './stage-header.css';
 
 import FullscreenAPI from '../../lib/tw-fullscreen-api';
+import { isMobile } from '../../addons/environment.js';
 
 const messages = defineMessages({
     largeStageSizeMessage: {
@@ -69,6 +70,7 @@ const StageHeaderComponent = function (props) {
         showFixedLargeSize,
         isFullScreen,
         isPlayerOnly,
+        isPhone,
         onKeyPress,
         onSetStageFullScreen,
         onSetStageUnFullScreen,
@@ -193,9 +195,12 @@ const StageHeaderComponent = function (props) {
             );
         header = (
             <Box
-                className={styles.stageHeaderWrapper}
+                className={classNames(styles.stageHeaderWrapper, styles.stageHeaderWrapperPhone)}
                 // + 2 px because the stage will have 2 pixels of border around it
-                style={{minWidth: `${stageDimensions.width + 2}px`}}
+                style={{
+                    minWidth: `${stageDimensions.width + 2}px`,
+                    width: isPhone ? `${stageDimensions.width + 2}px` : null
+                }}
             >
                 <Box className={styles.stageMenuWrapper}>
                     <Controls
@@ -244,6 +249,7 @@ StageHeaderComponent.propTypes = {
     showFixedLargeSize: PropTypes.bool,
     isFullScreen: PropTypes.bool.isRequired,
     isPlayerOnly: PropTypes.bool.isRequired,
+    isPhone: PropTypes.bool,
     onKeyPress: PropTypes.func.isRequired,
     onSetStageFullScreen: PropTypes.func.isRequired,
     onSetStageUnFullScreen: PropTypes.func.isRequired,

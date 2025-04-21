@@ -17,6 +17,7 @@ const StageWrapperComponent = function (props) {
         isFullScreen,
         isRtl,
         isRendererSupported,
+        isPhone,
         loading,
         stageSize,
         vm
@@ -37,14 +38,16 @@ const StageWrapperComponent = function (props) {
         >
             <Box className={styles.stageMenuWrapper}>
                 <StageHeader
+                    isPhone={isPhone}
                     stageSize={stageSize}
                     vm={vm}
                 />
             </Box>
-            <Box className={styles.stageCanvasWrapper}>
+            <Box className={classNames(styles.stageCanvasWrapper, styles.stageCanvasWrapperPhone)}>
                 {
                     isRendererSupported ?
                         <Stage
+                            isPhone={isPhone}
                             stageSize={stageSize}
                             vm={vm}
                         /> :
@@ -63,6 +66,7 @@ StageWrapperComponent.propTypes = {
     isFullScreen: PropTypes.bool,
     isRendererSupported: PropTypes.bool.isRequired,
     isRtl: PropTypes.bool.isRequired,
+    isPhone: PropTypes.bool,
     loading: PropTypes.bool,
     stageSize: PropTypes.oneOf(Object.keys(STAGE_DISPLAY_SIZES)).isRequired,
     vm: PropTypes.instanceOf(VM).isRequired

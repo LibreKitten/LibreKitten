@@ -73,6 +73,7 @@ StageHeader.propTypes = {
     }).isRequired,
     dimensions: PropTypes.arrayOf(PropTypes.number),
     isPlayerOnly: PropTypes.bool,
+    isPhone: PropTypes.bool,
     onSetStageUnFullScreen: PropTypes.func.isRequired,
     onSetStageFull: PropTypes.func.isRequired,
     onOpenSettings: PropTypes.func.isRequired,

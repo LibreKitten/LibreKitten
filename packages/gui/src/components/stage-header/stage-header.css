@@ -14,6 +14,13 @@
     left: 0;
 }
 
+[dir="ltr"] .stage-header-wrapper-phone {
+    left: 0;
+}
+[dir="rtl"] .stage-header-wrapper-phone {
+    right: 0;
+}
+
 .stage-header-wrapper-overlay {
     position: fixed;
     background-color: $fullscreen-accent;

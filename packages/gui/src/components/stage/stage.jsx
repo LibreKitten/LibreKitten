@@ -24,6 +24,7 @@ const StageComponent = props => {
         isPlayerOnly,
         isStarted,
         isRtl,
+        isPhone,
         colorInfo,
         micIndicator,
         question,
@@ -50,7 +51,8 @@ const StageComponent = props => {
                 onDoubleClick={onDoubleClick}
                 style={isPlayerOnly ? null : {
                     // add 2 because a 1px border is shown around each side of the stage
-                    minWidth: `${minWidth + 2}px`
+                    minWidth: `${minWidth + 2}px`,
+                    width: isPhone ? `${minWidth + 2}px` : null
                 }}
             >
                 <Box
@@ -162,6 +164,7 @@ StageComponent.propTypes = {
     isFullScreen: PropTypes.bool.isRequired,
     isPlayerOnly: PropTypes.bool,
     isRtl: PropTypes.bool,
+    isPhone: PropTypes.bool,
     isStarted: PropTypes.bool,
     micIndicator: PropTypes.bool,
     onDeactivateColorPicker: PropTypes.func,

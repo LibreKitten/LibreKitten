@@ -474,6 +474,7 @@ Stage.propTypes = {
     isFullScreen: PropTypes.bool.isRequired,
     isPlayerOnly: PropTypes.bool,
     isRtl: PropTypes.bool,
+    isPhone: PropTypes.bool,
     isWindowFullScreen: PropTypes.bool,
     dimensions: PropTypes.arrayOf(PropTypes.number),
     isStarted: PropTypes.bool,

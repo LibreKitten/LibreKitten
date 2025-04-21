@@ -5,6 +5,8 @@ import {
     FIXED_WIDTH
 } from '../lib/layout-constants';
 
+import isPhone from './isPhone.ts';
+
 const maxScaleParam = typeof URLSearchParams !== 'undefined' && new URLSearchParams(location.search).get('scale');
 
 /**
@@ -33,6 +35,10 @@ const STAGE_DIMENSION_DEFAULTS = {
  * @return {STAGE_DISPLAY_SIZES} - the stage size enum value we should use in this situation.
  */
 const resolveStageSize = (stageSizeMode, isUnconstrained) => {
+    // lk: Always return the constrained version on a phone
+    if (isPhone()) {
+        return STAGE_DISPLAY_SIZES.constrained;
+    }
     if (stageSizeMode === STAGE_SIZE_MODES.full && !isUnconstrained) {
         return STAGE_DISPLAY_SIZES.constrained;
     }
