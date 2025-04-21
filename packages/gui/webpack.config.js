@@ -100,7 +100,7 @@ const base = {
             options: {
                 jsc: {
                     parser: {
-                        jsx: true
+                        jsx: true,
                     },
                     target: 'es2020'
                 }
