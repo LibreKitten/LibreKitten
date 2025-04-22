@@ -45,6 +45,7 @@ const SpriteSelectorComponent = function (props) {
         editingTarget,
         hoveredTarget,
         intl,
+        isPhone,
         onChangeSpriteDirection,
         onChangeSpriteName,
         onChangeSpriteRotationStyle,
@@ -81,7 +82,7 @@ const SpriteSelectorComponent = function (props) {
             {...componentProps}
         >
 
-            <SpriteInfo
+            {isPhone ? null : <SpriteInfo
                 direction={selectedSprite.direction}
                 disabled={spriteInfoDisabled}
                 name={selectedSprite.name}
@@ -98,12 +99,13 @@ const SpriteSelectorComponent = function (props) {
                 onChangeVisibility={onChangeSpriteVisibility}
                 onChangeX={onChangeSpriteX}
                 onChangeY={onChangeSpriteY}
-            />
+            />}
 
             <SpriteList
                 editingTarget={editingTarget}
                 hoveredTarget={hoveredTarget}
                 items={Object.keys(sprites).map(id => sprites[id])}
+                isPhone={isPhone}
                 raised={raised}
                 selectedId={selectedId}
                 onDeleteSprite={onDeleteSprite}
@@ -153,6 +155,7 @@ SpriteSelectorComponent.propTypes = {
         receivedBlocks: PropTypes.bool
     }),
     intl: intlShape.isRequired,
+    isPhone: PropTypes.bool,
     onChangeSpriteDirection: PropTypes.func,
     onChangeSpriteName: PropTypes.func,
     onChangeSpriteRotationStyle: PropTypes.func,

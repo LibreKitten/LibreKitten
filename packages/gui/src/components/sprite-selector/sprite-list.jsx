@@ -21,6 +21,7 @@ const SpriteList = function (props) {
         draggingIndex,
         draggingType,
         hoveredTarget,
+        isPhone,
         onDeleteSprite,
         onDuplicateSprite,
         onExportSprite,
@@ -37,7 +38,7 @@ const SpriteList = function (props) {
 
     return (
         <Box
-            className={classNames(styles.scrollWrapper, {
+            className={classNames(styles.scrollWrapper, isPhone ? styles.scrollWrapperPhone : null, {
                 [styles.scrollWrapperDragging]: draggingType === DragConstants.BACKPACK_SPRITE
             })}
             componentRef={containerRef}
@@ -124,6 +125,7 @@ SpriteList.propTypes = {
         name: PropTypes.any, // modified by folders addon
         order: PropTypes.number.isRequired
     })),
+    isPhone: PropTypes.bool,
     onAddSortable: PropTypes.func,
     onDeleteSprite: PropTypes.func,
     onDuplicateSprite: PropTypes.func,

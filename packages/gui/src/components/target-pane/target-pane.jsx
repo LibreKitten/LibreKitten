@@ -20,6 +20,7 @@ const TargetPane = ({
     editingTarget,
     fileInputRef,
     hoveredTarget,
+    isPhone,
     spriteLibraryVisible,
     onActivateBlocksTab,
     onChangeSpriteDirection,
@@ -55,6 +56,7 @@ const TargetPane = ({
         <SpriteSelectorComponent
             editingTarget={editingTarget}
             hoveredTarget={hoveredTarget}
+            isPhone={isPhone}
             raised={raiseSprites}
             selectedId={editingTarget}
             spriteFileInput={fileInputRef}
@@ -133,6 +135,7 @@ TargetPane.propTypes = {
         hoveredSprite: PropTypes.string,
         receivedBlocks: PropTypes.bool
     }),
+    isPhone: PropTypes.bool,
     onActivateBlocksTab: PropTypes.func.isRequired,
     onChangeSpriteDirection: PropTypes.func,
     onChangeSpriteName: PropTypes.func,

@@ -445,14 +445,13 @@ const GUIComponent = props => {
                                 spriteLibraryVisible={false}
                                 vm={vm}
                             />
-                            {isPhone() ? null : (
-                                <Box className={styles.targetWrapper}>
-                                    <TargetPane
-                                        stageSize={stageSize}
-                                        vm={vm}
-                                    />
-                                </Box>
-                            )}
+                            <Box className={classNames(styles.targetWrapper, isPhone() ? styles.targetWrapperPhone : null)}>
+                                <TargetPane
+                                    isPhone={isPhone()}
+                                    stageSize={stageSize}
+                                    vm={vm}
+                                />
+                            </Box>
                         </Box>
                     </Box>
                 </Box>
