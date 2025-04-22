@@ -1,7 +1,0 @@
-ol, ul {
-    text-align: left;
-}
-
-ol li::marker {
-    font-weight: bold;
-}

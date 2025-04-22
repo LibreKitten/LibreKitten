@@ -67,12 +67,13 @@ const Credits = () => (
                 <h1 className={styles.headerText}>
                     {APP_NAME} Credits
                 </h1>
-            </header>
-            <section>
                 <p>
                     The {APP_NAME} project is made possible by TurboWarp and Scratch. To them, thank you.
-                    Without them, coding would have been less accessible to people, and people would have had to learn confusing languages with syntax errors as their first programming language.
+                    Without them, coding would have been less accessible to people,
+                    and people would have had to learn confusing programming languages with syntax errors as their first programming language.
                 </p>
+            </header>
+            <section>
                 <p>
                     <i>
                         Individual contributors are listed in no particular order.
@@ -103,7 +104,8 @@ const Credits = () => (
             <section>
                 <h2>Scratch</h2>
                 <p>
-                    {APP_NAME} & TurboWarp is based on the work of the <a href="https://scratch.mit.edu/credits">Scratch contributors</a> but is not endorsed by Scratch in any way.
+                    {APP_NAME} & TurboWarp is based on the work of the <a href="https://scratch.mit.edu/credits">Scratch contributors</a> but
+                    is not endorsed by Scratch in any way.
                 </p>
                 <p>
                     <a href="https://scratch.mit.edu/donate">
@@ -113,7 +115,9 @@ const Credits = () => (
             </section>
             <section>
                 <h2>Icon</h2>
-                The current icon is a vectorized version of an icon contributed by <a href="https://scratch.mit.edu/users/Eason_9/">Eason_9</a> from a <a href="https://scratch.mit.edu/discuss/post/8154030/">forum post</a>.
+                The current icon is a vectorized version of an icon contributed by
+                <a href="https://scratch.mit.edu/users/Eason_9/">Eason_9</a> on Scratch from a Scratch
+                <a href="https://scratch.mit.edu/discuss/post/8154030/">forum post</a>.
             </section>
             <section>
                 <h2>Contributors</h2>

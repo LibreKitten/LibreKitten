@@ -1,5 +1,13 @@
 @import "../../css/colors.css";
 
+h2, p {
+    text-align: center;
+}
+
+.button-container {
+    justify-content: center;
+}
+
 .notification {
     display: flex;
     align-items: center;

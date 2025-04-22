@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'classnames';
 import render from '../app-target';
 import styles from '../../css/info-page.css';
 import myStyles from './index.css';
@@ -8,6 +9,8 @@ import { detectTheme } from '../../lib/themes/themePersistance';
 
 import Header from '../../components/lk-header/header.jsx';
 import Footer from '../../components/lk-footer/footer.jsx';
+
+import Vision from '../components/vision/vision.tsx';
 
 /* eslint-disable react/jsx-no-literals */
 
@@ -21,7 +24,7 @@ const Index = () => (
             <div className={myStyles.notification}>
                 <p>
                     <span>
-                        If you know at least a little bit of web technologies and git, please contribute to LibreKitten. It will help make LibreKitten better!
+                        If you know at least a little bit of web technologies and git, please contribute to LibreKitten.
                     </span>
                     <a href="/for-contributors.html" className={myStyles.notificationButton}>
                         Contribute! 😻
@@ -33,29 +36,50 @@ const Index = () => (
                     LibreKitten - A powerful block-based visual programming language.
                 </h1>
                 <p>
-                    LibreKitten is an <strong>alpha quality</strong> block-based visual programming language based on <a href="https://turbowarp.org/">TurboWarp</a> that supports server-side execution.
+                    LibreKitten is an <strong>alpha-quality</strong> block-based visual programming language based
+                    on <a href="https://turbowarp.org/">TurboWarp</a>. The primary feature is server-side execution support, but it
+                    is also an experimentation ground to push the limits of block-based languages.
                 </p>
-                <a href="/editor.html" className={styles.primaryButton}>
+                <a href="/editor.html" className={styles.headerButton}>
                     Try now!
                 </a>
             </header>
-            <section id="what">
-                <h1>What is LibreKitten?</h1>
+            <section id="prototype">
+                <h2>Zoooooom! Quickly build something.</h2>
                 <p>
-                    LibreKitten is a block-based visual programming language based on <a href="https://turbowarp.org/">TurboWarp</a>.
-                    Its primary feature is server-side execution support, but it is also an experimentation ground to push the limits of block-based languages.
+                    With block-based programming, you can quickly prototype something from start to finish without worrying about
+                    syntax or other complications of text-based programming languages.
                 </p>
             </section>
-            <section id="prototype">
-                <h1>Zoooooom! Quickly build something.</h1>
+            <section id="why">
+                <h2>Why does LibreKitten exist?</h2>
                 <p>
-                    With block-based programming, you can quickly prototype something from start to finish without worrying about that missing semicolon or those messy sphagetti nodes.
+                    Scratch is made for a novice userbase. This means it doesn't cater to the more advanced users of Scratch who
+                    like the simple block-based interface of Scratch and the easy to use primitive blocks, but want more advanced
+                    features.
                 </p>
+                <p>
+                    For this audience, we have made a new block-based visual programming language called LibreKitten.
+                    It is a fork of TurboWarp, which itself was forked off Scratch.
+                </p>
+                <p>
+                    LibreKitten was created with the intention of containing more advanced features and accept contributions
+                    written by the community, while still being for all ages.
+                </p>
+            </section>
+            <section id="vision">
+                <h2>What is the vision?</h2>
+                <p>
+                    <strong>
+                        We recommend before you suggest ideas for LibreKitten, you check if your idea is in the spirit of the vision.
+                    </strong>
+                </p>
+                <Vision />
             </section>
             <section id="license">
-                <h1>LibreKitten is free software.</h1>
+                <h2>LibreKitten is free software.</h2>
                 <p>The LibreKitten editor is licensed under the GNU General Public License v3.</p>
-                <div className={styles.buttonContainer}>
+                <div className={classNames(styles.buttonContainer, myStyles.buttonContainer)}>
                     <a href="/LICENSE.txt" className={styles.button}>View</a>
                 </div>
             </section>

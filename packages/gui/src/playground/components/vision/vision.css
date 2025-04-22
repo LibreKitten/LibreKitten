@@ -1,0 +1,33 @@
+@import "../../../css/colors.css";
+
+.vision-box {
+    line-height: 1.5em;
+    padding: 0.5rem;
+    border: 1px solid $badge-border;
+    background-color: $badge-background;
+    border-radius: 0.5rem;
+}
+
+.vision-box p, .vision-box h2 {
+    text-align: left;
+}
+
+.vision-box p {
+    margin: 0;
+}
+
+.header {
+    font-weight: bold;
+    font-size: 1em;
+    margin: 0;
+    padding: 0;
+}
+
+.vision-box ul {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    margin: 0;
+    padding-left: 20px;
+}
