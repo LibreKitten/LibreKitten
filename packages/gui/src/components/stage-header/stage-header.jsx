@@ -211,7 +211,7 @@ const StageHeaderComponent = function (props) {
                         className={styles.stageSizeRow}
                         key="editor" // addons require the HTML element to be not be re-used by in-editor buttons
                     >
-                        {stageControls}
+                        {isPhone ? null : stageControls}
                         <div>
                             <Button
                                 className={styles.stageButton}

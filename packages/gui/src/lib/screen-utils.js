@@ -61,7 +61,7 @@ const getStageDimensions = (stageSize, customStageSize, isFullScreen) => {
         scale: 0
     };
 
-    if (isFullScreen) {
+    if (isFullScreen || isPhone()) {
         stageDimensions.height = window.innerHeight -
             STAGE_DIMENSION_DEFAULTS.menuHeightAdjustment -
             STAGE_DIMENSION_DEFAULTS.fullScreenSpacingBorderAdjustment;
@@ -76,7 +76,14 @@ const getStageDimensions = (stageSize, customStageSize, isFullScreen) => {
             stageDimensions.height = stageDimensions.width * (customStageSize.height / customStageSize.width);
         }
 
-        stageDimensions.scale = stageDimensions.width / stageDimensions.widthDefault;
+        if (isPhone()) {
+            stageDimensions.width = stageDimensions.width - 20;
+            stageDimensions.height = stageDimensions.height - 20;
+    
+            stageDimensions.scale = stageDimensions.width / (stageDimensions.widthDefault - 20);
+        } else {
+            stageDimensions.scale = stageDimensions.width / stageDimensions.widthDefault;
+        }
     } else {
         const metadata = STAGE_DISPLAY_SCALE_METADATA[stageSize];
         if (metadata.width) {
