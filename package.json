@@ -8,6 +8,8 @@
     "start": "pnpm --filter '*' run start",
     "prepublish": "pnpm --filter '*' run prepublish",
     "gui-start": "pnpm --filter librekitten-gui run start",
+    "gui-build": "pnpm --filter librekitten-gui run build",
+    "gui-ci-build": "pnpm --filter librekitten-gui run ci-build",
     "vm-start": "pnpm --filter scratch-vm run start",
     "blocks-build": "pnpm --filter scratch-blocks run prepublish"
   },
