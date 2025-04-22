@@ -1,4 +1,5 @@
 // lk: Modified to run code related to the "category" option when "clickandcreate" is selected.
+// lk: Also modified to disable the flyout placeholder when it is not needed.
 export default async function ({ addon, console, msg }) {
   let placeHolderDiv = null;
   let lockObject = null;
@@ -146,6 +147,12 @@ export default async function ({ addon, console, msg }) {
       Blockly.getMainWorkspace().getToolbox().selectedItem_.setSelected(true);
     });
     addon.self.addEventListener("reenabled", () => {
+      if (getToggleSetting() !== "hover") {
+        placeHolderDiv.style.setProperty("--hideFlyout-placeholderDisplay", "none");
+      }
+      if (getToggleSetting() === "hover") {
+        placeHolderDiv.style.removeProperty("--hideFlyout-placeholderDisplay");
+      }
       if ((getToggleSetting() === "category" || getToggleSetting() === "clickandcreate") && !addon.settings.get("lockLoad")) {
         Blockly.getMainWorkspace().getToolbox().selectedItem_.setSelected(false);
         onmouseleave(null, 0);
@@ -155,6 +162,12 @@ export default async function ({ addon, console, msg }) {
 
     addon.settings.addEventListener("change", () => {
       if (addon.self.disabled) return;
+      if (getToggleSetting() !== "hover") {
+        placeHolderDiv.style.setProperty("--hideFlyout-placeholderDisplay", "none");
+      }
+      if (getToggleSetting() === "hover") {
+        placeHolderDiv.style.removeProperty("--hideFlyout-placeholderDisplay");
+      }
       if (getToggleSetting() === "category" || getToggleSetting() === "clickandcreate") {
         // switching to category click mode
         // close the flyout unless it's locked
@@ -273,6 +286,9 @@ export default async function ({ addon, console, msg }) {
     blocksWrapper.appendChild(placeHolderDiv);
     placeHolderDiv.className = "sa-flyout-placeHolder";
     placeHolderDiv.style.display = "none"; // overridden by userstyle if the addon is enabled
+    if (getToggleSetting() !== "hover") {
+      placeHolderDiv.style.setProperty("--hideFlyout-placeholderDisplay", "none");
+    };
 
     // Lock image
     if (lockObject) lockObject.remove();
