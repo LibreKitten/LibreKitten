@@ -234,6 +234,22 @@ export default async function ({ addon, console, msg }) {
       }
       return oldStepScrollAnimation.apply(this, args);
     };
+  }
+
+  while (true) {
+    flyOut = await addon.tab.waitForElement(".blocklyFlyout", {
+      markAsSeen: true,
+      reduxEvents: [
+        "scratch-gui/mode/SET_PLAYER",
+        "scratch-gui/locales/SELECT_LOCALE",
+        "scratch-gui/theme/SET_THEME",
+        "fontsLoaded/SET_FONTS_LOADED",
+      ],
+      reduxCondition: (state) => !state.scratchGui.mode.isPlayerOnly,
+    });
+    scrollBar = document.querySelector(".blocklyFlyoutScrollbar");
+    const blocksWrapper = document.querySelector('[class*="gui_blocks-wrapper_"]');
+    const injectionDiv = document.querySelector(".injectionDiv");
 
     // lk: Added option for hiding on block create, useful for phones.
     const hideOnBlockCreate = addon.tab.traps.getWorkspace()?.addChangeListener(e => {
@@ -252,23 +268,7 @@ export default async function ({ addon, console, msg }) {
       Blockly.getMainWorkspace().getToolbox().selectedItem_.setSelected(false);
       onmouseleave();
       toggle = false;
-    })
-  }
-
-  while (true) {
-    flyOut = await addon.tab.waitForElement(".blocklyFlyout", {
-      markAsSeen: true,
-      reduxEvents: [
-        "scratch-gui/mode/SET_PLAYER",
-        "scratch-gui/locales/SELECT_LOCALE",
-        "scratch-gui/theme/SET_THEME",
-        "fontsLoaded/SET_FONTS_LOADED",
-      ],
-      reduxCondition: (state) => !state.scratchGui.mode.isPlayerOnly,
     });
-    scrollBar = document.querySelector(".blocklyFlyoutScrollbar");
-    const blocksWrapper = document.querySelector('[class*="gui_blocks-wrapper_"]');
-    const injectionDiv = document.querySelector(".injectionDiv");
 
     // Code editor left border
     const borderElement1 = document.createElement("div");
