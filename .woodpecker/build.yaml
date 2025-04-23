@@ -45,15 +45,15 @@ steps:
       - git config --global user.email "no@thankyou.com"
       - git config --global user.name "CI Builder"
       # clone and move the target repo
-      - cd ./packages/gui/
-      - git clone --depth=1 https://codeberg.org/LibreKitten/pages.git build
-      - chmod -R a+w build
-      - cd ./build
+      - cd ..
+      - git clone --depth=1 https://codeberg.org/LibreKitten/pages.git lk-build
+      - chmod -R a+w lk-build
+      - cd lk-build
       # Prepare for push
       - git rm -r -f ./**/*
       - git remote set-url origin https://$CBTOKEN@codeberg.org/LibreKitten/pages.git
       - git commit -m 'Woodpecker CI - Clean up.'
-      - cd ../../..
+      - cd ../LibreKitten
       # Run build stage
       - npm install pnpm -g
       - pnpm install --shamefully-hoist
@@ -62,7 +62,8 @@ steps:
       # Only needed for custom domains
       #- cp domains _site/.domains
       # Push to target
-      - cd ./packages/gui/build
+      - cp ./packages/gui/build/**/* ../lk-build
+      - cd ../lk-build
       - echo "librekitten.org" > .domains
       - git add --all
       - git commit -m "Woodpecker CI Build at $( env TZ=America/Chicago date +"%Y-%m-%d %X %Z" )"
