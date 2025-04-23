@@ -62,7 +62,7 @@ steps:
       # Only needed for custom domains
       #- cp domains _site/.domains
       # Push to target
-      - cp ./packages/gui/build/**/* ../lk-build
+      - cp -a ./packages/gui/build/. ../lk-build
       - cd ../lk-build
       - echo "librekitten.org" > .domains
       - git add --all
