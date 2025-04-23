@@ -13,4 +13,8 @@
     .collapsible-label {
         display: none;
     }
+
+    .community-button-icon {
+        margin-right: 0 !important;
+    }
 }

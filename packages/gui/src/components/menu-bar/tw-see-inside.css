@@ -14,4 +14,8 @@
     .collapsible-label {
         display: none;
     }
+
+    .see-inside-button-icon {
+        margin-right: 0 !important;
+    }
 }
