@@ -60,7 +60,7 @@ class Scratch3ControlBlocks {
         const thread = util.thread;
         thread.setBlockContext(thread.peekStack(), {
             type: 'switch',
-            value: Cast.toString(args.VALUE), 
+            value: Cast.toString(args.VALUE)
         });
         util.startBranch(1, false);
     }
