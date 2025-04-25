@@ -743,7 +743,7 @@ class AddonRunner {
         this.resources = null;
 
         this.publicAPI = {
-            globalThis,
+            globalThis: global,
             console,
             addon: {
                 tab: new Tab(id),
