@@ -179,13 +179,13 @@ class Blocks {
         while (block.parent !== null) {
             block = this._blocks[block.parent];
             if (typeof block.inputs !== 'object') continue;
-            for (let value of Object.values(block.inputs)) {
+            for (const value of Object.values(block.inputs)) {
                 if (value.block !== block.next) {
                     return {
                         id: block.id,
                         opcode: block.opcode
                     };
-                };
+                }
             }
         }
         return null;
@@ -207,20 +207,20 @@ class Blocks {
             block = this._blocks[block.parent];
             if (typeof block.inputs !== 'object') {
                 continue;
-            };
+            }
             if (typeof opcode === 'string' && block.opcode !== opcode) {
                 continue;
-            };
+            }
             if (opcode instanceof RegExp && !block.opcode.match(opcode)) {
                 continue;
-            };
-            for (let value of Object.values(block.inputs)) {
+            }
+            for (const value of Object.values(block.inputs)) {
                 if (value.block !== block.next) {
                     return {
                         id: block.id,
                         opcode: block.opcode
                     };
-                };
+                }
             }
         }
         return null;
