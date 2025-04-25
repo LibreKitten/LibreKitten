@@ -2,6 +2,8 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const defaultsDeep = require('lodash.defaultsdeep');
 const path = require('path');
 
+const {SwcMinifyWebpackPlugin} = require('swc-minify-webpack-plugin');
+
 const { EsbuildPlugin } = require('esbuild-loader');
 const { optimize } = require('webpack');
 
