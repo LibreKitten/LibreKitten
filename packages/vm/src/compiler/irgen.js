@@ -207,9 +207,9 @@ class ScriptTreeGenerator {
             const index = this.script.arguments.lastIndexOf(name);
             if (index === -1) {
                 if (
-                    name.toLowerCase() === 'is compiled?'
-                    || name.toLowerCase() === 'is turbowarp?'
-                    || name.toLowerCase() === 'is librekitten?'
+                    name.toLowerCase() === 'is compiled?' ||
+                    name.toLowerCase() === 'is turbowarp?' ||
+                    name.toLowerCase() === 'is librekitten?'
                 ) {
                     return {
                         kind: 'constant',
