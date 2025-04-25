@@ -41,7 +41,7 @@ const contributors = [
     },
     {
         username: 'This could be you!',
-        url: 'https://codeberg.org/LibreKitten',
+        url: 'https://codeberg.org/LibreKitten'
     },
     {
         username: 'nmsderp',

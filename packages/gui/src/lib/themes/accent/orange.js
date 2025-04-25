@@ -9,7 +9,7 @@ const guiColors = {
     'looks-secondary-dark': 'rgba(209, 108, 0, 1)',
     'error-primary': 'rgba(255, 0, 0, 1)',
 
-    'data-primary': 'rgba(0, 171, 17, 1)',
+    'data-primary': 'rgba(0, 171, 17, 1)'
 };
 
 const blockColors = {
@@ -28,4 +28,3 @@ export {
 // $motion-light-transparent: hgba(255, 130, 0, 0.15); /* 15% transparent version of motion-primary */
 // $ui-modal-overlay: var(--ui-modal-overlay, rgba(255, 130, 0, 0.9)); /* 90% transparent version of motion-primary */
 // $drop-highlight: rgba(255, 130, 0, 1); /* lighter than motion-primary */
-

@@ -2,8 +2,8 @@ import React from 'react';
 import render from '../app-target';
 import styles from '../../css/info-page.css';
 
-import { applyGuiColors } from '../../lib/themes/guiHelpers';
-import { detectTheme } from '../../lib/themes/themePersistance';
+import {applyGuiColors} from '../../lib/themes/guiHelpers';
+import {detectTheme} from '../../lib/themes/themePersistance';
 
 import Header from '../../components/lk-header/header.jsx';
 import Footer from '../../components/lk-footer/footer.jsx';
@@ -94,9 +94,18 @@ const ForContributors = () => (
                     Otherwise, the wiki has resources that explain things such as how to add blocks to the compiler.
                 </p>
                 <div className={styles.buttonContainer}>
-                    <a href="https://codeberg.org/LibreKitten/LibreKitten/" className={styles.button}>Open the repository on Codeberg (Preferred)</a>
-                    <a href="https://github.com/LibreKitten/LibreKitten/" className={styles.button}>Open the repository on GitHub</a>
-                    <a href="https://codeberg.org/LibreKitten/LibreKitten/wiki" className={styles.button}>Open the wiki</a>
+                    <a
+                        href="https://codeberg.org/LibreKitten/LibreKitten/"
+                        className={styles.button}
+                    >Open the repository on Codeberg (Preferred)</a>
+                    <a
+                        href="https://github.com/LibreKitten/LibreKitten/"
+                        className={styles.button}
+                    >Open the repository on GitHub</a>
+                    <a
+                        href="https://codeberg.org/LibreKitten/LibreKitten/wiki"
+                        className={styles.button}
+                    >Open the wiki</a>
                 </div>
             </section>
             <Footer />

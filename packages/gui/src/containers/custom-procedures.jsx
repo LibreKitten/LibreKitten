@@ -151,8 +151,8 @@ class CustomProcedures extends React.Component {
                 onCancel={this.handleCancel}
                 onOk={this.handleOk}
                 onToggleWarp={this.handleToggleWarp}
-                setColor={(val) => {
-                    this.setState({ color: val });
+                setColor={val => {
+                    this.setState({color: val});
                     this.mutationRoot.setColourExternal(val);
 
                 }}

@@ -4,8 +4,8 @@ import render from '../app-target';
 import styles from '../../css/info-page.css';
 import myStyles from './index.css';
 
-import { applyGuiColors } from '../../lib/themes/guiHelpers';
-import { detectTheme } from '../../lib/themes/themePersistance';
+import {applyGuiColors} from '../../lib/themes/guiHelpers';
+import {detectTheme} from '../../lib/themes/themePersistance';
 
 import Header from '../../components/lk-header/header.jsx';
 import Footer from '../../components/lk-footer/footer.jsx';
@@ -26,7 +26,10 @@ const Index = () => (
                     <span>
                         If you know at least a little bit of web technologies and git, please contribute to LibreKitten.
                     </span>
-                    <a href="/for-contributors.html" className={myStyles.notificationButton}>
+                    <a
+                        href="/for-contributors.html"
+                        className={myStyles.notificationButton}
+                    >
                         Contribute! 😻
                     </a>
                 </p>
@@ -40,7 +43,10 @@ const Index = () => (
                     on <a href="https://turbowarp.org/">TurboWarp</a>. The primary feature is server-side execution support, but it
                     is also an experimentation ground to push the limits of block-based languages.
                 </p>
-                <a href="/editor.html" className={styles.headerButton}>
+                <a
+                    href="/editor.html"
+                    className={styles.headerButton}
+                >
                     Try now!
                 </a>
             </header>
@@ -80,7 +86,10 @@ const Index = () => (
                 <h2>LibreKitten is free software.</h2>
                 <p>The LibreKitten editor is licensed under the GNU General Public License v3.</p>
                 <div className={classNames(styles.buttonContainer, myStyles.buttonContainer)}>
-                    <a href="/LICENSE.txt" className={styles.button}>View</a>
+                    <a
+                        href="/LICENSE.txt"
+                        className={styles.button}
+                    >View</a>
                 </div>
             </section>
             <Footer />

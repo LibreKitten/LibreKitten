@@ -10,7 +10,7 @@ import topBlock from './top-block.svg';
 import middleBlock from './middle-block.svg';
 import bottomBlock from './bottom-block.svg';
 
-import { tip } from '../../lib/randomUnhelpfulTip';
+import {tip} from '../../lib/randomUnhelpfulTip';
 
 // lk: unhelpful tips added
 
@@ -145,7 +145,7 @@ class LoaderComponent extends React.Component {
                         ref={this.messageRef}
                     />
 
-                    <p dangerouslySetInnerHTML={{__html: this.unhelpfulTip}}/>
+                    <p dangerouslySetInnerHTML={{__html: this.unhelpfulTip}} />
 
                     <div className={styles.barOuter}>
                         <div

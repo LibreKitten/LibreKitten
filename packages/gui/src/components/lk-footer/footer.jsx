@@ -16,26 +16,26 @@
 
 
 import React from 'react';
-import { APP_NAME } from '../../lib/brand.js';
-import { FormattedMessage, defineMessages, injectIntl, intlShape } from 'react-intl';
+import {APP_NAME} from '../../lib/brand.js';
+import {FormattedMessage, defineMessages, injectIntl, intlShape} from 'react-intl';
 
 import styles from './footer.css';
 
 const hardRefresh = () => {
-    var search = location.search.replace(/[?&]nocache=\d+/, '');
-    location.replace(location.pathname + search + (search ? '&' : '?') + 'nocache=' + Math.floor(Math.random() * 100000));
-}
+    const search = location.search.replace(/[?&]nocache=\d+/, '');
+    location.replace(`${location.pathname + search + (search ? '&' : '?')}nocache=${Math.floor(Math.random() * 100000)}`);
+};
 
 const eraseData = async () => {
     if (confirm('Please be aware that this will reset all your local data, including the Restore Points and backpack. Are you sure you want to continue?')) {
-        ;
+        
         localStorage.clear();
         // We have to manually delete the databases due to Firefox not supporting indexedDB.databases(). WHYYYY???
         indexedDB.deleteDatabase('TW_RestorePoints');
         indexedDB.deleteDatabase('TW_Backpack');
         location.reload();
     }
-}
+};
 
 const Footer = () => (
     <footer className={styles.footer}>
@@ -80,7 +80,10 @@ const Footer = () => (
                             id="tw.footer.credits"
                         />
                     </a>
-                    <a /* </div>href="https://github.com/sponsors/GarboMuffin" */ style={{ cursor: 'not-allowed' }} title="Not available (yet)">
+                    <a
+                        style={{cursor: 'not-allowed'}}
+                        title="Not available (yet)"
+                    >
                         <FormattedMessage
                             defaultMessage="Donate"
                             description="Donation link in footer"
@@ -143,7 +146,7 @@ const Footer = () => (
                     </a>
                 </div>
             </div>
-            <div style={{ textAlign: 'center' }}>
+            <div style={{textAlign: 'center'}}>
                 <p>
                     <strong>
                         <em>Pspspsps! </em>
@@ -157,16 +160,31 @@ const Footer = () => (
                         }}
                     />
                 </p>
-                <p><a href="https://librekitten.org/"><img alt="LibreKitten - Code in blocks seriously" src="https://u.cubeupload.com/gl12/LibreKittenBadge.png" /></a></p>
+                <p><a href="https://librekitten.org/"><img
+                    alt="LibreKitten - Code in blocks seriously"
+                    src="https://u.cubeupload.com/gl12/LibreKittenBadge.png"
+                /></a></p>
                 <p><em>HTML</em></p>
-                <textarea contentEditable={false} value={'<a href="https://librekitten.org/"><img alt="LibreKitten - Code in blocks seriously" src="https://u.cubeupload.com/gl12/LibreKittenBadge.png"/></a>'}></textarea>
+                <textarea
+                    contentEditable={false}
+                    value={'<a href="https://librekitten.org/"><img alt="LibreKitten - Code in blocks seriously" src="https://u.cubeupload.com/gl12/LibreKittenBadge.png"/></a>'}
+                />
                 <p><em>BBCode</em></p>
-                <textarea contentEditable={false} value={'[url=https://librekitten.org/][img]https://u.cubeupload.com/gl12/LibreKittenBadge.png[/img][/url]'}></textarea>
+                <textarea
+                    contentEditable={false}
+                    value={'[url=https://librekitten.org/][img]https://u.cubeupload.com/gl12/LibreKittenBadge.png[/img][/url]'}
+                />
                 <p><em>Markdown</em></p>
-                <textarea contentEditable={false} value={'[![LibreKitten - Code in blocks seriously](https://u.cubeupload.com/gl12/LibreKittenBadge.png)](https://librekitten.org/)'}></textarea>
+                <textarea
+                    contentEditable={false}
+                    value={'[![LibreKitten - Code in blocks seriously](https://u.cubeupload.com/gl12/LibreKittenBadge.png)](https://librekitten.org/)'}
+                />
             </div>
 
-            <p>Version: {process.env.npm_package_version} | <a onClick={eraseData} style={{ color: 'red' }}>Erase data</a></p>
+            <p>Version: {process.env.npm_package_version} | <a
+                onClick={eraseData}
+                style={{color: 'red'}}
+            >Erase data</a></p>
         </div>
     </footer>
 );

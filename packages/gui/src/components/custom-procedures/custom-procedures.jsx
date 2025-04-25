@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import Modal from '../../containers/modal.jsx';
 import Box from '../box/box.jsx';
 import {defineMessages, injectIntl, intlShape, FormattedMessage} from 'react-intl';
@@ -20,15 +20,13 @@ const messages = defineMessages({
 
 // lk: added custom colors
 
-const CustomColor = props => {
-    return (
-        <input
-            type="color"
-            value={props.color}
-            onChange={e => props.setColor(e.target.value)}
-        />
-    );
-}
+const CustomColor = props => (
+    <input
+        type="color"
+        value={props.color}
+        onChange={e => props.setColor(e.target.value)}
+    />
+);
 
 const CustomProcedures = props => (
     <Modal
@@ -129,9 +127,9 @@ const CustomProcedures = props => (
                     />
                 </label>
             </div>
-            <br/>
+            <br />
             <label>
-                <hr/>
+                <hr />
                 <CustomColor
                     setColor={props.setColor}
                     color={props.color}
@@ -141,7 +139,7 @@ const CustomProcedures = props => (
                     description="Label for colour input to set a custom color"
                     id="lk.customProcedures.customColor"
                 />
-                </label>
+            </label>
             <Box className={styles.buttonRow}>
                 <button
                     className={styles.cancelButton}

@@ -9,7 +9,7 @@ import {detectTheme} from '../../lib/themes/themePersistance';
 import Header from '../../components/lk-header/header.jsx';
 import Footer from '../../components/lk-footer/footer.jsx';
 
-import librekitty from './sad-librekitty.svg'
+import librekitty from './sad-librekitty.svg';
 
 /* eslint-disable react/jsx-no-literals */
 
@@ -31,7 +31,7 @@ const FourOhFour = () => (
                 </p>
                 <img
                     src={librekitty}
-                    alt='A sad Librekitty (ginger ailuromorphic/cat-shaped being).'
+                    alt="A sad Librekitty (ginger ailuromorphic/cat-shaped being)."
                 />
                 <h3 className={styles.headerText}>404</h3>
             </section>

@@ -30,7 +30,7 @@ const AddonMenuItem = ({onClick}) => (
                 draggable={false}
                 width={20}
                 height={20}
-                style={{ filter: 'var(--icon-filter)' }}
+                style={{filter: 'var(--icon-filter)'}}
             />
             <span className={styles.submenuLabel}>
                 <FormattedMessage
@@ -44,7 +44,7 @@ const AddonMenuItem = ({onClick}) => (
 );
 
 AddonMenuItem.propTypes = {
-    onClickAddonSettings: PropTypes.func,
+    onClickAddonSettings: PropTypes.func
 };
 
 const SettingsMenu = ({

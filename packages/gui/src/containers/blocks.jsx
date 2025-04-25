@@ -146,7 +146,7 @@ class Blocks extends React.Component {
         // lk: Added coloured custom blocks.
         // Basically, this function is so we can theme custom blocks.
         // Self is Blockly.Block
-        this.ScratchBlocks.ScratchBlocks.ProcedureUtils.renderColourExternal = (self) => {
+        this.ScratchBlocks.ScratchBlocks.ProcedureUtils.renderColourExternal = self => {
             if (!(self.procColour_ && self.procColour_ !== 'null')) return;
             const theme = this.props.theme;
             const colors = theme.getCustomBlockColors();
@@ -454,12 +454,12 @@ class Blocks extends React.Component {
     }
     onErrorGlow (data) {
         if (!data.id) {
-            return this.workspace.getAllBlocks().forEach((block) => {
+            return this.workspace.getAllBlocks().forEach(block => {
                 block.setGlowError(data.glow);
             });
-        };
+        }
         this.workspace.getBlockById(data.id).setGlowError(data.glow);
-    };
+    }
     getToolboxXML () {
         // Use try/catch because this requires digging pretty deep into the VM
         // Code inside intentionally ignores several error situations (no stage, etc.)
