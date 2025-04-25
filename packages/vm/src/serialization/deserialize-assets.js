@@ -1,15 +1,6 @@
 const JSZip = require('@turbowarp/jszip');
 const log = require('../util/log');
 
-const base64ToArrayBuffer = base64 => {
-    const binaryString = atob(base64);
-    const u8 = new Uint8Array(binaryString.length);
-    for (let i = 0; i < binaryString.length; i++) {
-        u8[i] = binaryString.charCodeAt(i);
-    }
-    return u8;
-};
-
 /**
  * Deserializes sound from file into storage cache so that it can
  * be loaded into the runtime.
@@ -181,7 +172,7 @@ const deserializeCostume = function (costume, runtime, zip, assetFileName, textL
                 })
         ]);
     }
-    return Promise.all([textLayerFilePromise,
+    /* return Promise.all([textLayerFilePromise,
         (costume => {
             storage.createAsset(
                 assetType,
@@ -195,7 +186,7 @@ const deserializeCostume = function (costume, runtime, zip, assetFileName, textL
             costume.assetId = asset.assetId;
             costume.md5 = `${asset.assetId}.${asset.dataFormat}`;
         })(costume)
-    ]);
+    ]); */
     
 
 };
