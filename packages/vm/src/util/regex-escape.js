@@ -1,4 +1,5 @@
-// Copied from escape-string-regexp, which is under this license:
+/* eslint-disable */
+// Based on escape-string-regexp, which is under this license:
 // ```
 // MIT License
 //
@@ -10,14 +11,16 @@
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ```
+/* eslint-enable */
 
-module.exports = function escapeStringRegexp(string) {
+module.exports = function escapeStringRegexp (string) {
     if (typeof string !== 'string') {
         throw new TypeError('Expected a string');
     }
 
     // Escape characters with special meaning either inside or outside character sets.
-    // Use a simple backslash escape when it’s always valid, and a `\xnn` escape when the simpler form would be disallowed by Unicode patterns’ stricter grammar.
+    // Use a simple backslash escape when it’s always valid, and a `\xnn` escape when the simpler form
+    // would be disallowed by Unicode patterns’ stricter grammar.
     return string
         .replace(/[|\\{}()[\]^$+*?.]/g, '\\$&')
         .replace(/-/g, '\\x2d');
