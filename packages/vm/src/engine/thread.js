@@ -515,10 +515,11 @@ class Thread {
     /**
      * lk: Find the block context of a block.
      * @param {string} blockId The ID of the block.
-     * @returns {object | undefined} The block context, or undefined if nothing was found.
+     * @returns {?object} The block context, or null if nothing was found.
      */
     getBlockContext (blockId) {
-        return this._blockContext.get(blockId);
+        const context = this._blockContext.get(blockId);
+        return context ? context : null;
     }
 
     /**
@@ -544,7 +545,7 @@ class Thread {
      * lk: Find the block context parent block of certain type, moving up from a child block.
      * @param {string | null} opcode Opcode of the block that we're looking for (optional.)
      * @param {string} childId The ID of the block to move up from.
-     * @return {object | undefined} The block context of the block we have found, or undefined if we didn't find anything.
+     * @return {object | null} The block context of the block we have found, or null if we didn't find anything.
      * @throws {Error} "opcode" must be a string or null.
      */
     getBlockContextOfParent (opcode, childId) {
@@ -555,7 +556,7 @@ class Thread {
         } else {
             block = this.target.blocks.findParentBlock(childId);
         }
-        if (block === null) return undefined;
+        if (block === null) return null;
         return this.getBlockContext(block.id);
     }
 
