@@ -276,6 +276,7 @@ class TurboWarpBlocks {
                     }),
                     tooltip: formatMessage({
                         id: 'tw.blockTooltip.comment',
+                        // eslint-disable-next-line max-len
                         default: 'I am a note about the code below me for people to read. I don\'t have any other purpose.',
                         description: 'Tooltip for a block that is a comment.'
                     }),
@@ -296,6 +297,7 @@ class TurboWarpBlocks {
                     }),
                     tooltip: formatMessage({
                         id: 'tw.blockTooltip.commentCBlock',
+                        // eslint-disable-next-line max-len
                         default: 'I am a note about the code inside me for people to read. I run the code inside me every time.',
                         description: 'Tooltip for a block that is a comment.'
                     }),
@@ -351,6 +353,7 @@ class TurboWarpBlocks {
                     }),
                     tooltip: formatMessage({
                         id: 'tw.blockTooltip.sanitizeXML',
+                        // eslint-disable-next-line max-len
                         default: 'I neutralize XML/SGML-like markup with JavaScript (HTML, SVG, and etc.) by stripping out JavaScript. Useful for security.',
                         description: 'Tooltip for a block that sanitizes JavaScript out of XML.'
                     }),
@@ -371,6 +374,7 @@ class TurboWarpBlocks {
                     }),
                     tooltip: formatMessage({
                         id: 'tw.blockTooltip.escapeXML',
+                        // eslint-disable-next-line max-len
                         default: 'I neutralize XML/SGML-like markup (HTML, XML, and etc.) by converting the unsafe characters to the equivelant character entity references. Useful for security.',
                         description: 'Tooltip for a block that converts XML to text.'
                     }),
@@ -426,7 +430,7 @@ class TurboWarpBlocks {
         return util.ioQuery('mouse', 'getButtonIsDown', [button]);
     }
 
-    checkDarkMode (args, util) {
+    checkDarkMode () {
         return window.matchMedia('(prefers-color-scheme: dark)').matches;
     }
 
@@ -434,52 +438,52 @@ class TurboWarpBlocks {
         util.startHats(Cast.toString(args.HAT_TYPE));
     }
 
-    exponentiation (args, util) {
+    exponentiation (args) {
         return Cast.toNumber(args.ONE) ** Cast.toNumber(args.TWO);
     }
 
-    regex (args, util) {
+    regex (args) {
         return Cast.toString(args.STRING)
             .match(new RegExp(Cast.toString(args.REGEX)));
     }
 
-    replaceOperation (args, util) {
+    replaceOperation (args) {
         return Cast.toString(args.STRING)
             .replace(Cast.toNumber(args.ONE), Cast.toNumber(args.TWO));
     }
 
-    true (args, util) {
+    true () {
         return true;
     }
-    pi (args, util) {
+    pi () {
         return '3.141592653589793238462643383279502884197';
     }
-    e (args, util) {
+    e () {
         return '2.7182818284590452353602874713527';
     }
 
-    infinity (args, util) {
+    infinity () {
         return Infinity;
     }
 
-    false (args, util) {
+    false () {
         return false;
     }
 
-    strictlyEquals (args, util) {
+    strictlyEquals (args) {
         // We don't cast on purpose for compatibility reasons.
         return args.ONE === args.TWO;
     }
 
-    booleanify (args, util) {
+    booleanify (args) {
         return Cast.toBoolean(args.REPORTER);
     }
 
-    substring (args, util) {
+    substring (args) {
         return Cast.toString(args.STRING).substring(Cast.toNumber(args.BEGINNING) - 1, Cast.toNumber(args.END) - 1);
     }
 
-    greenFlag (args, util) {
+    greenFlag () {
         this.runtime.greenFlag();
     }
 
