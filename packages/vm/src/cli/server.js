@@ -52,8 +52,8 @@ const runProject = async buffer => {
         req.on('end', async () => {
             if (dev && req.url === '/_lk_devServer_updateLb') {
                 if (
-                    String(req.headers.origin) === 'http://localhost:8601'
-                    || String(req.headers.origin).endsWith('librekitten.org')
+                    String(req.headers.origin) === 'http://localhost:8601' ||
+                    String(req.headers.origin).endsWith('librekitten.org')
                 ) {
                     return;
                 }
@@ -65,13 +65,22 @@ const runProject = async buffer => {
                 vm.greenFlag();
                 res.writeHead(200, {
                     'Content-Type': 'text/plain',
-                    'access-control-allow-origin': String(req.headers.origin) === 'http://localhost:8601'
-                        || String(req.headers.origin).endsWith('librekitten.org')
-                        ? req.headers.origin : 'http://invalid'
+                    'access-control-allow-origin':
+                        (
+                            String(req.headers.origin) === 'http://localhost:8601' ||
+                            String(req.headers.origin).endsWith('librekitten.org')
+                        ) ? req.headers.origin : 'http://invalid'
                 });
                 return res.end('success');
             }
-            vm.runtime.emit('serverRequest', req.url, req.socket.remoteAddress, req.method, JSON.stringify(req.headers), data);
+            vm.runtime.emit(
+                'serverRequest',
+                req.url,
+                req.socket.remoteAddress,
+                req.method,
+                JSON.stringify(req.headers),
+                data
+            );
             codeForPage = false;
             event = {
                 get content () {
