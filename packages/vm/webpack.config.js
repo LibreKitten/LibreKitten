@@ -4,9 +4,6 @@ const path = require('path');
 
 const {SwcMinifyWebpackPlugin} = require('swc-minify-webpack-plugin');
 
-const { EsbuildPlugin } = require('esbuild-loader');
-const { optimize } = require('webpack');
-
 const base = {
     mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
     devServer: {
