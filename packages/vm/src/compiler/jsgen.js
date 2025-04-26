@@ -1310,6 +1310,7 @@ class JSGenerator {
             this.source += `return ${valueJS};\n`;
         } else {
             this.descendStackedBlock({kind: 'visualReport', input: rawValue});
+            this.retire();
         }
     }
 
