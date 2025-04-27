@@ -172,6 +172,8 @@ const deserializeCostume = function (costume, runtime, zip, assetFileName, textL
                 })
         ]);
     }
+    // lk: TODO: Fix loading from stored Base64.
+    return Promise.resolve(null);
     /* return Promise.all([textLayerFilePromise,
         (costume => {
             storage.createAsset(
