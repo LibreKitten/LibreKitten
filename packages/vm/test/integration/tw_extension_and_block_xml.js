@@ -75,15 +75,16 @@ test('XML escaped in Runtime.getBlocksXML()', t => {
     mangledExtension.color3 = `<"'&amp;amp;color3>`;
 
     const vm = new VirtualMachine();
+    const defaultLength = vm.runtime.getBlocksXML().length;
     vm.extensionManager._registerInternalExtension({
         getInfo: () => mangledExtension
     });
 
     const xmlList = vm.runtime.getBlocksXML();
     t.type(xmlList, Array, 'getBlocksXML returns array');
-    t.equal(xmlList.length, 1, 'array has 1 item');
+    t.equal(xmlList.length - defaultLength, 1, 'array has 1 item');
 
-    const xmlEntry = xmlList[0];
+    const xmlEntry = xmlList[xmlList.length - 1];
     t.equal(xmlEntry.id, `xmltest`, 'id worked');
 
     const parsedXml = htmlparser.parseDOM(xmlEntry.xml);
