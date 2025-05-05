@@ -5,6 +5,10 @@ const BlockType = require('../../src/extension-support/block-type');
 
 test('Label blocks', t => {
     const vm = new VirtualMachine();
+
+    // lk: account for default core extensions
+    const defaultLength = vm.runtime.getBlocksXML().length;
+
     vm.extensionManager._registerInternalExtension({
         getInfo: () => ({
             id: 'testlabel',
@@ -19,9 +23,9 @@ test('Label blocks', t => {
     });
 
     const xmlList = vm.runtime.getBlocksXML();
-    t.equal(xmlList.length, 1);
+    t.equal(xmlList.length - defaultLength, 1);
 
-    const parsedXML = htmlparser.parseDOM(xmlList[0].xml);
+    const parsedXML = htmlparser.parseDOM(xmlList[defaultLength].xml);
     // Expecting something like this:
     // <category name="Label Test" id="testlabel" colour="#0FBD8C" secondaryColour="#0DA57A">
     //   <label text="&lt;&gt;&amp;&quot;&apos;"></label>
