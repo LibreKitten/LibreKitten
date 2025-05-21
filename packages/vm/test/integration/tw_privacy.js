@@ -94,6 +94,9 @@ test('custom extensions', async t => {
     vm.attachRenderer(mockRenderer());
 
     vm.extensionManager.securityManager.getSandboxMode = () => 'unsandboxed';
+    // lk: Since this test is testing as if we're in a browser, force the VM to act as if we're in a browser.
+    // lk: TODO: Do we need to test in Node.js mode as well?
+    vm.runtime.testing.forceBrowserMode = true;
     global.document = {
         createElement: () => {
             const element = {};

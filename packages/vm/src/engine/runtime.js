@@ -536,6 +536,13 @@ class Runtime extends EventEmitter {
          */
         this.finishedAssetRequests = 0;
 
+        /**
+         * lk: For internal testing purposes.
+         */
+        this.testing = {
+            forceBrowserMode: false
+        };
+
         // lk: added breakable blocks
         this._breakableBlocksArray = [];
         this._breakableBlocksRegExp = new RegExp('()');

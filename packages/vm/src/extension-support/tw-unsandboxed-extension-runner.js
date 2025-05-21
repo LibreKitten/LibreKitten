@@ -180,7 +180,7 @@ const teardownUnsandboxedExtensionAPI = () => {
 const loadUnsandboxedExtension = (extensionURL, vm) => new Promise((resolve, reject) => {
     setupUnsandboxedExtensionAPI(vm).then(resolve);
 
-    if (typeof process === 'undefined') {
+    if (typeof process === 'undefined' || vm.runtime.testing.forceBrowserMode) {
         const script = document.createElement('script');
         script.onerror = () => {
             reject(new Error(`Error in unsandboxed script ${extensionURL}. Check the console for more information.`));
