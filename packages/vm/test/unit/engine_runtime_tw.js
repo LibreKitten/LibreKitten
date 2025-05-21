@@ -142,7 +142,7 @@ test('maxClones runtime option', t => {
 
 test('stageWidth and stageHeight', t => {
     const rt = new Runtime();
-    t.equal(rt.stageWidth, 480);
+    t.equal(rt.stageWidth, 640);
     t.equal(rt.stageHeight, 360);
     t.end();
 });
@@ -163,9 +163,9 @@ test('setStageSize preserves monitor position relative to center of stage', t =>
         ['x', 0],
         ['y', 0]
     ]));
-    rt.setStageSize(640, 362);
+    rt.setStageSize(720, 362);
     const finalState = rt.getMonitorState().get('abc');
-    t.equal(finalState.get('x'), 80);
+    t.equal(finalState.get('x'), 40);
     t.equal(finalState.get('y'), 1);
     t.end();
 });
