@@ -312,12 +312,9 @@ class Sequencer {
      * @param {!string} procedureCode Procedure code of procedure to step to.
      */
     stepToProcedure (thread, procedureCode) {
-        let definition = thread.target.blocks.getProcedureDefinition(procedureCode);
+        const definition = thread.target.blocks.getProcedureDefinition(procedureCode);
         if (!definition) {
-            definition = this.runtime.getTargetForStage().blocks.getProcedureDefinition(procedureCode);
-            if (!definition) {
-                return;
-            }
+            return;
         }
         // Check if the call is recursive.
         // If so, set the thread to yield after pushing.
