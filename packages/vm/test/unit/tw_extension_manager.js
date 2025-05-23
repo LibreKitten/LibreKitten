@@ -29,6 +29,8 @@ test('loadExtensionURL, getExtensionURLs, deduplication', async t => {
 
     let loadedExtensions = 0;
     vm.extensionManager.securityManager.getSandboxMode = () => 'unsandboxed';
+    // lk: Since this test uses a mocked iframe, test in forced browser mode.
+    vm.runtime.testing.forceBrowserMode = true;
     global.document = {
         createElement: () => {
             loadedExtensions++;
