@@ -4,6 +4,10 @@ const BlockType = require('../../src/extension-support/block-type');
 
 test('branchIconURI', t => {
     const vm = new VirtualMachine();
+
+    // lk: account for default core extensions
+    const defaultLength = vm.runtime.getBlocksJSON().length;
+
     vm.extensionManager._registerInternalExtension({
         getInfo: () => ({
             id: 'testextension',
@@ -37,10 +41,10 @@ test('branchIconURI', t => {
     });
 
     const blocks = vm.runtime.getBlocksJSON();
-    t.equal(blocks[0].args2[0].src, 'media://repeat.svg', 'default custom icon');
-    t.equal(blocks[1].args2[0].src, 'data:whatever1', 'LOOP with custom icon');
-    t.equal(blocks[2].args2[0].src, 'data:whatever2', 'CONDITIONAL with custom icon');
-    t.same(blocks[3].args2, null, 'LOOP with no icon');
+    t.equal(blocks[defaultLength].args2[0].src, 'media://repeat.svg', 'default custom icon');
+    t.equal(blocks[defaultLength + 1].args2[0].src, 'data:whatever1', 'LOOP with custom icon');
+    t.equal(blocks[defaultLength + 2].args2[0].src, 'data:whatever2', 'CONDITIONAL with custom icon');
+    t.same(blocks[defaultLength + 3].args2, null, 'LOOP with no icon');
 
     t.end();
 });
