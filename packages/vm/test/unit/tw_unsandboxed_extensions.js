@@ -67,6 +67,10 @@ const {test} = tap;
 test('basic API', async t => {
     t.plan(9);
     const vm = new VirtualMachine();
+
+    // lk: Since this test uses a mocked iframe, test in forced browser mode.
+    vm.runtime.testing.forceBrowserMode = true;
+
     class MyExtension {}
     setScript('https://turbowarp.org/1.js', () => {
         t.equal(global.Scratch.vm, vm);
@@ -90,6 +94,10 @@ test('basic API', async t => {
 test('multiple VMs loading extensions', async t => {
     const vm1 = new VirtualMachine();
     const vm2 = new VirtualMachine();
+
+    // lk: Since this test uses a mocked iframe, test in forced browser mode.
+    vm1.runtime.testing.forceBrowserMode = true;
+    vm2.runtime.testing.forceBrowserMode = true;
 
     class Extension1 {}
     class Extension2 {}
@@ -134,6 +142,10 @@ test('multiple VMs loading extensions', async t => {
 
 test('register multiple extensions in one script', async t => {
     const vm = new VirtualMachine();
+
+    // lk: Since this test uses a mocked iframe, test in forced browser mode.
+    vm.runtime.testing.forceBrowserMode = true;
+
     class Extension1 {}
     class Extension2 {}
     setScript('https://turbowarp.org/multiple.js', () => {
@@ -149,6 +161,10 @@ test('register multiple extensions in one script', async t => {
 
 test('extension error results in rejection', async t => {
     const vm = new VirtualMachine();
+
+    // lk: Since this test uses a mocked iframe, test in forced browser mode.
+    vm.runtime.testing.forceBrowserMode = true;
+
     try {
         await UnsandboxedExtensionRunner.load('https://turbowarp.org/404.js', vm);
         // Above should throw an error as the script will not load successfully
@@ -161,6 +177,10 @@ test('extension error results in rejection', async t => {
 
 test('ScratchX', async t => {
     const vm = new VirtualMachine();
+
+    // lk: Since this test uses a mocked iframe, test in forced browser mode.
+    vm.runtime.testing.forceBrowserMode = true;
+
     setScript('https://turbowarp.org/scratchx.js', () => {
         const ext = {
             test: () => 2
@@ -181,6 +201,10 @@ test('ScratchX', async t => {
 test('canFetch', async t => {
     // see tw_security_manager.js
     const vm = new VirtualMachine();
+
+    // lk: Since this test uses a mocked iframe, test in forced browser mode.
+    vm.runtime.testing.forceBrowserMode = true;
+
     UnsandboxedExtensionRunner.setupUnsandboxedExtensionAPI(vm);
     const result = global.Scratch.canFetch('https://example.com/');
     t.type(result, Promise);
@@ -190,6 +214,10 @@ test('canFetch', async t => {
 
 test('fetch', async t => {
     const vm = new VirtualMachine();
+
+    // lk: Since this test uses a mocked iframe, test in forced browser mode.
+    vm.runtime.testing.forceBrowserMode = true;
+
     UnsandboxedExtensionRunner.setupUnsandboxedExtensionAPI(vm);
     global.Scratch.canFetch = url => url === 'https://example.com/2';
     await t.rejects(global.Scratch.fetch('https://example.com/1'), /Permission to fetch https:\/\/example.com\/1 rejected/);
@@ -207,6 +235,10 @@ test('fetch', async t => {
 test('canOpenWindow', async t => {
     // see tw_security_manager.js
     const vm = new VirtualMachine();
+
+    // lk: Since this test uses a mocked iframe, test in forced browser mode.
+    vm.runtime.testing.forceBrowserMode = true;
+    
     UnsandboxedExtensionRunner.setupUnsandboxedExtensionAPI(vm);
     const result = global.Scratch.canOpenWindow('https://example.com/');
     t.type(result, Promise);
@@ -216,6 +248,10 @@ test('canOpenWindow', async t => {
 
 test('openWindow', async t => {
     const vm = new VirtualMachine();
+
+    // lk: Since this test uses a mocked iframe, test in forced browser mode.
+    vm.runtime.testing.forceBrowserMode = true;
+
     UnsandboxedExtensionRunner.setupUnsandboxedExtensionAPI(vm);
     global.Scratch.canOpenWindow = url => url === 'https://example.com/2';
     await t.rejects(global.Scratch.openWindow('https://example.com/1'), /Permission to open tab https:\/\/example.com\/1 rejected/);
@@ -227,6 +263,10 @@ test('openWindow', async t => {
 test('canRedirect', async t => {
     // see tw_security_manager.js
     const vm = new VirtualMachine();
+
+    // lk: Since this test uses a mocked iframe, test in forced browser mode.
+    vm.runtime.testing.forceBrowserMode = true;
+
     UnsandboxedExtensionRunner.setupUnsandboxedExtensionAPI(vm);
     const result = global.Scratch.canRedirect('https://example.com/');
     t.type(result, Promise);
@@ -236,6 +276,10 @@ test('canRedirect', async t => {
 
 test('redirect', async t => {
     const vm = new VirtualMachine();
+
+    // lk: Since this test uses a mocked iframe, test in forced browser mode.
+    vm.runtime.testing.forceBrowserMode = true;
+
     UnsandboxedExtensionRunner.setupUnsandboxedExtensionAPI(vm);
     global.Scratch.canRedirect = url => url === 'https://example.com/2';
     await t.rejects(global.Scratch.redirect('https://example.com/1'), /Permission to redirect to https:\/\/example.com\/1 rejected/);
@@ -247,6 +291,10 @@ test('redirect', async t => {
 
 test('translate', async t => {
     const vm = new VirtualMachine();
+
+    // lk: Since this test uses a mocked iframe, test in forced browser mode.
+    vm.runtime.testing.forceBrowserMode = true;
+
     UnsandboxedExtensionRunner.setupUnsandboxedExtensionAPI(vm);
 
     t.equal(global.Scratch.translate({
@@ -298,6 +346,10 @@ test('translate', async t => {
 
 test('canRecordAudio', async t => {
     const vm = new VirtualMachine();
+
+    // lk: Since this test uses a mocked iframe, test in forced browser mode.
+    vm.runtime.testing.forceBrowserMode = true;
+
     UnsandboxedExtensionRunner.setupUnsandboxedExtensionAPI(vm);
 
     vm.securityManager.canRecordAudio = () => false;
@@ -311,6 +363,10 @@ test('canRecordAudio', async t => {
 
 test('canRecordVideo', async t => {
     const vm = new VirtualMachine();
+
+    // lk: Since this test uses a mocked iframe, test in forced browser mode.
+    vm.runtime.testing.forceBrowserMode = true;
+
     UnsandboxedExtensionRunner.setupUnsandboxedExtensionAPI(vm);
 
     vm.securityManager.canRecordVideo = () => false;
@@ -324,6 +380,10 @@ test('canRecordVideo', async t => {
 
 test('canReadClipboard', async t => {
     const vm = new VirtualMachine();
+
+    // lk: Since this test uses a mocked iframe, test in forced browser mode.
+    vm.runtime.testing.forceBrowserMode = true;
+
     UnsandboxedExtensionRunner.setupUnsandboxedExtensionAPI(vm);
 
     vm.securityManager.canReadClipboard = () => false;
@@ -337,6 +397,10 @@ test('canReadClipboard', async t => {
 
 test('canNotify', async t => {
     const vm = new VirtualMachine();
+
+    // lk: Since this test uses a mocked iframe, test in forced browser mode.
+    vm.runtime.testing.forceBrowserMode = true;
+
     UnsandboxedExtensionRunner.setupUnsandboxedExtensionAPI(vm);
 
     vm.securityManager.canNotify = () => false;
@@ -350,6 +414,10 @@ test('canNotify', async t => {
 
 test('canGeolocate', async t => {
     const vm = new VirtualMachine();
+
+    // lk: Since this test uses a mocked iframe, test in forced browser mode.
+    vm.runtime.testing.forceBrowserMode = true;
+
     UnsandboxedExtensionRunner.setupUnsandboxedExtensionAPI(vm);
 
     vm.securityManager.canGeolocate = () => false;
@@ -363,6 +431,9 @@ test('canGeolocate', async t => {
 
 test('rewriteExtensionURL', async t => {
     const vm = new VirtualMachine();
+
+    // lk: Since this test uses a mocked iframe, test in forced browser mode.
+    vm.runtime.testing.forceBrowserMode = true;
 
     let createdRewrittenExtension = false;
     class RewrittenExtension {
@@ -409,6 +480,10 @@ test('rewriteExtensionURL', async t => {
 
 test('canEmbed', async t => {
     const vm = new VirtualMachine();
+
+    // lk: Since this test uses a mocked iframe, test in forced browser mode.
+    vm.runtime.testing.forceBrowserMode = true;
+    
     UnsandboxedExtensionRunner.setupUnsandboxedExtensionAPI(vm);
 
     vm.securityManager.canEmbed = url => url === 'https://example.com/safe';
@@ -420,6 +495,10 @@ test('canEmbed', async t => {
 
 test('canDownload', async t => {
     const vm = new VirtualMachine();
+
+    // lk: Since this test uses a mocked iframe, test in forced browser mode.
+    vm.runtime.testing.forceBrowserMode = true;
+
     UnsandboxedExtensionRunner.setupUnsandboxedExtensionAPI(vm);
 
     const canDownloadChecks = [];
@@ -461,6 +540,10 @@ test('canDownload', async t => {
 
 test('download', async t => {
     const vm = new VirtualMachine();
+
+    // lk: Since this test uses a mocked iframe, test in forced browser mode.
+    vm.runtime.testing.forceBrowserMode = true;
+
     UnsandboxedExtensionRunner.setupUnsandboxedExtensionAPI(vm);
 
     const actualDownloadAttempts = [];
@@ -524,6 +607,10 @@ test('download', async t => {
 
 test('CREATE_UNSANDBOXED_EXTENSION_API', t => {
     const vm = new VirtualMachine();
+
+    // lk: Since this test uses a mocked iframe, test in forced browser mode.
+    vm.runtime.testing.forceBrowserMode = true;
+
     vm.on('CREATE_UNSANDBOXED_EXTENSION_API', api => {
         api.extraStuff = 'aaaa';
     });
