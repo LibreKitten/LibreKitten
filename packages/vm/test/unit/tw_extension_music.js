@@ -5,6 +5,10 @@ const Runtime = require('../../src/engine/runtime.js');
 test('_isConcurrencyLimited', t => {
     const rt = new Runtime();
 
+    rt.setRuntimeOptions({
+        miscLimits: true
+    }); // lk: Initially test with misc limits on because we disabled it by default.
+
     // sanity check so that the setRuntimeOptions() call below actually does something
     t.equal(rt.runtimeOptions.miscLimits, true, 'misc limits enabled by default');
 

@@ -441,7 +441,8 @@ const serializeCostume = function (costume) {
 
     obj.bitmapResolution = costumeToSerialize.bitmapResolution;
     obj.dataFormat = costumeToSerialize.dataFormat.toLowerCase();
-    obj.data = Base64Util.uint8ArrayToBase64(costumeToSerialize.asset.data);
+    // lk: Added Base64 costume serialization.
+    if (costumeToSerialize?.asset?.data) obj.data = Base64Util.uint8ArrayToBase64(costumeToSerialize.asset.data);
 
     obj.assetId = costumeToSerialize.assetId;
 

@@ -249,7 +249,8 @@ class ExtensionManager {
         /* eslint-disable max-len */
         let ExtensionWorker;
         if (sandboxMode === 'worker') {
-            ExtensionWorker = new Worker(new URL('./extension-worker', import.meta.url));
+            /* global importMetaURL */
+            ExtensionWorker = new Worker(new URL('./extension-worker', importMetaURL));
         } else if (sandboxMode === 'iframe') {
             ExtensionWorker = (await import(/* webpackChunkName: "iframe-extension-worker" */ './tw-iframe-extension-worker')).default;
         } else {

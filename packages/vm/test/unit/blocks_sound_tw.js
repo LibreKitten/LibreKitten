@@ -12,6 +12,9 @@ test('effect clamping runtime option', t => {
     target.sprite = sprite;
     const sound = new Scratch3SoundBlocks(rt);
 
+    rt.setRuntimeOptions({
+        miscLimits: true
+    });
     sound.setEffect({
         EFFECT: 'pitch',
         VALUE: 720

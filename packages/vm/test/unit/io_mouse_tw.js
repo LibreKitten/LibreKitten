@@ -10,12 +10,12 @@ test('position clamping', t => {
     m.postData({
         x: BIG,
         y: BIG,
-        canvasWidth: 480,
+        canvasWidth: 640,
         canvasHeight: 360
     });
     t.strictEquals(m.getClientX(), BIG);
     t.strictEquals(m.getClientY(), BIG);
-    t.strictEquals(m.getScratchX(), 240);
+    t.strictEquals(m.getScratchX(), 320);
     t.strictEquals(m.getScratchY(), -180);
     t.end();
 });
@@ -104,19 +104,22 @@ test('no rounding when misc limits disabled', t => {
     const rt = new Runtime();
     const m = new Mouse(rt);
 
+    rt.setRuntimeOptions({
+        miscLimits: true
+    });
     m.postData({
         x: 241,
         y: 541,
         canvasWidth: 960,
         canvasHeight: 720
     });
-    t.equal(m.getScratchX(), -119);
+    t.equal(m.getScratchX(), -159);
     t.equal(m.getScratchY(), -90);
 
     rt.setRuntimeOptions({
         miscLimits: false
     });
-    t.equal(m.getScratchX(), -119.5);
+    t.equal(m.getScratchX(), -159.333);
     t.equal(m.getScratchY(), -90.5);
 
     t.end();

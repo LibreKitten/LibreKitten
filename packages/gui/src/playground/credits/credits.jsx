@@ -1,26 +1,26 @@
 import React from 'react';
-import { Provider } from 'react-redux';
-import { compose } from 'redux'; import PropTypes from 'prop-types';
+import {Provider} from 'react-redux';
+import {compose} from 'redux'; import PropTypes from 'prop-types';
 import render from '../app-target';
 import styles from '../../css/info-page.css';
 
 import AppStateHOC from '../../lib/app-state-hoc.jsx';
-import { injectIntl } from 'react-intl'
-import { APP_NAME } from '../../lib/brand';
-import { applyGuiColors } from '../../lib/themes/guiHelpers';
-import { detectTheme } from '../../lib/themes/themePersistance';
+import {injectIntl} from 'react-intl';
+import {APP_NAME} from '../../lib/brand';
+import {applyGuiColors} from '../../lib/themes/guiHelpers';
+import {detectTheme} from '../../lib/themes/themePersistance';
 import UserData from './users';
 import Header from '../../components/lk-header/header.jsx';
 import Footer from '../../components/lk-footer/footer.jsx';
 
-import librekitty from './purring-librekitty-with-love-heart.svg'
+import librekitty from './purring-librekitty-with-love-heart.svg';
 
 /* eslint-disable react/jsx-no-literals */
 
 applyGuiColors(detectTheme());
 document.documentElement.lang = 'en';
 
-const User = ({ image, text, href }) => (
+const User = ({image, text, href}) => (
     <a
         href={href}
         target="_blank"
@@ -45,7 +45,7 @@ User.propTypes = {
     href: PropTypes.string
 };
 
-const UserList = ({ users }) => (
+const UserList = ({users}) => (
     <div className={styles.users}>
         {users.map((data, index) => (
             <User
@@ -153,7 +153,7 @@ const Credits = () => (
                 <p>
                     <img
                         src={librekitty}
-                        alt='The Librekitty (ginger ailuromorphic/cat-shaped being) purring with a love heart.'
+                        alt="The Librekitty (ginger ailuromorphic/cat-shaped being) purring with a love heart."
                     />
                 </p>
                 <i>The  Librekitty purring from your usage of LibreKitten.</i>

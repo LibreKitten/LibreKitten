@@ -6,6 +6,10 @@ const BlockType = require('../../src/extension-support/block-type');
 test('buttons', t => {
     const vm = new VM();
     let buttonRunCount = 0;
+
+    // lk: account for default core extensions
+    const defaultLength = vm.runtime.getBlocksXML().length;
+
     vm.extensionManager._registerInternalExtension({
         'getInfo': () => ({
             id: 'test',
@@ -37,11 +41,11 @@ test('buttons', t => {
             buttonRunCount++;
         }
     });
-
+    
     const xml = vm.runtime.getBlocksXML();
-    t.equal(xml.length, 1);
+    t.equal(xml.length - defaultLength, 1);
 
-    const parsed = htmlparser.parseDOM(xml[0].xml, {
+    const parsed = htmlparser.parseDOM(xml[defaultLength].xml, {
         decodeEntities: true
     });
     t.equal(parsed.length, 1);

@@ -4,6 +4,10 @@ const BlockType = require('../../src/extension-support/block-type');
 
 test('with explicit category colors', t => {
     const vm = new VirtualMachine();
+
+    // lk: account for default core extensions
+    const defaultLength = vm.runtime.getBlocksJSON().length;
+
     vm.extensionManager._registerInternalExtension({
         getInfo: () => ({
             id: 'testextension',
@@ -44,31 +48,35 @@ test('with explicit category colors', t => {
 
     const blocks = vm.runtime.getBlocksJSON();
 
-    t.equal(blocks[0].colour, '#ff0000');
-    t.equal(blocks[0].colourSecondary, '#00ff00');
-    t.equal(blocks[0].colourTertiary, '#0000ff');
+    t.equal(blocks[defaultLength].colour, '#ff0000');
+    t.equal(blocks[defaultLength].colourSecondary, '#00ff00');
+    t.equal(blocks[defaultLength].colourTertiary, '#0000ff');
 
-    t.equal(blocks[1].colour, '#ffff00');
-    t.equal(blocks[1].colourSecondary, '#00ff00');
-    t.equal(blocks[1].colourTertiary, '#0000ff');
+    t.equal(blocks[defaultLength + 1].colour, '#ffff00');
+    t.equal(blocks[defaultLength + 1].colourSecondary, '#00ff00');
+    t.equal(blocks[defaultLength + 1].colourTertiary, '#0000ff');
 
-    t.equal(blocks[2].colour, '#ff0000');
-    t.equal(blocks[2].colourSecondary, '#ff00ff');
-    t.equal(blocks[2].colourTertiary, '#0000ff');
+    t.equal(blocks[defaultLength + 2].colour, '#ff0000');
+    t.equal(blocks[defaultLength + 2].colourSecondary, '#ff00ff');
+    t.equal(blocks[defaultLength + 2].colourTertiary, '#0000ff');
 
-    t.equal(blocks[3].colour, '#ff0000');
-    t.equal(blocks[3].colourSecondary, '#00ff00');
-    t.equal(blocks[3].colourTertiary, '#00ffff');
+    t.equal(blocks[defaultLength + 3].colour, '#ff0000');
+    t.equal(blocks[defaultLength + 3].colourSecondary, '#00ff00');
+    t.equal(blocks[defaultLength + 3].colourTertiary, '#00ffff');
 
-    t.equal(blocks[4].colour, '#7fff00');
-    t.equal(blocks[4].colourSecondary, '#ff007f');
-    t.equal(blocks[4].colourTertiary, '#007fff');
+    t.equal(blocks[defaultLength + 4].colour, '#7fff00');
+    t.equal(blocks[defaultLength + 4].colourSecondary, '#ff007f');
+    t.equal(blocks[defaultLength + 4].colourTertiary, '#007fff');
 
     t.end();
 });
 
 test('with the default colors', t => {
     const vm = new VirtualMachine();
+
+    // lk: account for default core extensions
+    const defaultLength = vm.runtime.getBlocksJSON().length;
+
     vm.extensionManager._registerInternalExtension({
         getInfo: () => ({
             id: 'testextension',
@@ -106,25 +114,25 @@ test('with the default colors', t => {
 
     const blocks = vm.runtime.getBlocksJSON();
 
-    t.equal(blocks[0].colour, '#0FBD8C');
-    t.equal(blocks[0].colourSecondary, '#0DA57A');
-    t.equal(blocks[0].colourTertiary, '#0B8E69');
+    t.equal(blocks[defaultLength].colour, '#0FBD8C');
+    t.equal(blocks[defaultLength].colourSecondary, '#0DA57A');
+    t.equal(blocks[defaultLength].colourTertiary, '#0B8E69');
 
-    t.equal(blocks[1].colour, '#ffff00');
-    t.equal(blocks[1].colourSecondary, '#0DA57A');
-    t.equal(blocks[1].colourTertiary, '#0B8E69');
+    t.equal(blocks[defaultLength + 1].colour, '#ffff00');
+    t.equal(blocks[defaultLength + 1].colourSecondary, '#0DA57A');
+    t.equal(blocks[defaultLength + 1].colourTertiary, '#0B8E69');
 
-    t.equal(blocks[2].colour, '#0FBD8C');
-    t.equal(blocks[2].colourSecondary, '#ff00ff');
-    t.equal(blocks[2].colourTertiary, '#0B8E69');
+    t.equal(blocks[defaultLength + 2].colour, '#0FBD8C');
+    t.equal(blocks[defaultLength + 2].colourSecondary, '#ff00ff');
+    t.equal(blocks[defaultLength + 2].colourTertiary, '#0B8E69');
 
-    t.equal(blocks[3].colour, '#0FBD8C');
-    t.equal(blocks[3].colourSecondary, '#0DA57A');
-    t.equal(blocks[3].colourTertiary, '#00ffff');
+    t.equal(blocks[defaultLength + 3].colour, '#0FBD8C');
+    t.equal(blocks[defaultLength + 3].colourSecondary, '#0DA57A');
+    t.equal(blocks[defaultLength + 3].colourTertiary, '#00ffff');
 
-    t.equal(blocks[4].colour, '#7fff00');
-    t.equal(blocks[4].colourSecondary, '#ff007f');
-    t.equal(blocks[4].colourTertiary, '#007fff');
+    t.equal(blocks[defaultLength + 4].colour, '#7fff00');
+    t.equal(blocks[defaultLength + 4].colourSecondary, '#ff007f');
+    t.equal(blocks[defaultLength + 4].colourTertiary, '#007fff');
 
     t.end();
 });

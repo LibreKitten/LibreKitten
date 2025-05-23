@@ -83,7 +83,8 @@ const AccentMenuItem = props => (
         <div className={styles.option}>
             <img
                 className={classNames(styles.check, {[styles.selected]: props.isSelected})}
-                width={15}Matches
+                width={15}
+                Matches
                 height={12}
                 src={check}
                 draggable={false}

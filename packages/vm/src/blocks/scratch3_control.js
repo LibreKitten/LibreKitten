@@ -34,7 +34,7 @@ class Scratch3ControlBlocks {
             control_if_else: this.ifElse,
             control_switch: this.switch,
             control_case: this.case,
-            // control_default: this.default,
+            control_default: this.default,
             control_stop: this.stop,
             control_create_clone_of: this.createClone,
             control_delete_this_clone: this.deleteClone,
@@ -60,7 +60,7 @@ class Scratch3ControlBlocks {
         const thread = util.thread;
         thread.setBlockContext(thread.peekStack(), {
             type: 'switch',
-            value: Cast.toString(args.VALUE), 
+            value: Cast.toString(args.VALUE)
         });
         util.startBranch(1, false);
     }
@@ -81,6 +81,22 @@ class Scratch3ControlBlocks {
             });
             util.startBranch(1, false);
         }
+    }
+
+    default (args, util) {
+        const thread = util.thread;
+        const blocks = util.target.blocks;
+        
+        const block = blocks.findParentBlockOfType('control_switch', thread.peekStack());
+        if (!block) return;
+        const blockContext = thread.getBlockContext(block.id);
+        if (!blockContext || blockContext.type !== 'switch') return;
+        
+        thread.setBlockContext(block.id, {
+            ...blockContext,
+            fallthrough: false
+        });
+        util.startBranch(1, false);
     }
 
     break (args, util) {

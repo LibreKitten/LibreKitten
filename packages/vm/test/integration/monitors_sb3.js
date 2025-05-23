@@ -42,7 +42,7 @@ test('importing sb3 project with monitors', t => {
         t.equal(monitorRecord.sliderMin, 0);
         t.equal(monitorRecord.sliderMax, 100);
         t.equal(monitorRecord.isDiscrete, true); // The default if not present
-        t.equal(monitorRecord.x, 10);
+        t.equal(monitorRecord.x, 90); // lk: Due to an offset because of the stage size, change this to 90.
         t.equal(monitorRecord.y, 62);
         // Height and width are only used for list monitors and should default to 0
         // for all other monitors

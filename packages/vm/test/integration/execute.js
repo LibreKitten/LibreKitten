@@ -57,8 +57,8 @@ const whenThreadsComplete = (t, vm, uri, timeLimit = 5000) =>
 
 const executeDir = path.resolve(__dirname, '../fixtures/execute');
 
-// Find files which end in ".sb", ".sb2", or ".sb3"
-const fileFilter = /\.sb[23]?$/i;
+// Find files which end in ".sb", ".sb2", ".sb3", or ".lb"
+const fileFilter = /\.(sb[23]?|lb)$/i;
 
 fs.readdirSync(executeDir)
     .filter(uri => fileFilter.test(uri))

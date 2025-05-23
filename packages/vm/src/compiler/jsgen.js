@@ -853,7 +853,7 @@ class JSGenerator {
         case 'control.case':
             this.source += `case ${this.descendInput(node.value).asString()}: {\n`;
             this.descendStack(node.contents, new Frame(false));
-            this.source += '}\n'
+            this.source += '}\n';
             break;
         case 'control.default':
             this.source += `default: {\n`;
@@ -1310,6 +1310,7 @@ class JSGenerator {
             this.source += `return ${valueJS};\n`;
         } else {
             this.descendStackedBlock({kind: 'visualReport', input: rawValue});
+            this.retire();
         }
     }
 

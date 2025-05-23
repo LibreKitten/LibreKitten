@@ -12,7 +12,7 @@ const postcssVars = require('postcss-simple-vars');
 const postcssImport = require('postcss-import');
 
 // SWC
-const { SwcMinifyWebpackPlugin } = require('swc-minify-webpack-plugin');
+const {SwcMinifyWebpackPlugin} = require('swc-minify-webpack-plugin');
 
 const STATIC_PATH = process.env.STATIC_PATH || '/static';
 const {APP_NAME} = require('./src/lib/brand');
@@ -84,7 +84,7 @@ const base = {
         },
         fallback: {
             // I really don't feel like forking another repository today.
-            'buffer': require.resolve('buffer'),
+            buffer: require.resolve('buffer')
         }
     },
     module: {
@@ -265,7 +265,7 @@ module.exports = [
                 'process.env.ROOT': JSON.stringify(root),
                 'process.env.ROUTING_STYLE': JSON.stringify(process.env.ROUTING_STYLE || 'filehash'),
                 'process.env.npm_package_version': JSON.stringify(process.env.npm_package_version),
-                'canaryMode': process.env.CANARY_MODE === 'true' ? true : false
+                'canaryMode': process.env.CANARY_MODE === 'true'
             }),
             new HtmlWebpackPlugin({
                 chunks: ['editor'],

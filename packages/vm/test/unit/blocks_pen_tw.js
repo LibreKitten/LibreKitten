@@ -7,6 +7,9 @@ test('_clampPenSize', t => {
     const rt = new Runtime();
     const pen = new Scratch3PenBlocks(rt);
 
+    rt.setRuntimeOptions({
+        miscLimits: true
+    });
     t.equal(pen._clampPenSize(-1), 1);
     t.equal(pen._clampPenSize(0), 1);
     t.equal(pen._clampPenSize(0.25), 1);

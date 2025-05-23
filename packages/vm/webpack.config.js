@@ -1,9 +1,10 @@
+const {DefinePlugin} = require('webpack');
+
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const defaultsDeep = require('lodash.defaultsdeep');
 const path = require('path');
 
-const { EsbuildPlugin } = require('esbuild-loader');
-const { optimize } = require('webpack');
+const {SwcMinifyWebpackPlugin} = require('swc-minify-webpack-plugin');
 
 const base = {
     mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
@@ -44,7 +45,11 @@ const base = {
             })
         ]
     },
-    plugins: []
+    plugins: [
+        new DefinePlugin({
+            importMetaURL: 'import.meta.url'
+        })
+    ]
 };
 
 module.exports = [

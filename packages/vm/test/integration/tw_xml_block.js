@@ -5,6 +5,10 @@ const BlockType = require('../../src/extension-support/block-type');
 
 test('XML blocks', t => {
     const vm = new VirtualMachine();
+
+    // lk: account for default core extensions
+    const defaultLength = vm.runtime.getBlocksXML().length;
+
     vm.extensionManager._registerInternalExtension({
         getInfo: () => ({
             id: 'testxml',
@@ -19,9 +23,9 @@ test('XML blocks', t => {
     });
 
     const xmlList = vm.runtime.getBlocksXML();
-    t.equal(xmlList.length, 1);
+    t.equal(xmlList.length - defaultLength, 1);
 
-    const parsedXML = htmlparser.parseDOM(xmlList[0].xml);
+    const parsedXML = htmlparser.parseDOM(xmlList[defaultLength].xml);
     t.equal(parsedXML.length, 1);
 
     const category = parsedXML[0];

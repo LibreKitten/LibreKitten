@@ -4,14 +4,18 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "pnpm --filter '!scratch-blocks' run test",
+    "test-all": "pnpm --filter '*' run test",
     "start": "pnpm --filter '*' run start",
     "prepublish": "pnpm --filter '*' run prepublish",
     "gui-start": "pnpm --filter librekitten-gui run start",
     "gui-build": "pnpm --filter librekitten-gui run build",
     "gui-ci-build": "pnpm --filter librekitten-gui run ci-build",
+    "gui-test": "pnpm --filter librekitten-gui run test",
     "vm-start": "pnpm --filter scratch-vm run start",
-    "blocks-build": "pnpm --filter scratch-blocks run prepublish"
+    "vm-test": "pnpm --filter scratch-vm run test",
+    "blocks-build": "pnpm --filter scratch-blocks run prepublish",
+    "blocks-test": "pnpm --filter scratch-blocks run test"
   },
   "keywords": [],
   "author": "",

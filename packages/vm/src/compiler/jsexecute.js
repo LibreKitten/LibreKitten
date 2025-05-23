@@ -532,6 +532,7 @@ runtimeFunctions.listContents = `const listContents = list => {
     return list.value.join('');
 }`;
 
+/*
 runtimeFunctions.listContentsFirstClass = `const listContents = list => {
     for (let i = 0; i < list.value.length; i++) {
         const listItem = list.value[i];
@@ -543,6 +544,7 @@ runtimeFunctions.listContentsFirstClass = `const listContents = list => {
     }
     return list.value.join('\\n');
 }`;
+*/
 
 /**
  * Convert a color to an RGB list
