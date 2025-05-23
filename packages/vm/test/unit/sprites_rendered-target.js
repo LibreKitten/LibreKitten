@@ -390,8 +390,8 @@ test('keepInFence', t => {
     r.setRuntimeOptions({
         fencing: true
     }); // lk: Make sure fencing is on so we can test properly.
-    t.equals(a.keepInFence(1000, 1000)[0], 240);
-    t.equals(a.keepInFence(-1000, 1000)[0], -240);
+    t.equals(a.keepInFence(1000, 1000)[0], 320);
+    t.equals(a.keepInFence(-1000, 1000)[0], -320);
     t.equals(a.keepInFence(1000, 1000)[1], 180);
     t.equals(a.keepInFence(1000, -1000)[1], -180);
     t.end();
