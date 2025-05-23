@@ -29,7 +29,7 @@ test('mouseUp', t => {
     });
     t.strictEquals(m.getClientX(), -20);
     t.strictEquals(m.getClientY(), 10);
-    t.strictEquals(m.getScratchX(), -240);
+    t.strictEquals(m.getScratchX(), -320);
     t.strictEquals(m.getScratchY(), 170);
     t.strictEquals(m.getIsDown(), false);
     t.end();
@@ -48,7 +48,7 @@ test('mouseDown', t => {
     });
     t.strictEquals(m.getClientX(), 9.9);
     t.strictEquals(m.getClientY(), 400.1);
-    t.strictEquals(m.getScratchX(), -230);
+    t.strictEquals(m.getScratchX(), -306.8);
     t.strictEquals(m.getScratchY(), -180);
     t.strictEquals(m.getIsDown(), true);
     t.end();
@@ -66,7 +66,7 @@ test('at zoomed scale', t => {
     });
     t.strictEquals(m.getClientX(), 240);
     t.strictEquals(m.getClientY(), 540);
-    t.strictEquals(m.getScratchX(), -120);
+    t.strictEquals(m.getScratchX(), -160);
     t.strictEquals(m.getScratchY(), -90);
     t.end();
 });
