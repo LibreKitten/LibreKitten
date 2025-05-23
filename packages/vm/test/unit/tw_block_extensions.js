@@ -4,6 +4,10 @@ const BlockType = require('../../src/extension-support/block-type');
 
 test('does not duplicate', t => {
     const vm = new VirtualMachine();
+
+    // lk: account for default core extensions
+    const defaultLength = vm.runtime.getBlocksJSON().length;
+
     vm.extensionManager._registerInternalExtension({
         getInfo: () => ({
             id: 'testextension',
@@ -26,7 +30,7 @@ test('does not duplicate', t => {
 
     const blocks = vm.runtime.getBlocksJSON();
     t.same(
-        blocks[0].extensions,
+        blocks[defaultLength].extensions,
         ['from_extension', 'default_extension_colors', 'scratch_extension', 'something_invalid']
     );
     t.end();
@@ -34,6 +38,10 @@ test('does not duplicate', t => {
 
 test('block icon', t => {
     const vm = new VirtualMachine();
+
+    // lk: account for default core extensions
+    const defaultLength = vm.runtime.getBlocksJSON().length;
+
     vm.extensionManager._registerInternalExtension({
         getInfo: () => ({
             id: 'testextension',
@@ -70,12 +78,12 @@ test('block icon', t => {
     });
 
     const blocks = vm.runtime.getBlocksJSON();
-    t.same(blocks[0].extensions, ['from_extension', 'default_extension_colors']);
-    t.same(blocks[1].extensions, ['from_extension', 'default_extension_colors']);
-    t.same(blocks[2].extensions, ['from_extension', 'default_extension_colors', 'scratch_extension']);
-    t.same(blocks[3].extensions, ['from_extension', 'default_extension_colors', 'scratch_extension']);
+    t.same(blocks[defaultLength].extensions, ['from_extension', 'default_extension_colors']);
+    t.same(blocks[defaultLength + 1].extensions, ['from_extension', 'default_extension_colors']);
+    t.same(blocks[defaultLength + 2].extensions, ['from_extension', 'default_extension_colors', 'scratch_extension']);
+    t.same(blocks[defaultLength + 3].extensions, ['from_extension', 'default_extension_colors', 'scratch_extension']);
     t.same(
-        blocks[4].extensions,
+        blocks[defaultLength + 4].extensions,
         ['from_extension', 'default_extension_colors', 'scratch_extension', 'colours_sensing']
     );
 
@@ -84,6 +92,10 @@ test('block icon', t => {
 
 test('category icon', t => {
     const vm = new VirtualMachine();
+
+    // lk: account for default core extensions
+    const defaultLength = vm.runtime.getBlocksJSON().length;
+
     vm.extensionManager._registerInternalExtension({
         getInfo: () => ({
             id: 'testextension',
@@ -99,12 +111,16 @@ test('category icon', t => {
     });
 
     const blocks = vm.runtime.getBlocksJSON();
-    t.same(blocks[0].extensions, ['from_extension', 'default_extension_colors', 'scratch_extension']);
+    t.same(blocks[defaultLength].extensions, ['from_extension', 'default_extension_colors', 'scratch_extension']);
     t.end();
 });
 
 test('category color', t => {
     const vm = new VirtualMachine();
+
+    // lk: account for default core extensions
+    const defaultLength = vm.runtime.getBlocksJSON().length;
+
     vm.extensionManager._registerInternalExtension({
         getInfo: () => ({
             id: 'testextension',
@@ -121,12 +137,16 @@ test('category color', t => {
     });
 
     const blocks = vm.runtime.getBlocksJSON();
-    t.same(blocks[0].extensions, ['from_extension', 'scratch_extension']);
+    t.same(blocks[defaultLength].extensions, ['from_extension', 'scratch_extension']);
     t.end();
 });
 
 test('category color', t => {
     const vm = new VirtualMachine();
+
+    // lk: account for default core extensions
+    const defaultLength = vm.runtime.getBlocksJSON().length;
+
     vm.extensionManager._registerInternalExtension({
         getInfo: () => ({
             id: 'testextension',
@@ -146,7 +166,7 @@ test('category color', t => {
     });
 
     const blocks = vm.runtime.getBlocksJSON();
-    t.same(blocks[0].extensions, ['from_extension', 'default_extension_colors']);
-    t.same(blocks[1].extensions, ['from_extension']);
+    t.same(blocks[defaultLength].extensions, ['from_extension', 'default_extension_colors']);
+    t.same(blocks[defaultLength + 1].extensions, ['from_extension']);
     t.end();
 });
