@@ -20,6 +20,9 @@ test('setxy', t => {
     const s = new Sprite(null, r);
     const a = new RenderedTarget(s, r);
     const renderer = new FakeRenderer();
+    r.setRuntimeOptions({
+        fencing: true
+    }); // lk: Make sure fencing is on so we can test properly.
     a.renderer = renderer;
     a.setXY(123, 321, true);
     t.equals(a.x, 123);
@@ -82,6 +85,9 @@ test('setSize', t => {
     const a = new RenderedTarget(s, r);
     const renderer = new FakeRenderer();
     a.renderer = renderer;
+    r.setRuntimeOptions({
+        fencing: true
+    }); // lk: Make sure fencing is on so we can test properly.
     a.setSize(123);
     t.equals(a._getRenderedDirectionAndScale().scale[0], 123);
     renderer.getCurrentSkinSize = () => [100, 100];
@@ -381,6 +387,9 @@ test('keepInFence', t => {
     r.attachRenderer(renderer);
     const a = new RenderedTarget(s, r);
     a.renderer = renderer;
+    r.setRuntimeOptions({
+        fencing: true
+    }); // lk: Make sure fencing is on so we can test properly.
     t.equals(a.keepInFence(1000, 1000)[0], 240);
     t.equals(a.keepInFence(-1000, 1000)[0], -240);
     t.equals(a.keepInFence(1000, 1000)[1], 180);
