@@ -29,7 +29,7 @@ steps:
     when:
       - event: push
         branch: develop
-        path: ['packages/*/src/**/*', '.woodpecker/*']
+        path: ['packages/*/src/**/*', 'packages/*/package.json', 'package.json', '.woodpecker/*']
     # Use the official jekyll build container
     image: node
     environment:
