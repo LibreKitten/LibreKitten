@@ -26,7 +26,7 @@ const fromHardcoded = ({userID = '0', username, url, img}) => {
     } else if (url) {
         result.href = url;
     }
-    if (userID == '0' && img) {
+    if (userID === '0' && img) {
         result.image = img;
     }
     return result;
