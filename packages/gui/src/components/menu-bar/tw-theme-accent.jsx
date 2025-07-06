@@ -18,34 +18,34 @@ import styles from './settings-menu.css';
 
 const options = defineMessages({
     [ACCENT_ORANGE]: {
-        defaultMessage: 'LibreKitten',
-        description: 'Name of the orange color scheme, used by LibreKitten by default.',
+        defaultMessage: 'LibreKitten — Orange',
+        description: 'Name of LibreKitten\'s orange color scheme. Used by default.',
         id: 'lk.accent.orange'
     },
     [ACCENT_WHITE]: {
-        defaultMessage: 'Colourless (Alpha)',
-        description: 'Name of the white color scheme.',
+        defaultMessage: 'LibreKitten — Professional (Alpha)',
+        description: 'Name of LibreKitten\'s dark blue with a white menu bar color scheme. Nicknamed "Professional".',
         id: 'lk.accent.white'
     },
+    [ACCENT_RAINBOW]: {
+        defaultMessage: 'LibreKitten — Rainbow',
+        description: 'Name of LibreKitten\'s color scheme that uses a rainbow.',
+        id: 'tw.accent.rainbow'
+    },
     [ACCENT_PURPLE]: {
-        defaultMessage: 'Scratch',
-        description: 'Name of the purple color scheme. Matches modern Scratch.',
+        defaultMessage: 'Scratch — Purple',
+        description: 'Name of Scratch\'s purple color scheme. Matches modern Scratch.',
         id: 'tw.accent.purple'
     },
     [ACCENT_BLUE]: {
-        defaultMessage: 'Old Scratch',
-        description: 'Name of the blue color scheme. Matches Scratch before the high contrast update.',
+        defaultMessage: 'Scratch — Blue',
+        description: 'Name of Scratch\'s blue color scheme. Matches Scratch before the high contrast update.',
         id: 'tw.accent.blue'
     },
     [ACCENT_RED]: {
-        defaultMessage: 'TurboWarp',
-        description: 'Name of the red color scheme. used by TurboWarp by default.',
+        defaultMessage: 'TurboWarp — Red',
+        description: 'Name of TurboWarp\'s red color scheme.',
         id: 'lk.accent.red'
-    },
-    [ACCENT_RAINBOW]: {
-        defaultMessage: 'Rainbow',
-        description: 'Name of color scheme that uses a rainbow.',
-        id: 'tw.accent.rainbow'
     }
 });
 
