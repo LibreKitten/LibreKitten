@@ -1,52 +1,110 @@
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {FormattedMessage} from 'react-intl';
+import {FormattedMessage, defineMessages} from 'react-intl';
 import {connect} from 'react-redux';
 
-import {MenuItem} from '../menu/menu.jsx';
+import {MenuItem, Submenu} from '../menu/menu.jsx';
 import {GUI_DARK, GUI_LIGHT, Theme} from '../../lib/themes/index.js';
-import {closeSettingsMenu} from '../../reducers/menus.js';
+import {closeSettingsMenu, openGuiMenu, guiMenuOpen} from '../../reducers/menus.js';
 import {setTheme} from '../../reducers/theme.js';
 import {persistTheme} from '../../lib/themes/themePersistance.js';
 import lightModeIcon from './tw-sun.svg';
 import darkModeIcon from './tw-moon.svg';
 import styles from './settings-menu.css';
+import check from './check.svg';
+import dropdownCaret from './dropdown-caret.svg';
+
+const options = defineMessages({
+    [GUI_LIGHT]: {
+        defaultMessage: 'LibreKitten — Light',
+        description: 'Name of LibreKitten\'s light theme.',
+        icon: lightModeIcon,
+        id: 'lk.theme.lk-light'
+    },
+    [GUI_DARK]: {
+        defaultMessage: 'LibreKitten — Dark',
+        description: 'Name of LibreKitten\'s dark theme.',
+        icon: darkModeIcon,
+        id: 'lk.theme.lk-dark'
+    }
+});
+
+const ThemeIcon = ({item}) => (
+    <img
+        src={options[item].icon}
+        draggable={false}
+        style={{filter: 'var(--icon-filter)'}}
+        // Image is decorative
+        alt=""
+    />
+);
+
+ThemeIcon.propTypes = {
+    item: PropTypes.string
+};
 
 const GuiThemeMenu = ({
+    isOpen,
+    isRtl,
     onChangeTheme,
+    onOpen,
     theme
 }) => (
-    <MenuItem>
+    <MenuItem expanded={isOpen}>
         <div
             className={styles.option}
-            // eslint-disable-next-line react/jsx-no-bind
-            onClick={() => onChangeTheme(theme.set('gui', theme.gui === GUI_DARK ? GUI_LIGHT : GUI_DARK))}
+            onClick={onOpen}
         >
+            <ThemeIcon item={theme.gui} />
+            <span className={styles.submenuLabel}>
+                <FormattedMessage
+                    defaultMessage="Theme"
+                    description="Label for menu to choose a theme (eg. light theme, dark theme)"
+                    id="lk.menuBar.theme"
+                />
+            </span>
             <img
-                src={theme.gui === GUI_DARK ? lightModeIcon : darkModeIcon}
+                className={styles.expandCaret}
+                src={dropdownCaret}
                 draggable={false}
-                width={24}
-                height={24}
                 style={{filter: 'var(--icon-filter)'}}
             />
-            <span className={styles.submenuLabel}>
-                {theme.gui === GUI_DARK ? (
-                    <FormattedMessage
-                        defaultMessage="Switch To Light Mode"
-                        description="Menu item to change color scheme to light (it is currently dark)"
-                        id="tw.darkMode"
-                    />
-                ) : (
-                    <FormattedMessage
-                        defaultMessage="Switch To Dark Mode"
-                        description="Menu item to change color scheme to dark (it is currently light)"
-                        id="tw.lightMode"
-                    />
-                )}
-            </span>
         </div>
+        <Submenu place={isRtl ? 'left' : 'right'}>
+            {Object.keys(options).map(item => (
+                <MenuItem
+                    key={item}
+                    isSelected={theme.accent === item}
+                    // eslint-disable-next-line react/jsx-no-bind
+                    onClick={() => onChangeTheme(theme.set('gui', item))}
+                >
+                    <div className={styles.option}>
+                        <img
+                            className={classNames(styles.check, {[styles.selected]: theme.gui === item})}
+                            width={15}
+                            Matches
+                            height={12}
+                            src={check}
+                            draggable={false}
+                            style={{filter: 'var(--icon-filter)'}}
+                        />
+                        <ThemeIcon item={item} />
+                        <FormattedMessage {...options[item]} />
+                    </div>
+                </MenuItem>
+            ))}
+        </Submenu>
     </MenuItem>
 );
+
+GuiThemeMenu.propTypes = {
+    isOpen: PropTypes.bool,
+    isRtl: PropTypes.bool,
+    onChangeTheme: PropTypes.func,
+    onOpen: PropTypes.func,
+    theme: PropTypes.instanceOf(Theme)
+};
 
 GuiThemeMenu.propTypes = {
     onChangeTheme: PropTypes.func,
@@ -54,6 +112,8 @@ GuiThemeMenu.propTypes = {
 };
 
 const mapStateToProps = state => ({
+    isOpen: guiMenuOpen(state),
+    isRtl: state.locales.isRtl,
     theme: state.scratchGui.theme.theme
 });
 
@@ -62,7 +122,8 @@ const mapDispatchToProps = dispatch => ({
         dispatch(setTheme(theme));
         dispatch(closeSettingsMenu());
         persistTheme(theme);
-    }
+    },
+    onOpen: () => dispatch(openGuiMenu())
 });
 
 export default connect(
