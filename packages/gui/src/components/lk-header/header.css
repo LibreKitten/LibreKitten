@@ -82,7 +82,7 @@
 
 .header-item.active,
 .header-item.hoverable:hover {
-    background-color: $ui-black-transparent;
+    background-color: $menu-bar-black-transparent;
 }
 
 .header-item.growable {

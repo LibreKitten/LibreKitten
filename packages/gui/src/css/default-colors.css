@@ -54,6 +54,10 @@ $drop-highlight-default: var(--drop-highlight-default);
 $menu-bar-background-default: var(--menu-bar-background-default);
 $menu-bar-foreground-default: var(--menu-bar-foreground-default);
 
+$menu-bar-black-transparent-default: var(--menu-bar-black-transparent-default);
+$menu-bar-white-default: var(--menu-bar-white-default);
+$menu-bar-text-primary-default: var(--menu-bar-text-primary-default);
+
 $assets-background-default: var(--assets-background-default);
 
 $input-background-default: var(--input-background-default);

@@ -9,7 +9,7 @@ can set a width for example or what it should do in a flex box (eg. grow).
 */
 
 .title-field {
-    border: 1px dashed $ui-black-transparent;
+    border: 1px dashed $menu-bar-black-transparent;
     border-radius: $form-radius;
     -webkit-border-radius: $form-radius;
     -moz-border-radius: $form-radius;
@@ -36,7 +36,7 @@ can set a width for example or what it should do in a flex box (eg. grow).
 
 .title-field:hover {
     background-color: $project-title-hover;
-    border-color: $ui-black-transparent; /* dont use hover border from custom input */
+    border-color: $menu-bar-black-transparent; /* dont use hover border from custom input */
 }
 
 .title-field:focus {
@@ -44,6 +44,6 @@ can set a width for example or what it should do in a flex box (eg. grow).
     border: 1px solid $ui-transparent;
     -webkit-box-shadow: 0 0 0 calc($space * .5) $ui-white-transparent-default;
     box-shadow: 0 0 0 calc($space * .5) $ui-white-transparent-default;
-    background-color: $ui-white;
-    color: $text-primary;
+    background-color: $menu-bar-white;
+    color: $menu-bar-text-primary-default;
 }

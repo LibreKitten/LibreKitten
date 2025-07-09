@@ -2,7 +2,7 @@
 
 .menu {
     position: absolute;
-    border: 1px solid $ui-black-transparent;
+    border: 1px solid $menu-bar-black-transparent;
     border-radius: 0 0 8px 8px;
     background-color: $menu-bar-background;
     padding: 0;
@@ -34,7 +34,7 @@
 .menu-item.active,
 .menu-item:hover,
 .menu-item.expanded {
-    background-color: $ui-black-transparent;
+    background-color: $menu-bar-black-transparent;
 }
 
 .menu-item.hoverable {
@@ -42,7 +42,7 @@
 }
 
 .menu-section {
-    border-top: 1px solid $ui-black-transparent;
+    border-top: 1px solid $menu-bar-black-transparent;
 }
 
 .submenu {
