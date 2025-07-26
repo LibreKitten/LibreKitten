@@ -140,13 +140,21 @@ export default async function ({ addon, console, msg }) {
       }
     });
 
+    // lk: This is a terrible hack, but it is the closest we can get to fixing the ghost
+    //     toolbox bug before entering monkeypatchy territory.
+    //
+    //     This is necessary for the toolbox to be useful on a phone.
+    Blockly.getMainWorkspace().toolboxPosition = 4;
+
     if (addon.self.enabledLate && (getToggleSetting() === "category" || getToggleSetting() === "clickandcreate") && !addon.settings.get("lockLoad")) {
       Blockly.getMainWorkspace().getToolbox().selectedItem_.setSelected(false);
     }
     addon.self.addEventListener("disabled", () => {
+      Blockly.getMainWorkspace().toolboxPosition = 2;
       Blockly.getMainWorkspace().getToolbox().selectedItem_.setSelected(true);
     });
     addon.self.addEventListener("reenabled", () => {
+      Blockly.getMainWorkspace().toolboxPosition = 4;
       if (getToggleSetting() !== "hover") {
         placeHolderDiv.style.setProperty("--hideFlyout-placeholderDisplay", "none");
       }
