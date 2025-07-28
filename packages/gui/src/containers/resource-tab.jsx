@@ -1,34 +1,20 @@
 import React from 'react';
 
-import type VM from 'scratch-vm';
-
 import AssetPanel from '../components/asset-panel/asset-panel.jsx';
 
 import fileUploadIcon from '../components/action-menu/icon--file-upload.svg';
 
-interface ResourceTabProps {
-    children?: React.ReactNode;
-    vm: VM;
-};
-
 class ResourceTab extends React.Component {
-    declare props: ResourceTabProps;
-    declare fileInput: HTMLInputElement;
-
-    constructor (props: ResourceTabProps) {
-        super(props);
-    };
-
-    setFileInput (input: any): void {
+    setFileInput (input) {
         this.fileInput = input;
         console.log('meow!');
-    };
+    }
 
-    handleFileUploadClick (): void {
+    handleFileUploadClick () {
         this.fileInput.click();
-    };
+    }
 
-    render (): React.ReactNode {
+    render () {
         return (
             <AssetPanel
                 buttons={[
@@ -37,6 +23,7 @@ class ResourceTab extends React.Component {
                         img: fileUploadIcon,
                         onClick: this.handleFileUploadClick.bind(this),
                         fileAccept: '',
+                        // eslint-disable-next-line no-alert
                         fileChange: () => alert('test'),
                         fileInput: this.setFileInput.bind(this),
                         fileMultiple: true
@@ -46,16 +33,18 @@ class ResourceTab extends React.Component {
                 isRtl={false}
                 items={[]}
                 selectedItemIndex={0}
+                /* eslint-disable react/jsx-no-bind */
                 onDeleteClick={() => null}
                 onDrop={() => null}
                 onDuplicateClick={() => null}
                 onExportClick={() => null}
                 onItemClick={() => null}
+                /* eslint-enable react/jsx-no-bind */
             >
-                test
+                {'test'}
             </AssetPanel>
         );
-    };
-};
+    }
+}
 
 export default ResourceTab;
