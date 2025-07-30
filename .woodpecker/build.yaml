@@ -56,7 +56,7 @@ steps:
       - cd ../LibreKitten
       # Run build stage
       - npm install pnpm -g
-      - pnpm install --shamefully-hoist
+      - pnpm install
       - pnpm run prepublish
       - NODE_ENV=production pnpm run gui-ci-build
       # Only needed for custom domains
