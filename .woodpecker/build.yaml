@@ -27,7 +27,7 @@
 steps:
   - name: build
     when:
-      - event: push
+      - event: [push, manual]
         branch: develop
         path: ['packages/*/src/**/*', 'packages/*/package.json', 'package.json', '.woodpecker/*']
     # Use the official jekyll build container
