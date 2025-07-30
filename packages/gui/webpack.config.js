@@ -77,7 +77,6 @@ const base = {
     resolve: {
         fullySpecified: false,
         extensions: ['.ts', '.js'],
-        symlinks: false,
         alias: {
             'text-encoding$': path.resolve(__dirname, 'src/lib/tw-text-encoder'),
             'scratch-render-fonts$': path.resolve(__dirname, 'src/lib/tw-scratch-render-fonts')
