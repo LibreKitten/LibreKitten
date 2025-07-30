@@ -60,6 +60,7 @@
     "dapjs": "2.3.0",
     "domhandler": "2.4.2",
     "es6-object-assign": "1.1.0",
+    "events": "^3.3.0",
     "get-float-time-domain-data": "0.1.0",
     "get-user-media-promise": "1.1.4",
     "immutable": "3.8.2",

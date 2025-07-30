@@ -82,8 +82,8 @@ const base = {
             'scratch-render-fonts$': path.resolve(__dirname, 'src/lib/tw-scratch-render-fonts')
         },
         fallback: {
-            // I really don't feel like forking another repository today.
-            buffer: require.resolve('buffer')
+            buffer: require.resolve('buffer'),
+            events: require.resolve('events/')
         }
     },
     module: {
