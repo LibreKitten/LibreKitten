@@ -1,0 +1,26 @@
+.flex-wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+}
+
+.file-tree {
+    width: 15rem;
+}
+
+.text-editor {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.text-editor [class~='cm-editor'] {
+    width: 0px;
+    height: 100%;
+    flex: 1 1 0px;
+}
+
+.text-editor [class~='cm-editor'] [class~='cm-scroller'] {
+    flex: 1 1 0px;
+    overflow-y: auto;
+}

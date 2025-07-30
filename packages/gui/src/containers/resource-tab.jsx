@@ -1,50 +1,50 @@
+import bindAll from 'lodash.bindall';
+import PropTypes from 'prop-types';
 import React from 'react';
+import VM from 'scratch-vm';
 
-import AssetPanel from '../components/asset-panel/asset-panel.jsx';
-
-import fileUploadIcon from '../components/action-menu/icon--file-upload.svg';
+import ResourceEditor from '../components/lk-resource-editor/resource-editor.jsx';
 
 class ResourceTab extends React.Component {
-    setFileInput (input) {
-        this.fileInput = input;
-        console.log('meow!');
+    constructor (props) {
+        super(props);
+        bindAll(this, [
+            'handleCreate',
+            'handleEdit'
+        ]);
+
+        this.vm = this.props.vm;
+        this.editingTarget = this.vm.editingTarget;
     }
 
-    handleFileUploadClick () {
-        this.fileInput.click();
+    handleCreate (path, content, grant) {
+        this.editingTarget.addResource({
+            name: path,
+            mime: 'text/plain',
+            text: ''
+        });
+        grant();
+    }
+
+    handleEdit (doc, i) {
+        const resources = this.editingTarget.sprite.resources;
+        resources[i].text = doc;
     }
 
     render () {
         return (
-            <AssetPanel
-                buttons={[
-                    {
-                        title: 'Test',
-                        img: fileUploadIcon,
-                        onClick: this.handleFileUploadClick.bind(this),
-                        fileAccept: '',
-                        // eslint-disable-next-line no-alert
-                        fileChange: () => alert('test'),
-                        fileInput: this.setFileInput.bind(this),
-                        fileMultiple: true
-                    }
-                ]}
-                dragType={null}
-                isRtl={false}
-                items={[]}
-                selectedItemIndex={0}
-                /* eslint-disable react/jsx-no-bind */
-                onDeleteClick={() => null}
-                onDrop={() => null}
-                onDuplicateClick={() => null}
-                onExportClick={() => null}
-                onItemClick={() => null}
-                /* eslint-enable react/jsx-no-bind */
-            >
-                {'test'}
-            </AssetPanel>
+            <ResourceEditor
+                editingTarget={this.editingTarget}
+                onCreate={this.handleCreate}
+                onEdit={this.handleEdit}
+                resources={this.editingTarget.sprite.resources}
+            />
         );
     }
 }
+
+ResourceTab.propTypes = {
+    vm: PropTypes.instanceOf(VM)
+};
 
 export default ResourceTab;
