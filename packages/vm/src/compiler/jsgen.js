@@ -508,6 +508,10 @@ class JSGenerator {
         case InputOpcode.SENSING_TIMER_GET:
             return 'runtime.ioDevices.clock.projectTimer()';
 
+        case InputOpcode.RESOURCES_GET:
+            return `getResource(${this.descendInput(node.name)})`;
+
+
         case InputOpcode.CONTROL_COUNTER:
             return 'runtime.ext_scratch3_control._counter';
         case InputOpcode.CONTROL_TERNARY:

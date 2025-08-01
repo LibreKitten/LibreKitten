@@ -394,6 +394,22 @@ runtimeFunctions.distance = `const distance = menu => {
 }`;
 
 /**
+ * Read a resource from a sprite.
+ * @param {string} name The name of the resource to read.
+ * @returns {string} The resource's content, or blank if it doesn't exist, or cannot be read.
+ */
+runtimeFunctions.getResource = `const getResource = name => {
+    const target = globalState.thread.target;
+
+    const resourceI = target.getResourceIndexByName(name);
+    if (resourceI === -1) return '';
+    const resource = target.sprite.resources[resourceI];
+
+    if (!resource.text) return '';
+    return resource.text;
+}`;
+
+/**
  * Convert a Scratch list index to a JavaScript list index.
  * "all" is not considered as a list index.
  * Similar to Cast.toListIndex()

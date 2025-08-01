@@ -622,6 +622,11 @@ class ScriptTreeGenerator {
                 whenFalse: this.descendInputOfBlock(block, 'RIGHT', true)
             });
 
+        case 'resources_get':
+            return new IntermediateInput(InputOpcode.RESOURCES_GET, InputType.STRING, {
+                name: this.descendInputOfBlock(block, 'RESOURCE_INPUT').toType(InputType.STRING)
+            });
+
         case 'tw_getLastKeyPressed':
             return new IntermediateInput(InputOpcode.TW_KEY_LAST_PRESSED, InputType.STRING);
 

@@ -347,10 +347,16 @@ Blockly.Msg.SOUND_SETVOLUMETO = 'set volume to %1%';
 Blockly.Msg.SOUND_VOLUME = 'volume';
 Blockly.Msg.SOUND_RECORD = 'record...';
 
+// Resource blocks
+Blockly.Msg.RESOURCES_GET = 'resource %1';
+// Resource blocks tooltips
+Blockly.Msg.RESOURCES_GET_TOOLTIP = 'I get a resource from my sprite. This is useful, for example, on a server; as you can get HTML from a resource, and serve it.';
+
 // Category labels
 Blockly.Msg.CATEGORY_MOTION = 'Motion';
 Blockly.Msg.CATEGORY_LOOKS = 'Looks';
 Blockly.Msg.CATEGORY_SOUND = 'Sound';
+Blockly.Msg.CATEGORY_RESOURCES = 'Resources';
 Blockly.Msg.CATEGORY_EVENTS = 'Events';
 Blockly.Msg.CATEGORY_CONTROL = 'Control';
 Blockly.Msg.CATEGORY_SENSING = 'Sensing';

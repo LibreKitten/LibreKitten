@@ -366,6 +366,24 @@ const sound = function (isInitialSetup, isStage, targetId, soundName, colors) {
     `;
 };
 
+const resources = function (isInitialSetup, isStage, targetId, soundName, colors) {
+    // Note: the category's secondaryColour matches up with the blocks' tertiary color, both used for border color.
+    return `
+    <category
+        name="%{BKY_CATEGORY_RESOURCES}"
+        id="resources"
+        colour="${colors.primary}"
+        secondaryColour="${colors.tertiary}">
+        <block type="resources_get">
+            <value name="RESOURCE_INPUT">
+                <shadow type="resources_resources_menu"/>
+            </value>
+        </block>
+        ${categorySeparator}
+    </category>
+    `;
+};
+
 const events = function (isInitialSetup, isStage, targetId, colors) {
     // Note: the category's secondaryColour matches up with the blocks' tertiary color, both used for border color.
     return `
@@ -907,6 +925,8 @@ const makeToolboxXML = function (isInitialSetup, isStage = true, targetId, categ
     const looksXML = moveCategory('looks') ||
         looks(isInitialSetup, isStage, targetId, costumeName, backdropName, colors.looks);
     const soundXML = moveCategory('sound') || sound(isInitialSetup, isStage, targetId, soundName, colors.sounds);
+    const resourcesXML = moveCategory('resources') ||
+        resources(isInitialSetup, isStage, targetId, soundName, colors.resources);
     const eventsXML = moveCategory('event') || events(isInitialSetup, isStage, targetId, colors.event);
     const controlXML = moveCategory('control') || control(isInitialSetup, isStage, targetId, colors.control);
     const sensingXML = moveCategory('sensing') || sensing(isInitialSetup, isStage, targetId, colors.sensing);
@@ -926,6 +946,7 @@ const makeToolboxXML = function (isInitialSetup, isStage = true, targetId, categ
         motionXML, gap,
         looksXML, gap,
         soundXML, gap,
+        resourcesXML, gap,
         eventsXML, gap,
         controlXML, gap,
         sensingXML, gap,

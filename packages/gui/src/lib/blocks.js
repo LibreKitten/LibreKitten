@@ -116,6 +116,13 @@ export default function (vm) {
         return [['', '']];
     };
 
+    const resourcesMenu = function () {
+        if (vm.editingTarget && vm.editingTarget.sprite.resources.length > 0) {
+            return vm.editingTarget.sprite.resources.map(resource => [resource.name, resource.name]);
+        }
+        return [['', '']];
+    };
+
     const spriteMenu = function () {
         const sprites = [];
         for (const targetId in vm.runtime.targets) {
@@ -148,6 +155,8 @@ export default function (vm) {
 
     const looksColors = ScratchBlocks.Colours.looks;
 
+    const resourcesColors = ScratchBlocks.Colours.resources;
+
     const motionColors = ScratchBlocks.Colours.motion;
 
     const sensingColors = ScratchBlocks.Colours.sensing;
@@ -168,6 +177,11 @@ export default function (vm) {
 
     ScratchBlocks.Blocks.looks_backdrops.init = function () {
         const json = jsonForMenuBlock('BACKDROP', backdropsMenu, looksColors, []);
+        this.jsonInit(json);
+    };
+
+    ScratchBlocks.Blocks.resources_resources_menu.init = function () {
+        const json = jsonForMenuBlock('RESOURCES_MENU', resourcesMenu, resourcesColors, []);
         this.jsonInit(json);
     };
 
