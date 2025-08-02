@@ -5,7 +5,7 @@ import {FormattedMessage, defineMessages} from 'react-intl';
 import {connect} from 'react-redux';
 
 import {MenuItem, Submenu} from '../menu/menu.jsx';
-import {GUI_DARK, GUI_LIGHT, Theme} from '../../lib/themes/index.js';
+import {GUI_DARK, GUI_LIGHT, GUI_LIGHT_MODERN, Theme} from '../../lib/themes/index.js';
 import {closeSettingsMenu, openGuiMenu, guiMenuOpen} from '../../reducers/menus.js';
 import {setTheme} from '../../reducers/theme.js';
 import {persistTheme} from '../../lib/themes/themePersistance.js';
@@ -17,10 +17,16 @@ import dropdownCaret from './dropdown-caret.svg';
 
 const options = defineMessages({
     [GUI_LIGHT]: {
-        defaultMessage: 'LibreKitten — Light',
+        defaultMessage: 'LibreKitten — Light (Colourful)',
         description: 'Name of LibreKitten\'s light theme.',
         icon: lightModeIcon,
         id: 'lk.theme.lk-light'
+    },
+    [GUI_LIGHT_MODERN]: {
+        defaultMessage: 'LibreKitten — Light (Modern)',
+        description: 'Name of LibreKitten\'s "Light (Modern)" theme.',
+        icon: lightModeIcon,
+        id: 'lk.theme.lk-light-modern'
     },
     [GUI_DARK]: {
         defaultMessage: 'LibreKitten — Dark',

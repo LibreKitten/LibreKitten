@@ -9,10 +9,7 @@ const guiColors = {
     'looks-secondary-dark': 'hsla(260, 42%, 51%, 1)'
 };
 
-const blockColors = {
-    tooltipBackground: 'hsla(260, 60%, 60%, 1)',
-    tooltipBorder: 'hsla(260, 42%, 51%, 1)'
-};
+const blockColors = {};
 
 export {
     guiColors,

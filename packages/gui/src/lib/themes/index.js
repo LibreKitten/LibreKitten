@@ -8,6 +8,7 @@ import * as accentRainbow from './accent/rainbow';
 import * as accentWhite from './accent/white';
 
 import * as guiLight from './gui/light';
+import * as guiLightModern from './gui/light-modern';
 import * as guiDark from './gui/dark';
 
 import * as blocksThree from './blocks/three';
@@ -31,9 +32,11 @@ const ACCENT_MAP = {
 const ACCENT_DEFAULT = ACCENT_ORANGE;
 
 const GUI_LIGHT = 'light';
+const GUI_LIGHT_MODERN = 'light-modern';
 const GUI_DARK = 'dark';
 const GUI_MAP = {
     [GUI_LIGHT]: guiLight,
+    [GUI_LIGHT_MODERN]: guiLightModern,
     [GUI_DARK]: guiDark
 };
 const GUI_DEFAULT = GUI_LIGHT;
@@ -168,6 +171,7 @@ export {
     ACCENT_MAP,
 
     GUI_LIGHT,
+    GUI_LIGHT_MODERN,
     GUI_DARK,
     GUI_MAP,
 
