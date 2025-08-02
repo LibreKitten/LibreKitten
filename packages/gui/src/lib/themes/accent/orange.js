@@ -14,7 +14,9 @@ const guiColors = {
 
 const blockColors = {
     checkboxActiveBackground: 'rgba(255, 130, 0, 1)',
-    checkboxActiveBorder: 'rgba(230, 119, 0, 1)'
+    checkboxActiveBorder: 'rgba(230, 119, 0, 1)',
+    tooltipBackground: 'rgba(255, 130, 0, 1)',
+    tooltipBorder: 'rgba(230, 119, 0, 1)'
 };
 
 export {
