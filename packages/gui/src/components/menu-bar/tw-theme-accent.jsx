@@ -7,7 +7,16 @@ import {connect} from 'react-redux';
 import check from './check.svg';
 import dropdownCaret from './dropdown-caret.svg';
 import {MenuItem, Submenu} from '../menu/menu.jsx';
-import {ACCENT_BLUE, ACCENT_MAP, ACCENT_PURPLE, ACCENT_ORANGE, ACCENT_RED, ACCENT_RAINBOW, ACCENT_WHITE, Theme} from '../../lib/themes/index.js';
+import {
+    ACCENT_BLUE,
+    ACCENT_MAP,
+    ACCENT_PURPLE,
+    ACCENT_ORANGE,
+    ACCENT_RED,
+    ACCENT_RAINBOW,
+    ACCENT_DARK_BLUE,
+    Theme
+} from '../../lib/themes/index.js';
 import {openAccentMenu, accentMenuOpen, closeSettingsMenu} from '../../reducers/menus.js';
 import {setTheme} from '../../reducers/theme.js';
 import {persistTheme} from '../../lib/themes/themePersistance.js';
@@ -22,10 +31,10 @@ const options = defineMessages({
         description: 'Name of LibreKitten\'s orange color scheme. Used by default.',
         id: 'lk.accent.orange'
     },
-    [ACCENT_WHITE]: {
-        defaultMessage: 'LibreKitten — Professional (Alpha)',
-        description: 'Name of LibreKitten\'s dark blue with a white menu bar color scheme. Nicknamed "Professional".',
-        id: 'lk.accent.white'
+    [ACCENT_DARK_BLUE]: {
+        defaultMessage: 'LibreKitten — Dark Blue',
+        description: 'Name of LibreKitten\'s dark blue color scheme.',
+        id: 'lk.accent.darkBlue'
     },
     [ACCENT_RAINBOW]: {
         defaultMessage: 'LibreKitten — Rainbow',
