@@ -28,7 +28,7 @@ steps:
   - name: build
     when:
       - event: [push, manual]
-        branch: develop
+        branch: prod
         path: ['packages/*/src/**/*', 'packages/*/package.json', 'package.json', '.woodpecker/*']
     # Use the official jekyll build container
     image: node
@@ -46,11 +46,12 @@ steps:
       - git config --global user.name "CI Builder"
       # clone and move the target repo
       - cd ..
-      - git clone --depth=1 https://codeberg.org/LibreKitten/pages.git lk-build
+      - git clone --depth=1 -b main https://codeberg.org/LibreKitten/pages.git lk-build
       - chmod -R a+w lk-build
       - cd lk-build
       # Prepare for push
-      - git rm -r -f ./**/*
+      - git rm -rf ./**/*
+      - git rm -rf ./*
       - git remote set-url origin https://$CBTOKEN@codeberg.org/LibreKitten/pages.git
       - git commit -m 'Woodpecker CI - Clean up.'
       - cd ../LibreKitten
