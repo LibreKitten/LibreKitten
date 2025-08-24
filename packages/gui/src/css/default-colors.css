@@ -57,6 +57,11 @@ $menu-bar-foreground-default: var(--menu-bar-foreground-default);
 $menu-bar-black-transparent-default: var(--menu-bar-black-transparent-default);
 $menu-bar-white-default: var(--menu-bar-white-default);
 $menu-bar-text-primary-default: var(--menu-bar-text-primary-default);
+$menu-bar-item-hover-default: var(--menu-bar-item-hover-default);
+
+$context-menu-item-text-default: var(--context-menu-item-text-default);
+$context-menu-item-hover-background-default: var(--context-menu-item-hover-background-default);
+$context-menu-item-hover-foreground-default: var(--context-menu-item-hover-foreground-default);
 
 $assets-background-default: var(--assets-background-default);
 

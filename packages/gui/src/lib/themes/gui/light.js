@@ -62,6 +62,11 @@ const guiColors = {
     'menu-bar-black-transparent': 'var(--ui-black-transparent-default)',
     'menu-bar-white': 'var(--ui-white-default)',
     'menu-bar-text-primary': 'var(--text-primary-default)',
+    'menu-bar-item-hover': 'var(--menu-bar-black-transparent)',
+
+    'context-menu-item-text': 'var(--text-primary)',
+    'context-menu-item-hover-background': 'var(--looks-secondary)',
+    'context-menu-item-hover-foreground': 'white',
 
     'navbar-background': 'var(--looks-secondary)', /* lk: added nav bar colour */
 

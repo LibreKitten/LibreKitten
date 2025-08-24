@@ -34,7 +34,7 @@
 .menu-item.active,
 .menu-item:hover,
 .menu-item.expanded {
-    background-color: $menu-bar-black-transparent;
+    background-color: $menu-bar-item-hover;
 }
 
 .menu-item.hoverable {
