@@ -66,10 +66,9 @@ const ThemeMenuItem = ({id, disabled, isSelected, onClick}) => (
             <img
                 width={15}
                 height={12}
-                className={classNames(styles.check, {[styles.selected]: isSelected})}
+                className={classNames(styles.check, styles.iconFilter, {[styles.selected]: isSelected})}
                 src={check}
                 draggable={false}
-                style={{filter: 'var(--icon-filter)'}}
             />
             <ThemeIcon id={id} />
             <FormattedMessage {...options[id]} />
@@ -77,10 +76,9 @@ const ThemeMenuItem = ({id, disabled, isSelected, onClick}) => (
                 <img
                     width={20}
                     height={20}
-                    className={styles.openLink}
+                    className={classNames(styles.openLink, styles.iconFilter)}
                     src={openLinkIcon}
                     draggable={false}
-                    style={{filter: 'var(--icon-filter)'}}
                 />
             )}
         </div>
@@ -116,10 +114,9 @@ const BlocksThemeMenu = ({
                 />
             </span>
             <img
-                className={styles.expandCaret}
+                className={classNames(styles.expandCaret, styles.iconFilter)}
                 src={dropdownCaret}
                 draggable={false}
-                style={{filter: 'var(--icon-filter)'}}
             />
         </div>
         <Submenu place={isRtl ? 'left' : 'right'}>

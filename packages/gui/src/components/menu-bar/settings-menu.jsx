@@ -30,7 +30,7 @@ const AddonMenuItem = ({onClick}) => (
                 draggable={false}
                 width={20}
                 height={20}
-                style={{filter: 'var(--icon-filter)'}}
+                className={styles.icon}
             />
             <span className={styles.submenuLabel}>
                 <FormattedMessage
@@ -68,7 +68,7 @@ const SettingsMenu = ({
             draggable={false}
             width={20}
             height={20}
-            style={{filter: 'var(--icon-filter)'}}
+            className={styles.iconFilter}
         />
         <span className={styles.dropdownLabel}>
             <FormattedMessage
@@ -82,7 +82,7 @@ const SettingsMenu = ({
             draggable={false}
             width={8}
             height={5}
-            style={{filter: 'var(--icon-filter)'}}
+            className={styles.iconFilter}
         />
         <MenuBarMenu
             className={menuBarStyles.menuBarMenu}

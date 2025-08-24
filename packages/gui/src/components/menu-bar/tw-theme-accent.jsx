@@ -91,13 +91,12 @@ const AccentMenuItem = props => (
     <MenuItem onClick={props.onClick}>
         <div className={styles.option}>
             <img
-                className={classNames(styles.check, {[styles.selected]: props.isSelected})}
+                className={classNames(styles.check, styles.iconFilter, {[styles.selected]: props.isSelected})}
                 width={15}
                 Matches
                 height={12}
                 src={check}
                 draggable={false}
-                style={{filter: 'var(--icon-filter)'}}
             />
             <ColorIcon id={props.id} />
             <FormattedMessage {...options[props.id]} />
@@ -132,10 +131,9 @@ const AccentThemeMenu = ({
                 />
             </span>
             <img
-                className={styles.expandCaret}
+                className={classNames(styles.expandCaret, styles.iconFilter)}
                 src={dropdownCaret}
                 draggable={false}
-                style={{filter: 'var(--icon-filter)'}}
             />
         </div>
         <Submenu place={isRtl ? 'left' : 'right'}>

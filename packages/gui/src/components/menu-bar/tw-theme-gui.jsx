@@ -40,7 +40,7 @@ const ThemeIcon = ({item}) => (
     <img
         src={options[item].icon}
         draggable={false}
-        style={{filter: 'var(--icon-filter)'}}
+        className={styles.iconFilter}
         // Image is decorative
         alt=""
     />
@@ -71,10 +71,9 @@ const GuiThemeMenu = ({
                 />
             </span>
             <img
-                className={styles.expandCaret}
+                className={classNames(styles.expandCaret, styles.iconFilter)}
                 src={dropdownCaret}
                 draggable={false}
-                style={{filter: 'var(--icon-filter)'}}
             />
         </div>
         <Submenu place={isRtl ? 'left' : 'right'}>
@@ -87,13 +86,16 @@ const GuiThemeMenu = ({
                 >
                     <div className={styles.option}>
                         <img
-                            className={classNames(styles.check, {[styles.selected]: theme.gui === item})}
+                            className={classNames(
+                                styles.check,
+                                styles.iconFilter,
+                                {[styles.selected]: theme.gui === item}
+                            )}
                             width={15}
                             Matches
                             height={12}
                             src={check}
                             draggable={false}
-                            style={{filter: 'var(--icon-filter)'}}
                         />
                         <ThemeIcon item={item} />
                         <FormattedMessage {...options[item]} />
