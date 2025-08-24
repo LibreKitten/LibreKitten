@@ -8,4 +8,5 @@
 
 .see-inside-button-icon {
     height: 1.25rem;
+    filter: $icon-filter;
 }
