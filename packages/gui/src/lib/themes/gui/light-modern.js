@@ -10,6 +10,8 @@ const guiColors = {
     'context-menu-item-hover-background': 'hsla(210, 100%, 40%, 0.25)',
     'context-menu-item-hover-foreground': 'var(--context-menu-item-text)',
 
+    'navbar-background': 'var(--menu-bar-background)',
+
     'icon-filter': 'invert(100%)',
 
     'logo-image': `url("${logo}")`
