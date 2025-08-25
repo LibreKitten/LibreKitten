@@ -58,6 +58,7 @@ $menu-bar-black-transparent-default: var(--menu-bar-black-transparent-default);
 $menu-bar-white-default: var(--menu-bar-white-default);
 $menu-bar-text-primary-default: var(--menu-bar-text-primary-default);
 $menu-bar-item-hover-default: var(--menu-bar-item-hover-default);
+$menu-bar-primary-button-default: var(--menu-bar-primary-button-default);
 
 $context-menu-item-text-default: var(--context-menu-item-text-default);
 $context-menu-item-hover-background-default: var(--context-menu-item-hover-background-default);

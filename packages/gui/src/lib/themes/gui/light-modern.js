@@ -9,6 +9,7 @@ const guiColors = {
     'menu-bar-foreground': 'rgba(0, 0, 0, 1)',
 
     'menu-bar-item-hover': 'var(--context-menu-item-hover-background)',
+    'menu-bar-primary-button': 'var(--looks-secondary)',
 
     'context-menu-item-text': 'black',
     'context-menu-item-hover-background': 'hsla(210, 100%, 40%, 0.25)',

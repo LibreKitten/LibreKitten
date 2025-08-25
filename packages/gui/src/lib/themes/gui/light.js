@@ -65,6 +65,7 @@ const guiColors = {
     'menu-bar-white': 'var(--ui-white-default)',
     'menu-bar-text-primary': 'var(--text-primary-default)',
     'menu-bar-item-hover': 'var(--menu-bar-black-transparent)',
+    'menu-bar-primary-button': 'var(--menu-bar-foreground)',
 
     'context-menu-item-text': 'var(--text-primary)',
     'context-menu-item-hover-background': 'var(--looks-secondary)',
