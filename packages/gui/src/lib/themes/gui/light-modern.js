@@ -20,12 +20,12 @@ const guiColors = {
 
     'page-background': 'var(--ui-primary)',
 
-    'page-header-background': 'var(--ui-tertiary)',
-    'page-header-foreground': 'black',
-    'page-header-anchor-text': 'var(--looks-secondary)',
+    'page-header-background': 'var(--looks-secondary)',
+    'page-header-foreground': 'white',
+    'page-header-anchor-text': 'white',
 
     'page-header-button-background': 'white',
-    'page-header-button-foreground': 'black',
+    'page-header-button-foreground': 'var(--looks-secondary)',
 
     'project-title-hover': 'var(--project-title-inactive)',
     'project-title-hover-border': 'var(--looks-secondary)',
