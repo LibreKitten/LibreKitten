@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import render from '../app-target';
 import styles from '../../css/info-page.css';
 
+import '../../lib/normalize.css';
+
 import {APP_NAME} from '../../lib/brand';
 import {applyGuiColors} from '../../lib/themes/guiHelpers';
 import {detectTheme} from '../../lib/themes/themePersistance';

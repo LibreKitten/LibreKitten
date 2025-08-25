@@ -2,6 +2,8 @@ import React from 'react';
 import render from '../app-target';
 import styles from '../../css/info-page.css';
 
+import '../../lib/normalize.css';
+
 import {applyGuiColors} from '../../lib/themes/guiHelpers';
 import {detectTheme} from '../../lib/themes/themePersistance';
 
