@@ -66,6 +66,7 @@ $menu-bar-primary-button: var(--menu-bar-primary-button);
 $context-menu-item-text: var(--context-menu-item-text);
 $context-menu-item-hover-background: var(--context-menu-item-hover-background);
 $context-menu-item-hover-foreground: var(--context-menu-item-hover-foreground);
+$context-menu-item-hover-danger: var(--context-menu-item-hover-danger);
 
 $navbar-background: var(--navbar-background);
 

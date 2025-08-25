@@ -14,6 +14,7 @@ const guiColors = {
     'context-menu-item-text': 'black',
     'context-menu-item-hover-background': 'hsla(210, 100%, 40%, 0.25)',
     'context-menu-item-hover-foreground': 'var(--context-menu-item-text)',
+    'context-menu-item-hover-danger': 'hsla(0, 100%, 50%, 0.25)',
 
     'navbar-background': 'var(--menu-bar-background)',
 

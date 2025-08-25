@@ -35,6 +35,5 @@
 }
 
 .menu-item-danger:hover {
-    background: $error-primary;
-    color: white;
+    background: $context-menu-item-hover-danger;
 }

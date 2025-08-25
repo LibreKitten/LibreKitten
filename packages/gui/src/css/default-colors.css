@@ -63,6 +63,7 @@ $menu-bar-primary-button-default: var(--menu-bar-primary-button-default);
 $context-menu-item-text-default: var(--context-menu-item-text-default);
 $context-menu-item-hover-background-default: var(--context-menu-item-hover-background-default);
 $context-menu-item-hover-foreground-default: var(--context-menu-item-hover-foreground-default);
+$context-menu-item-hover-danger-default: var(--context-menu-item-hover-danger-default);
 
 $assets-background-default: var(--assets-background-default);
 
