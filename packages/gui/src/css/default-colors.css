@@ -83,3 +83,5 @@ $page-foreground-default: var(--page-foreground-default);
 $link-color-default: var(--link-color-default);
 
 $icon-filter: var(--icon-filter-default);
+
+$logo-image-default: var(--logo-image-default);

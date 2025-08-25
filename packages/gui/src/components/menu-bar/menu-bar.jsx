@@ -33,6 +33,8 @@ import ChangeUsername from '../../containers/tw-change-username.jsx';
 import CloudVariablesToggler from '../../containers/tw-cloud-toggler.jsx';
 import TWSaveStatus from './tw-save-status.jsx';
 
+import {detectTheme} from '../../lib/themes/themePersistance';
+
 import {openTipsLibrary, openSettingsModal, openRestorePointModal} from '../../reducers/modals';
 import {setPlayer} from '../../reducers/mode';
 import {
@@ -84,7 +86,6 @@ import collectMetadata from '../../lib/collect-metadata';
 
 import styles from './menu-bar.css';
 
-import logoIcon from './librekitten.svg';
 import helpIcon from '../../lib/assets/icon--tutorials.svg';
 import mystuffIcon from './icon--mystuff.png';
 import profileIcon from './icon--profile.png';
@@ -494,11 +495,7 @@ class MenuBar extends React.Component {
                     <div className={styles.fileGroup}>
                         <a href="/">
                             <MenuLabel onOpen={() => {}}>
-                                <img
-                                    width="32px"
-                                    height="32px"
-                                    src={logoIcon}
-                                />
+                                <div className={styles.logo} />
                             </MenuLabel>
                         </a>
                         {this.props.errors.length > 0 && <div>

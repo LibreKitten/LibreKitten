@@ -1,3 +1,5 @@
+import logo from '../../../lib/assets/librekitten-white.svg';
+
 const guiColors = {
     'color-scheme': 'light',
 
@@ -105,8 +107,10 @@ const guiColors = {
     'paint-popover-background': 'var(--popover-background)',
     'paint-filter-icon-gray': 'none',
 
-    'icon-filter': 'none'
+    'icon-filter': 'none',
 
+    // lk: Not a colour, but it's easier to do this in the themeing system than any other way.
+    'logo-image': `url("${logo}")`
 };
 
 const blockColors = {};
