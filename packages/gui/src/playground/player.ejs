@@ -32,11 +32,15 @@
         background-color: #333;
         color: white;
       }
+      .splash-screen[data-theme="light-modern"] {
+        background-color: white;
+        color: black;
+      }
       .splash-screen > * {
         max-width: 80%;
       }
-      .splash-spinner:after {
-        background-image: url('/images/librekitten.svg');
+      .splash-spinner::after {
+        background-image: url('/images/librekitten-white.svg');
         background-repeat: no-repeat;
         background-size: 128px 128px;
         content: " ";
@@ -44,6 +48,9 @@
         width: 128px;
         height: 128px;
         animation: splash-spinner 0.75s infinite alternate ease-in-out;
+      }
+      .splash-screen[data-theme="light-modern"] .splash-spinner::after {
+        background-image: url('/images/librekitten-colour.svg');
       }
       @keyframes splash-spinner {
         from {  
@@ -95,7 +102,10 @@
 
     <div class="splash-screen spash-waiting-for-js" hidden>
       <div class="splash-spinner"></div>
-      <div class="splash-error-title" hidden>A editor bug has occured and LibreKitten failed to start. <a href="https://scratch.mit.edu/discuss/topic/772797/" target="_blank" rel="noreferrer">Please report</a> with the information below.</div>
+      <div class="splash-error-title" hidden>
+        LibreKitten failed to start. If this happens again, <a href="https://scratch.mit.edu/discuss/topic/772797/" target="_blank" rel="noreferrer">please report</a>
+        with the information below.
+      </div>
       <div class="splash-errors" hidden></div>
       <button class="splash-reset" hidden>Click here to reset caches (can fix some errors)</button>
     </div>
@@ -116,6 +126,8 @@
           theme = 'light';
         } else if (themeSetting === 'dark') {
           theme = 'dark';
+        } else if (themeSetting === 'light-modern') {
+          theme = 'light-modern';
         } else if (themeSetting) {
           try {
             var parsed = JSON.parse(themeSetting);
@@ -126,7 +138,11 @@
             } else if (parsed.accent === 'red') {
               accent = '#ff4c4c';
             }
-            if (parsed.gui === 'dark' || parsed.gui === 'light') {
+            if (
+              parsed.gui === 'dark' ||
+              parsed.gui === 'light' ||
+              parsed.gui === 'light-modern'
+            ) {
               theme = parsed.gui;
             }
           } catch (e) {
@@ -140,7 +156,7 @@
 
         var splash = document.querySelector('.spash-waiting-for-js');
         splash.setAttribute('data-theme', theme);
-        if (theme !== 'dark') {
+        if (!(theme === 'light-modern' || theme === 'dark')) {
             splash.style.backgroundColor = accent;
             splash.style.color = 'white';
         }
