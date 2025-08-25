@@ -181,10 +181,12 @@ const Footer = () => (
                 />
             </div>
 
-            <p>Version: {process.env.npm_package_version} | <a
-                onClick={eraseData}
-                style={{color: 'red'}}
-            >Erase data</a></p>
+            <p className={styles.info}>
+                Version: {process.env.npm_package_version} | <a
+                    onClick={eraseData}
+                    style={{color: 'red'}}
+                >Erase data</a>
+            </p>
         </div>
     </footer>
 );
