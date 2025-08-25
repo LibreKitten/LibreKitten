@@ -18,6 +18,8 @@ const guiColors = {
 
     'navbar-background': 'var(--menu-bar-background)',
 
+    'page-background': 'var(--ui-primary)',
+
     'page-header-background': 'var(--ui-tertiary)',
     'page-header-foreground': 'black',
     'page-header-anchor-text': 'var(--looks-secondary)',
