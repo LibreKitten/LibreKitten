@@ -89,6 +89,13 @@ const guiColors = {
     'page-background': '#ffffff',
     'page-foreground': '#000000',
 
+    'page-header-background': 'var(--motion-tertiary)',
+    'page-header-foreground': 'white',
+    'page-header-anchor-text': 'var(--page-header-foreground)',
+
+    'page-header-button-background': 'white',
+    'page-header-button-foreground': 'var(--page-header-background)',
+
     'project-title-inactive': 'var(--ui-white-transparent)',
     'project-title-hover': '#ffffff7f',
 

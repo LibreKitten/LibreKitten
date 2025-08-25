@@ -16,6 +16,13 @@ const guiColors = {
 
     'navbar-background': 'var(--menu-bar-background)',
 
+    'page-header-background': 'var(--ui-tertiary)',
+    'page-header-foreground': 'black',
+    'page-header-anchor-text': 'var(--looks-secondary)',
+
+    'page-header-button-background': 'white',
+    'page-header-button-foreground': 'black',
+
     'icon-filter': 'invert(100%)',
 
     'logo-image': `url("${logo}")`

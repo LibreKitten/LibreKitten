@@ -79,6 +79,13 @@ $fullscreen-accent-default: var(--fullscreen-accent-default);
 
 $page-background-default: var(--page-background-default);
 $page-foreground-default: var(--page-foreground-default);
+$page-header-anchor-text-default: var(--page-header-anchor-text-default);
+
+$page-header-background-default: var(--page-header-background-default);
+$page-header-foreground-default: var(--page-header-foreground-default);
+
+$page-header-button-background-default: var(--page-header-button-background-default);
+$page-header-button-foreground-default: var(--page-header-button-foreground-default);
 
 $link-color-default: var(--link-color-default);
 

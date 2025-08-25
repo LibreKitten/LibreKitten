@@ -82,8 +82,15 @@ $shadow: var(--shadow);
 $badge-background: var(--badge-background);
 $badge-border: var(--badge-border);
 
+$page-header-background: var(--page-header-background);
+$page-header-foreground: var(--page-header-foreground);
+$page-header-anchor-text: var(--page-header-anchor-text);
+
 $page-background: var(--page-background);
 $page-foreground: var(--page-foreground);
+
+$page-header-button-background: var(--page-header-button-background);
+$page-header-button-foreground: var(--page-header-button-foreground);
 
 $project-title-inactive: var(--project-title-inactive);
 $project-title-hover: var(--project-title-hover);
