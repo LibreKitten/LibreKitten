@@ -25,6 +25,11 @@ const guiColors = {
     'page-header-button-background': 'white',
     'page-header-button-foreground': 'black',
 
+    'project-title-hover': 'var(--project-title-inactive)',
+    'project-title-hover-border': 'var(--looks-secondary)',
+    'project-title-focus-border': 'var(--looks-secondary)',
+    'project-title-focus-shadow': 'var(--looks-transparent)',
+
     'icon-filter': 'invert(100%)',
 
     'logo-image': `url("${logo}")`

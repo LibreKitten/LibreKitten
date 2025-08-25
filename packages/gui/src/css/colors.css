@@ -96,6 +96,9 @@ $page-header-button-foreground: var(--page-header-button-foreground);
 
 $project-title-inactive: var(--project-title-inactive);
 $project-title-hover: var(--project-title-hover);
+$project-title-hover-border: var(--project-title-hover-border);
+$project-title-focus-border: var(--project-title-focus-border);
+$project-title-focus-shadow: var(--project-title-focus-shadow);
 
 $link-color: var(--link-color);
 

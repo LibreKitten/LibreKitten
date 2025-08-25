@@ -36,14 +36,14 @@ can set a width for example or what it should do in a flex box (eg. grow).
 
 .title-field:hover {
     background-color: $project-title-hover;
-    border-color: $menu-bar-black-transparent; /* dont use hover border from custom input */
+    border-color: $project-title-hover-border; /* dont use hover border from custom input */
 }
 
 .title-field:focus {
     outline:none;
-    border: 1px solid $ui-transparent;
-    -webkit-box-shadow: 0 0 0 calc($space * .5) $ui-white-transparent-default;
-    box-shadow: 0 0 0 calc($space * .5) $ui-white-transparent-default;
+    border: 1px solid $project-title-focus-border;
+    -webkit-box-shadow: 0 0 0 calc($space * .5) $project-title-focus-shadow;
+    box-shadow: 0 0 0 calc($space * .5) $project-title-focus-shadow;
     background-color: $menu-bar-white;
     color: $menu-bar-text-primary-default;
 }

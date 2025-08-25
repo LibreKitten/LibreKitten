@@ -100,6 +100,9 @@ const guiColors = {
 
     'project-title-inactive': 'var(--ui-white-transparent)',
     'project-title-hover': '#ffffff7f',
+    'project-title-hover-border': 'var(--menu-bar-black-transparent)',
+    'project-title-focus-border': 'var(--ui-transparent)',
+    'project-title-focus-shadow': 'var(--ui-white-transparent-default)',
 
     'link-color': '#2255dd',
 
