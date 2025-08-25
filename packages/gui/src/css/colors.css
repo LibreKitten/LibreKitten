@@ -94,6 +94,9 @@ $page-foreground: var(--page-foreground);
 $page-header-button-background: var(--page-header-button-background);
 $page-header-button-foreground: var(--page-header-button-foreground);
 
+$footer-background: var(--footer-background);
+$footer-foreground: var(--footer-foreground);
+
 $project-title-inactive: var(--project-title-inactive);
 $project-title-hover: var(--project-title-hover);
 $project-title-hover-border: var(--project-title-hover-border);

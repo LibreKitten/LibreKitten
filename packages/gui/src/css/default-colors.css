@@ -89,6 +89,9 @@ $page-header-foreground-default: var(--page-header-foreground-default);
 $page-header-button-background-default: var(--page-header-button-background-default);
 $page-header-button-foreground-default: var(--page-header-button-foreground-default);
 
+$footer-background-default: var(--footer-background-default);
+$footer-foreground-default: var(--footer-foreground-default);
+
 $link-color-default: var(--link-color-default);
 
 $icon-filter: var(--icon-filter-default);

@@ -27,6 +27,9 @@ const guiColors = {
     'page-header-button-background': 'white',
     'page-header-button-foreground': 'var(--looks-secondary)',
 
+    'footer-background': 'white',
+    'footer-foreground': 'black',
+
     'project-title-hover': 'var(--project-title-inactive)',
     'project-title-hover-border': 'var(--looks-secondary)',
     'project-title-focus-border': 'var(--looks-secondary)',

@@ -98,6 +98,9 @@ const guiColors = {
     'page-header-button-background': 'white',
     'page-header-button-foreground': 'var(--page-header-background)',
 
+    'footer-background': 'transparent',
+    'footer-foreground': 'inherit',
+
     'project-title-inactive': 'var(--ui-white-transparent)',
     'project-title-hover': '#ffffff7f',
     'project-title-hover-border': 'var(--menu-bar-black-transparent)',

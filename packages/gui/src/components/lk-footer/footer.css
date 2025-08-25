@@ -1,6 +1,8 @@
 @import "../../css/colors.css";
 
 .footer {
+    background: $footer-background;
+    color: $footer-foreground;
     padding: 10px 0;
     margin-top: 10px;
     border-top: 2px solid $ui-black-transparent;
