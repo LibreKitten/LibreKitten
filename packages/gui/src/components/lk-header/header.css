@@ -37,6 +37,8 @@
     background-color: $navbar-background;
     background-image: $menu-bar-background-image;
     color: $menu-bar-foreground;
+
+    box-shadow: 0 0.1em 0.5em hsla(0, 0%, 0%, 0.25);
 }
 
 .main-group {
