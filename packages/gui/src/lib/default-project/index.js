@@ -19,7 +19,7 @@ const defaultProject = translator => {
         }];
     }
 
-    if (canaryMode) {
+    if (process.env.CANARY_MODE) {
         return [{
             id: 0,
             assetType: 'Project',

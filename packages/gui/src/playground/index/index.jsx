@@ -38,8 +38,16 @@ const Index = () => (
             </div>
             <header className={styles.headerContainer}>
                 <h1 className={styles.headerText}>
-                    LibreKitten - A powerful block-based visual programming language.
+                    {process.env.CANARY_MODE ?
+                        'LibreKitten (Canary Build)' :
+                        'LibreKitten - A powerful block-based visual programming language.'}
                 </h1>
+                {process.env.CANARY_MODE && <p>
+                    <strong>Please do not write serious projects in the canary build.</strong> Features that you
+                    are using may be removed, your project may get corrupted, among other things that may happen. <a href="https://librekitten.org/">
+                        Click here to go to stable LibreKitten.
+                    </a>
+                </p>}
                 <p>
                     LibreKitten is an <strong>alpha-quality</strong> block-based visual programming language based
                     on <a href="https://turbowarp.org/">TurboWarp</a>. The primary feature is being able to function as a web server, but it is

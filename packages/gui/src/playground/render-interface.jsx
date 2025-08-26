@@ -136,9 +136,11 @@ class Interface extends React.Component {
                             enableSeeInside
                             onClickAddonSettings={handleClickAddonSettings}
                         />
-                        {canaryMode ? (
+                        {process.env.CANARY_MODE ? (
                             <p className={styles.notice}>
-                                You are using Canary IDE, which can be unstable, <a href="https://librekitten.org/projects.html">click here to return to LibreKitten Stable</a>.
+                                {`You are using the canary build of ${APP_NAME}, which can be unstable.`}
+                                &nbsp;
+                                <a href="https://librekitten.org/projects.html">{'Click here to go to stable LibreKitten.'}</a>
                             </p>
                         ) : null}
                     </div>

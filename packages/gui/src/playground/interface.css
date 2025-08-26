@@ -87,6 +87,10 @@ a {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: $motion-tertiary;
+    background-color: $data-primary;
+    color: white;
+}
+
+.notice a {
     color: white;
 }
