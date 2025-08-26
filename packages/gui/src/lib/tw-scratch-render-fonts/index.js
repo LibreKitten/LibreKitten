@@ -15,7 +15,8 @@ const fontSource = {
     'Handwriting': Handwriting,
     'Marker': Marker,
     'Curly': Curly,
-    'Pixel': Pixel
+    'Pixel': Pixel,
+    'Scratch': Scratch
 };
 
 const fontData = {};
