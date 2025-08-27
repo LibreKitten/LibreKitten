@@ -35,7 +35,7 @@ import TWSaveStatus from './tw-save-status.jsx';
 
 import {detectTheme} from '../../lib/themes/themePersistance';
 
-import {openTipsLibrary, openSettingsModal, openRestorePointModal} from '../../reducers/modals';
+import {openTipsLibrary, openSettingsModal, openRestorePointModal, openWelcomeModal} from '../../reducers/modals';
 import {setPlayer} from '../../reducers/mode';
 import {
     isTimeTravel220022BC,
@@ -565,6 +565,7 @@ class MenuBar extends React.Component {
                                 this.props.onClickAddonSettings &&
                                 this.props.onClickAddonSettings.bind(null, 'editor-theme3')
                             }
+                            onClickWelcomeModal={this.props.onClickWelcomeModal}
                             onRequestClose={this.props.onRequestCloseSettings}
                             onRequestOpen={this.props.onClickSettings}
                             settingsMenuOpen={this.props.settingsMenuOpen}
@@ -1120,6 +1121,7 @@ MenuBar.propTypes = {
     onClickSaveAsCopy: PropTypes.func,
     onClickSettings: PropTypes.func,
     onClickSettingsModal: PropTypes.func,
+    onClickWelcomeModal: PropTypes.func,
     onLogOut: PropTypes.func,
     onOpenRegistration: PropTypes.func,
     onOpenTipLibrary: PropTypes.func,
@@ -1213,6 +1215,10 @@ const mapDispatchToProps = dispatch => ({
     onClickSettingsModal: () => {
         dispatch(closeEditMenu());
         dispatch(openSettingsModal());
+    },
+    onClickWelcomeModal: () => {
+        dispatch(closeSettingsMenu());
+        dispatch(openWelcomeModal());
     },
     onRequestCloseSettings: () => dispatch(closeSettingsMenu()),
     onClickNew: needSave => {

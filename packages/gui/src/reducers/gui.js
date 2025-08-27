@@ -142,6 +142,18 @@ const initTelemetryModal = function (currentState) {
     );
 };
 
+const initWelcomeModal = function (currentState, toSet) {
+    return Object.assign(
+        {},
+        currentState,
+        {
+            modals: {
+                welcomeModal: toSet // this key must match `MODAL_WELCOME` in modals.js
+            }
+        }
+    );
+};
+
 const guiReducer = combineReducers({
     alerts: alertsReducer,
     assetDrag: assetDragReducer,
@@ -184,5 +196,6 @@ export {
     initFullScreen,
     initPlayer,
     initTelemetryModal,
-    initTutorialCard
+    initTutorialCard,
+    initWelcomeModal
 };

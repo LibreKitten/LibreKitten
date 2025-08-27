@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
+import classNames from 'classnames';
 
 import LanguageMenu from './language-menu.jsx';
 import MenuBarMenu from './menu-bar-menu.jsx';
-import {MenuSection} from '../menu/menu.jsx';
-import {MenuItem} from '../menu/menu.jsx';
+import {MenuItem, MenuSection} from '../menu/menu.jsx';
 import MenuLabel from './tw-menu-label.jsx';
 import TWAccentThemeMenu from './tw-theme-accent.jsx';
 import TWGuiThemeMenu from './tw-theme-gui.jsx';
@@ -47,12 +47,35 @@ AddonMenuItem.propTypes = {
     onClickAddonSettings: PropTypes.func
 };
 
+const WelcomeModalMenuItem = ({className, onClick}) => (
+    <MenuItem
+        className={classNames(styles.option, className)}
+        onClick={onClick}
+    >
+        <div className={styles.option}>
+            <span className={styles.submenuLabel}>
+                <FormattedMessage
+                    defaultMessage="Show welcome screen"
+                    description="Button to re-show the welcome modal"
+                    id="lk.menuBar.welcomeModal"
+                />
+            </span>
+        </div>
+    </MenuItem>
+);
+
+WelcomeModalMenuItem.propTypes = {
+    className: PropTypes.string,
+    onClick: PropTypes.func
+};
+
 const SettingsMenu = ({
     canChangeLanguage,
     canChangeTheme,
     isRtl,
     onClickAddonSettings,
     onClickDesktopSettings,
+    onClickWelcomeModal,
     onOpenCustomSettings,
     onRequestClose,
     onRequestOpen,
@@ -103,6 +126,9 @@ const SettingsMenu = ({
                 {onClickDesktopSettings && <TWDesktopSettings onClick={onClickDesktopSettings} />}
                 {onClickAddonSettings && <AddonMenuItem onClick={onClickAddonSettings} />}
             </MenuSection>
+            <MenuSection>
+                {onClickWelcomeModal && <WelcomeModalMenuItem onClick={onClickWelcomeModal} />}
+            </MenuSection>
         </MenuBarMenu>
     </MenuLabel>
 );
@@ -113,6 +139,7 @@ SettingsMenu.propTypes = {
     isRtl: PropTypes.bool,
     onClickAddonSettings: PropTypes.func,
     onClickDesktopSettings: PropTypes.func,
+    onClickWelcomeModal: PropTypes.func,
     onOpenCustomSettings: PropTypes.func,
     onRequestClose: PropTypes.func,
     onRequestOpen: PropTypes.func,
