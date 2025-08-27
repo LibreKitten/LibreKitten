@@ -58,9 +58,9 @@ const handleClickAddonSettings = addonId => {
 
 const messages = defineMessages({
     defaultTitle: {
-        defaultMessage: 'Code in blocks seriously',
+        defaultMessage: 'Block-based visual programming language with server support',
         description: 'Title of homepage',
-        id: 'tw.guiDefaultTitle'
+        id: 'lk.guiDefaultTitle'
     }
 });
 
