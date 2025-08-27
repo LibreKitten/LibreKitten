@@ -12,8 +12,12 @@
 }
 .body {
     width: 50%;
-    color: white;
+    color: $menu-bar-foreground;
     text-align: center;
+}
+
+.reload-icon {
+    filter: var(--icon-filter);
 }
 
 /* scratch-www was overriding the colors */
@@ -22,11 +26,11 @@
 }
 
 .reloadButton {
-    border: 1px solid $motion-primary;
+    border: 1px solid $menu-bar-background;
     border-radius: 0.25rem;
     padding: 0.5rem 2rem;
-    background: white;
-    color: $motion-primary;
+    background: $menu-bar-foreground;
+    color: $menu-bar-background;
     font-weight: bold;
     font-size: 0.875rem;
     cursor: pointer;
