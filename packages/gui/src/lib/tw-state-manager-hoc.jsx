@@ -319,8 +319,8 @@ const TWStateManager = function (WrappedComponent) {
                 }
             }
 
-            if (urlParams.has('hqpen')) {
-                this.props.vm.renderer.setUseHighQualityRender(true);
+            if (urlParams.has('no-hqpen')) {
+                this.props.vm.renderer.setUseHighQualityRender(false);
             }
 
             if (urlParams.has('turbo')) {
@@ -350,15 +350,15 @@ const TWStateManager = function (WrappedComponent) {
                 }
             }
 
-            if (urlParams.has('offscreen')) {
+            if (urlParams.has('fence')) {
                 this.props.vm.setRuntimeOptions({
-                    fencing: false
+                    fencing: true
                 });
             }
 
-            if (urlParams.has('limitless')) {
+            if (urlParams.has('misc-limits')) {
                 this.props.vm.setRuntimeOptions({
-                    miscLimits: false
+                    miscLimits: true
                 });
             }
 
@@ -415,6 +415,11 @@ const TWStateManager = function (WrappedComponent) {
                 // Always remove legacy parameter
                 searchParams.delete('60fps');
 
+                // lk: Delete LibreKitten's legacy parameters.
+                searchParams.delete('hqpen');
+                searchParams.delete('offscreen');
+                searchParams.delete('limitless');
+
                 const {width, height} = this.props.customStageSize;
                 if (width === defaultStageSize.width && height === defaultStageSize.height) {
                     searchParams.delete('size');
@@ -422,7 +427,7 @@ const TWStateManager = function (WrappedComponent) {
                     searchParams.set('size', `${width}x${height}`);
                 }
 
-                if (this.props.framerate === 30) {
+                if (this.props.framerate === 0) {
                     searchParams.delete('fps');
                 } else {
                     searchParams.set('fps', this.props.framerate);
@@ -441,9 +446,9 @@ const TWStateManager = function (WrappedComponent) {
                 }
 
                 if (this.props.highQualityPen) {
-                    searchParams.set('hqpen', '');
+                    searchParams.delete('no-hqpen');
                 } else {
-                    searchParams.delete('hqpen');
+                    searchParams.set('no-hqpen', '');
                 }
 
                 if (compilerOptions.enabled) {
@@ -467,15 +472,15 @@ const TWStateManager = function (WrappedComponent) {
                 }
 
                 if (runtimeOptions.fencing) {
-                    searchParams.delete('offscreen');
+                    searchParams.set('fence', '');
                 } else {
-                    searchParams.set('offscreen', '');
+                    searchParams.delete('fence');
                 }
 
                 if (runtimeOptions.miscLimits) {
-                    searchParams.delete('limitless');
+                    searchParams.set('misc-limits', '');
                 } else {
-                    searchParams.set('limitless', '');
+                    searchParams.delete('misc-limits');
                 }
 
                 setSearchParams(searchParams);
