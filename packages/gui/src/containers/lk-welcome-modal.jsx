@@ -29,12 +29,17 @@ class WelcomeModal extends React.Component {
         this.props.onClose();
     }
 
+    handleOpenStable () {
+        window.open(`https://librekitten.org${window.location.pathname}`, '_blank');
+    }
+
     render () {
         return (
             <WelcomeModalComponent
                 dontShowAgainRef={this.dontShowAgainRef}
                 isRtl={this.props.isRtl}
                 onClose={this.handleClose}
+                onOpenStable={this.handleOpenStable}
             />
         );
     }

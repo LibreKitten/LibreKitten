@@ -99,3 +99,16 @@
 .dont-show-again-area input[type="checkbox"] {
     margin-right: 5px;
 }
+
+.canary-warning {
+    line-height: 1.5em;
+    padding: 0.5rem;
+    margin-bottom: 1em;
+    border-radius: 0.5rem;
+    border: 1px solid #ff52526e;
+    background-color: #ff525240;
+}
+
+.canary-warning p {
+    margin-bottom: 0;
+}

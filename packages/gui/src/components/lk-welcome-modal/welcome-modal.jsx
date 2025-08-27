@@ -80,6 +80,22 @@ const WelcomeModalComponent = ({intl, ...props}) => {
                         </p>
                     </>
 
+                    {process.env.CANARY_MODE && (
+                        <div className={styles.canaryWarning}>
+                            <p>
+                                <FormattedMessage
+                                    // eslint-disable-next-line max-len
+                                    defaultMessage="You are using the canary build of {APP_NAME}. Please do not write serious projects in the canary build. Features that you are using may be removed, your project may get corrupted, among other things that may happen."
+                                    description="An obligatory &quot;don't use the unstable build in production&quot; warning."
+                                    id="lk.welcomeModal.canaryBuild"
+                                    values={{
+                                        APP_NAME
+                                    }}
+                                />
+                            </p>
+                        </div>
+                    )}
+
                     <div className={styles.buttonContainer}>
                         <Button
                             className={styles.button}
@@ -91,6 +107,21 @@ const WelcomeModalComponent = ({intl, ...props}) => {
                                 id="lk.welcomeModal.close"
                             />
                         </Button>
+                        {process.env.CANARY_MODE && (
+                            <Button
+                                className={styles.button}
+                                onClick={props.onOpenStable}
+                            >
+                                <FormattedMessage
+                                    defaultMessage="Open Stable {APP_NAME}"
+                                    description="Opens the stable version of LibreKitten."
+                                    id="lk.welcomeModal.openStable"
+                                    values={{
+                                        APP_NAME
+                                    }}
+                                />
+                            </Button>
+                        )}
                     </div>
 
                     <div className={styles.dontShowAgainArea}>
@@ -119,7 +150,8 @@ WelcomeModalComponent.propTypes = {
     dontShowAgainRef: PropTypes.func,
     intl: intlShape.isRequired,
     isRtl: PropTypes.bool,
-    onClose: PropTypes.func
+    onClose: PropTypes.func,
+    onOpenStable: PropTypes.func
 };
 
 const WrappedWelcomeModalComponent = injectIntl(WelcomeModalComponent);
