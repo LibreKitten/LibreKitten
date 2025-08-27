@@ -18,11 +18,12 @@ import styles from './settings-menu.css';
 import addonsIcon from './addons.svg';
 import dropdownCaret from './dropdown-caret.svg';
 import settingsIcon from './icon--settings.svg';
+import openLinkIcon from './tw-open-link.svg';
 
-const AddonMenuItem = ({onClick}) => (
+const AddonMenuItem = ({className, onClick}) => (
     <MenuItem>
         <div
-            className={styles.option}
+            className={classNames(styles.option, className)}
             onClick={onClick}
         >
             <img
@@ -39,12 +40,20 @@ const AddonMenuItem = ({onClick}) => (
                     id="tw.menuBar.addons"
                 />
             </span>
+            <img
+                width={20}
+                height={20}
+                className={classNames(styles.openLink, styles.iconFilter)}
+                src={openLinkIcon}
+                draggable={false}
+            />
         </div>
     </MenuItem>
 );
 
 AddonMenuItem.propTypes = {
-    onClickAddonSettings: PropTypes.func
+    className: PropTypes.string,
+    onClick: PropTypes.func
 };
 
 const WelcomeModalMenuItem = ({className, onClick}) => (
@@ -124,6 +133,8 @@ const SettingsMenu = ({
                     </React.Fragment>
                 )}
                 {onClickDesktopSettings && <TWDesktopSettings onClick={onClickDesktopSettings} />}
+            </MenuSection>
+            <MenuSection>
                 {onClickAddonSettings && <AddonMenuItem onClick={onClickAddonSettings} />}
             </MenuSection>
             <MenuSection>
