@@ -13,14 +13,12 @@ import {
     ACCENT_PURPLE,
     ACCENT_ORANGE,
     ACCENT_RED,
-    ACCENT_RAINBOW,
     ACCENT_DARK_BLUE,
     Theme
 } from '../../lib/themes/index.js';
 import {openAccentMenu, accentMenuOpen, closeSettingsMenu} from '../../reducers/menus.js';
 import {setTheme} from '../../reducers/theme.js';
 import {persistTheme} from '../../lib/themes/themePersistance.js';
-import rainbowIcon from './tw-accent-rainbow.svg';
 import styles from './settings-menu.css';
 
 // lk: added orange
@@ -35,11 +33,6 @@ const options = defineMessages({
         defaultMessage: 'LibreKitten — Dark Blue',
         description: 'Name of LibreKitten\'s dark blue color scheme.',
         id: 'lk.accent.darkBlue'
-    },
-    [ACCENT_RAINBOW]: {
-        defaultMessage: 'LibreKitten — Rainbow',
-        description: 'Name of LibreKitten\'s color scheme that uses a rainbow.',
-        id: 'tw.accent.rainbow'
     },
     [ACCENT_PURPLE]: {
         defaultMessage: 'Scratch — Purple',
@@ -58,9 +51,7 @@ const options = defineMessages({
     }
 });
 
-const icons = {
-    [ACCENT_RAINBOW]: rainbowIcon
-};
+const icons = {};
 
 const ColorIcon = props => (
     icons[props.id] ? (
