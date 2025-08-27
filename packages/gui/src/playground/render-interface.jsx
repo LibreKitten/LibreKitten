@@ -23,6 +23,7 @@ import {FormattedMessage, defineMessages, injectIntl, intlShape} from 'react-int
 import {getIsLoading} from '../reducers/project-state.js';
 import AppStateHOC from '../lib/app-state-hoc.jsx';
 import ErrorBoundaryHOC from '../lib/error-boundary-hoc.jsx';
+import TWThemeManagerHOC from '../containers/tw-theme-manager-hoc.jsx';
 import TWProjectMetaFetcherHOC from '../lib/tw-project-meta-fetcher-hoc.jsx';
 import TWStateManagerHOC from '../lib/tw-state-manager-hoc.jsx';
 import SBFileUploaderHOC from '../lib/sb-file-uploader-hoc.jsx';
@@ -100,6 +101,13 @@ class Interface extends React.Component {
         }
     }
     render () {
+        if (new URLSearchParams(location.search).has('induce-crash')) {
+            throw new Error(
+                'Induced crash. If someone sent this as a link to you, you don\'t need to worry about it. ' +
+                'You can open LibreKitten in a new tab and go on about your day.'
+            );
+        }
+
         if (isInvalidEmbed) {
             return <InvalidEmbed />;
         }
@@ -311,7 +319,9 @@ const WrappedInterface = compose(
     ErrorBoundaryHOC('TW Interface'),
     TWProjectMetaFetcherHOC,
     TWStateManagerHOC,
-    TWPackagerIntegrationHOC
+    TWPackagerIntegrationHOC,
+    // lk: Theme Manager needs to run earlier than in TurboWarp for the induced crash error message to be readable.
+    TWThemeManagerHOC
 )(ConnectedInterface);
 
 export default WrappedInterface;
