@@ -59,7 +59,7 @@ steps:
       - npm install pnpm -g
       - pnpm install
       - pnpm run prepublish
-      - NODE_ENV=production pnpm run gui-ci-build
+      - NODE_ENV=production CANARY_MODE=true pnpm run gui-ci-build
       # Only needed for custom domains
       #- cp domains _site/.domains
       # Push to target
