@@ -4,14 +4,14 @@
     "description": "Block-based JIT compiled programming language with server-side execution support.",
     "icons": [
         {
-            "src": "/android-chrome-192x192.png",
+            "src": "/images/librekitten-colour.svg",
             "sizes": "192x192",
-            "type": "image/png"
+            "type": "image/svg+xml"
         },
         {
-            "src": "/android-chrome-512x512.png",
+            "src": "/images/librekitten-colour.svg",
             "sizes": "512x512",
-            "type": "image/png"
+            "type": "image/svg+xml"
         }
     ],
     "start_url": "editor.html",
