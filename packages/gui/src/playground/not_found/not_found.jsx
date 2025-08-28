@@ -3,6 +3,8 @@ import render from '../app-target';
 import styles from '../../css/info-page.css';
 import './not_found.css';
 
+import '../../lib/normalize.css';
+
 import {applyGuiColors} from '../../lib/themes/guiHelpers';
 import {detectTheme} from '../../lib/themes/themePersistance';
 

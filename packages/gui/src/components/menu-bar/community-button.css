@@ -1,7 +1,7 @@
 @import "../../css/colors.css";
 
 .community-button {
-    box-shadow: 0 0 0 1px $ui-black-transparent;
+    box-shadow: 0 0 0 1px $menu-bar-black-transparent;
 }
 
 .community-button-icon {

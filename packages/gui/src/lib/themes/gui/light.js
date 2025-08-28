@@ -1,3 +1,5 @@
+import logo from '../../../lib/assets/librekitten-white.svg';
+
 const guiColors = {
     'color-scheme': 'light',
 
@@ -59,6 +61,17 @@ const guiColors = {
     'menu-bar-background-image': 'none',
     'menu-bar-foreground': '#ffffff',
 
+    'menu-bar-black-transparent': 'var(--ui-black-transparent-default)',
+    'menu-bar-white': 'var(--ui-white-default)',
+    'menu-bar-text-primary': 'var(--text-primary-default)',
+    'menu-bar-item-hover': 'var(--menu-bar-black-transparent)',
+    'menu-bar-primary-button': 'var(--menu-bar-foreground)',
+
+    'context-menu-item-text': 'var(--text-primary)',
+    'context-menu-item-hover-background': 'var(--looks-secondary)',
+    'context-menu-item-hover-foreground': 'white',
+    'context-menu-item-hover-danger': 'var(--error-primary)',
+
     'navbar-background': 'var(--looks-secondary)', /* lk: added nav bar colour */
 
     'assets-background': '#ffffff',
@@ -78,8 +91,21 @@ const guiColors = {
     'page-background': '#ffffff',
     'page-foreground': '#000000',
 
+    'page-header-background': 'var(--motion-tertiary)',
+    'page-header-foreground': 'white',
+    'page-header-anchor-text': 'var(--page-header-foreground)',
+
+    'page-header-button-background': 'white',
+    'page-header-button-foreground': 'var(--page-header-background)',
+
+    'footer-background': 'transparent',
+    'footer-foreground': 'inherit',
+
     'project-title-inactive': 'var(--ui-white-transparent)',
     'project-title-hover': '#ffffff7f',
+    'project-title-hover-border': 'var(--menu-bar-black-transparent)',
+    'project-title-focus-border': 'var(--ui-transparent)',
+    'project-title-focus-shadow': 'var(--ui-white-transparent-default)',
 
     'link-color': '#2255dd',
 
@@ -96,8 +122,10 @@ const guiColors = {
     'paint-popover-background': 'var(--popover-background)',
     'paint-filter-icon-gray': 'none',
 
-    'icon-filter': 'none'
+    'icon-filter': 'none',
 
+    // lk: Not a colour, but it's easier to do this in the themeing system than any other way.
+    'logo-image': `url("${logo}")`
 };
 
 const blockColors = {};

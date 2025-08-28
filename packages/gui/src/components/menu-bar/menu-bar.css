@@ -47,13 +47,13 @@
 .inactive {
     opacity: 0;
 }
-.scratch-logo {
-    height:  1.6rem;
-    vertical-align: middle;
-}
-
-.scratch-logo.clickable {
-    cursor: pointer;
+.logo {
+    width: 32px;
+    height: 32px;
+    background-image: $logo-image;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
 }
 
 .menu-bar-item {
@@ -75,7 +75,7 @@
 
 .menu-bar-item.active,
 .menu-bar-item.hoverable:hover {
-    background-color: $ui-black-transparent;
+    background-color: $menu-bar-item-hover;
 }
 
 .menu-bar-item.growable {
@@ -110,7 +110,7 @@
 }
 
 .feedback-button {
-    background-color: var(--menu-bar-foreground);
+    background-color: $menu-bar-primary-button;
     color: inherit;
     height: 34px;
 }
@@ -237,4 +237,8 @@
 .menu-item-link {
     color: inherit;
     text-decoration: none;
+}
+
+.icon-filter {
+    filter: $icon-filter;
 }

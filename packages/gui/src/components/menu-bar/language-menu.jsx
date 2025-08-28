@@ -72,7 +72,6 @@ class LanguageMenu extends React.PureComponent {
                         className={styles.icon}
                         src={languageIcon}
                         draggable={false}
-                        style={{filter: 'var(--icon-filter)'}}
                     />
                     <span className={styles.submenuLabel}>
                         <FormattedMessage
@@ -82,10 +81,9 @@ class LanguageMenu extends React.PureComponent {
                         />
                     </span>
                     <img
-                        className={styles.expandCaret}
+                        className={classNames(styles.expandCaret, styles.iconFilter)}
                         src={dropdownCaret}
                         draggable={false}
-                        style={{filter: 'var(--icon-filter)'}}
                     />
                 </div>
                 <Submenu
@@ -102,13 +100,14 @@ class LanguageMenu extends React.PureComponent {
                                     onClick={() => this.props.onChangeLanguage(locale)}
                                 >
                                     <img
-                                        className={classNames(styles.check, {
-                                            [styles.selected]: this.props.currentLocale === locale
-                                        })}
+                                        className={classNames(
+                                            styles.check,
+                                            styles.iconFilter,
+                                            {[styles.selected]: this.props.currentLocale === locale}
+                                        )}
                                         src={check}
                                         draggable={false}
                                         {...(this.props.currentLocale === locale && {ref: this.setRef})}
-                                        style={{filter: 'var(--icon-filter)'}}
                                     />
                                     {locales[locale].name}
                                 </MenuItem>

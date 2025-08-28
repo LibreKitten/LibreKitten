@@ -23,6 +23,7 @@ import {FormattedMessage, defineMessages, injectIntl, intlShape} from 'react-int
 import {getIsLoading} from '../reducers/project-state.js';
 import AppStateHOC from '../lib/app-state-hoc.jsx';
 import ErrorBoundaryHOC from '../lib/error-boundary-hoc.jsx';
+import TWThemeManagerHOC from '../containers/tw-theme-manager-hoc.jsx';
 import TWProjectMetaFetcherHOC from '../lib/tw-project-meta-fetcher-hoc.jsx';
 import TWStateManagerHOC from '../lib/tw-state-manager-hoc.jsx';
 import SBFileUploaderHOC from '../lib/sb-file-uploader-hoc.jsx';
@@ -57,9 +58,9 @@ const handleClickAddonSettings = addonId => {
 
 const messages = defineMessages({
     defaultTitle: {
-        defaultMessage: 'Code in blocks seriously',
+        defaultMessage: 'Block-based visual programming language with server support',
         description: 'Title of homepage',
-        id: 'tw.guiDefaultTitle'
+        id: 'lk.guiDefaultTitle'
     }
 });
 
@@ -100,6 +101,13 @@ class Interface extends React.Component {
         }
     }
     render () {
+        if (new URLSearchParams(location.search).has('induce-crash')) {
+            throw new Error(
+                'Induced crash. If someone sent this as a link to you, you don\'t need to worry about it. ' +
+                'You can open LibreKitten in a new tab and go on about your day.'
+            );
+        }
+
         if (isInvalidEmbed) {
             return <InvalidEmbed />;
         }
@@ -136,9 +144,11 @@ class Interface extends React.Component {
                             enableSeeInside
                             onClickAddonSettings={handleClickAddonSettings}
                         />
-                        {canaryMode ? (
+                        {process.env.CANARY_MODE ? (
                             <p className={styles.notice}>
-                                You are using Canary IDE, which can be unstable, <a href="https://librekitten.org/projects.html">click here to return to LibreKitten Stable</a>.
+                                {`You are using the canary build of ${APP_NAME}, which can be unstable.`}
+                                &nbsp;
+                                <a href="https://librekitten.org/projects.html">{'Click here to go to stable LibreKitten.'}</a>
                             </p>
                         ) : null}
                     </div>
@@ -309,7 +319,9 @@ const WrappedInterface = compose(
     ErrorBoundaryHOC('TW Interface'),
     TWProjectMetaFetcherHOC,
     TWStateManagerHOC,
-    TWPackagerIntegrationHOC
+    TWPackagerIntegrationHOC,
+    // lk: Theme Manager needs to run earlier than in TurboWarp for the induced crash error message to be readable.
+    TWThemeManagerHOC
 )(ConnectedInterface);
 
 export default WrappedInterface;

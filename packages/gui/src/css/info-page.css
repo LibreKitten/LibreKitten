@@ -42,8 +42,8 @@ ol li::marker {
 }
 
 .header-container {
-    color: white;
-    background-color: $motion-tertiary;
+    color: $page-header-foreground;
+    background-color: $page-header-background;
     padding: 20px 0;
     text-align: center;
     margin-bottom: 30px;
@@ -56,12 +56,12 @@ ol li::marker {
 }
 
 .header-container a {
-    color: white;
+    color: $page-header-anchor-text;
 }
 
 .header-button {
-    background-color: white;
-    color: $motion-tertiary !important;
+    background-color: $page-header-button-background;
+    color: $page-header-button-foreground !important;
     border-radius: 8px;
     padding: 16px;
     text-decoration: none;

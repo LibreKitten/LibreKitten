@@ -11,7 +11,6 @@ import Button from '../button/button.jsx';
 
 import styles from './header.css';
 
-import logoIcon from '../menu-bar/librekitten.svg';
 import {APP_NAME} from '../../lib/brand.js';
 
 const Header = () => (
@@ -21,11 +20,7 @@ const Header = () => (
                 href="/"
                 className={classNames(styles.headerItem, styles.hoverable)}
             >
-                <img
-                    width="32px"
-                    height="32px"
-                    src={logoIcon}
-                />
+                <div className={styles.logo} />
             </a>
             <a
                 href="/editor.html"

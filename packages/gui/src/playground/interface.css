@@ -62,39 +62,6 @@ a {
     margin: 8px 0 8px 0;
 }
 
-.footer {
-    padding: 10px 0;
-    margin-top: 10px;
-    border-top: 2px solid $ui-black-transparent;
-}
-.footer a {
-    font-weight: bold;
-    text-decoration: none;
-}
-.footer-content {
-    max-width: 600px;
-    margin: auto;
-}
-.footer-text {
-    text-align: center;
-    margin: 5px 0 10px 0;
-}
-.footer-columns {
-    display: flex;
-    justify-content: center;
-    justify-items: center;
-    flex-wrap: wrap;
-}
-.footer-section {
-    display: flex;
-    flex-direction: column;
-    width: 200px;
-    margin-bottom: 10px;
-}
-.footer-section > * {
-    margin-bottom: 10px;
-}
-
 .infobox {
     line-height: 1.5em;
     padding: 0.5rem;
@@ -120,6 +87,10 @@ a {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: $motion-tertiary;
+    background-color: $data-primary;
+    color: white;
+}
+
+.notice a {
     color: white;
 }

@@ -12,6 +12,8 @@ import {setPlayer, setFullScreen} from '../reducers/mode.js';
 import locales from '@turbowarp/scratch-l10n';
 import {detectLocale} from './detect-locale';
 
+import {sawWelcomeModal} from './lk-welcome-modal-utils.js';
+
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 /*
@@ -53,7 +55,8 @@ const AppStateHOC = function (WrappedComponent, localesOnly) {
                     initFullScreen,
                     initPlayer,
                     initEmbedded,
-                    initTelemetryModal
+                    initTelemetryModal,
+                    initWelcomeModal
                 } = guiRedux;
                 const {ScratchPaintReducer} = require('./tw-scratch-paint');
 
@@ -71,6 +74,7 @@ const AppStateHOC = function (WrappedComponent, localesOnly) {
                 if (props.isEmbedded) {
                     initializedGui = initEmbedded(initializedGui);
                 }
+                initializedGui = initWelcomeModal(initializedGui, !sawWelcomeModal());
                 reducers = {
                     locales: localesReducer,
                     scratchGui: guiReducer,

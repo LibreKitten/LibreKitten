@@ -37,6 +37,8 @@
     background-color: $navbar-background;
     background-image: $menu-bar-background-image;
     color: $menu-bar-foreground;
+
+    box-shadow: 0 0.1em 0.5em hsla(0, 0%, 0%, 0.25);
 }
 
 .main-group {
@@ -51,13 +53,13 @@
 .inactive {
     opacity: 0;
 }
-.scratch-logo {
-    height:  1.6rem;
-    vertical-align: middle;
-}
-
-.scratch-logo.clickable {
-    cursor: pointer;
+.logo {
+    width: 32px;
+    height: 32px;
+    background-image: $logo-image;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
 }
 
 .header-item {
@@ -82,7 +84,7 @@
 
 .header-item.active,
 .header-item.hoverable:hover {
-    background-color: $ui-black-transparent;
+    background-color: $menu-bar-item-hover;
 }
 
 .header-item.growable {
@@ -106,7 +108,7 @@
 }
 
 .feedback-button {
-    background-color: var(--menu-bar-foreground);
+    background-color: $menu-bar-primary-button;
     color: inherit;
     height: 34px;
 }

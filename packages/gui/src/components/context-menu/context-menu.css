@@ -3,6 +3,7 @@
 @import "../../css/z-index.css";
 
 .context-menu {
+    color: $context-menu-item-text;
     min-width: 130px;
     padding: 5px 0; /* The white strip at the top and bottom of the menu */
     margin: 2px 0 0; /* To keep the menu below the cursor comfortably */
@@ -25,8 +26,8 @@
 }
 
 .menu-item:hover {
-    background: $looks-secondary;
-    color: white;
+    background: $context-menu-item-hover-background;
+    color: $context-menu-item-hover-foreground;
 }
 
 .menu-item-bordered {
@@ -34,5 +35,5 @@
 }
 
 .menu-item-danger:hover {
-    background: $error-primary;
+    background: $context-menu-item-hover-danger;
 }

@@ -161,13 +161,13 @@ const Footer = () => (
                     />
                 </p>
                 <p><a href="https://librekitten.org/"><img
-                    alt="LibreKitten - Code in blocks seriously"
+                    alt="LibreKitten - Block-based visual programming language with server support"
                     src="https://u.cubeupload.com/gl12/LibreKittenBadge.png"
                 /></a></p>
                 <p><em>HTML</em></p>
                 <textarea
                     contentEditable={false}
-                    value={'<a href="https://librekitten.org/"><img alt="LibreKitten - Code in blocks seriously" src="https://u.cubeupload.com/gl12/LibreKittenBadge.png"/></a>'}
+                    value={'<a href="https://librekitten.org/"><img alt="LibreKitten - Block-based visual programming language with server support" src="https://u.cubeupload.com/gl12/LibreKittenBadge.png"/></a>'}
                 />
                 <p><em>BBCode</em></p>
                 <textarea
@@ -177,14 +177,16 @@ const Footer = () => (
                 <p><em>Markdown</em></p>
                 <textarea
                     contentEditable={false}
-                    value={'[![LibreKitten - Code in blocks seriously](https://u.cubeupload.com/gl12/LibreKittenBadge.png)](https://librekitten.org/)'}
+                    value={'[![LibreKitten - Block-based visual programming language with server support](https://u.cubeupload.com/gl12/LibreKittenBadge.png)](https://librekitten.org/)'}
                 />
             </div>
 
-            <p>Version: {process.env.npm_package_version} | <a
-                onClick={eraseData}
-                style={{color: 'red'}}
-            >Erase data</a></p>
+            <p className={styles.info}>
+                Version: {process.env.npm_package_version} | <a
+                    onClick={eraseData}
+                    style={{color: 'red'}}
+                >Erase data</a>
+            </p>
         </div>
     </footer>
 );

@@ -12,7 +12,7 @@ var UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 module.exports = [{
   mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
   entry: {
-    entry: './shim/gh-pages.js',
+    entry: './src/vertical.js',
   },
   output: {
     library: 'ScratchBlocks',
@@ -29,7 +29,7 @@ module.exports = [{
 }, {
   mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
   entry: {
-    entry: './shim/gh-pages.js',
+    entry: './src/vertical.js',
   },
   output: {
     library: 'Blockly',

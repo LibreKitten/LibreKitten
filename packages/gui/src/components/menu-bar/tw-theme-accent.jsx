@@ -7,51 +7,51 @@ import {connect} from 'react-redux';
 import check from './check.svg';
 import dropdownCaret from './dropdown-caret.svg';
 import {MenuItem, Submenu} from '../menu/menu.jsx';
-import {ACCENT_BLUE, ACCENT_MAP, ACCENT_PURPLE, ACCENT_ORANGE, ACCENT_RED, ACCENT_RAINBOW, ACCENT_WHITE, Theme} from '../../lib/themes/index.js';
+import {
+    ACCENT_BLUE,
+    ACCENT_MAP,
+    ACCENT_PURPLE,
+    ACCENT_ORANGE,
+    ACCENT_RED,
+    ACCENT_DARK_BLUE,
+    Theme
+} from '../../lib/themes/index.js';
 import {openAccentMenu, accentMenuOpen, closeSettingsMenu} from '../../reducers/menus.js';
 import {setTheme} from '../../reducers/theme.js';
 import {persistTheme} from '../../lib/themes/themePersistance.js';
-import rainbowIcon from './tw-accent-rainbow.svg';
 import styles from './settings-menu.css';
 
 // lk: added orange
 
 const options = defineMessages({
     [ACCENT_ORANGE]: {
-        defaultMessage: 'LibreKitten',
-        description: 'Name of the orange color scheme, used by LibreKitten by default.',
+        defaultMessage: 'LibreKitten — Orange',
+        description: 'Name of LibreKitten\'s orange color scheme. Used by default.',
         id: 'lk.accent.orange'
     },
-    [ACCENT_WHITE]: {
-        defaultMessage: 'Colourless (Alpha)',
-        description: 'Name of the white color scheme.',
-        id: 'lk.accent.white'
+    [ACCENT_DARK_BLUE]: {
+        defaultMessage: 'LibreKitten — Dark Blue',
+        description: 'Name of LibreKitten\'s dark blue color scheme.',
+        id: 'lk.accent.darkBlue'
     },
     [ACCENT_PURPLE]: {
-        defaultMessage: 'Scratch',
-        description: 'Name of the purple color scheme. Matches modern Scratch.',
+        defaultMessage: 'Scratch — Purple',
+        description: 'Name of Scratch\'s purple color scheme. Matches modern Scratch.',
         id: 'tw.accent.purple'
     },
     [ACCENT_BLUE]: {
-        defaultMessage: 'Old Scratch',
-        description: 'Name of the blue color scheme. Matches Scratch before the high contrast update.',
+        defaultMessage: 'Scratch — Blue',
+        description: 'Name of Scratch\'s blue color scheme. Matches Scratch before the high contrast update.',
         id: 'tw.accent.blue'
     },
     [ACCENT_RED]: {
-        defaultMessage: 'TurboWarp',
-        description: 'Name of the red color scheme. used by TurboWarp by default.',
+        defaultMessage: 'TurboWarp — Red',
+        description: 'Name of TurboWarp\'s red color scheme.',
         id: 'lk.accent.red'
-    },
-    [ACCENT_RAINBOW]: {
-        defaultMessage: 'Rainbow',
-        description: 'Name of color scheme that uses a rainbow.',
-        id: 'tw.accent.rainbow'
     }
 });
 
-const icons = {
-    [ACCENT_RAINBOW]: rainbowIcon
-};
+const icons = {};
 
 const ColorIcon = props => (
     icons[props.id] ? (
@@ -82,13 +82,12 @@ const AccentMenuItem = props => (
     <MenuItem onClick={props.onClick}>
         <div className={styles.option}>
             <img
-                className={classNames(styles.check, {[styles.selected]: props.isSelected})}
+                className={classNames(styles.check, styles.iconFilter, {[styles.selected]: props.isSelected})}
                 width={15}
                 Matches
                 height={12}
                 src={check}
                 draggable={false}
-                style={{filter: 'var(--icon-filter)'}}
             />
             <ColorIcon id={props.id} />
             <FormattedMessage {...options[props.id]} />
@@ -123,10 +122,9 @@ const AccentThemeMenu = ({
                 />
             </span>
             <img
-                className={styles.expandCaret}
+                className={classNames(styles.expandCaret, styles.iconFilter)}
                 src={dropdownCaret}
                 draggable={false}
-                style={{filter: 'var(--icon-filter)'}}
             />
         </div>
         <Submenu place={isRtl ? 'left' : 'right'}>

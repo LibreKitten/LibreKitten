@@ -132,7 +132,8 @@ GUI.propTypes = {
     projectHost: PropTypes.string,
     projectId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     telemetryModalVisible: PropTypes.bool,
-    vm: PropTypes.instanceOf(VM).isRequired
+    vm: PropTypes.instanceOf(VM).isRequired,
+    welcomeModalVisible: PropTypes.bool
 };
 
 GUI.defaultProps = {
@@ -177,7 +178,8 @@ const mapStateToProps = state => {
         fontsModalVisible: state.scratchGui.modals.fontsModal,
         unknownPlatformModalVisible: state.scratchGui.modals.unknownPlatformModal,
         invalidProjectModalVisible: state.scratchGui.modals.invalidProjectModal,
-        vm: state.scratchGui.vm
+        vm: state.scratchGui.vm,
+        welcomeModalVisible: state.scratchGui.modals.welcomeModal
     };
 };
 

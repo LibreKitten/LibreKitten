@@ -54,6 +54,17 @@ $drop-highlight-default: var(--drop-highlight-default);
 $menu-bar-background-default: var(--menu-bar-background-default);
 $menu-bar-foreground-default: var(--menu-bar-foreground-default);
 
+$menu-bar-black-transparent-default: var(--menu-bar-black-transparent-default);
+$menu-bar-white-default: var(--menu-bar-white-default);
+$menu-bar-text-primary-default: var(--menu-bar-text-primary-default);
+$menu-bar-item-hover-default: var(--menu-bar-item-hover-default);
+$menu-bar-primary-button-default: var(--menu-bar-primary-button-default);
+
+$context-menu-item-text-default: var(--context-menu-item-text-default);
+$context-menu-item-hover-background-default: var(--context-menu-item-hover-background-default);
+$context-menu-item-hover-foreground-default: var(--context-menu-item-hover-foreground-default);
+$context-menu-item-hover-danger-default: var(--context-menu-item-hover-danger-default);
+
 $assets-background-default: var(--assets-background-default);
 
 $input-background-default: var(--input-background-default);
@@ -70,7 +81,19 @@ $fullscreen-accent-default: var(--fullscreen-accent-default);
 
 $page-background-default: var(--page-background-default);
 $page-foreground-default: var(--page-foreground-default);
+$page-header-anchor-text-default: var(--page-header-anchor-text-default);
+
+$page-header-background-default: var(--page-header-background-default);
+$page-header-foreground-default: var(--page-header-foreground-default);
+
+$page-header-button-background-default: var(--page-header-button-background-default);
+$page-header-button-foreground-default: var(--page-header-button-foreground-default);
+
+$footer-background-default: var(--footer-background-default);
+$footer-foreground-default: var(--footer-foreground-default);
 
 $link-color-default: var(--link-color-default);
 
 $icon-filter: var(--icon-filter-default);
+
+$logo-image-default: var(--logo-image-default);

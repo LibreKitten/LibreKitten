@@ -4,6 +4,8 @@ import render from '../app-target';
 import styles from '../../css/info-page.css';
 import myStyles from './index.css';
 
+import '../../lib/normalize.css';
+
 import {applyGuiColors} from '../../lib/themes/guiHelpers';
 import {detectTheme} from '../../lib/themes/themePersistance';
 
@@ -36,12 +38,20 @@ const Index = () => (
             </div>
             <header className={styles.headerContainer}>
                 <h1 className={styles.headerText}>
-                    LibreKitten - A powerful block-based visual programming language.
+                    {process.env.CANARY_MODE ?
+                        'LibreKitten (Canary Build)' :
+                        'LibreKitten - A powerful block-based visual programming language.'}
                 </h1>
+                {process.env.CANARY_MODE && <p>
+                    <strong>Please do not write serious projects in the canary build.</strong> Features that you
+                    are using may be removed, your project may get corrupted, among other things that may happen. <a href="https://librekitten.org/">
+                        Click here to go to stable LibreKitten.
+                    </a>
+                </p>}
                 <p>
                     LibreKitten is an <strong>alpha-quality</strong> block-based visual programming language based
-                    on <a href="https://turbowarp.org/">TurboWarp</a>. The primary feature is server-side execution support, but it
-                    is also an experimentation ground to push the limits of block-based languages.
+                    on <a href="https://turbowarp.org/">TurboWarp</a>. The primary feature is being able to function as a web server, but it is
+                    also an experimentation ground to push the limits of block-based languages.
                 </p>
                 <a
                     href="/editor.html"
@@ -53,32 +63,31 @@ const Index = () => (
             <section id="prototype">
                 <h2>Zoooooom! Quickly build something.</h2>
                 <p>
-                    With block-based programming, you can quickly prototype something from start to finish without worrying about
-                    syntax or other complications of text-based programming languages.
+                    With block-based programming, you can quickly prototype something from start to finish without
+                    worrying about syntax or other complications of text-based programming languages.
                 </p>
             </section>
             <section id="why">
                 <h2>Why does LibreKitten exist?</h2>
                 <p>
-                    Scratch is made for a novice userbase. This means it doesn't cater to the more advanced users of Scratch who
-                    like the simple block-based interface of Scratch and the easy to use primitive blocks, but want more advanced
-                    features.
+                    Scratch is made for a novice userbase. This means it doesn&apos;t cater to the more advanced users
+                    of Scratch who like the simple block-based interface of Scratch and the easy to use primitive
+                    blocks, but want more advanced features.
                 </p>
                 <p>
                     For this audience, we have made a new block-based visual programming language called LibreKitten.
                     It is a fork of TurboWarp, which itself was forked off Scratch.
                 </p>
                 <p>
-                    LibreKitten was created with the intention of containing more advanced features and accept contributions
-                    written by the community, while still being for all ages.
+                    LibreKitten was created with the intention of containing more advanced features and accept
+                    contributions written by the community, while still being for all ages.
                 </p>
             </section>
             <section id="vision">
                 <h2>What is the vision?</h2>
                 <p>
-                    <strong>
-                        We recommend before you suggest ideas for LibreKitten, you check if your idea is in the spirit of the vision.
-                    </strong>
+                    LibreKitten has a vision. We want you to know it so you can know our intentions for LibreKitten,
+                    and look at LibreKitten the way that we do.
                 </p>
                 <Vision />
             </section>

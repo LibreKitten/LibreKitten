@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
+import classNames from 'classnames';
 
 import LanguageMenu from './language-menu.jsx';
 import MenuBarMenu from './menu-bar-menu.jsx';
-import {MenuSection} from '../menu/menu.jsx';
-import {MenuItem} from '../menu/menu.jsx';
+import {MenuItem, MenuSection} from '../menu/menu.jsx';
 import MenuLabel from './tw-menu-label.jsx';
 import TWAccentThemeMenu from './tw-theme-accent.jsx';
 import TWGuiThemeMenu from './tw-theme-gui.jsx';
@@ -18,11 +18,12 @@ import styles from './settings-menu.css';
 import addonsIcon from './addons.svg';
 import dropdownCaret from './dropdown-caret.svg';
 import settingsIcon from './icon--settings.svg';
+import openLinkIcon from './tw-open-link.svg';
 
-const AddonMenuItem = ({onClick}) => (
+const AddonMenuItem = ({className, onClick}) => (
     <MenuItem>
         <div
-            className={styles.option}
+            className={classNames(styles.option, className)}
             onClick={onClick}
         >
             <img
@@ -30,7 +31,7 @@ const AddonMenuItem = ({onClick}) => (
                 draggable={false}
                 width={20}
                 height={20}
-                style={{filter: 'var(--icon-filter)'}}
+                className={styles.icon}
             />
             <span className={styles.submenuLabel}>
                 <FormattedMessage
@@ -39,12 +40,42 @@ const AddonMenuItem = ({onClick}) => (
                     id="tw.menuBar.addons"
                 />
             </span>
+            <img
+                width={20}
+                height={20}
+                className={classNames(styles.openLink, styles.iconFilter)}
+                src={openLinkIcon}
+                draggable={false}
+            />
         </div>
     </MenuItem>
 );
 
 AddonMenuItem.propTypes = {
-    onClickAddonSettings: PropTypes.func
+    className: PropTypes.string,
+    onClick: PropTypes.func
+};
+
+const WelcomeModalMenuItem = ({className, onClick}) => (
+    <MenuItem
+        className={classNames(styles.option, className)}
+        onClick={onClick}
+    >
+        <div className={styles.option}>
+            <span className={styles.submenuLabel}>
+                <FormattedMessage
+                    defaultMessage="Show welcome screen"
+                    description="Button to re-show the welcome modal"
+                    id="lk.menuBar.welcomeModal"
+                />
+            </span>
+        </div>
+    </MenuItem>
+);
+
+WelcomeModalMenuItem.propTypes = {
+    className: PropTypes.string,
+    onClick: PropTypes.func
 };
 
 const SettingsMenu = ({
@@ -53,6 +84,7 @@ const SettingsMenu = ({
     isRtl,
     onClickAddonSettings,
     onClickDesktopSettings,
+    onClickWelcomeModal,
     onOpenCustomSettings,
     onRequestClose,
     onRequestOpen,
@@ -68,7 +100,7 @@ const SettingsMenu = ({
             draggable={false}
             width={20}
             height={20}
-            style={{filter: 'var(--icon-filter)'}}
+            className={styles.iconFilter}
         />
         <span className={styles.dropdownLabel}>
             <FormattedMessage
@@ -82,7 +114,7 @@ const SettingsMenu = ({
             draggable={false}
             width={8}
             height={5}
-            style={{filter: 'var(--icon-filter)'}}
+            className={styles.iconFilter}
         />
         <MenuBarMenu
             className={menuBarStyles.menuBarMenu}
@@ -101,7 +133,12 @@ const SettingsMenu = ({
                     </React.Fragment>
                 )}
                 {onClickDesktopSettings && <TWDesktopSettings onClick={onClickDesktopSettings} />}
+            </MenuSection>
+            <MenuSection>
                 {onClickAddonSettings && <AddonMenuItem onClick={onClickAddonSettings} />}
+            </MenuSection>
+            <MenuSection>
+                {onClickWelcomeModal && <WelcomeModalMenuItem onClick={onClickWelcomeModal} />}
             </MenuSection>
         </MenuBarMenu>
     </MenuLabel>
@@ -113,6 +150,7 @@ SettingsMenu.propTypes = {
     isRtl: PropTypes.bool,
     onClickAddonSettings: PropTypes.func,
     onClickDesktopSettings: PropTypes.func,
+    onClickWelcomeModal: PropTypes.func,
     onOpenCustomSettings: PropTypes.func,
     onRequestClose: PropTypes.func,
     onRequestOpen: PropTypes.func,

@@ -33,7 +33,9 @@ import ChangeUsername from '../../containers/tw-change-username.jsx';
 import CloudVariablesToggler from '../../containers/tw-cloud-toggler.jsx';
 import TWSaveStatus from './tw-save-status.jsx';
 
-import {openTipsLibrary, openSettingsModal, openRestorePointModal} from '../../reducers/modals';
+import {detectTheme} from '../../lib/themes/themePersistance';
+
+import {openTipsLibrary, openSettingsModal, openRestorePointModal, openWelcomeModal} from '../../reducers/modals';
 import {setPlayer} from '../../reducers/mode';
 import {
     isTimeTravel220022BC,
@@ -84,7 +86,6 @@ import collectMetadata from '../../lib/collect-metadata';
 
 import styles from './menu-bar.css';
 
-import logoIcon from './librekitten.svg';
 import helpIcon from '../../lib/assets/icon--tutorials.svg';
 import mystuffIcon from './icon--mystuff.png';
 import profileIcon from './icon--profile.png';
@@ -494,11 +495,7 @@ class MenuBar extends React.Component {
                     <div className={styles.fileGroup}>
                         <a href="/">
                             <MenuLabel onOpen={() => {}}>
-                                <img
-                                    width="32px"
-                                    height="32px"
-                                    src={logoIcon}
-                                />
+                                <div className={styles.logo} />
                             </MenuLabel>
                         </a>
                         {this.props.errors.length > 0 && <div>
@@ -518,7 +515,7 @@ class MenuBar extends React.Component {
                                     draggable={false}
                                     width={8}
                                     height={5}
-                                    style={{filter: 'var(--icon-filter)'}}
+                                    className={styles.iconFilter}
                                 />
                                 <MenuBarMenu
                                     className={classNames(styles.menuBarMenu)}
@@ -568,6 +565,7 @@ class MenuBar extends React.Component {
                                 this.props.onClickAddonSettings &&
                                 this.props.onClickAddonSettings.bind(null, 'editor-theme3')
                             }
+                            onClickWelcomeModal={this.props.onClickWelcomeModal}
                             onRequestClose={this.props.onRequestCloseSettings}
                             onRequestOpen={this.props.onClickSettings}
                             settingsMenuOpen={this.props.settingsMenuOpen}
@@ -583,7 +581,7 @@ class MenuBar extends React.Component {
                                     draggable={false}
                                     width={20}
                                     height={20}
-                                    style={{filter: 'var(--icon-filter)'}}
+                                    className={styles.iconFilter}
                                 />
                                 <span className={styles.collapsibleLabel}>
                                     <FormattedMessage
@@ -597,7 +595,7 @@ class MenuBar extends React.Component {
                                     draggable={false}
                                     width={8}
                                     height={5}
-                                    style={{filter: 'var(--icon-filter)'}}
+                                    className={styles.iconFilter}
                                 />
                                 <MenuBarMenu
                                     className={classNames(styles.menuBarMenu)}
@@ -741,7 +739,7 @@ class MenuBar extends React.Component {
                                 width={20}
                                 edit
                                 height={20}
-                                style={{filter: 'var(--icon-filter)'}}
+                                className={styles.iconFilter}
                             />
                             <span className={styles.collapsibleLabel}>
                                 <FormattedMessage
@@ -755,7 +753,7 @@ class MenuBar extends React.Component {
                                 draggable={false}
                                 width={8}
                                 height={5}
-                                style={{filter: 'var(--icon-filter)'}}
+                                className={styles.iconFilter}
                             />
                             <MenuBarMenu
                                 className={classNames(styles.menuBarMenu)}
@@ -1123,6 +1121,7 @@ MenuBar.propTypes = {
     onClickSaveAsCopy: PropTypes.func,
     onClickSettings: PropTypes.func,
     onClickSettingsModal: PropTypes.func,
+    onClickWelcomeModal: PropTypes.func,
     onLogOut: PropTypes.func,
     onOpenRegistration: PropTypes.func,
     onOpenTipLibrary: PropTypes.func,
@@ -1216,6 +1215,10 @@ const mapDispatchToProps = dispatch => ({
     onClickSettingsModal: () => {
         dispatch(closeEditMenu());
         dispatch(openSettingsModal());
+    },
+    onClickWelcomeModal: () => {
+        dispatch(closeSettingsMenu());
+        dispatch(openWelcomeModal());
     },
     onRequestCloseSettings: () => dispatch(closeSettingsMenu()),
     onClickNew: needSave => {

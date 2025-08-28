@@ -2,6 +2,11 @@
 
 .icon {
     width: 1.5rem;
+    filter: $icon-filter;
+}
+
+.icon-filter {
+    filter: $icon-filter;
 }
 
 .theme-label {

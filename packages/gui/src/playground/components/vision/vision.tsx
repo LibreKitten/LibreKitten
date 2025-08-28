@@ -10,23 +10,30 @@ const Vision = () => (
         <ul>
             <li>
                 <p>
-                    LibreKitten should be entirely free (as in freedom).
+                    <details>
+                        <summary>
+                            LibreKitten should be for all ages and family-friendly, meaning it should contain no profanity
+                            and other content that is inappropriate for children (not even in the source code!)
+                        </summary>
+                    </details>
                 </p>
             </li>
             <li>
                 <p>
-                    LibreKitten should be for all ages and family-friendly, meaning it should contain no profanity
-                    and other content that is inappropriate for children (not even in the source code!)
+                    <details>
+                        <summary>
+                            LibreKitten should be easy to use, while still being able to handle advanced stuff.
+                        </summary>
+                    </details>
                 </p>
             </li>
             <li>
                 <p>
-                    LibreKitten should be easy to use, while still being able to handle advanced stuff.
-                </p>
-            </li>
-            <li>
-                <p>
-                    LibreKitten should have as little feature creep as reasonably possible.
+                    <details>
+                        <summary>
+                            LibreKitten should have as little feature creep as reasonably possible.
+                        </summary>
+                    </details>
                 </p>
             </li>
         </ul>

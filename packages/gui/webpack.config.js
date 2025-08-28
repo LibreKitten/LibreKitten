@@ -2,6 +2,9 @@ const defaultsDeep = require('lodash.defaultsdeep');
 const path = require('path');
 const webpack = require('webpack');
 
+// lk: Get the monorepo's package.json.
+const monorepoPackageJson = require('../../package.json');
+
 // Plugins
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -263,14 +266,14 @@ module.exports = [
                 'process.env.ENABLE_SERVICE_WORKER': JSON.stringify(process.env.ENABLE_SERVICE_WORKER || ''),
                 'process.env.ROOT': JSON.stringify(root),
                 'process.env.ROUTING_STYLE': JSON.stringify(process.env.ROUTING_STYLE || 'filehash'),
-                'process.env.npm_package_version': JSON.stringify(process.env.npm_package_version),
-                'canaryMode': process.env.CANARY_MODE === 'true'
+                'process.env.npm_package_version': JSON.stringify(monorepoPackageJson.version),
+                'process.env.CANARY_MODE': Boolean(process.env.CANARY_MODE)
             }),
             new HtmlWebpackPlugin({
                 chunks: ['editor'],
                 template: 'src/playground/player.ejs',
                 filename: 'editor.html',
-                title: `${APP_NAME} - Code in blocks seriously`,
+                title: `${APP_NAME} - Block-based visual programming language with server support`,
                 isEditor: true,
                 ...htmlWebpackPluginCommon
             }),
@@ -278,14 +281,14 @@ module.exports = [
                 chunks: ['player'],
                 template: 'src/playground/player.ejs',
                 filename: 'projects.html',
-                title: `${APP_NAME} - Code in blocks seriously`,
+                title: `${APP_NAME} - Block-based visual programming language with server support`,
                 ...htmlWebpackPluginCommon
             }),
             new HtmlWebpackPlugin({
                 chunks: ['fullscreen'],
                 template: 'src/playground/player.ejs',
                 filename: 'fullscreen.html',
-                title: `${APP_NAME} - Code in blocks seriously`,
+                title: `${APP_NAME} - Block-based visual programming language with server support`,
                 ...htmlWebpackPluginCommon
             }),
             new HtmlWebpackPlugin({

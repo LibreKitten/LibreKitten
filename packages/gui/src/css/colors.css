@@ -57,6 +57,17 @@ $menu-bar-background: var(--menu-bar-background);
 $menu-bar-background-image: var(--menu-bar-background-image);
 $menu-bar-foreground: var(--menu-bar-foreground);
 
+$menu-bar-black-transparent: var(--menu-bar-black-transparent);
+$menu-bar-white: var(--menu-bar-white);
+$menu-bar-text-primary: var(--menu-bar-text-primary);
+$menu-bar-item-hover: var(--menu-bar-item-hover);
+$menu-bar-primary-button: var(--menu-bar-primary-button);
+
+$context-menu-item-text: var(--context-menu-item-text);
+$context-menu-item-hover-background: var(--context-menu-item-hover-background);
+$context-menu-item-hover-foreground: var(--context-menu-item-hover-foreground);
+$context-menu-item-hover-danger: var(--context-menu-item-hover-danger);
+
 $navbar-background: var(--navbar-background);
 
 $assets-background: var(--assets-background);
@@ -73,12 +84,27 @@ $shadow: var(--shadow);
 $badge-background: var(--badge-background);
 $badge-border: var(--badge-border);
 
+$page-header-background: var(--page-header-background);
+$page-header-foreground: var(--page-header-foreground);
+$page-header-anchor-text: var(--page-header-anchor-text);
+
 $page-background: var(--page-background);
 $page-foreground: var(--page-foreground);
 
+$page-header-button-background: var(--page-header-button-background);
+$page-header-button-foreground: var(--page-header-button-foreground);
+
+$footer-background: var(--footer-background);
+$footer-foreground: var(--footer-foreground);
+
 $project-title-inactive: var(--project-title-inactive);
 $project-title-hover: var(--project-title-hover);
+$project-title-hover-border: var(--project-title-hover-border);
+$project-title-focus-border: var(--project-title-focus-border);
+$project-title-focus-shadow: var(--project-title-focus-shadow);
 
 $link-color: var(--link-color);
 
 $icon-filter: var(--icon-filter);
+
+$logo-image: var(--logo-image);

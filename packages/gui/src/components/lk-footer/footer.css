@@ -1,9 +1,54 @@
 @import "../../css/colors.css";
 
 .footer {
+    background: $footer-background;
+    color: $footer-foreground;
     padding: 10px 0;
     margin-top: 10px;
     border-top: 2px solid $ui-black-transparent;
+
+    /* Base styles used by Scratch https://github.com/LLK/scratch-www/blob/develop/src/main.scss */
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    p {
+        margin: 0;
+        padding: 0;
+        border: 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5 {
+        font-weight: bold;
+        line-height: 1.7em;
+    }
+
+    h1 {
+        font-weight: 2.5rem;
+    }
+
+    h2 {
+        font-weight: 2rem;
+    }
+
+    h3 {
+        font-size: 1.4rem;
+    }
+
+    h4 {
+        font-size: 1rem;
+    }
+
+    a {
+        color: $link-color;
+        cursor: pointer;
+        text-decoration: underline;
+    }
 }
 .footer a {
     font-weight: bold;
@@ -31,4 +76,7 @@
 }
 .footer-section > * {
     margin-bottom: 10px;
+}
+.footer .info {
+    text-align: left;
 }

@@ -49,6 +49,7 @@ import addExtensionIcon from './icon--extensions.svg';
 import codeIcon from '!../../lib/tw-recolor/build!./icon--code.svg';
 import costumesIcon from '!../../lib/tw-recolor/build!./icon--costumes.svg';
 import soundsIcon from '!../../lib/tw-recolor/build!./icon--sounds.svg';
+import WelcomeModal from '../../containers/lk-welcome-modal.jsx';
 
 const messages = defineMessages({
     addExtension: {
@@ -159,6 +160,7 @@ const GUIComponent = props => {
         unknownPlatformModalVisible,
         invalidProjectModalVisible,
         vm,
+        welcomeModalVisible,
         ...componentProps
     } = omit(props, 'dispatch');
     if (children) {
@@ -192,6 +194,7 @@ const GUIComponent = props => {
                 {fontsModalVisible && <TWFontsModal />}
                 {unknownPlatformModalVisible && <TWUnknownPlatformModal />}
                 {invalidProjectModalVisible && <TWInvalidProjectModal />}
+                {welcomeModalVisible && <WelcomeModal />}
             </React.Fragment>
         );
 
@@ -540,7 +543,8 @@ GUIComponent.propTypes = {
     fontsModalVisible: PropTypes.bool,
     unknownPlatformModalVisible: PropTypes.bool,
     invalidProjectModalVisible: PropTypes.bool,
-    vm: PropTypes.instanceOf(VM).isRequired
+    vm: PropTypes.instanceOf(VM).isRequired,
+    welcomeModalVisible: PropTypes.bool
 };
 GUIComponent.defaultProps = {
     backpackHost: null,
