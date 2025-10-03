@@ -12,8 +12,10 @@ const staticFetch = require('../util/tw-static-fetch');
  * @returns {URL|null}
  */
 const parseURL = url => {
+    // lk: This is a hack to get this to work in Node.js, as the location object doesn't exist in that environment.
+    const base = typeof location === 'undefined' ? void 0 : location.href;
     try {
-        return new URL(url, location.href);
+        return new URL(url, base);
     } catch (e) {
         return null;
     }

@@ -61,7 +61,8 @@
     "sweetalert2": "^11.10.5",
     "text-encoding": "0.7.0",
     "uuid": "8.3.2",
-    "worker-loader": "^1.1.1"
+    "worker-loader": "^1.1.1",
+    "yargs": "^18.0.0"
   },
   "peerDependencies": {
     "@turbowarp/scratch-svg-renderer": "^1.0.0-202312300007-62fe825"

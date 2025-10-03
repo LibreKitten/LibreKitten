@@ -64,6 +64,12 @@ module.exports = [
             libraryTarget: 'umd',
             path: path.resolve('dist', 'web')
         },
+        resolve: {
+            fallback: {
+                buffer: require.resolve('buffer'),
+                events: require.resolve('events/')
+            }
+        },
         module: {
             rules: base.module.rules.concat([
                 {
@@ -105,11 +111,10 @@ module.exports = [
     defaultsDeep({}, base, {
         target: 'node',
         entry: {
-            'scratch-vm': './src/cli/server.js'
+            librekitten: './src/server/cli.js'
         },
         output: {
             filename: '[name].js',
-            libraryTarget: 'commonjs2',
             path: path.resolve('dist', 'server')
         },
         plugins: base.plugins.concat([
@@ -128,6 +133,12 @@ module.exports = [
         output: {
             path: path.resolve(__dirname, 'playground'),
             filename: '[name].js'
+        },
+        resolve: {
+            fallback: {
+                buffer: require.resolve('buffer'),
+                events: require.resolve('events/')
+            }
         },
         module: {
             rules: base.module.rules.concat([

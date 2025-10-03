@@ -162,6 +162,24 @@ class SecurityManager {
     canDownload (resourceURL, name) {
         return Promise.resolve(true);
     }
+
+    /**
+     * lk: Determine whether a file can be read from a location. Meant for privileged environments.
+     * @param {string} path The file to read
+     * @returns {Promise<boolean>|boolean}
+     */
+    canReadFile (path) {
+        return Promise.resolve(false);
+    }
+
+    /**
+     * lk: Determine whether a file can be written to a location. Meant for privileged environments.
+     * @param {string} path The file to write
+     * @returns {Promise<boolean>|boolean}
+     */
+    canWriteFile (path) {
+        return Promise.resolve(false);
+    }
 }
 
 module.exports = SecurityManager;

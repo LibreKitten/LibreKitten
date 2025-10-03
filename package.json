@@ -14,6 +14,7 @@
     "gui-test": "pnpm --filter librekitten-gui run test",
     "vm-start": "pnpm --filter scratch-vm run start",
     "vm-test": "pnpm --filter scratch-vm run test",
+    "vm-build": "pnpm --filter scratch-vm run build",
     "blocks-build": "pnpm --filter scratch-blocks run prepublish",
     "blocks-test": "pnpm --filter scratch-blocks run test"
   },
@@ -35,6 +36,8 @@
   },
   "devDependencies": {
     "@swc/core": "^1.11.21",
+    "buffer": "^6.0.3",
+    "events": "^3.3.0",
     "swc-loader": "^0.2.6",
     "swc-minify-webpack-plugin": "^2.1.3",
     "webpack": "5.96.1",
