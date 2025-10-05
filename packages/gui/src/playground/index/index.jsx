@@ -4,7 +4,7 @@ import render from '../app-target';
 import styles from '../../css/info-page.css';
 import myStyles from './index.css';
 
-import '../../lib/normalize.css';
+import 'modern-normalize/modern-normalize.css';
 
 import {applyGuiColors} from '../../lib/themes/guiHelpers';
 import {detectTheme} from '../../lib/themes/themePersistance';
