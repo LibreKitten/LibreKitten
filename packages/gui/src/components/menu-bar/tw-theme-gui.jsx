@@ -16,17 +16,17 @@ import check from './check.svg';
 import dropdownCaret from './dropdown-caret.svg';
 
 const options = defineMessages({
-    [GUI_LIGHT]: {
-        defaultMessage: 'LibreKitten — Light (Colourful)',
-        description: 'Name of LibreKitten\'s light theme.',
-        icon: lightModeIcon,
-        id: 'lk.theme.lk-light'
-    },
     [GUI_LIGHT_MODERN]: {
         defaultMessage: 'LibreKitten — Light (Modern)',
         description: 'Name of LibreKitten\'s "Light (Modern)" theme.',
         icon: lightModeIcon,
         id: 'lk.theme.lk-light-modern'
+    },
+    [GUI_LIGHT]: {
+        defaultMessage: 'LibreKitten — Light (Colourful)',
+        description: 'Name of LibreKitten\'s light theme.',
+        icon: lightModeIcon,
+        id: 'lk.theme.lk-light'
     },
     [GUI_DARK]: {
         defaultMessage: 'LibreKitten — Dark',

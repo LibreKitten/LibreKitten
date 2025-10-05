@@ -115,8 +115,8 @@ const BlocksThemeMenu = ({
         </div>
         <Submenu place={isRtl ? 'left' : 'right'}>
             {[
-                BLOCKS_THREE,
                 BLOCKS_HIGH_CONTRAST,
+                BLOCKS_THREE,
                 ...(onOpenCustomSettings ? [BLOCKS_CUSTOM] : [])
             ].map(i => (
                 <ThemeMenuItem
