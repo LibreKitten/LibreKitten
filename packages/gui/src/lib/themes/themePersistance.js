@@ -16,7 +16,7 @@ const systemPreferencesTheme = () => {
     if (PREFERS_DARK_QUERY && PREFERS_DARK_QUERY.matches) {
         return Theme.dark;
     }
-    return Theme.light;
+    return Theme.lightModern;
 };
 
 /**
