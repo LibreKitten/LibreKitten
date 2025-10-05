@@ -1,0 +1,14 @@
+/*
+    lk: We have to do this to counteract the effect of modern-normalize; otherwise 
+    Blockly widgets will look strange.
+
+    The selectors are written strangely to prevent Webpack from modifying the selectors.
+*/
+[class~='blocklyWidgetDiv']:not([class~='fieldTextInput']),
+[class~='blocklyWidgetDiv']:not([class~='fieldTextInput']) *,
+[class~='blocklyDropDownDiv'],
+[class~='blocklyDropDownDiv'] *,
+[class~='blocklyTooltipDiv']
+[class~='blocklyTooltipDiv'] * {
+    box-sizing: content-box;
+}
