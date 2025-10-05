@@ -349,18 +349,20 @@ export default async function ({ addon, console, msg }) {
     };
 
     BLOCKS_MAP[BLOCKS_CUSTOM] = {
-      blocksMediaFolder: 'blocks-media/default',
-      colors: blockColors,
-      extensions: extensions,
-      customExtensionColors: {
-        primary: primaryColor,
-        secondary: secondaryColor,
-        tertiary: tertiaryColor,
-        quaternary: quaternaryColor,
-        categoryIconBackground,
-        categoryIconBorder
-      },
-      useForStage: false
+      light: {
+        blocksMediaFolder: 'blocks-media/default',
+        colors: blockColors,
+        extensions: extensions,
+        customExtensionColors: {
+          primary: primaryColor,
+          secondary: secondaryColor,
+          tertiary: tertiaryColor,
+          quaternary: quaternaryColor,
+          categoryIconBackground,
+          categoryIconBorder
+        },
+        useForStage: false
+      }
     };
 
     const newTheme = addon.tab.redux.state.scratchGui.theme.theme.set('blocks', BLOCKS_CUSTOM);

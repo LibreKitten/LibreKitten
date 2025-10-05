@@ -39,43 +39,48 @@ const GUI_MAP = {
 const GUI_DEFAULT = GUI_LIGHT;
 
 const BLOCKS_THREE = 'three';
-const BLOCKS_DARK = 'dark';
 const BLOCKS_HIGH_CONTRAST = 'high-contrast';
 const BLOCKS_CUSTOM = 'custom';
 const BLOCKS_DEFAULT = BLOCKS_THREE;
 const defaultBlockColors = blocksThree.blockColors;
 const BLOCKS_MAP = {
     [BLOCKS_THREE]: {
-        blocksMediaFolder: 'blocks-media/default',
-        colors: blocksThree.blockColors,
-        extensions: blocksThree.extensions,
-        customExtensionColors: {},
-        customBlockColors: blocksThree.customBlockColors,
-        useForStage: true
+        light: {
+            blocksMediaFolder: 'blocks-media/default',
+            colors: blocksThree.blockColors,
+            extensions: blocksThree.extensions,
+            customExtensionColors: {},
+            customBlockColors: blocksThree.customBlockColors,
+            useForStage: true
+        }
     },
     [BLOCKS_HIGH_CONTRAST]: {
-        blocksMediaFolder: 'blocks-media/high-contrast',
-        colors: defaultsDeep({}, blocksHighContrast.blockColors, defaultBlockColors),
-        extensions: blocksHighContrast.extensions,
-        customExtensionColors: blocksHighContrast.customExtensionColors,
-        customBlockColors: blocksHighContrast.customExtensionColors,
-        useForStage: true
-    },
-    [BLOCKS_DARK]: {
-        blocksMediaFolder: 'blocks-media/default',
-        colors: defaultsDeep({}, blocksDark.blockColors, defaultBlockColors),
-        extensions: blocksDark.extensions,
-        customExtensionColors: blocksDark.customExtensionColors,
-        customBlockColors: blocksDark.customExtensionColors,
-        useForStage: false
+        light: {
+            blocksMediaFolder: 'blocks-media/high-contrast',
+            colors: defaultsDeep({}, blocksHighContrast.blockColors, defaultBlockColors),
+            extensions: blocksHighContrast.extensions,
+            customExtensionColors: blocksHighContrast.customExtensionColors,
+            customBlockColors: blocksHighContrast.customExtensionColors,
+            useForStage: true
+        },
+        dark: {
+            blocksMediaFolder: 'blocks-media/default',
+            colors: defaultsDeep({}, blocksDark.blockColors, defaultBlockColors),
+            extensions: blocksDark.extensions,
+            customExtensionColors: blocksDark.customExtensionColors,
+            customBlockColors: blocksDark.customExtensionColors,
+            useForStage: false
+        }
     },
     [BLOCKS_CUSTOM]: {
         // to be filled by editor-theme3 addon
-        blocksMediaFolder: 'blocks-media/default',
-        colors: blocksThree.blockColors,
-        extensions: {},
-        customExtensionColors: {},
-        useForStage: false
+        light: {
+            blocksMediaFolder: 'blocks-media/default',
+            colors: blocksThree.blockColors,
+            extensions: {},
+            customExtensionColors: {},
+            useForStage: false
+        }
     }
 };
 
@@ -110,8 +115,17 @@ class Theme {
         throw new Error(`Unknown theme property: ${what}`);
     }
 
+    getBlockObject () {
+        const colorScheme = this.getGuiColors()['color-scheme'];
+        if (!(colorScheme in BLOCKS_MAP[this.blocks])) {
+            return BLOCKS_MAP[this.blocks].light;
+        }
+
+        return BLOCKS_MAP[this.blocks][colorScheme];
+    }
+    
     getBlocksMediaFolder () {
-        return BLOCKS_MAP[this.blocks].blocksMediaFolder;
+        return this.getBlockObject().blocksMediaFolder;
     }
 
     getGuiColors () {
@@ -128,12 +142,12 @@ class Theme {
             {},
             ACCENT_MAP[this.accent].blockColors,
             GUI_MAP[this.gui].blockColors,
-            BLOCKS_MAP[this.blocks].colors
+            this.getBlockObject().colors
         );
     }
 
     getExtensions () {
-        return BLOCKS_MAP[this.blocks].extensions;
+        return this.getBlockObject().extensions;
     }
 
     isDark () {
@@ -141,18 +155,20 @@ class Theme {
     }
 
     getStageBlockColors () {
-        if (BLOCKS_MAP[this.blocks].useForStage) {
+        if (
+            this.getBlockObject().useForStage
+        ) {
             return this.getBlockColors();
         }
         return Theme.light.getBlockColors();
     }
 
     getCustomExtensionColors () {
-        return BLOCKS_MAP[this.blocks].customExtensionColors;
+        return this.getBlockObject().customExtensionColors;
     }
 
     getCustomBlockColors () {
-        return BLOCKS_MAP[this.blocks].customBlockColors;
+        return this.getBlockObject().customBlockColors;
     }
 }
 
@@ -173,7 +189,6 @@ export {
     GUI_MAP,
 
     BLOCKS_THREE,
-    BLOCKS_DARK,
     BLOCKS_HIGH_CONTRAST,
     BLOCKS_CUSTOM,
     BLOCKS_MAP
