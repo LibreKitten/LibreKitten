@@ -21,9 +21,9 @@ import settingsIcon from './icon--settings.svg';
 import openLinkIcon from './tw-open-link.svg';
 
 const AddonMenuItem = ({className, onClick}) => (
-    <MenuItem>
+    <MenuItem className={className}>
         <div
-            className={classNames(styles.option, className)}
+            className={styles.option}
             onClick={onClick}
         >
             <img
@@ -57,11 +57,11 @@ AddonMenuItem.propTypes = {
 };
 
 const WelcomeModalMenuItem = ({className, onClick}) => (
-    <MenuItem
-        className={classNames(styles.option, className)}
-        onClick={onClick}
-    >
-        <div className={styles.option}>
+    <MenuItem className={className}>
+        <div
+            className={styles.option}
+            onClick={onClick}
+        >
             <span className={styles.submenuLabel}>
                 <FormattedMessage
                     defaultMessage="Show welcome screen"
