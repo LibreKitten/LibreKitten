@@ -70,7 +70,7 @@ const guiColors = {
     'context-menu-item-text': 'var(--text-primary)',
     'context-menu-item-hover-background': 'var(--looks-secondary)',
     'context-menu-item-hover-foreground': 'white',
-    'context-menu-item-hover-danger': 'var(--error-primary)',
+    'context-menu-item-hover-danger': 'hsla(0, 100%, 43.5%, 1)',
 
     'navbar-background': 'var(--looks-secondary)', /* lk: added nav bar colour */
 
