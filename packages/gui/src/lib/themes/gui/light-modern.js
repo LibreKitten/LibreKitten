@@ -34,6 +34,7 @@ const guiColors = {
     'project-title-hover-border': 'var(--looks-secondary)',
     'project-title-focus-border': 'var(--looks-secondary)',
     'project-title-focus-shadow': 'var(--looks-transparent)',
+    'project-title-focus-text': 'var(--menu-bar-foreground)',
 
     'icon-filter': 'invert(100%)',
 

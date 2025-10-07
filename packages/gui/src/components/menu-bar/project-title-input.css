@@ -45,5 +45,5 @@ can set a width for example or what it should do in a flex box (eg. grow).
     -webkit-box-shadow: 0 0 0 calc($space * .5) $project-title-focus-shadow;
     box-shadow: 0 0 0 calc($space * .5) $project-title-focus-shadow;
     background-color: $menu-bar-white;
-    color: $menu-bar-text-primary-default;
+    color: $project-title-focus-text;
 }

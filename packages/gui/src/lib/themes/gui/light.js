@@ -106,6 +106,7 @@ const guiColors = {
     'project-title-hover-border': 'var(--menu-bar-black-transparent)',
     'project-title-focus-border': 'var(--ui-transparent)',
     'project-title-focus-shadow': 'var(--ui-white-transparent-default)',
+    'project-title-focus-text': 'var(--menu-bar-text-primary-default)',
 
     'link-color': '#2255dd',
 

@@ -102,6 +102,7 @@ $project-title-hover: var(--project-title-hover);
 $project-title-hover-border: var(--project-title-hover-border);
 $project-title-focus-border: var(--project-title-focus-border);
 $project-title-focus-shadow: var(--project-title-focus-shadow);
+$project-title-focus-text: var(--project-title-focus-text);
 
 $link-color: var(--link-color);
 
