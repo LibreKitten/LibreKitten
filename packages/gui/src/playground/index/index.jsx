@@ -5,6 +5,7 @@ import styles from '../../css/info-page.css';
 import myStyles from './index.css';
 
 import 'modern-normalize/modern-normalize.css';
+import '@fontsource-variable/inter';
 
 import {applyGuiColors} from '../../lib/themes/guiHelpers';
 import {detectTheme} from '../../lib/themes/themePersistance';

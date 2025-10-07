@@ -4,6 +4,7 @@ import render from '../app-target';
 import styles from '../../css/info-page.css';
 
 import 'modern-normalize/modern-normalize.css';
+import '@fontsource-variable/inter';
 
 import {APP_NAME} from '../../lib/brand';
 import {applyGuiColors} from '../../lib/themes/guiHelpers';
