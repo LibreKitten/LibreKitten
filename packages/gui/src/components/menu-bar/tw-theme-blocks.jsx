@@ -42,8 +42,9 @@ const icons = {
     [BLOCKS_CUSTOM]: customIcon
 };
 
-const ThemeIcon = ({id}) => (
+const ThemeIcon = ({id, invert = false}) => (
     <img
+        className={invert ? styles.iconFilter : ''}
         src={icons[id]}
         draggable={false}
         width={24}
@@ -51,7 +52,8 @@ const ThemeIcon = ({id}) => (
 );
 
 ThemeIcon.propTypes = {
-    id: PropTypes.string
+    id: PropTypes.string,
+    invert: PropTypes.bool
 };
 
 const ThemeMenuItem = ({id, disabled, isSelected, onClick}) => (
@@ -64,7 +66,10 @@ const ThemeMenuItem = ({id, disabled, isSelected, onClick}) => (
                 src={check}
                 draggable={false}
             />
-            <ThemeIcon id={id} />
+            <ThemeIcon
+                id={id}
+                invert={id === BLOCKS_CUSTOM}
+            />
             <FormattedMessage {...options[id]} />
             {id === BLOCKS_CUSTOM && (
                 <img
@@ -99,7 +104,10 @@ const BlocksThemeMenu = ({
             className={styles.option}
             onClick={onOpenMenu}
         >
-            <ThemeIcon id={theme.blocks} />
+            <ThemeIcon
+                id={theme.blocks}
+                invert={theme.blocks === BLOCKS_CUSTOM}
+            />
             <span className={styles.submenuLabel}>
                 <FormattedMessage
                     defaultMessage="Block Colors"
