@@ -32,7 +32,7 @@ steps:
     image: node:22-alpine3.22
     commands:
       # Install dependencies
-      - apk add --no-cache openjdk21 pypy3
+      - apk add --no-cache openjdk21 python3
       # Avoid permission denied errors
       - chmod -R a+w .
       # Enable corepack
