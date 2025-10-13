@@ -38,7 +38,7 @@ steps:
       # Enable corepack
       - corepack enable
       # Run build stage
-      - pnpm install
+      - pnpm install --frozen-lockfile
       - pnpm run prepublish
       - NODE_ENV=production CANARY_MODE=true pnpm run gui-ci-build
 

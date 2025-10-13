@@ -5,9 +5,6 @@
 node_modules
 npm-*
 
-# PNPM
-pnpm-lock.yaml
-
 # for act
 .secrets
 
