@@ -8,8 +8,7 @@
 
 # https://cjerrington.codeberg.page/eleventy-base-blog-site/blog/codebergpagesbuild/
 #
-# This file would typically be .woodpecker.yml in the root of your repository.
-#
+# This is also inspired by https://codeberg.org/ampmod/ampmod/src/branch/develop/.woodpecker/canary.yaml
 #
 # SECRETS
 # https://woodpecker-ci.org/docs/usage/secrets
@@ -30,41 +29,44 @@ steps:
       - event: [push, manual]
         branch: develop
         path: ['packages/*/src/**/*', 'packages/*/package.json', 'package.json', '.woodpecker/*']
-    # Use the official jekyll build container
-    image: node
+    image: node:22-alpine3.22
+    commands:
+      # Install dependencies
+      - apk add --no-cache openjdk21 pypy3
+      # Avoid permission denied errors
+      - chmod -R a+w .
+      # Enable corepack
+      - corepack enable
+      # Run build stage
+      - pnpm install
+      - pnpm run prepublish
+      - NODE_ENV=production CANARY_MODE=true pnpm run gui-ci-build
+
+  - name: push
+    when:
+      - event: [push, manual]
+        branch: develop
+        path: ['packages/*/src/**/*', 'packages/*/package.json', 'package.json', '.woodpecker/*']
+    image: alpine/git
     environment:
       CBTOKEN:
         from_secret: cbtoken
     commands:
-      # Am i even allowed to do this?
-      - apt-get update && apt-get install pypy3 default-jre-headless --no-install-recommends -y
-      # Avoid permission denied errors
-      - chmod -R a+w .
       # Set up git in a working way
       - git config --global --add safe.directory /woodpecker/src/codeberg.org/LibreKitten/LibreKitten-gui/build
       - git config --global user.email "no@thankyou.com"
       - git config --global user.name "CI Builder"
-      # clone and move the target repo
+      # Clone and enter the target repo
       - cd ..
       - git clone --depth=1 -b canary https://codeberg.org/LibreKitten/pages.git lk-build
       - chmod -R a+w lk-build
       - cd lk-build
       # Prepare for push
-      - git rm -rf ./**/*
-      - git rm -rf ./*
+      - git rm -rf --ignore-unmatch ./**/* ./*
       - git remote set-url origin https://$CBTOKEN@codeberg.org/LibreKitten/pages.git
       - git commit -m 'Woodpecker CI - Clean up.'
-      - cd ../LibreKitten
-      # Run build stage
-      - npm install pnpm -g
-      - pnpm install
-      - pnpm run prepublish
-      - NODE_ENV=production CANARY_MODE=true pnpm run gui-ci-build
-      # Only needed for custom domains
-      #- cp domains _site/.domains
       # Push to target
-      - cp -a ./packages/gui/build/. ../lk-build
-      - cd ../lk-build
+      - cp -a ../LibreKitten/packages/gui/build/. .
       - echo "canary.librekitten.org" > .domains
       - git add --all
       - git commit -m "Woodpecker CI Build at $( env TZ=America/Chicago date +"%Y-%m-%d %X %Z" )"
