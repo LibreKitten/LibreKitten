@@ -1,4 +1,5 @@
 import defaultsDeep from 'lodash.defaultsdeep';
+import {defineMessages} from 'react-intl';
 
 import * as accentPurple from './accent/purple';
 import * as accentBlue from './accent/blue';
@@ -14,6 +15,13 @@ import * as blocksThree from './blocks/three';
 import * as blocksHighContrast from './blocks/high-contrast';
 import * as blocksDark from './blocks/dark';
 
+import lightModeIcon from './icons/tw-sun.svg';
+import darkModeIcon from './icons/tw-moon.svg';
+
+import threeIcon from './icons/tw-blocks-three.svg';
+import highContrastIcon from './icons/tw-blocks-high-contrast.svg';
+import customIcon from './icons/tw-blocks-custom.svg';
+
 const ACCENT_PURPLE = 'purple';
 const ACCENT_BLUE = 'blue';
 const ACCENT_ORANGE = 'orange';
@@ -26,6 +34,33 @@ const ACCENT_MAP = {
     [ACCENT_RED]: accentRed,
     [ACCENT_DARK_BLUE]: accentDarkBlue
 };
+const ACCENT_LABELS = defineMessages({
+    [ACCENT_ORANGE]: {
+        defaultMessage: 'LibreKitten — Orange',
+        description: 'Name of LibreKitten\'s orange color scheme. Used by default.',
+        id: 'lk.accent.orange'
+    },
+    [ACCENT_DARK_BLUE]: {
+        defaultMessage: 'LibreKitten — Dark Blue',
+        description: 'Name of LibreKitten\'s dark blue color scheme.',
+        id: 'lk.accent.darkBlue'
+    },
+    [ACCENT_PURPLE]: {
+        defaultMessage: 'Scratch — Purple',
+        description: 'Name of Scratch\'s purple color scheme. Matches modern Scratch.',
+        id: 'tw.accent.purple'
+    },
+    [ACCENT_BLUE]: {
+        defaultMessage: 'Scratch — Blue',
+        description: 'Name of Scratch\'s blue color scheme. Matches Scratch before the high contrast update.',
+        id: 'tw.accent.blue'
+    },
+    [ACCENT_RED]: {
+        defaultMessage: 'TurboWarp — Red',
+        description: 'Name of TurboWarp\'s red color scheme.',
+        id: 'lk.accent.red'
+    }
+});
 const ACCENT_DEFAULT = ACCENT_ORANGE;
 
 const GUI_LIGHT = 'light';
@@ -36,6 +71,26 @@ const GUI_MAP = {
     [GUI_LIGHT_MODERN]: guiLightModern,
     [GUI_DARK]: guiDark
 };
+const GUI_LABELS = defineMessages({
+    [GUI_LIGHT_MODERN]: {
+        defaultMessage: 'LibreKitten — Light (Modern)',
+        description: 'Name of LibreKitten\'s "Light (Modern)" theme.',
+        icon: lightModeIcon,
+        id: 'lk.theme.lk-light-modern'
+    },
+    [GUI_LIGHT]: {
+        defaultMessage: 'LibreKitten — Light (Colourful)',
+        description: 'Name of LibreKitten\'s light theme.',
+        icon: lightModeIcon,
+        id: 'lk.theme.lk-light'
+    },
+    [GUI_DARK]: {
+        defaultMessage: 'LibreKitten — Dark',
+        description: 'Name of LibreKitten\'s dark theme.',
+        icon: darkModeIcon,
+        id: 'lk.theme.lk-dark'
+    }
+});
 const GUI_DEFAULT = GUI_LIGHT;
 
 const BLOCKS_THREE = 'three';
@@ -83,6 +138,26 @@ const BLOCKS_MAP = {
         }
     }
 };
+const BLOCKS_LABELS = defineMessages({
+    [BLOCKS_HIGH_CONTRAST]: {
+        defaultMessage: 'High Contrast',
+        description: 'Name of the high contrast block colors.',
+        icon: highContrastIcon,
+        id: 'tw.blockColors.highContrast'
+    },
+    [BLOCKS_THREE]: {
+        defaultMessage: 'Classic',
+        description: 'Name of normal Scratch block colors.',
+        icon: threeIcon,
+        id: 'tw.blockColors.three'
+    },
+    [BLOCKS_CUSTOM]: {
+        defaultMessage: 'Customize in Addon Settings',
+        description: 'Link in block color list to open addon settings for more customization',
+        icon: customIcon,
+        id: 'tw.blockColors.custom'
+    }
+});
 
 let themeObjectsCreated = 0;
 
@@ -180,14 +255,17 @@ export {
     ACCENT_DARK_BLUE,
     ACCENT_RED,
     ACCENT_MAP,
+    ACCENT_LABELS,
 
     GUI_LIGHT,
     GUI_LIGHT_MODERN,
     GUI_DARK,
     GUI_MAP,
+    GUI_LABELS,
 
     BLOCKS_THREE,
     BLOCKS_HIGH_CONTRAST,
     BLOCKS_CUSTOM,
-    BLOCKS_MAP
+    BLOCKS_MAP,
+    BLOCKS_LABELS
 };

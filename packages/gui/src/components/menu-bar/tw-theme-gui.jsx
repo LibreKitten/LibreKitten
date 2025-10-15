@@ -1,44 +1,22 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {FormattedMessage, defineMessages} from 'react-intl';
+import {FormattedMessage} from 'react-intl';
 import {connect} from 'react-redux';
 
 import {MenuItem, Submenu} from '../menu/menu.jsx';
-import {GUI_DARK, GUI_LIGHT, GUI_LIGHT_MODERN, Theme} from '../../lib/themes/index.js';
+import {GUI_LABELS, Theme} from '../../lib/themes/index.js';
 import {closeSettingsMenu, openGuiMenu, guiMenuOpen} from '../../reducers/menus.js';
 import {setTheme} from '../../reducers/theme.js';
 import {persistTheme} from '../../lib/themes/themePersistance.js';
-import lightModeIcon from './tw-sun.svg';
-import darkModeIcon from './tw-moon.svg';
 import styles from './settings-menu.css';
 import check from './check.svg';
 import dropdownCaret from './dropdown-caret.svg';
 
-const options = defineMessages({
-    [GUI_LIGHT_MODERN]: {
-        defaultMessage: 'LibreKitten — Light (Modern)',
-        description: 'Name of LibreKitten\'s "Light (Modern)" theme.',
-        icon: lightModeIcon,
-        id: 'lk.theme.lk-light-modern'
-    },
-    [GUI_LIGHT]: {
-        defaultMessage: 'LibreKitten — Light (Colourful)',
-        description: 'Name of LibreKitten\'s light theme.',
-        icon: lightModeIcon,
-        id: 'lk.theme.lk-light'
-    },
-    [GUI_DARK]: {
-        defaultMessage: 'LibreKitten — Dark',
-        description: 'Name of LibreKitten\'s dark theme.',
-        icon: darkModeIcon,
-        id: 'lk.theme.lk-dark'
-    }
-});
 
 const ThemeIcon = ({item}) => (
     <img
-        src={options[item].icon}
+        src={GUI_LABELS[item].icon}
         draggable={false}
         className={styles.iconFilter}
         // Image is decorative
@@ -77,7 +55,7 @@ const GuiThemeMenu = ({
             />
         </div>
         <Submenu place={isRtl ? 'left' : 'right'}>
-            {Object.keys(options).map(item => (
+            {Object.keys(GUI_LABELS).map(item => (
                 <MenuItem
                     key={item}
                     isSelected={theme.accent === item}
@@ -98,7 +76,7 @@ const GuiThemeMenu = ({
                             draggable={false}
                         />
                         <ThemeIcon item={item} />
-                        <FormattedMessage {...options[item]} />
+                        <FormattedMessage {...GUI_LABELS[item]} />
                     </div>
                 </MenuItem>
             ))}

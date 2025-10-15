@@ -1,51 +1,23 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {FormattedMessage, defineMessages} from 'react-intl';
+import {FormattedMessage} from 'react-intl';
 import {connect} from 'react-redux';
 
 import check from './check.svg';
 import dropdownCaret from './dropdown-caret.svg';
 import {MenuItem, Submenu} from '../menu/menu.jsx';
-import {BLOCKS_CUSTOM, BLOCKS_HIGH_CONTRAST, BLOCKS_THREE, Theme} from '../../lib/themes/index.js';
+import {BLOCKS_CUSTOM, BLOCKS_LABELS, Theme} from '../../lib/themes/index.js';
 import {openBlocksThemeMenu, blocksThemeMenuOpen, closeSettingsMenu} from '../../reducers/menus.js';
 import {setTheme} from '../../reducers/theme.js';
 import {persistTheme} from '../../lib/themes/themePersistance.js';
 import styles from './settings-menu.css';
-import threeIcon from './tw-blocks-three.svg';
-import highContrastIcon from './tw-blocks-high-contrast.svg';
-// import darkIcon from './tw-blocks-dark.svg';
-import customIcon from './tw-blocks-custom.svg';
 import openLinkIcon from './tw-open-link.svg';
-
-const options = defineMessages({
-    [BLOCKS_HIGH_CONTRAST]: {
-        defaultMessage: 'High Contrast',
-        description: 'Name of the high contrast block colors.',
-        id: 'tw.blockColors.highContrast'
-    },
-    [BLOCKS_THREE]: {
-        defaultMessage: 'Classic',
-        description: 'Name of normal Scratch block colors.',
-        id: 'tw.blockColors.three'
-    },
-    [BLOCKS_CUSTOM]: {
-        defaultMessage: 'Customize in Addon Settings',
-        description: 'Link in block color list to open addon settings for more customization',
-        id: 'tw.blockColors.custom'
-    }
-});
-
-const icons = {
-    [BLOCKS_HIGH_CONTRAST]: highContrastIcon,
-    [BLOCKS_THREE]: threeIcon,
-    [BLOCKS_CUSTOM]: customIcon
-};
 
 const ThemeIcon = ({id, invert = false}) => (
     <img
         className={invert ? styles.iconFilter : ''}
-        src={icons[id]}
+        src={BLOCKS_LABELS[id].icon}
         draggable={false}
         width={24}
     />
@@ -70,7 +42,7 @@ const ThemeMenuItem = ({id, disabled, isSelected, onClick}) => (
                 id={id}
                 invert={id === BLOCKS_CUSTOM}
             />
-            <FormattedMessage {...options[id]} />
+            <FormattedMessage {...BLOCKS_LABELS[id]} />
             {id === BLOCKS_CUSTOM && (
                 <img
                     width={20}
@@ -98,51 +70,52 @@ const BlocksThemeMenu = ({
     onOpenCustomSettings,
     onOpenMenu,
     theme
-}) => (
-    <MenuItem expanded={isOpen}>
-        <div
-            className={styles.option}
-            onClick={onOpenMenu}
-        >
-            <ThemeIcon
-                id={theme.blocks}
-                invert={theme.blocks === BLOCKS_CUSTOM}
-            />
-            <span className={styles.submenuLabel}>
-                <FormattedMessage
-                    defaultMessage="Block Colors"
-                    description="Label for to choose what color blocks should be, eg. original or high contrast"
-                    id="tw.menuBar.blockColors"
+}) => {
+    const labels = Object.keys(BLOCKS_LABELS);
+    if (!onOpenCustomSettings) delete labels[BLOCKS_CUSTOM];
+
+    return (
+        <MenuItem expanded={isOpen}>
+            <div
+                className={styles.option}
+                onClick={onOpenMenu}
+            >
+                <ThemeIcon
+                    id={theme.blocks}
+                    invert={theme.blocks === BLOCKS_CUSTOM}
                 />
-            </span>
-            <img
-                className={classNames(styles.expandCaret, styles.iconFilter)}
-                src={dropdownCaret}
-                draggable={false}
-            />
-        </div>
-        <Submenu place={isRtl ? 'left' : 'right'}>
-            {[
-                BLOCKS_HIGH_CONTRAST,
-                BLOCKS_THREE,
-                ...(onOpenCustomSettings ? [BLOCKS_CUSTOM] : [])
-            ].map(i => (
-                <ThemeMenuItem
-                    key={i}
-                    id={i}
-                    isSelected={theme.blocks === i}
-                    // eslint-disable-next-line react/jsx-no-bind
-                    onClick={
-                        i === BLOCKS_CUSTOM ?
-                            onOpenCustomSettings :
-                            () => onChangeTheme(theme.set('blocks', i))
-                    }
-                    disabled={i !== BLOCKS_CUSTOM && theme.blocks === BLOCKS_CUSTOM}
+                <span className={styles.submenuLabel}>
+                    <FormattedMessage
+                        defaultMessage="Block Colors"
+                        description="Label for to choose what color blocks should be, eg. original or high contrast"
+                        id="tw.menuBar.blockColors"
+                    />
+                </span>
+                <img
+                    className={classNames(styles.expandCaret, styles.iconFilter)}
+                    src={dropdownCaret}
+                    draggable={false}
                 />
-            ))}
-        </Submenu>
-    </MenuItem>
-);
+            </div>
+            <Submenu place={isRtl ? 'left' : 'right'}>
+                {Object.keys(BLOCKS_LABELS).map(i => (
+                    <ThemeMenuItem
+                        key={i}
+                        id={i}
+                        isSelected={theme.blocks === i}
+                        // eslint-disable-next-line react/jsx-no-bind
+                        onClick={
+                            i === BLOCKS_CUSTOM ?
+                                onOpenCustomSettings :
+                                () => onChangeTheme(theme.set('blocks', i))
+                        }
+                        disabled={i !== BLOCKS_CUSTOM && theme.blocks === BLOCKS_CUSTOM}
+                    />
+                ))}
+            </Submenu>
+        </MenuItem>
+    );
+};
 
 BlocksThemeMenu.propTypes = {
     isOpen: PropTypes.bool,

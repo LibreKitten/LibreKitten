@@ -1,63 +1,23 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {FormattedMessage, defineMessages} from 'react-intl';
+import {FormattedMessage} from 'react-intl';
 import {connect} from 'react-redux';
 
 import check from './check.svg';
 import dropdownCaret from './dropdown-caret.svg';
 import {MenuItem, Submenu} from '../menu/menu.jsx';
-import {
-    ACCENT_BLUE,
-    ACCENT_MAP,
-    ACCENT_PURPLE,
-    ACCENT_ORANGE,
-    ACCENT_RED,
-    ACCENT_DARK_BLUE,
-    Theme
-} from '../../lib/themes/index.js';
+import {ACCENT_LABELS, ACCENT_MAP, Theme} from '../../lib/themes/index.js';
 import {openAccentMenu, accentMenuOpen, closeSettingsMenu} from '../../reducers/menus.js';
 import {setTheme} from '../../reducers/theme.js';
 import {persistTheme} from '../../lib/themes/themePersistance.js';
 import styles from './settings-menu.css';
 
-// lk: added orange
-
-const options = defineMessages({
-    [ACCENT_ORANGE]: {
-        defaultMessage: 'LibreKitten — Orange',
-        description: 'Name of LibreKitten\'s orange color scheme. Used by default.',
-        id: 'lk.accent.orange'
-    },
-    [ACCENT_DARK_BLUE]: {
-        defaultMessage: 'LibreKitten — Dark Blue',
-        description: 'Name of LibreKitten\'s dark blue color scheme.',
-        id: 'lk.accent.darkBlue'
-    },
-    [ACCENT_PURPLE]: {
-        defaultMessage: 'Scratch — Purple',
-        description: 'Name of Scratch\'s purple color scheme. Matches modern Scratch.',
-        id: 'tw.accent.purple'
-    },
-    [ACCENT_BLUE]: {
-        defaultMessage: 'Scratch — Blue',
-        description: 'Name of Scratch\'s blue color scheme. Matches Scratch before the high contrast update.',
-        id: 'tw.accent.blue'
-    },
-    [ACCENT_RED]: {
-        defaultMessage: 'TurboWarp — Red',
-        description: 'Name of TurboWarp\'s red color scheme.',
-        id: 'lk.accent.red'
-    }
-});
-
-const icons = {};
-
 const ColorIcon = props => (
-    icons[props.id] ? (
+    'icon' in ACCENT_LABELS[props.id] ? (
         <img
             className={styles.accentIconOuter}
-            src={icons[props.id]}
+            src={ACCENT_LABELS[props.id].icon}
             draggable={false}
             // Image is decorative
             alt=""
@@ -90,7 +50,7 @@ const AccentMenuItem = props => (
                 draggable={false}
             />
             <ColorIcon id={props.id} />
-            <FormattedMessage {...options[props.id]} />
+            <FormattedMessage {...ACCENT_LABELS[props.id]} />
         </div>
     </MenuItem>
 );
@@ -128,7 +88,7 @@ const AccentThemeMenu = ({
             />
         </div>
         <Submenu place={isRtl ? 'left' : 'right'}>
-            {Object.keys(options).map(item => (
+            {Object.keys(ACCENT_LABELS).map(item => (
                 <AccentMenuItem
                     key={item}
                     id={item}
