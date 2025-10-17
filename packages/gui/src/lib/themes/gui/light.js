@@ -9,9 +9,11 @@ const guiColors = {
 
     'ui-modal-overlay': 'var(--motion-primary-transparent)',
     'ui-modal-background': 'hsla(0, 100%, 100%, 1)', /* #FFFFFF */
+    'ui-modal-background-secondary': 'var(--ui-primary)',
     'ui-modal-foreground': 'hsla(225, 15%, 40%, 1)', /* #575E75 */
     'ui-modal-header-background': 'var(--looks-secondary)',
     'ui-modal-header-foreground': 'hsla(0, 100%, 100%, 1)', /* #FFFFFF */
+    'ui-modal-header-close-button-color': 'neutral',
 
     'ui-white': 'hsla(0, 100%, 100%, 1)', /* #FFFFFF */
     'ui-white-dim': 'hsla(0, 100%, 100%, 0.75)', /* 25% transparent version of ui-white */

@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {connect} from 'react-redux';
 
+import {Theme} from '../lib/themes/index.js';
+
 import ModalComponent from '../components/modal/modal.jsx';
 
 class Modal extends React.Component {
@@ -50,11 +52,13 @@ Modal.propTypes = {
     id: PropTypes.string.isRequired,
     isRtl: PropTypes.bool,
     onRequestClose: PropTypes.func,
-    onRequestOpen: PropTypes.func
+    onRequestOpen: PropTypes.func,
+    theme: PropTypes.instanceOf(Theme)
 };
 
 const mapStateToProps = state => ({
-    isRtl: state.locales.isRtl
+    isRtl: state.locales.isRtl,
+    theme: state.scratchGui.theme.theme
 });
 
 export default connect(

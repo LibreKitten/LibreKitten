@@ -4,10 +4,13 @@ import classNames from 'classnames';
 
 import styles from './close-button.css';
 import closeIcon from './icon--close.svg';
+import closeIconBlack from './icon--close-black.svg';
 import closeIconOrange from './icon--close-orange.svg';
 import backIcon from '../../lib/assets/icon--back.svg';
+import backIconBlack from '../../lib/assets/icon--back-black.svg';
 
 let closeIcons = {};
+let backIcons = {};
 
 const CloseButton = props => (
     <div
@@ -18,6 +21,7 @@ const CloseButton = props => (
             {
                 [styles.small]: props.size === CloseButton.SIZE_SMALL,
                 [styles.large]: props.size === CloseButton.SIZE_LARGE,
+                [styles.black]: props.color === CloseButton.COLOR_BLACK,
                 [styles.orange]: props.color === CloseButton.COLOR_ORANGE
             }
         )}
@@ -28,7 +32,10 @@ const CloseButton = props => (
         {props.buttonType === 'back' ?
             <img
                 className={styles.backIcon}
-                src={backIcon}
+                src={(props.color && closeIcons[props.color]) ?
+                    backIcons[props.color] :
+                    backIcon
+                }
                 draggable={false}
             /> :
             <img
@@ -52,12 +59,21 @@ CloseButton.SIZE_SMALL = 'small';
 CloseButton.SIZE_LARGE = 'large';
 
 CloseButton.COLOR_NEUTRAL = 'neutral';
+CloseButton.COLOR_BLACK = 'black';
 CloseButton.COLOR_GREEN = 'green';
 CloseButton.COLOR_ORANGE = 'orange';
+
+CloseButton.BACK_COLOR_NEUTRAL = 'neutral';
+CloseButton.BACK_COLOR_BLACK = 'black';
 closeIcons = {
     [CloseButton.COLOR_NEUTRAL]: closeIcon,
+    [CloseButton.COLOR_BLACK]: closeIconBlack,
     [CloseButton.COLOR_GREEN]: closeIcon, // TODO: temporary, need green icon
     [CloseButton.COLOR_ORANGE]: closeIconOrange
+};
+backIcons = {
+    [CloseButton.BACK_COLOR_NEUTRAL]: backIcon,
+    [CloseButton.BACK_COLOR_BLACK]: backIconBlack
 };
 
 

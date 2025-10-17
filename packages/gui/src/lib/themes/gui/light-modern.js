@@ -5,6 +5,13 @@ const guiColors = {
     'ui-secondary': 'hsla(215, 45%, 94%, 1)',
     'ui-tertiary': 'hsla(215, 45%, 92%, 1)',
 
+    'ui-modal-overlay': '#c1c1c1aa',
+    'ui-modal-background': 'var(--ui-primary)',
+    'ui-modal-background-secondary': 'var(--ui-tertiary)',
+    'ui-modal-header-background': '#ffffff',
+    'ui-modal-header-foreground': '#000000',
+    'ui-modal-header-close-button-color': 'black',
+
     'menu-bar-background': 'rgba(255, 255, 255, 1)',
     'menu-bar-foreground': 'rgba(0, 0, 0, 1)',
 

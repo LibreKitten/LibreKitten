@@ -31,7 +31,7 @@
 }
 
 .workspace :global(.blocklySvg) {
-    background-color: $ui-primary;
+    background-color: $ui-modal-background-secondary;
 }
 
 /* Row of "card" buttons for modifying custom procedures */
