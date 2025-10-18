@@ -1,0 +1,8 @@
+/*
+    lk: Opinionated default style resets. Everything here should start with ".style-resets" to prevent
+    styles leaking outside the GUI.
+*/
+
+.style-resets button {
+    cursor: pointer;
+}

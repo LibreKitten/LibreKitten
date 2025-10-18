@@ -16,13 +16,15 @@ import helpIcon from '../../lib/assets/icon--help.svg';
 
 import styles from './modal.css';
 
+import {styleResets} from '../../css/lk-style-resets.css';
+
 const ModalComponent = props => {
     const color = props.theme.getGuiColors()['ui-modal-header-close-button-color'];
 
     return (
         <ReactModal
             isOpen
-            className={classNames(styles.modalContent, props.className, {
+            className={classNames(styles.modalContent, styleResets, props.className, {
                 [styles.fullScreen]: props.fullScreen
             })}
             contentLabel={props.contentLabel}
