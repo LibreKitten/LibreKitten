@@ -146,12 +146,50 @@ class Blocks extends React.Component {
         // lk: Added coloured custom blocks.
         // Basically, this function is so we can theme custom blocks.
         // Self is Blockly.Block
+        
+        // lk: We probably shoudn't recreate the regex every time the function runs, so it is outside.
+        const hexValidator = /^#?([0-9a-f]{6}|[0-9a-f]{3})$/;
+
         this.ScratchBlocks.ScratchBlocks.ProcedureUtils.renderColourExternal = self => {
-            if (!(self.procColour_ && self.procColour_ !== 'null')) return;
             const theme = this.props.theme;
-            const colors = theme.getCustomBlockColors();
-            const myColor = self.procColour_;
-            self.setColour(colors.primary(myColor), colors.secondary(myColor), colors.tertiary(myColor), colors.quaternary(myColor));
+            const colorPalettes = theme.getBlockColors();
+
+            const useDefaultColour = () => {
+                self.setColour(
+                    colorPalettes.more.primary,
+                    colorPalettes.more.secondary,
+                    colorPalettes.more.tertiary,
+                    colorPalettes.more.quaternary
+                );
+            };
+
+            const color = self.procColour_;
+            if (!(color && color !== 'null')) return useDefaultColour();
+
+            const themer = theme.getCustomBlockColors();
+
+            if (color.startsWith('#')) {
+                // If we reached here, the colour is likely a hex code, but we should validate it to make sure.
+                if (!color.match(hexValidator)) return useDefaultColour();
+                return self.setColour(
+                    themer.primary(color),
+                    themer.secondary(color),
+                    themer.tertiary(color),
+                    themer.quaternary(color)
+                );
+            }
+
+            // If we reached here, the colour is likely from the palette, but we should check if it is.
+            if (!(color in colorPalettes)) return useDefaultColour();
+            const procPalette = colorPalettes[color];
+            if (!('primary' in procPalette)) return useDefaultColour();
+
+            self.setColour(
+                procPalette.primary,
+                procPalette.secondary,
+                procPalette.tertiary,
+                procPalette.quaternary
+            );
         };
 
         this.ScratchBlocks.ScratchMsgs.setLocale(this.props.locale);

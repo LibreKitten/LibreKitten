@@ -720,12 +720,13 @@ Blockly.ScratchBlocks.ProcedureUtils.addLabelExternal = function() {
 
 /**
  * Externally-visible function to add a label to the procedure declaration.
+ * @param {string} colour The colour to set the procedure block to.
  * @public
  */
 Blockly.ScratchBlocks.ProcedureUtils.setColourExternal = function(colour) {
-  if (colour.includes('<') || colour.includes('>') || colour.includes('"') || !colour.startsWith('#')) {
+  if (colour.includes('<') || colour.includes('>') || colour.includes('"')) {
     throw 'Invalid colour string';
-  };
+  }
   this.procColour_ = colour;
   this.updateDisplay_();
   this.focusLastEditor_();
