@@ -1,8 +1,11 @@
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React from 'react';
 import Modal from '../../containers/modal.jsx';
 import Box from '../box/box.jsx';
 import {defineMessages, injectIntl, intlShape, FormattedMessage} from 'react-intl';
+import classNames from 'classnames';
+
+import {Theme} from '../../lib/themes';
 
 import booleanInputIcon from './icon--boolean-input.svg';
 import textInputIcon from './icon--text-input.svg';
@@ -19,14 +22,99 @@ const messages = defineMessages({
 });
 
 // lk: added custom colors
+const CustomColor = props => {
+    const isSelected = props.currentColor.startsWith('#') === true;
+    const inputRef = React.useRef(null);
 
-const CustomColor = props => (
-    <input
-        type="color"
-        value={props.color}
-        onChange={e => props.setColor(e.target.value)}
-    />
-);
+    const handleClickInput = React.useCallback(
+        e => props.setColor(e.target.value), [props.setColor]
+    );
+    const handleClickButton = React.useCallback(
+        () => inputRef.current.click(), [inputRef.current]
+    );
+
+    return (
+        <>
+            <button
+                className={classNames(styles.colorButton, styles.colorPicker,
+                    isSelected ? styles.active : null
+                )}
+                style={{
+                    backgroundColor: isSelected ? props.currentColor : null
+                }}
+                onClick={handleClickButton}
+            />
+            <input
+                onChange={handleClickInput}
+                ref={inputRef}
+                style={{display: 'none'}}
+                type="color"
+                value={isSelected ? props.currentColor : '#42d66a'}
+            />
+        </>
+    );
+};
+
+CustomColor.propTypes = {
+    currentColor: PropTypes.string.isRequired,
+    setColor: PropTypes.func.isRequired
+};
+
+const PrefilledColor = props => {
+    const isSelected = props.currentColor === props.colorToSet;
+    const color = props.colorToSet;
+
+    let buttonColor = color;
+    (() => {
+        if (!color.startsWith('#')) {
+            const blockPalettes = props.theme.getBlockColors();
+            if (props.colorToSet === 'null') {
+                buttonColor = blockPalettes.more.primary;
+                return;
+            }
+
+            if (!(color in blockPalettes)) return;
+            if (!('primary' in blockPalettes[color])) return;
+
+            buttonColor = blockPalettes[color].primary;
+        }
+    })();
+
+    const handleClick = React.useCallback(
+        () => props.setColor(props.colorToSet), [props.setColor]
+    );
+
+    return (
+        <button
+            className={classNames(styles.colorButton, isSelected ? styles.active : null)}
+            style={{
+                backgroundColor: buttonColor
+            }}
+            onClick={handleClick}
+        />
+    );
+};
+
+PrefilledColor.propTypes = {
+    colorToSet: PropTypes.string.isRequired,
+    currentColor: PropTypes.string.isRequired,
+    setColor: PropTypes.func.isRequired,
+    theme: PropTypes.instanceOf(Theme)
+};
+
+const prefilledColorList = [
+    'null',
+    'motion',
+    'looks',
+    'sounds',
+    'control',
+    'event',
+    'sensing',
+    'pen',
+    'operators',
+    'data',
+    'data_lists'
+];
 
 const CustomProcedures = props => (
     <Modal
@@ -127,19 +215,21 @@ const CustomProcedures = props => (
                     />
                 </label>
             </div>
-            <br />
-            <label>
-                <hr />
+            <Box className={styles.colorRow}>
+                {prefilledColorList.map((color, i) => (
+                    <PrefilledColor
+                        colorToSet={color}
+                        currentColor={props.color}
+                        key={i}
+                        setColor={props.setColor}
+                        theme={props.theme}
+                    />
+                ))}
                 <CustomColor
+                    currentColor={props.color}
                     setColor={props.setColor}
-                    color={props.color}
                 />
-                <FormattedMessage
-                    defaultMessage="Custom block color"
-                    description="Label for colour input to set a custom color"
-                    id="lk.customProcedures.customColor"
-                />
-            </label>
+            </Box>
             <Box className={styles.buttonRow}>
                 <button
                     className={styles.cancelButton}
@@ -167,6 +257,7 @@ const CustomProcedures = props => (
 );
 
 CustomProcedures.propTypes = {
+    color: PropTypes.string.isRequired,
     componentRef: PropTypes.func.isRequired,
     intl: intlShape,
     onAddBoolean: PropTypes.func.isRequired,
@@ -175,6 +266,8 @@ CustomProcedures.propTypes = {
     onCancel: PropTypes.func.isRequired,
     onOk: PropTypes.func.isRequired,
     onToggleWarp: PropTypes.func.isRequired,
+    setColor: PropTypes.func.isRequired,
+    theme: PropTypes.instanceOf(Theme),
     warp: PropTypes.bool.isRequired
 };
 

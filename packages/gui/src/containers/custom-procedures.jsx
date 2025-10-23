@@ -6,6 +6,8 @@ import CustomProceduresComponent from '../components/custom-procedures/custom-pr
 import LazyScratchBlocks from '../lib/tw-lazy-scratch-blocks';
 import {connect} from 'react-redux';
 
+import {Theme} from '../lib/themes';
+
 class CustomProcedures extends React.Component {
     constructor (props) {
         super(props);
@@ -16,12 +18,13 @@ class CustomProcedures extends React.Component {
             'handleToggleWarp',
             'handleCancel',
             'handleOk',
-            'setBlocks'
+            'setBlocks',
+            'setColor'
         ]);
         this.state = {
             rtlOffset: 0,
             warp: false,
-            color: '#FF8200'
+            color: 'null'
         };
     }
     componentWillUnmount () {
@@ -140,6 +143,10 @@ class CustomProcedures extends React.Component {
             this.setState({warp: newWarp});
         }
     }
+    setColor (color) {
+        this.setState({color});
+        this.mutationRoot.setColourExternal(color);
+    }
     render () {
         return (
             <CustomProceduresComponent
@@ -151,12 +158,9 @@ class CustomProcedures extends React.Component {
                 onCancel={this.handleCancel}
                 onOk={this.handleOk}
                 onToggleWarp={this.handleToggleWarp}
-                setColor={val => {
-                    this.setState({color: val});
-                    this.mutationRoot.setColourExternal(val);
-
-                }}
+                setColor={this.setColor}
                 color={this.state.color}
+                theme={this.props.theme}
             />
         );
     }
@@ -175,7 +179,8 @@ CustomProcedures.propTypes = {
         }),
         comments: PropTypes.bool,
         collapse: PropTypes.bool
-    })
+    }),
+    theme: PropTypes.instanceOf(Theme)
 };
 
 CustomProcedures.defaultOptions = {
@@ -195,7 +200,8 @@ CustomProcedures.defaultProps = {
 
 const mapStateToProps = state => ({
     isRtl: state.locales.isRtl,
-    mutator: state.scratchGui.customProcedures.mutator
+    mutator: state.scratchGui.customProcedures.mutator,
+    theme: state.scratchGui.theme.theme
 });
 
 export default connect(
