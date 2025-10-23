@@ -28,9 +28,9 @@ class TurboWarpBlocks {
         return {
             id: 'tw',
             name: 'Misc',
-            color1: '#ff884d',
-            color2: '#ed6a28',
-            color3: '#d65d20',
+            color1: '#40c2ff',
+            color2: '#34a4d9',
+            color3: '#2a88b5',
             blocks: [
                 {
                     opcode: 'getLastKeyPressed',
