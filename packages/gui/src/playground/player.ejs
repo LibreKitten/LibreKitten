@@ -8,6 +8,23 @@
     <title><%= htmlWebpackPlugin.options.title %></title>
     <link rel="icon" href="<%= htmlWebpackPlugin.options.root %>images/librekitten-colour.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="<%= htmlWebpackPlugin.options.root %>images/apple-touch-icon.png">
+    <% 
+      [
+        require('@fontsource-variable/inter/files/inter-latin-wght-normal.woff2'),
+        require('@fontsource-variable/inter/files/inter-greek-ext-wght-normal.woff2'),
+        require('@fontsource-variable/inter/files/inter-greek-wght-normal.woff2'),
+        require('@fontsource-variable/inter/files/inter-cyrillic-ext-wght-normal.woff2'),
+        require('@fontsource-variable/inter/files/inter-cyrillic-wght-normal.woff2'),
+        require('@fontsource-variable/inter/files/inter-latin-ext-wght-normal.woff2'),
+        require('@fontsource-variable/inter/files/inter-vietnamese-wght-normal.woff2')
+      ].map(font => { %>
+        <link 
+          rel="preload"
+          href="<%= font %>"
+          as="font"
+          type="font/woff2"
+        >
+    <% }); %>
     <% if (htmlWebpackPlugin.options.root === "/" || htmlWebpackPlugin.options.root === "") { %>
       <link rel="manifest" href="<%= htmlWebpackPlugin.options.root %>manifest.webmanifest">
     <% } %>
