@@ -1024,9 +1024,9 @@ class MenuBar extends React.Component {
                             {/* todo: icon */}
                             <Button className={styles.feedbackButton}>
                                 <FormattedMessage
-                                    defaultMessage="{APP_NAME} forum topic (for feedback)"
+                                    defaultMessage="{APP_NAME} forum topic (for feedback, help & more)"
                                     description="Button to give feedback in the menu bar"
-                                    id="tw.feedbackButton"
+                                    id="lk.forumTopic"
                                     values={{
                                         APP_NAME
                                     }}
