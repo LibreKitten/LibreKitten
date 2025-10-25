@@ -64,7 +64,6 @@ steps:
       # Prepare for push
       - git rm -rf --ignore-unmatch ./**/* ./*
       - git remote set-url origin https://$CBTOKEN@codeberg.org/LibreKitten/pages.git
-      - git commit -m 'Woodpecker CI - Clean up.'
       # Push to target
       - cp -a ../LibreKitten/packages/gui/build/. .
       - echo "librekitten.org" > .domains
