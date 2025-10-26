@@ -1,23 +1,30 @@
-# LibreKitten Monorepo
-This is the source code of LibreKitten. If you want to try out LibreKitten, go to [https://librekitten.org/](https://librekitten.org/).
-## License
-The licenses for the packages are in the individual packages, the non-package files are under CC0.
+# LibreKitten - A powerful block-based visual programming language.
+LibreKitten is an **alpha-quality** block-based visual programming language based on TurboWarp. The primary feature is being able to function as a web server, but it is also an experimentation ground to push the limits of block-based languages.
 
-# About LibreKitten
-## What is LibreKitten?
-LibreKitten is an alpha-quality block-based visual programming language based on TurboWarp. The primary feature is being able to function as a web server, but it is also an experimentation ground to push the limits of block-based languages.
+This is the source code for LibreKitten. If you want to try out LibreKitten, go to [https://librekitten.org/](https://librekitten.org/).
+If you want to try out a build with the newest commits (at the cost of stablility and breaking changes)
 
 ## Why does LibreKitten exist?
-
 Scratch is made for a novice userbase. This means it doesn't cater to the more advanced users of Scratch who like the simple block-based interface of Scratch and the easy to use primitive blocks, but want more advanced features.
 
 For this audience, we have made a new block-based visual programming language called LibreKitten. It is a fork of TurboWarp, which itself was forked off Scratch.
 
 LibreKitten was created with the intention of containing more advanced features and accept contributions written by the community, while still being for all ages.
 
-# How do I run the server?
-*Currently, there are no server builds. We're planning on building them soon. For now, you can clone the source code to try it out.*
-- Clone the repository and enter it in the terminal.
-- Install Node.js and pnpm (if you haven't already.)
-- Run `pnpm install --shamefully-hoist` in the terminal.
-- Run `node /path/to/LibreKitten/packages/vm/src/cli/server.js /path/to/Project.lb` in the terminal.
+## License
+The licenses for the packages are in the individual packages (mainly GPL-3.0-only and MPL-2.0); however, the files that are *not* in any package, are under CC0.
+
+## How do I run the server?
+*Note: The server has not been tested on Windows and may not work properly on there. You may want to run the server in Windows Subsystem for Linux if you must use Windows.*
+
+There are two ways to run the server: downloading the build and running it, or running from the source code. You probably want to do the first.
+
+### First way:
+1. Install Node.js, if you haven't already.
+2. Download the latest file, that has a name that looks like "(version)-cli.tar.gz", from the Releases tab, and unzip it.
+3. In the terminal, run `/path/to/the/unzipped/folder/librekitten.js serve /path/to/your/Project.lb 8080`.
+### Second way:
+1. Clone LibreKitten using git and enter it in the terminal.
+2. Install Node.js and pnpm, if you haven't already.
+3. Run `pnpm install` in the terminal.
+4. Run `node /path/to/LibreKitten/packages/vm/src/server/cli.js serve /path/to/your/Project.lb 8080` in the terminal.
