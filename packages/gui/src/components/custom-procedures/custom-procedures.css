@@ -100,8 +100,14 @@
 }
 
 .color-button.color-picker:not(.active) {
-    background-color: #42d66a;
-    border-color: red green blue purple;
+    background: 
+        linear-gradient(#42d66a 0 0) padding-box,
+        linear-gradient(135deg, 
+            hsla(249, 100%, 59%, 1) 11%, 
+            hsla(280, 100%, 50%, 1) 50%, 
+            hsla(306, 100%, 44%, 1) 81%
+        ) border-box;
+    border: 2px solid transparent;
 }
 
 /* Confirmation buttons at the bottom of the modal */
