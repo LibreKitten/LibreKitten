@@ -2,7 +2,8 @@
 LibreKitten is an **alpha-quality** block-based visual programming language based on TurboWarp. The primary feature is being able to function as a web server, but it is also an experimentation ground to push the limits of block-based languages.
 
 This is the source code for LibreKitten. If you want to try out LibreKitten, go to [https://librekitten.org/](https://librekitten.org/).
-If you want to try out a build with the newest commits (at the cost of stablility and breaking changes)
+
+If you want to try out a build with the newest commits (at the cost of stablility and breaking changes), go to [https://canary.librekitten.org/](https://canary.librekitten.org/).
 
 ## Why does LibreKitten exist?
 Scratch is made for a novice userbase. This means it doesn't cater to the more advanced users of Scratch who like the simple block-based interface of Scratch and the easy to use primitive blocks, but want more advanced features.
