@@ -21,6 +21,41 @@ const messages = defineMessages({
     }
 });
 
+const hexValidator = /^#?([0-9a-f]{6}|[0-9a-f]{3})$/;
+const processColor = (color, theme) => {
+    const colorPalettes = theme.getBlockColors();
+
+    const useDefaultColor = () => ({
+        primary: colorPalettes.more.primary,
+        secondary: colorPalettes.more.secondary,
+        tertiary: colorPalettes.more.tertiary,
+        quaternary: colorPalettes.more.quaternary
+    });
+
+    if (!(color && color !== 'null')) return useDefaultColor();
+
+    const themer = theme.getCustomBlockColors();
+
+    if (color.startsWith('#')) {
+        // If we reached here, the colour is likely a hex code, but we should validate it to make sure.
+        if (!color.match(hexValidator)) return useDefaultColor();
+        return {
+            primary: themer.primary(color),
+            secondary: themer.secondary(color),
+            tertiary: themer.tertiary(color),
+            quaternary: themer.quaternary(color)
+        };
+    }
+
+    // If we reached here, the colour is likely from the palette, but we should check if it is.
+    if (!(color in colorPalettes)) return useDefaultColor();
+    const procPalette = colorPalettes[color];
+    if (!('primary' in procPalette)) return useDefaultColor();
+
+    return procPalette;
+};
+
+
 // lk: added custom colors
 const CustomColor = props => {
     const isSelected = props.currentColor.startsWith('#') === true;
@@ -63,22 +98,9 @@ CustomColor.propTypes = {
 const PrefilledColor = props => {
     const isSelected = props.currentColor === props.colorToSet;
     const color = props.colorToSet;
-
-    let buttonColor = color;
-    (() => {
-        if (!color.startsWith('#')) {
-            const blockPalettes = props.theme.getBlockColors();
-            if (props.colorToSet === 'null') {
-                buttonColor = blockPalettes.more.primary;
-                return;
-            }
-
-            if (!(color in blockPalettes)) return;
-            if (!('primary' in blockPalettes[color])) return;
-
-            buttonColor = blockPalettes[color].primary;
-        }
-    })();
+    const theme = props.theme;
+    
+    const buttonPalette = React.useMemo(() => processColor(color, theme), [color, theme]);
 
     const handleClick = React.useCallback(
         () => props.setColor(props.colorToSet), [props.setColor]
@@ -88,7 +110,8 @@ const PrefilledColor = props => {
         <button
             className={classNames(styles.colorButton, isSelected ? styles.active : null)}
             style={{
-                backgroundColor: buttonColor
+                backgroundColor: buttonPalette.primary,
+                borderColor: buttonPalette.tertiary
             }}
             onClick={handleClick}
         />
