@@ -312,6 +312,8 @@ class JSGenerator {
             // No compile-time optimizations possible - use fallback method.
             return `compareEqual(${this.descendInput(left)}, ${this.descendInput(right)})`;
         }
+        case InputOpcode.OP_POW:
+            return `(${this.descendInput(node.left)} ** ${this.descendInput(node.right)})`;
         case InputOpcode.OP_POW_E:
             return `Math.exp(${this.descendInput(node.value)})`;
         case InputOpcode.OP_FLOOR:
@@ -334,6 +336,14 @@ class JSGenerator {
             // No compile-time optimizations possible - use fallback method.
             return `compareGreaterThan(${this.descendInput(left)}, ${this.descendInput(right)})`;
         }
+        case InputOpcode.OP_REPLACE:
+            return `${this.descendInput(node.string)}.replace(${this.descendInput(node.toBeReplaced)}, ${this.descendInput(node.replaceWith)})`;
+        case InputOpcode.OP_REVERSE:
+            return `${this.descendInput(node.string)}.split("").reverse().join("")`;
+        case InputOpcode.OP_STRICT_EQL:
+            return `(${this.descendInput(node.left)} === ${this.descendInput(node.right)})`;
+        case InputOpcode.OP_SUBSTR:
+            return `${this.descendInput(node.string)}.substring(${this.descendInput(node.from)} - 1, ${this.descendInput(node.to)} - 1)`;
         case InputOpcode.OP_JOIN:
             return `(${this.descendInput(node.left)} + ${this.descendInput(node.right)})`;
         case InputOpcode.OP_LENGTH:

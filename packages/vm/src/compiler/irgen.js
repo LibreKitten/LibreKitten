@@ -338,6 +338,22 @@ class ScriptTreeGenerator {
                 left: this.descendInputOfBlock(block, 'OPERAND1'),
                 right: this.descendInputOfBlock(block, 'OPERAND2')
             });
+        case 'operator_replace':
+            return new IntermediateInput(InputOpcode.OP_REPLACE, InputType.STRING, {
+                string: this.descendInputOfBlock(block, 'STRING').toType(InputType.STRING),
+                toBeReplaced: this.descendInputOfBlock(block, 'ONE').toType(InputType.STRING),
+                replaceWith: this.descendInputOfBlock(block, 'TWO').toType(InputType.STRING)
+            });
+        case 'operator_reverse':
+            return new IntermediateInput(InputOpcode.OP_REVERSE, InputType.STRING, {
+                string: this.descendInputOfBlock(block, 'STRING').toType(InputType.STRING)
+            });
+        case 'operator_get_from_string':
+            return new IntermediateInput(InputOpcode.OP_SUBSTR, InputType.STRING, {
+                string: this.descendInputOfBlock(block, 'STRING').toType(InputType.STRING),
+                from: this.descendInputOfBlock(block, 'ONE').toType(InputType.STRING),
+                to: this.descendInputOfBlock(block, 'TWO').toType(InputType.STRING)
+            });
         case 'operator_join':
             return new IntermediateInput(InputOpcode.OP_JOIN, InputType.STRING, {
                 left: this.descendInputOfBlock(block, 'STRING1').toType(InputType.STRING),
@@ -396,6 +412,11 @@ class ScriptTreeGenerator {
             return new IntermediateInput(InputOpcode.OP_OR, InputType.BOOLEAN, {
                 left: this.descendInputOfBlock(block, 'OPERAND1').toType(InputType.BOOLEAN),
                 right: this.descendInputOfBlock(block, 'OPERAND2').toType(InputType.BOOLEAN)
+            });
+        case 'operator_exponent':
+            return new IntermediateInput(InputOpcode.OP_POW, InputType.NUMBER_OR_NAN, {
+                left: this.descendInputOfBlock(block, 'NUM1').toType(InputType.NUMBER),
+                right: this.descendInputOfBlock(block, 'NUM2').toType(InputType.NUMBER)
             });
         case 'operator_random': {
             const from = this.descendInputOfBlock(block, 'FROM');
@@ -461,11 +482,20 @@ class ScriptTreeGenerator {
             return new IntermediateInput(InputOpcode.OP_ROUND, InputType.NUMBER_INT | InputType.NUMBER_INF, {
                 value: this.descendInputOfBlock(block, 'NUM').toType(InputType.NUMBER)
             });
+        case 'operator_strictly_equals':
+            return new IntermediateInput(InputOpcode.OP_STRICT_EQL, InputType.BOOLEAN, {
+                left: this.descendInputOfBlock(block, 'OPERAND1').toType(InputType.STRING),
+                right: this.descendInputOfBlock(block, 'OPERAND2').toType(InputType.STRING)
+            });
         case 'operator_subtract':
             return new IntermediateInput(InputOpcode.OP_SUBTRACT, InputType.NUMBER_OR_NAN, {
                 left: this.descendInputOfBlock(block, 'NUM1').toType(InputType.NUMBER),
                 right: this.descendInputOfBlock(block, 'NUM2').toType(InputType.NUMBER)
             });
+        case 'operator_true':
+            return this.createConstantInput(true).toType(InputType.BOOLEAN);
+        case 'operator_false':
+            return this.createConstantInput(false).toType(InputType.BOOLEAN);
 
         case 'procedures_call': {
             const procedureInfo = this.getProcedureInfo(block);
