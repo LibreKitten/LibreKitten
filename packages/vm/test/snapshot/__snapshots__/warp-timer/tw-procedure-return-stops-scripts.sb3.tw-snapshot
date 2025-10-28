@@ -44,6 +44,7 @@ b0.value = 0;
 while (true) {
 b0.value = ((+b0.value || 0) + 1);
 if ((b0.value === 18)) {
+const a0 = ("This value should be " + "discarded.");if (a0 !== undefined) runtime.visualReport(target, "j", a0);
 retire(); return;
 }
 yield;
