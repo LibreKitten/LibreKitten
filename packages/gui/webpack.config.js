@@ -267,7 +267,8 @@ module.exports = [
                 'process.env.ROOT': JSON.stringify(root),
                 'process.env.ROUTING_STYLE': JSON.stringify(process.env.ROUTING_STYLE || 'filehash'),
                 'process.env.npm_package_version': JSON.stringify(monorepoPackageJson.version),
-                'process.env.CANARY_MODE': Boolean(process.env.CANARY_MODE)
+                'process.env.CANARY_MODE': Boolean(process.env.CANARY_MODE),
+                'process.env.ENABLE_WINDCHIMES': JSON.stringify(process.env.ENABLE_WINDCHIMES || '')
             }),
             new HtmlWebpackPlugin({
                 chunks: ['editor'],

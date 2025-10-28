@@ -32,6 +32,7 @@ import FramerateChanger from '../../containers/tw-framerate-changer.jsx';
 import ChangeUsername from '../../containers/tw-change-username.jsx';
 import CloudVariablesToggler from '../../containers/tw-cloud-toggler.jsx';
 import TWSaveStatus from './tw-save-status.jsx';
+import TWNews from './tw-news.jsx';
 
 import {detectTheme} from '../../lib/themes/themePersistance';
 
@@ -484,7 +485,7 @@ class MenuBar extends React.Component {
         // Show the About button only if we have a handler for it (like in the desktop app)
         // lk: Added a logo.
         const aboutButton = this.buildAboutMenu(this.props.onClickAbout);
-        return (
+        const menuBar = (
             <Box
                 className={classNames(
                     this.props.className,
@@ -1044,6 +1045,13 @@ class MenuBar extends React.Component {
 
                 {aboutButton}
             </Box>
+        );
+
+        return (
+            <React.Fragment>
+                {menuBar}
+                {/* <TWNews /> */}
+            </React.Fragment>
         );
     }
 }

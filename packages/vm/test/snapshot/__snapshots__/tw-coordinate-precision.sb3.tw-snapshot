@@ -14,17 +14,17 @@ yield* executeInCompatibilityLayer({"MESSAGE":"pass much above x does not round"
 if (((b1 ? b1.x : 0) === 1e-9)) {
 yield* executeInCompatibilityLayer({"MESSAGE":"pass initial 'of' test",}, b0, false, false, "${qf}t3_Wf_/sqC#i0WN", null);
 }
-target.setXY(target.x + 0, target.y);
+target.setXY(target.x + 0, target.y + 0);
 runtime.ext_scratch3_motion._moveSteps(0, target);
-target.setXY(target.x + -9e-10, target.y);
+target.setXY(target.x + -9e-10, target.y + 0);
 if (((b1 ? b1.x : 0) === 1.0000000000000007e-10)) {
 yield* executeInCompatibilityLayer({"MESSAGE":"pass 'of' never rounds - positive x",}, b0, false, false, "zt/Fd,i768/rohNq-OU/", null);
 }
 if ((limitPrecision(target.x) === 0)) {
 yield* executeInCompatibilityLayer({"MESSAGE":"pass x slightly above 0 rounds",}, b0, false, false, "p5a6(?e#B|B(d.fe;b6F", null);
 }
-target.setXY(target.x + -9e-10, target.y);
-target.setXY(target.x, target.y + 0);
+target.setXY(target.x + -9e-10, target.y + 0);
+target.setXY(target.x + 0, target.y + 0);
 if (((b1 ? b1.x : 0) === -7.999999999999999e-10)) {
 yield* executeInCompatibilityLayer({"MESSAGE":"pass 'of' never rounds and change x - negative x",}, b0, false, false, "![=|9E8]xp_9QR]fu}4M", null);
 }
