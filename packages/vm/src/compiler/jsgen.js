@@ -924,9 +924,17 @@ class JSGenerator {
             this.source += `);\n`;
             break;
         }
-        case StackOpcode.PROCEDURE_RETURN:
-            this.stopScriptAndReturn(this.descendInput(node.value));
+        case StackOpcode.PROCEDURE_RETURN: {
+            if (this.isProcedure) {
+                this.stopScriptAndReturn(this.descendInput(node.value));
+            } else {
+                const value = this.localVariables.next();
+                this.source += `const ${value} = ${this.descendInput(node.value)};`;
+                this.source += `if (${value} !== undefined) runtime.visualReport(target, "${sanitize(node.id)}", ${value});\n`;
+                this.retire();
+            }
             break;
+        }
 
         case StackOpcode.SENSING_TIMER_RESET:
             this.source += 'runtime.ioDevices.clock.resetProjectTimer();\n';

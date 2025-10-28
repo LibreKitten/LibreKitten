@@ -1009,7 +1009,8 @@ class ScriptTreeGenerator {
         }
         case 'procedures_return':
             return new IntermediateStackBlock(StackOpcode.PROCEDURE_RETURN, {
-                value: this.descendInputOfBlock(block, 'VALUE')
+                value: this.descendInputOfBlock(block, 'VALUE'),
+                id: block.id
             });
 
         case 'sensing_resettimer':
