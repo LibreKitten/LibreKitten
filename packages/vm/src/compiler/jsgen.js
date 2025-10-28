@@ -313,7 +313,8 @@ class JSGenerator {
             return `compareEqual(${this.descendInput(left)}, ${this.descendInput(right)})`;
         }
         case InputOpcode.OP_POW:
-            return `(${this.descendInput(node.left)} ** ${this.descendInput(node.right)})`;
+            // Wrap the left input to resolve ambiguity.
+            return `((${this.descendInput(node.left)}) ** ${this.descendInput(node.right)})`;
         case InputOpcode.OP_POW_E:
             return `Math.exp(${this.descendInput(node.value)})`;
         case InputOpcode.OP_FLOOR:
@@ -499,6 +500,8 @@ class JSGenerator {
 
         case InputOpcode.CONTROL_COUNTER:
             return 'runtime.ext_scratch3_control._counter';
+        case InputOpcode.CONTROL_TERNARY:
+            return `(${this.descendInput(node.condition)} ? ${this.descendInput(node.whenTrue)} : ${this.descendInput(node.whenFalse)})`;
 
         case InputOpcode.TW_KEY_LAST_PRESSED:
             return 'runtime.ioDevices.keyboard.getLastKeyPressed()';
@@ -618,6 +621,24 @@ class JSGenerator {
             }
             this.source += `}\n`;
             break;
+        case 'control.switch':
+            this.source += `switch (${this.descendInput(node.value)}) {\n`;
+            this.descendStack(node.cases, new Frame(false));
+            this.source += `}\n`;
+            break;
+        case 'control.case':
+            this.source += `case ${this.descendInput(node.value)}: {\n`;
+            this.descendStack(node.whenMatched, new Frame(false));
+            this.source += '}\n';
+            break;
+        case 'control.default':
+            this.source += `default: {\n`;
+            this.descendStack(node.whenNoMatches, new Frame(false));
+            this.source += `}\n`;
+            break;
+        case 'control.break':
+            this.source += `break;\n`;
+            break;
         case StackOpcode.CONTROL_REPEAT: {
             const i = this.localVariables.next();
             if (node.times.isAlwaysType(InputType.NUMBER_INT | InputType.NUMBER_INF)) {
@@ -639,6 +660,10 @@ class JSGenerator {
             break;
         case StackOpcode.CONTROL_STOP_SCRIPT:
             this.stopScript();
+            break;
+        case StackOpcode.CONTROL_RESTART:
+            this.source += 'runtime.greenFlag();\n';
+            this.retire();
             break;
         case StackOpcode.CONTROL_WAIT: {
             const duration = this.localVariables.next();

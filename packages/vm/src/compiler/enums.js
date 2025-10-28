@@ -109,6 +109,10 @@ const StackOpcode = {
     HAT_PREDICATE: 'hat.predicate',
 
     CONTROL_IF_ELSE: 'control.if',
+    CONTROL_SWITCH: 'control.switch',
+    CONTROL_CASE: 'control.case',
+    CONTROL_DEFAULT: 'control.default',
+    CONTROL_BREAK: 'control.break',
     CONTROL_CLONE_CREATE: 'control.createClone',
     CONTROL_CLONE_DELETE: 'control.deleteClone',
     CONTROL_WHILE: 'control.while',
@@ -117,6 +121,7 @@ const StackOpcode = {
     CONTROL_STOP_ALL: 'control.stopAll',
     CONTROL_STOP_OTHERS: 'control.stopOthers',
     CONTROL_STOP_SCRIPT: 'control.stopScript',
+    CONTROL_RESTART: 'control.restart',
     CONTROL_WAIT: 'control.wait',
     CONTROL_WAIT_UNTIL: 'control.waitUntil',
     CONTROL_CLEAR_COUNTER: 'control.counterClear',
@@ -294,6 +299,7 @@ const InputOpcode = {
     PROCEDURE_ARGUMENT: 'procedures.argument',
 
     CONTROL_COUNTER: 'control.counter',
+    CONTROL_TERNARY: 'control.ternary',
 
     TW_KEY_LAST_PRESSED: 'tw.lastKeyPressed'
 };

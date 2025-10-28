@@ -596,6 +596,12 @@ class ScriptTreeGenerator {
 
         case 'control_get_counter':
             return new IntermediateInput(InputOpcode.CONTROL_COUNTER, InputType.NUMBER_POS_INT | InputType.NUMBER_ZERO);
+        case 'control_ternary_if':
+            return new IntermediateInput(InputOpcode.CONTROL_TERNARY, InputType.ANY, {
+                condition: this.descendInputOfBlock(block, 'VALUE').toType(InputType.BOOLEAN),
+                whenTrue: this.descendInputOfBlock(block, 'LEFT', true),
+                whenFalse: this.descendInputOfBlock(block, 'RIGHT', true)
+            });
 
         case 'tw_getLastKeyPressed':
             return new IntermediateInput(InputOpcode.TW_KEY_LAST_PRESSED, InputType.STRING);
@@ -681,6 +687,22 @@ class ScriptTreeGenerator {
                 whenTrue: this.descendSubstack(block, 'SUBSTACK'),
                 whenFalse: this.descendSubstack(block, 'SUBSTACK2')
             });
+        case 'control_switch':
+            return new IntermediateStackBlock(StackOpcode.CONTROL_SWITCH, {
+                value: this.descendInputOfBlock(block, 'VALUE').toType(InputType.STRING),
+                cases: this.descendSubstack(block, 'SUBSTACK')
+            });
+        case 'control_case':
+            return new IntermediateStackBlock(StackOpcode.CONTROL_CASE, {
+                value: this.descendInputOfBlock(block, 'VALUE').toType(InputType.STRING),
+                whenMatched: this.descendSubstack(block, 'SUBSTACK')
+            });
+        case 'control_default':
+            return new IntermediateStackBlock(StackOpcode.CONTROL_DEFAULT, {
+                whenNoMatches: this.descendSubstack(block, 'SUBSTACK')
+            });
+        case 'control_break':
+            return new IntermediateStackBlock(StackOpcode.CONTROL_BREAK);
         case 'control_repeat':
             return new IntermediateStackBlock(StackOpcode.CONTROL_REPEAT, {
                 times: this.descendInputOfBlock(block, 'TIMES').toType(InputType.NUMBER),
@@ -711,6 +733,8 @@ class ScriptTreeGenerator {
             }
             return new IntermediateStackBlock(StackOpcode.NOP);
         }
+        case 'control_green_flag':
+            return new IntermediateStackBlock(StackOpcode.CONTROL_RESTART, {}, true);
         case 'control_wait':
             return new IntermediateStackBlock(StackOpcode.CONTROL_WAIT, {
                 seconds: this.descendInputOfBlock(block, 'DURATION').toType(InputType.NUMBER)

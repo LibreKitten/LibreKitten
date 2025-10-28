@@ -168,6 +168,12 @@ class IROptimizer {
             return InputType.NUMBER_OR_NAN;
         }
 
+        // lk: Try to optimize our blocks.
+        case InputOpcode.CONTROL_TERNARY: {
+            const type = inputs.whenTrue.type | inputs.whenFalse.type;
+            return type;
+        }
+
         case InputOpcode.OP_ADD: {
             const leftType = inputs.left.type;
             const rightType = inputs.right.type;
@@ -571,7 +577,8 @@ class IROptimizer {
             modified = state.or(trueState) || modified;
             break;
         }
-        case StackOpcode.CONTROL_STOP_SCRIPT: {
+        case StackOpcode.CONTROL_STOP_SCRIPT:
+        case StackOpcode.CONTROL_BREAK: {
             modified = this.analyzeInputs(inputs, state) || modified;
             this.addPossibleExitState(state);
             break;
