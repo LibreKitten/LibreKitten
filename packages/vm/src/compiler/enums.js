@@ -211,8 +211,10 @@ const InputOpcode = {
 
     LOOKS_BACKDROP_NUMBER: 'looks.backdropNumber',
     LOOKS_BACKDROP_NAME: 'looks.backdropName',
+    LOOKS_BACKDROP_AMOUNT: 'looks.backdropAmount',
     LOOKS_COSTUME_NUMBER: 'looks.costumeNumber',
     LOOKS_COSTUME_NAME: 'looks.costumeName',
+    LOOKS_COSTUME_AMOUNT: 'looks.costumeAmount',
     LOOKS_SIZE_GET: 'looks.size',
 
     VAR_GET: 'var.get',

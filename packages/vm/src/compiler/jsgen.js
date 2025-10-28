@@ -252,10 +252,14 @@ class JSGenerator {
             return 'Math.round(target.size)';
         case InputOpcode.LOOKS_BACKDROP_NAME:
             return 'stage.getCostumes()[stage.currentCostume].name';
+        case InputOpcode.LOOKS_BACKDROP_AMOUNT:
+            return 'stage.getCostumes().length';
         case InputOpcode.LOOKS_BACKDROP_NUMBER:
             return '(stage.currentCostume + 1)';
         case InputOpcode.LOOKS_COSTUME_NAME:
             return 'target.getCostumes()[target.currentCostume].name';
+        case InputOpcode.LOOKS_COSTUME_AMOUNT:
+            return 'target.getCostumes().length';
         case InputOpcode.LOOKS_COSTUME_NUMBER:
             return '(target.currentCostume + 1)';
 

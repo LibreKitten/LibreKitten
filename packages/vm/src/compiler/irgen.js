@@ -289,15 +289,23 @@ class ScriptTreeGenerator {
         }
 
         case 'looks_backdropnumbername':
-            if (block.fields.NUMBER_NAME.value === 'number') {
+            switch (block.fields.NUMBER_NAME.value) {
+            case 'number':
                 return new IntermediateInput(InputOpcode.LOOKS_BACKDROP_NUMBER, InputType.NUMBER_POS_INT);
+            case 'amount':
+                return new IntermediateInput(InputOpcode.LOOKS_BACKDROP_AMOUNT, InputType.NUMBER_POS_INT);
+            default:
+                return new IntermediateInput(InputOpcode.LOOKS_BACKDROP_NAME, InputType.STRING);
             }
-            return new IntermediateInput(InputOpcode.LOOKS_BACKDROP_NAME, InputType.STRING);
         case 'looks_costumenumbername':
-            if (block.fields.NUMBER_NAME.value === 'number') {
+            switch (block.fields.NUMBER_NAME.value) {
+            case 'number':
                 return new IntermediateInput(InputOpcode.LOOKS_COSTUME_NUMBER, InputType.NUMBER_POS_INT);
+            case 'amount':
+                return new IntermediateInput(InputOpcode.LOOKS_COSTUME_AMOUNT, InputType.NUMBER_POS_INT);
+            default:
+                return new IntermediateInput(InputOpcode.LOOKS_COSTUME_NAME, InputType.STRING);
             }
-            return new IntermediateInput(InputOpcode.LOOKS_COSTUME_NAME, InputType.STRING);
         case 'looks_size':
             return new IntermediateInput(InputOpcode.LOOKS_SIZE_GET, InputType.NUMBER_POS);
 
