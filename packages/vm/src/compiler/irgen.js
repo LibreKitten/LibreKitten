@@ -892,6 +892,11 @@ class ScriptTreeGenerator {
             return new IntermediateStackBlock(StackOpcode.MOTION_X_CHANGE, {
                 dx: this.descendInputOfBlock(block, 'DX').toType(InputType.NUMBER)
             });
+        case 'motion_changexyby':
+            return new IntermediateStackBlock(StackOpcode.MOTION_XY_CHANGE, {
+                dx: this.descendInputOfBlock(block, 'DX').toType(InputType.NUMBER),
+                dy: this.descendInputOfBlock(block, 'DY').toType(InputType.NUMBER)
+            });
         case 'motion_changeyby':
             return new IntermediateStackBlock(StackOpcode.MOTION_Y_CHANGE, {
                 dy: this.descendInputOfBlock(block, 'DY').toType(InputType.NUMBER)

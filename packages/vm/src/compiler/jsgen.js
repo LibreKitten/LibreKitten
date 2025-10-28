@@ -819,12 +819,15 @@ class JSGenerator {
             this.source += `runtime.ext_scratch3_looks._setCostume(target, ${this.descendInput(node.costume)});\n`;
             break;
 
-        case StackOpcode.MOTION_X_CHANGE:
-            this.source += `target.setXY(target.x + ${this.descendInput(node.dx)}, target.y);\n`;
+        // lk: Use one big case for all the relevant blocks.
+        case StackOpcode.MOTION_X_CHANGE: // fallthrough
+        case StackOpcode.MOTION_Y_CHANGE: // fallthrough
+        case StackOpcode.MOTION_XY_CHANGE: {
+            const dx = 'dx' in node ? this.descendInput(node.dx) : '0';
+            const dy = 'dy' in node ? this.descendInput(node.dy) : '0';
+            this.source += `target.setXY(target.x + ${dx}, target.y + ${dy});\n`;
             break;
-        case StackOpcode.MOTION_Y_CHANGE:
-            this.source += `target.setXY(target.x, target.y + ${this.descendInput(node.dy)});\n`;
-            break;
+        }
         case StackOpcode.MOTION_IF_ON_EDGE_BOUNCE:
             this.source += `runtime.ext_scratch3_motion._ifOnEdgeBounce(target);\n`;
             break;
