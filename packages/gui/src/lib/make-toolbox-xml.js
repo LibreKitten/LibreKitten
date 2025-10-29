@@ -563,6 +563,8 @@ const sensing = function (isInitialSetup, isStage, targetId, colors) {
         <block id="current" type="sensing_current"/>
         <block type="sensing_dayssince2000"/>
         ${blockSeparator}
+        <block type="sensing_deltatime"/>
+        ${blockSeparator}
         <block type="sensing_username"/>
         ${categorySeparator}
     </category>

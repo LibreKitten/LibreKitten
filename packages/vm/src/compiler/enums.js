@@ -277,6 +277,7 @@ const InputOpcode = {
     SENSING_TIME_MINUTE: 'sensing.minute',
     SENSING_TIME_SECOND: 'sensing.second',
     SENSING_TIME_DAYS_SINCE_2000: 'sensing.daysSince2000',
+    SENSING_DELTA_TIME: 'sensing.deltaTime',
     SENSING_DISTANCE: 'sensing.distance',
     SENSING_KEY_DOWN: 'keyboard.pressed',
     SENSING_MOUSE_DOWN: 'mouse.down',

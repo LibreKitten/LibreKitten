@@ -448,6 +448,8 @@ class JSGenerator {
             return `(new Date().getDay() + 1)`;
         case InputOpcode.SENSING_TIME_DAYS_SINCE_2000:
             return 'daysSince2000()';
+        case InputOpcode.SENSING_DELTA_TIME:
+            return 'runtime.deltaTime';
         case InputOpcode.SENSING_DISTANCE:
             // TODO: on stages, this can be computed at compile time
             return `distance(${this.descendInput(node.target)})`;

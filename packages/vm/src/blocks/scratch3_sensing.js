@@ -67,6 +67,7 @@ class Scratch3SensingBlocks {
             sensing_keypressed: this.getKeyPressed,
             sensing_current: this.current,
             sensing_dayssince2000: this.daysSince2000,
+            sensing_deltatime: this.deltaTime,
             sensing_loudness: this.getLoudness,
             sensing_loud: this.isLoud,
             sensing_askandwait: this.askAndWait,
@@ -98,6 +99,9 @@ class Scratch3SensingBlocks {
             },
             sensing_dayssince2000: {
                 getId: () => 'dayssince2000'
+            },
+            sensing_deltatime: {
+                getId: () => 'deltatime'
             },
             sensing_current: {
                 // This is different from the default toolbox xml id in order to support
@@ -269,6 +273,10 @@ class Scratch3SensingBlocks {
         let mSecsSinceStart = today.valueOf() - start.valueOf();
         mSecsSinceStart += ((today.getTimezoneOffset() - dstAdjust) * 60 * 1000);
         return mSecsSinceStart / msPerDay;
+    }
+
+    deltaTime () {
+        return this.runtime.deltaTime;
     }
 
     getLoudness () {

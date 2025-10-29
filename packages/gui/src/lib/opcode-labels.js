@@ -132,6 +132,11 @@ const messages = defineMessages({
         defaultMessage: 'days since 2000',
         description: 'Label for the days since 2000 monitor when show on the stage',
         id: 'tw.opcode.2000'
+    },
+    sensing_deltatime: {
+        defaultMessage: 'delta time',
+        description: 'Label for the delta time monitor when show on the stage',
+        id: 'lk.opcode.deltaTime'
     }
 });
 
@@ -178,7 +183,8 @@ class OpcodeLabels {
             sensing_username: {category: 'sensing'},
             sensing_current: {category: 'sensing'},
             sensing_timer: {category: 'sensing'},
-            sensing_dayssince2000: {category: 'sensing'}
+            sensing_dayssince2000: {category: 'sensing'},
+            sensing_deltatime: {category: 'sensing'}
         };
 
         // Initialize opcodeMap with default strings
@@ -256,6 +262,7 @@ class OpcodeLabels {
         };
         this._opcodeMap.sensing_timer.labelFn = () => this._translator(messages.sensing_timer);
         this._opcodeMap.sensing_dayssince2000.labelFn = () => this._translator(messages.sensing_dayssince2000);
+        this._opcodeMap.sensing_deltatime.labelFn = () => this._translator(messages.sensing_deltatime);
     }
 
     /**
