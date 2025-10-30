@@ -8,7 +8,7 @@
 [class~='blocklyWidgetDiv']:not([class~='fieldTextInput']) *,
 [class~='blocklyDropDownDiv'],
 [class~='blocklyDropDownDiv'] *,
-[class~='blocklyTooltipDiv']
+[class~='blocklyTooltipDiv'],
 [class~='blocklyTooltipDiv'] * {
     box-sizing: content-box;
 }
