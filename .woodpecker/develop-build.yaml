@@ -30,6 +30,8 @@ steps:
         branch: develop
         path: ['packages/*/src/**/*', 'packages/*/package.json', 'package.json', '.woodpecker/*']
     image: node:22-alpine3.22
+    environment:
+      HUSKY: 0
     commands:
       # Install dependencies
       - apk add --no-cache openjdk21 python3
