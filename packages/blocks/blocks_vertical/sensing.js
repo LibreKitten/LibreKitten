@@ -523,6 +523,7 @@ Blockly.Blocks['sensing_deltatime'] = {
       "message0": Blockly.Msg.SENSING_DELTATIME,
       "category": Blockly.Categories.sensing,
       "checkboxInFlyout": true,
+      "tooltip": Blockly.Msg.SENSING_DELTATIME_TOOLTIP,
       "extensions": ["colours_sensing", "output_number"]
     });
   }

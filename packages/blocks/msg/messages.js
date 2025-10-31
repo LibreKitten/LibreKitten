@@ -320,6 +320,14 @@ Blockly.Msg.SENSING_DAYSSINCE2000 = 'days since 2000';
 Blockly.Msg.SENSING_DELTATIME = 'delta time';
 Blockly.Msg.SENSING_USERNAME = 'username';
 Blockly.Msg.SENSING_USERID = 'user id';
+// Sensing blocks tooltips
+Blockly.Msg.SENSING_DELTATIME_TOOLTIP =
+    "This block reports the seconds elasped since the last frame. It is useful for things such as " +
+    "making a sprite move at the same speed, even with different refresh rates. For example, you can " +
+    "mutiply you can mutiply delta time by 300, and it will move roughly 5 pixels per frame when the  " +
+    "framerate is 60 FPS; but when the framerate is 120 FPS, it moves around 3 pixels per frame. If you " +
+    "want to use the pixel values you are used to with Scratch, multiply delta time by 30, and then multiply " +
+    "it again with the value you want to use.";
 
 // Sound blocks
 Blockly.Msg.SOUND_PLAY = 'start sound %1';
