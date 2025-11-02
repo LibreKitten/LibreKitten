@@ -224,6 +224,7 @@ class MenuBar extends React.Component {
             'handleClickRestorePoints',
             'handleClickSeeCommunity',
             'handleClickShare',
+            'handleDevServerUpload',
             'handleSetMode',
             'handleKeyPress',
             'handleRestoreOption',
@@ -300,6 +301,22 @@ class MenuBar extends React.Component {
                 waitForUpdate(false); // immediately transition to project page
             }
         }
+    }
+    async handleDevServerUpload () {
+        // Prompt must be awaited in the desktop app.
+        // eslint-disable-next-line no-alert
+        const port = parseFloat(await prompt('On what port is your development server hosted?'));
+        if (!port || Number.isNaN(port)) return;
+        const blob = await this.props.vm.saveProjectSb3();
+
+        const reader = new FileReader();
+        reader.readAsArrayBuffer(blob);
+        reader.addEventListener('loadend', () => {
+            fetch(`http://localhost:${port}/_lk_devServer_updateLb`, {
+                method: 'POST',
+                body: reader.result
+            });
+        });
     }
     handleSetMode (mode) {
         return () => {
@@ -855,27 +872,11 @@ class MenuBar extends React.Component {
                                     </MenuItem>
                                 </MenuSection>
                                 <MenuSection>
-                                    <MenuItem
-                                        onClick={async () => {
-                                        // preliminary code
-                                            const port = prompt('On what port is your development server hosted?');
-                                            if (!port) return;
-                                            const blob = await window.vm.saveProjectSb3();
-
-                                            // convert blob to base64
-                                            const reader = new FileReader();
-                                            reader.readAsArrayBuffer(blob);
-                                            reader.addEventListener('loadend', () => {
-                                                fetch(`http://localhost:${port}/_lk_devServer_updateLb`, {
-                                                    method: 'POST',
-                                                    body: reader.result
-                                                });
-                                            });
-                                        }}
-                                    >
+                                    <MenuItem onClick={this.handleDevServerUpload}>
                                         <FormattedMessage
                                             defaultMessage="Send to development server"
-                                            description="Menu bar item for advanced settings"
+                                            // eslint-disable-next-line max-len
+                                            description="Menu bar item for sending a project to a LibreKitten on Server instance running in developer mode"
                                             id="lk.menuBar.sendToDevServer"
                                         />
                                     </MenuItem>
