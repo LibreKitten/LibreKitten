@@ -55,9 +55,9 @@ const messages = defineMessages({
         id: 'gui.stageHeader.fullscreenControl'
     },
     openSettingsMessage: {
-        defaultMessage: 'Open advanced settings',
-        description: 'Button to open advanced settings in embeds',
-        id: 'tw.openAdvanced'
+        defaultMessage: 'Open project settings',
+        description: 'Button to open project settings in embeds',
+        id: 'lk.openAdvanced'
     }
 });
 
