@@ -23,6 +23,10 @@
     align-items: center;
 }
 
+.stretchy-button {
+    width: fit-content;
+}
+
 .button > img {
     display: block;
     transition: transform 0.1s;

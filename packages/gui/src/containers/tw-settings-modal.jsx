@@ -1,31 +1,22 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import {defineMessages, injectIntl, intlShape} from 'react-intl';
+import {injectIntl, intlShape} from 'react-intl';
 import bindAll from 'lodash.bindall';
 import {connect} from 'react-redux';
 import {closeSettingsModal} from '../reducers/modals';
 import SettingsModalComponent from '../components/tw-settings-modal/settings-modal.jsx';
 import {defaultStageSize} from '../reducers/custom-stage-size';
 
-const messages = defineMessages({
-    newFramerate: {
-        defaultMessage: 'New framerate:',
-        description: 'Prompt shown to choose a new framerate',
-        id: 'tw.menuBar.newFramerate'
-    }
-});
-
 class UsernameModal extends React.Component {
     constructor (props) {
         super(props);
         bindAll(this, [
-            'handleFramerateChange',
-            'handleCustomizeFramerate',
+            'handleSetFramerate',
             'handleHighQualityPenChange',
             'handleInterpolationChange',
             'handleInfiniteClonesChange',
-            'handleRemoveFencingChange',
-            'handleRemoveLimitsChange',
+            'handleFencingChange',
+            'handleRestoreLimitsChange',
             'handleWarpTimerChange',
             'handleStageWidthChange',
             'handleStageHeightChange',
@@ -33,17 +24,8 @@ class UsernameModal extends React.Component {
             'handleStoreProjectOptions'
         ]);
     }
-    handleFramerateChange (e) {
-        this.props.vm.setFramerate(e.target.checked ? 60 : 30);
-    }
-    async handleCustomizeFramerate () {
-        // prompt() returns Promise in desktop app
-        // eslint-disable-next-line no-alert
-        const newFramerate = await prompt(this.props.intl.formatMessage(messages.newFramerate), this.props.framerate);
-        const parsed = parseFloat(newFramerate);
-        if (isFinite(parsed)) {
-            this.props.vm.setFramerate(parsed);
-        }
+    handleSetFramerate (value) {
+        this.props.vm.setFramerate(value);
     }
     handleHighQualityPenChange (e) {
         this.props.vm.renderer.setUseHighQualityRender(e.target.checked);
@@ -56,14 +38,14 @@ class UsernameModal extends React.Component {
             maxClones: e.target.checked ? Infinity : 300
         });
     }
-    handleRemoveFencingChange (e) {
+    handleFencingChange (e) {
         this.props.vm.setRuntimeOptions({
-            fencing: !e.target.checked
+            fencing: e.target.checked
         });
     }
-    handleRemoveLimitsChange (e) {
+    handleRestoreLimitsChange (e) {
         this.props.vm.setRuntimeOptions({
-            miscLimits: !e.target.checked
+            miscLimits: e.target.checked
         });
     }
     handleWarpTimerChange (e) {
@@ -96,13 +78,12 @@ class UsernameModal extends React.Component {
         return (
             <SettingsModalComponent
                 onClose={this.props.onClose}
-                onFramerateChange={this.handleFramerateChange}
-                onCustomizeFramerate={this.handleCustomizeFramerate}
+                onSetFramerate={this.handleSetFramerate}
                 onHighQualityPenChange={this.handleHighQualityPenChange}
                 onInterpolationChange={this.handleInterpolationChange}
                 onInfiniteClonesChange={this.handleInfiniteClonesChange}
-                onRemoveFencingChange={this.handleRemoveFencingChange}
-                onRemoveLimitsChange={this.handleRemoveLimitsChange}
+                onFencingChange={this.handleFencingChange}
+                onRestoreLimitsChange={this.handleRestoreLimitsChange}
                 onWarpTimerChange={this.handleWarpTimerChange}
                 onStageWidthChange={this.handleStageWidthChange}
                 onStageHeightChange={this.handleStageHeightChange}
@@ -139,8 +120,8 @@ UsernameModal.propTypes = {
     highQualityPen: PropTypes.bool,
     interpolation: PropTypes.bool,
     infiniteClones: PropTypes.bool,
-    removeFencing: PropTypes.bool,
-    removeLimits: PropTypes.bool,
+    fencing: PropTypes.bool,
+    restoreLimits: PropTypes.bool,
     warpTimer: PropTypes.bool,
     customStageSize: PropTypes.shape({
         width: PropTypes.number,
@@ -156,8 +137,8 @@ const mapStateToProps = state => ({
     highQualityPen: state.scratchGui.tw.highQualityPen,
     interpolation: state.scratchGui.tw.interpolation,
     infiniteClones: state.scratchGui.tw.runtimeOptions.maxClones === Infinity,
-    removeFencing: !state.scratchGui.tw.runtimeOptions.fencing,
-    removeLimits: !state.scratchGui.tw.runtimeOptions.miscLimits,
+    fencing: state.scratchGui.tw.runtimeOptions.fencing,
+    restoreLimits: state.scratchGui.tw.runtimeOptions.miscLimits,
     warpTimer: state.scratchGui.tw.compilerOptions.warpTimer,
     customStageSize: state.scratchGui.customStageSize,
     disableCompiler: !state.scratchGui.tw.compilerOptions.enabled
