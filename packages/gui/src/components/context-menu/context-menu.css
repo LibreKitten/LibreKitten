@@ -18,6 +18,10 @@
     z-index: $z-index-context-menu;
 }
 
+[dir="rtl"] .context-menu {
+    text-align: right;
+}
+
 .menu-item {
     padding: 8px 12px;
     white-space: nowrap;
