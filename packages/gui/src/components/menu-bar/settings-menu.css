@@ -1,4 +1,5 @@
 @import "../../css/colors.css";
+@import "../../css/units.css";
 
 .icon {
     width: 1.5rem;
@@ -19,9 +20,22 @@
     gap: .5rem;
 }
 
-.check {
-    margin: 0 .25rem 0 0;
-    visibility: hidden;
+[dir="ltr"] .inset {
+    padding-left: 2rem;
+}
+
+[dir="rtl"] .inset {
+    padding-right: 2rem;
+}
+
+.check-area {
+    position: absolute;
+	left: 0;
+	width: 2rem;
+    height: 100%;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
 }
 
 [dir="rtl"] .check {
@@ -62,9 +76,9 @@
     padding-left: 1rem;
 }
 
-.language-submenu > ul {
-    max-height: calc(100vh - 5rem); /* Fallback if dvh not supported */
-    max-height: calc(100dvh - 5rem);
+.language-submenu {
+    overflow: scroll;
+    max-height: calc(100vh - $menu-bar-height);
 }
 
 @media only screen and (max-width: 1124px) {

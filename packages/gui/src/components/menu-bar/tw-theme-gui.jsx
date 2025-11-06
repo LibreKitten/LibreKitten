@@ -3,13 +3,15 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
 import {connect} from 'react-redux';
+import {Menubar} from 'radix-ui';
 
-import {MenuItem, Submenu} from '../menu/menu.jsx';
+import {MenuRadioItem, Submenu} from '../menu/menu.jsx';
 import {GUI_LABELS, Theme} from '../../lib/themes/index.js';
 import {closeSettingsMenu, openGuiMenu, guiMenuOpen} from '../../reducers/menus.js';
 import {setTheme} from '../../reducers/theme.js';
 import {persistTheme} from '../../lib/themes/themePersistance.js';
 import styles from './settings-menu.css';
+import menuStyles from '../menu/menu.css';
 import check from './check.svg';
 import dropdownCaret from './dropdown-caret.svg';
 
@@ -29,16 +31,17 @@ ThemeIcon.propTypes = {
 };
 
 const GuiThemeMenu = ({
-    isOpen,
     isRtl,
     onChangeTheme,
-    onOpen,
     theme
 }) => (
-    <MenuItem expanded={isOpen}>
-        <div
-            className={styles.option}
-            onClick={onOpen}
+    <Menubar.Sub>
+        <Menubar.SubTrigger
+            className={classNames(
+                menuStyles.menuItem,
+                menuStyles.hoverable,
+                styles.option
+            )}
         >
             <ThemeIcon item={theme.gui} />
             <span className={styles.submenuLabel}>
@@ -53,35 +56,38 @@ const GuiThemeMenu = ({
                 src={dropdownCaret}
                 draggable={false}
             />
-        </div>
-        <Submenu place={isRtl ? 'left' : 'right'}>
-            {Object.keys(GUI_LABELS).map(item => (
-                <MenuItem
-                    key={item}
-                    isSelected={theme.accent === item}
+        </Menubar.SubTrigger>
+        <Menubar.Portal>
+            <Submenu place={isRtl ? 'left' : 'right'}>
+                <Menubar.RadioGroup
+                    value={theme.gui}
                     // eslint-disable-next-line react/jsx-no-bind
-                    onClick={() => onChangeTheme(theme.set('gui', item))}
+                    onValueChange={value => onChangeTheme(theme.set('gui', value))}
                 >
-                    <div className={styles.option}>
-                        <img
-                            className={classNames(
-                                styles.check,
-                                styles.iconFilter,
-                                {[styles.selected]: theme.gui === item}
-                            )}
-                            width={15}
-                            Matches
-                            height={12}
-                            src={check}
-                            draggable={false}
-                        />
-                        <ThemeIcon item={item} />
-                        <FormattedMessage {...GUI_LABELS[item]} />
-                    </div>
-                </MenuItem>
-            ))}
-        </Submenu>
-    </MenuItem>
+                    {Object.keys(GUI_LABELS).map(item => (
+                        <MenuRadioItem
+                            className={classNames(styles.option, styles.inset)}
+                            key={item}
+                            value={item}
+                        >
+                            <Menubar.ItemIndicator className={styles.checkArea}>
+                                <img
+                                    className={classNames(styles.check, styles.iconFilter)}
+                                    width={15}
+                                    Matches
+                                    height={12}
+                                    src={check}
+                                    draggable={false}
+                                />
+                            </Menubar.ItemIndicator>
+                            <ThemeIcon item={item} />
+                            <FormattedMessage {...GUI_LABELS[item]} />
+                        </MenuRadioItem>
+                    ))}
+                </Menubar.RadioGroup>
+            </Submenu>
+        </Menubar.Portal>
+    </Menubar.Sub>
 );
 
 GuiThemeMenu.propTypes = {
