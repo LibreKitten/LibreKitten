@@ -3,8 +3,13 @@
 // const formatMessage = require('format-message');
 const BlockType = require('../../extension-support/block-type');
 const ArgumentType = require('../../extension-support/argument-type');
-const SQL = require('./sql-abstraction');
 
+const SQLiteWrapper = require('./sql-abstraction').default;
+const SQL = new SQLiteWrapper();
+
+(async () => {
+    await SQL.init();
+})();
 
 /**
  * lk: Blocks to provide SQLite to projects.

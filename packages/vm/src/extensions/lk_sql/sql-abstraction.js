@@ -95,4 +95,4 @@ class SQLiteWrapper {
     }
 }
 
-module.exports = SQLiteWrapper;
+module.exports.default = SQLiteWrapper;
