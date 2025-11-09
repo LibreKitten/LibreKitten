@@ -1,3 +1,5 @@
+// lk: TODO: Fix variable manager extension
+
 export default async function ({ addon, console, msg }) {
   const vm = addon.tab.traps.vm;
 
