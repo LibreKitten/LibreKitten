@@ -1,4 +1,5 @@
 /* eslint-env browser, node */
+// @ts-check
 const SQLBrowser = require('sql.js');
 const SQLServer = require('sqlite3');
 
@@ -8,11 +9,13 @@ const SQLServer = require('sqlite3');
 class SQLiteWrapper {
     constructor () {
         this._isNode = typeof process !== 'undefined' && process.versions?.node;
+        // @ts-ignore
         this.db = this._isNode ? new SQLServer.Database(':memory:') : new SQLBrowser.Database();
     }
 
     /**
      * Escape table/column identifiers safely.
+     * @param {string} name
      */
     _escapeIdentifier (name) {
         if (typeof name !== 'string') throw new Error('Identifier must be a string');
@@ -23,9 +26,10 @@ class SQLiteWrapper {
      * Securely parses a column definition string and escapes identifiers.
      * Example input: "id INT, name TEXT"
      * Output: `"id" INT, "name" TEXT`
+     * @param {string} colStr
      */
     _parseColumns (colStr) {
-        const cols = colStr.split(/,(?![^(]*\))/g).map(c => c.trim());
+        const cols = colStr.split(/,(?![^(]*\))/g).map((/** @type {string} */ c) => c.trim());
         return cols.map(c => {
             const [first, ...rest] = c.split(/\s+/);
             if (!first) throw new Error(`Invalid column definition: ${c}`);
@@ -45,7 +49,7 @@ class SQLiteWrapper {
 
         if (this._isNode) {
             return new Promise((resolve, reject) => {
-                this.db.run(sql, err => (err ? reject(err) : resolve()));
+                this.db.run(sql, (/** @type {any} */ err) => (err ? reject(err) : resolve()));
             });
         }
         this.db.run(sql);
@@ -56,13 +60,15 @@ class SQLiteWrapper {
     /**
      * Run any arbitrary SQL query (with values array for parameterization)
      * @param {string} sql
-     * @param {Array} [params]
+     * @param {Array<any>} [params]
      * @returns {Promise<any>}
      */
     runSQL (sql, params = []) {
         if (this._isNode) {
             return new Promise((resolve, reject) => {
-                this.db.all(sql, params, (err, rows) => (err ? reject(err) : resolve(rows)));
+                this.db.all(sql, params, (
+                    /** @type {any} */ err, /** @type {any} */
+                    rows) => (err ? reject(err) : resolve(rows)));
             });
         }
         const stmt = this.db.prepare(sql);
