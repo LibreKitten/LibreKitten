@@ -19,7 +19,7 @@ class SQLiteWrapper {
      */
     _escapeIdentifier (name) {
         if (typeof name !== 'string') throw new Error('Identifier must be a string');
-        return `"${name.replace(/"/g, '""')}"`;
+        return `"${name.replace(/"/g, '___sql_doublequote___').replace(/'/g, '___sql_singlequote___')}}"`;
     }
 
     /**
