@@ -1,7 +1,5 @@
 /* eslint-env browser, node */
 // @ts-check
-const SQLBrowser = require('sql.js');
-const SQLServer = require('sqlite3');
 
 /**
  * Cross-platform SQLite wrapper class.
@@ -9,8 +7,22 @@ const SQLServer = require('sqlite3');
 class SQLiteWrapper {
     constructor () {
         this._isNode = typeof process !== 'undefined' && process.versions?.node;
-        // @ts-ignore
-        this.db = this._isNode ? new SQLServer.Database(':memory:') : new SQLBrowser.Database();
+    }
+
+    /**
+     * Initialise the SQL database so that it cn be used by the abstraction.
+     * @returns {Promise<SQLiteWrapper>}
+     */
+    async init () {
+        if (this._isNode) {
+            const {Database} = await import('sqlite3');
+            this.db = new Database(':memory:');
+        } else {
+            // @ts-ignore
+            const SQL = await import('sql.js').initSqlJs({locateFile: file => `https://sql.js.org/dist/${file}`});
+            this.db = new SQL.Database();
+        }
+        return this;
     }
 
     /**

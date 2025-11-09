@@ -1,5 +1,5 @@
 const {DefinePlugin} = require('webpack');
-
+const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const defaultsDeep = require('lodash.defaultsdeep');
 const path = require('path');
@@ -17,6 +17,14 @@ const base = {
     output: {
         library: 'VirtualMachine',
         filename: '[name].js'
+    },
+    resolve: {
+        fallback: {
+            // This shouldn't do anything in the server hopefully.
+            path: false,
+            crypto: false,
+            fs: false
+        }
     },
     module: {
         rules: [{
@@ -46,6 +54,10 @@ const base = {
         ]
     },
     plugins: [
+        // To fix a weird bug in the SQL extension that causes Webpack to bundle sqlite3
+        new webpack.IgnorePlugin({
+            resourceRegExp: /^sqlite3$/
+        }),
         new DefinePlugin({
             importMetaURL: 'import.meta.url'
         })
