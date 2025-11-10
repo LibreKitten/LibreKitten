@@ -57,6 +57,7 @@ class Scratch3SensingBlocks {
             sensing_touchingcolor: this.touchingColor,
             sensing_coloristouchingcolor: this.colorTouchingColor,
             sensing_distanceto: this.distanceTo,
+            sensing_stagesize: this.stageSize,
             sensing_timer: this.getTimer,
             sensing_resettimer: this.resetTimer,
             sensing_of: this.getAttributeOf,
@@ -102,6 +103,9 @@ class Scratch3SensingBlocks {
             },
             sensing_deltatime: {
                 getId: () => 'deltatime'
+            },
+            sensing_stagesize: {
+                getId: (_, fields) => getMonitorIdForBlockWithArgs('stagesize', fields)
             },
             sensing_current: {
                 // This is different from the default toolbox xml id in order to support
@@ -220,6 +224,13 @@ class Scratch3SensingBlocks {
         const dx = util.target.x - targetX;
         const dy = util.target.y - targetY;
         return Math.sqrt((dx * dx) + (dy * dy));
+    }
+
+    stageSize (args, util) {
+        const runtime = util.runtime;
+        const side = Cast.toString(args.SIDE).toLowerCase();
+        if (side === 'height') return runtime.stageHeight;
+        return runtime.stageWidth;
     }
 
     setDragMode (args, util) {

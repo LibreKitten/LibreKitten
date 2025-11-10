@@ -137,7 +137,17 @@ const messages = defineMessages({
         defaultMessage: 'delta time',
         description: 'Label for the delta time monitor when show on the stage',
         id: 'lk.opcode.deltaTime'
-    }
+    },
+    sensing_stagesize_width: {
+        defaultMessage: 'stage width',
+        description: 'Label for the stage width monitor when shown on the stage',
+        id: 'lk.opcodeLabels.stageWidth'
+    },
+    sensing_stagesize_height: {
+        defaultMessage: 'stage height',
+        description: 'Label for the stage height monitor when shown on the stage',
+        id: 'lk.opcodeLabels.stageHeight'
+    },
 });
 
 class OpcodeLabels {
@@ -184,7 +194,8 @@ class OpcodeLabels {
             sensing_current: {category: 'sensing'},
             sensing_timer: {category: 'sensing'},
             sensing_dayssince2000: {category: 'sensing'},
-            sensing_deltatime: {category: 'sensing'}
+            sensing_deltatime: {category: 'sensing'},
+            sensing_stagesize: {category: 'sensing'}
         };
 
         // Initialize opcodeMap with default strings
@@ -263,6 +274,10 @@ class OpcodeLabels {
         this._opcodeMap.sensing_timer.labelFn = () => this._translator(messages.sensing_timer);
         this._opcodeMap.sensing_dayssince2000.labelFn = () => this._translator(messages.sensing_dayssince2000);
         this._opcodeMap.sensing_deltatime.labelFn = () => this._translator(messages.sensing_deltatime);
+        this._opcodeMap.sensing_stagesize.labelFn = params => {
+            if (params.SIDE.toLowerCase() === 'height') return this._translator(messages.sensing_stagesize_height);
+            return this._translator(messages.sensing_stagesize_width);
+        };
     }
 
     /**
