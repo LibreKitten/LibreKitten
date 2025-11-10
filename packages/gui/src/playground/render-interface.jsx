@@ -23,6 +23,7 @@ import {FormattedMessage, defineMessages, injectIntl, intlShape} from 'react-int
 import {getIsLoading} from '../reducers/project-state.js';
 import AppStateHOC from '../lib/app-state-hoc.jsx';
 import ErrorBoundaryHOC from '../lib/error-boundary-hoc.jsx';
+import LKDirectionProviderHOC from '../lib/lk-direction-provider-hoc.jsx';
 import TWThemeManagerHOC from '../containers/tw-theme-manager-hoc.jsx';
 import TWProjectMetaFetcherHOC from '../lib/tw-project-meta-fetcher-hoc.jsx';
 import TWStateManagerHOC from '../lib/tw-state-manager-hoc.jsx';
@@ -317,6 +318,7 @@ const ConnectedInterface = injectIntl(connect(
 const WrappedInterface = compose(
     AppStateHOC,
     ErrorBoundaryHOC('TW Interface'),
+    LKDirectionProviderHOC,
     TWProjectMetaFetcherHOC,
     TWStateManagerHOC,
     TWPackagerIntegrationHOC,

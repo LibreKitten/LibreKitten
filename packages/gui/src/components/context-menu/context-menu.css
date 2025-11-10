@@ -18,14 +18,19 @@
     z-index: $z-index-context-menu;
 }
 
+[dir="rtl"] .context-menu {
+    text-align: right;
+}
+
 .menu-item {
     padding: 8px 12px;
     white-space: nowrap;
     cursor: pointer;
     transition: 0.1s ease;
+    outline: none;
 }
 
-.menu-item:hover {
+.menu-item[data-highlighted] {
     background: $context-menu-item-hover-background;
     color: $context-menu-item-hover-foreground;
 }
@@ -34,6 +39,6 @@
     border-top: 1px solid $ui-black-transparent;
 }
 
-.menu-item-danger:hover {
+.menu-item-danger[data-highlighted] {
     background: $context-menu-item-hover-danger;
 }

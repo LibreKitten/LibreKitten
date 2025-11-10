@@ -27,6 +27,7 @@ import {
 
 import FontLoaderHOC from '../lib/font-loader-hoc.jsx';
 import LocalizationHOC from '../lib/localization-hoc.jsx';
+import LKDirectionProviderHOC from '../lib/lk-direction-provider-hoc.jsx';
 import SBFileUploaderHOC from '../lib/sb-file-uploader-hoc.jsx';
 import ProjectFetcherHOC from '../lib/project-fetcher-hoc.jsx';
 import TitledHOC from '../lib/titled-hoc.jsx';
@@ -205,6 +206,7 @@ const WrappedGui = compose(
     LocalizationHOC,
     ErrorBoundaryHOC('Top Level App'),
     TWThemeManagerHOC, // componentDidUpdate() needs to run very early for icons to update immediately
+    LKDirectionProviderHOC,
     TWFullScreenResizerHOC,
     FontLoaderHOC,
     // QueryParserHOC, // tw: HOC is unused

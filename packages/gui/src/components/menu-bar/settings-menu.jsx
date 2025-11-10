@@ -2,11 +2,10 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
+import {Menubar} from 'radix-ui';
 
 import LanguageMenu from './language-menu.jsx';
-import MenuBarMenu from './menu-bar-menu.jsx';
-import {MenuItem, MenuSection} from '../menu/menu.jsx';
-import MenuLabel from './tw-menu-label.jsx';
+import {default as Menu, MenuItem, MenuSection} from '../menu/menu.jsx';
 import TWAccentThemeMenu from './tw-theme-accent.jsx';
 import TWGuiThemeMenu from './tw-theme-gui.jsx';
 import TWBlocksThemeMenu from './tw-theme-blocks.jsx';
@@ -85,63 +84,61 @@ const SettingsMenu = ({
     onClickAddonSettings,
     onClickDesktopSettings,
     onClickWelcomeModal,
-    onOpenCustomSettings,
-    onRequestClose,
-    onRequestOpen,
-    settingsMenuOpen
+    onOpenCustomSettings
 }) => (
-    <MenuLabel
-        open={settingsMenuOpen}
-        onOpen={onRequestOpen}
-        onClose={onRequestClose}
-    >
-        <img
-            src={settingsIcon}
-            draggable={false}
-            width={20}
-            height={20}
-            className={styles.iconFilter}
-        />
-        <span className={styles.dropdownLabel}>
-            <FormattedMessage
-                defaultMessage="Settings"
-                description="Settings menu"
-                id="gui.menuBar.settings"
-            />
-        </span>
-        <img
-            src={dropdownCaret}
-            draggable={false}
-            width={8}
-            height={5}
-            className={styles.iconFilter}
-        />
-        <MenuBarMenu
-            className={menuBarStyles.menuBarMenu}
-            open={settingsMenuOpen}
-            place={isRtl ? 'left' : 'right'}
+    <Menubar.Menu>
+        <Menubar.Trigger
+            className={classNames(menuBarStyles.menuBarItem, menuBarStyles.hoverable)}
         >
-            <MenuSection>
-                {canChangeLanguage && <LanguageMenu onRequestCloseSettings={onRequestClose} />}
-                {canChangeTheme && (
-                    <React.Fragment>
-                        <TWGuiThemeMenu />
-                        <TWBlocksThemeMenu
-                            onOpenCustomSettings={onOpenCustomSettings}
-                        />
-                        <TWAccentThemeMenu />
-                    </React.Fragment>
-                )}
-                {onClickDesktopSettings && <TWDesktopSettings onClick={onClickDesktopSettings} />}
-            </MenuSection>
-            <MenuSection>
-                {onClickAddonSettings && <AddonMenuItem onClick={onClickAddonSettings} />}
-            </MenuSection>
-            <MenuSection>
-                {onClickWelcomeModal && <WelcomeModalMenuItem onClick={onClickWelcomeModal} />}
-            </MenuSection>
-        </MenuBarMenu>
-    </MenuLabel>
+            <img
+                src={settingsIcon}
+                draggable={false}
+                width={20}
+                height={20}
+                className={styles.iconFilter}
+            />
+            <span className={styles.dropdownLabel}>
+                <FormattedMessage
+                    defaultMessage="Settings"
+                    description="Settings menu"
+                    id="gui.menuBar.settings"
+                />
+            </span>
+            <img
+                src={dropdownCaret}
+                draggable={false}
+                width={8}
+                height={5}
+                className={styles.iconFilter}
+            />
+        </Menubar.Trigger>
+        <Menubar.Portal>
+            <Menu
+                className={menuBarStyles.menuBarMenu}
+                place={isRtl ? 'left' : 'right'}
+            >
+                <MenuSection>
+                    {canChangeLanguage && <LanguageMenu />}
+                    {canChangeTheme && (
+                        <React.Fragment>
+                            <TWGuiThemeMenu />
+                            <TWBlocksThemeMenu
+                                onOpenCustomSettings={onOpenCustomSettings}
+                            />
+                            <TWAccentThemeMenu />
+                        </React.Fragment>
+                    )}
+                    {onClickDesktopSettings && <TWDesktopSettings onClick={onClickDesktopSettings} />}
+                </MenuSection>
+                <MenuSection>
+                    {onClickAddonSettings && <AddonMenuItem onClick={onClickAddonSettings} />}
+                </MenuSection>
+                <MenuSection>
+                    {onClickWelcomeModal && <WelcomeModalMenuItem onClick={onClickWelcomeModal} />}
+                </MenuSection>
+            </Menu>
+        </Menubar.Portal>
+    </Menubar.Menu>
 );
 
 SettingsMenu.propTypes = {
@@ -151,10 +148,7 @@ SettingsMenu.propTypes = {
     onClickAddonSettings: PropTypes.func,
     onClickDesktopSettings: PropTypes.func,
     onClickWelcomeModal: PropTypes.func,
-    onOpenCustomSettings: PropTypes.func,
-    onRequestClose: PropTypes.func,
-    onRequestOpen: PropTypes.func,
-    settingsMenuOpen: PropTypes.bool
+    onOpenCustomSettings: PropTypes.func
 };
 
 export default SettingsMenu;

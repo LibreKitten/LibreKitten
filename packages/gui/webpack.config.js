@@ -82,7 +82,11 @@ const base = {
         extensions: ['.ts', '.js'],
         alias: {
             'text-encoding$': path.resolve(__dirname, 'src/lib/tw-text-encoder'),
-            'scratch-render-fonts$': path.resolve(__dirname, 'src/lib/tw-scratch-render-fonts')
+            'scratch-render-fonts$': path.resolve(__dirname, 'src/lib/tw-scratch-render-fonts'),
+            // lk: Hack to get Radix working on the ancient version of React we're using.
+            // Based on https://github.com/xyflow/xyflow/issues/4683#issuecomment-2388049017
+            'react/jsx-dev-runtime': 'react/jsx-dev-runtime.js',
+            'react/jsx-runtime': 'react/jsx-runtime.js'
         },
         fallback: {
             buffer: require.resolve('buffer'),

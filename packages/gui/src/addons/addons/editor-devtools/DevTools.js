@@ -168,7 +168,8 @@ export default class DevTools {
   }
 
   isCostumeEditor() {
-    return this.costTab.className.indexOf("gui_is-selected") >= 0;
+    const dataset = this.costTab.dataset;
+    if ("active" in dataset) return this.costTab.dataset.state === "active";
   }
 
   /**
