@@ -1,19 +1,2 @@
-import PropTypes from 'prop-types';
-import React from 'react';
-
-import MenuComponent from '../components/menu/menu.jsx';
-
-const Menu = ({open, children, ...props}) => (
-    open ? (
-        <MenuComponent {...props}>
-            {children}
-        </MenuComponent>
-    ) : null
-);
-
-Menu.propTypes = {
-    children: PropTypes.node,
-    open: PropTypes.bool.isRequired
-};
-
-export default Menu;
+// lk: There is no need for the wrapper anymore, so just re-export it.
+export {default} from '../components/menu/menu.jsx';

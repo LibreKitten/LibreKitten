@@ -1,4 +1,13 @@
+// lk: findParentWithProp and findSpriteSelectorItem were copied from:
+// https://github.com/ScratchAddons/ScratchAddons/blob/master/addon-api/content-script/contextmenu.js
+
 const DIVIDER = "//";
+
+import {
+    BLOCKS_TAB_INDEX,
+    COSTUMES_TAB_INDEX,
+    SOUNDS_TAB_INDEX
+} from '../../../reducers/editor-tab';
 
 /**
  * getFolderFromName("B") === null
@@ -66,6 +75,28 @@ export const addDefaultAssetFolderIfMissing = (asset) => {
     asset.name = setFolderOfName(asset.name, currentAssetFolder);
   }
 };
+
+const findParentWithProp = (reactInternalInstance, prop) => {
+  if (!reactInternalInstance) return null;
+  while (
+    !reactInternalInstance.stateNode?.props ||
+    !Object.prototype.hasOwnProperty.call(reactInternalInstance.stateNode.props, prop)
+  ) {
+    if (!reactInternalInstance.return) return null;
+    reactInternalInstance = reactInternalInstance.return;
+  }
+  return reactInternalInstance.stateNode;
+};
+const findParentWithName = (reactInternalInstance, name) => {
+  if (!reactInternalInstance) return null;
+  while (!reactInternalInstance.stateNode?.name === name) {
+    if (!reactInternalInstance.return) return null;
+    reactInternalInstance = reactInternalInstance.return;
+  }
+  return reactInternalInstance.stateNode;
+};
+const findSpriteSelectorItemClass = (reactInternalInstance) => findParentWithProp(reactInternalInstance, "dragType");
+const findSpriteSelectorItemFunc = (reactInternalInstance) => findParentWithName(reactInternalInstance, "SpriteSelectorItem");
 
 export default async function ({ addon, console, msg }) {
   // The basic premise of how this addon works is relative simple.
@@ -711,11 +742,11 @@ export default async function ({ addon, console, msg }) {
   await addon.tab.scratchClassReady();
   addon.tab.createEditorContextMenu((ctxType, ctx) => {
     if (ctxType !== "sprite" && ctxType !== "costume" && ctxType !== "sound") return;
-    const component = ctx.target[addon.tab.traps.getInternalKey(ctx.target)].return.return.return.stateNode;
+    const component = findSpriteSelectorItemClass(ctx.target[addon.tab.traps.getInternalKey(ctx.target)]);
     const data = getItemData(component.props);
     if (!data) return;
     if (typeof data.folder === "string") {
-      ctx.target.setAttribute("sa-folders-context-type", "folder");
+      ctx.menuItem.setAttribute("sa-folders-context-type", "folder");
 
       const renameItems = (newName) => {
         const isOpen = isFolderOpen(component, data.folder);
@@ -783,6 +814,7 @@ export default async function ({ addon, console, msg }) {
           callback: renameFolder,
           position: "assetContextMenuAfterDelete",
           order: 10,
+          trap: true,
         },
         {
           className: "sa-folders-remove-folder",
@@ -793,7 +825,7 @@ export default async function ({ addon, console, msg }) {
         },
       ];
     } else {
-      ctx.target.setAttribute("sa-folders-context-type", "asset");
+      ctx.menuItem.setAttribute("sa-folders-context-type", "asset");
       const setFolder = (folder) => {
         if (component.props.dragType === "SPRITE") {
           const target = vm.runtime.getTargetById(component.props.id);
@@ -1325,7 +1357,7 @@ export default async function ({ addon, console, msg }) {
   // Costume and sound list
   {
     const selectorListItem = await addon.tab.waitForElement("[class*='selector_list-item']", {
-      reduxCondition: (state) => state.scratchGui.editorTab.activeTabIndex !== 0 && !state.scratchGui.mode.isPlayerOnly,
+      reduxCondition: (state) => state.scratchGui.editorTab.activeTabIndex !== BLOCKS_TAB_INDEX && !state.scratchGui.mode.isPlayerOnly,
     });
     const sortableHOCInstance = getSortableHOCFromElement(selectorListItem);
     verifySortableHOC(sortableHOCInstance);

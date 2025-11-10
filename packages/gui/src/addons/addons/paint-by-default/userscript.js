@@ -1,3 +1,9 @@
+import {
+    BLOCKS_TAB_INDEX,
+    COSTUMES_TAB_INDEX,
+    SOUNDS_TAB_INDEX
+} from '../../../reducers/editor-tab';
+
 export default async function ({ addon, console }) {
   const spriteMeta = Object.assign(Object.create(null), {
     upload: {
@@ -80,7 +86,7 @@ export default async function ({ addon, console }) {
   const getButtonToClick = (mainButton) => {
     const assetPanelWrapper = mainButton.closest("[class*=asset-panel_wrapper_]");
     if (assetPanelWrapper) {
-      if (addon.tab.redux.state.scratchGui.editorTab.activeTabIndex === 2) {
+      if (addon.tab.redux.state.scratchGui.editorTab.activeTabIndex === SOUNDS_TAB_INDEX) {
         return soundMeta[getSetting("sound")] || soundMeta.library;
       } else {
         return costumeMeta[getSetting("costume")] || costumeMeta.library;

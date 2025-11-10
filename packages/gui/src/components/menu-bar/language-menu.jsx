@@ -5,14 +5,16 @@ import React from 'react';
 import {FormattedMessage} from 'react-intl';
 import {connect} from 'react-redux';
 import locales from '@turbowarp/scratch-l10n';
+import {Menubar} from 'radix-ui';
 
 import check from './check.svg';
-import {MenuItem, Submenu} from '../menu/menu.jsx';
+import {MenuRadioItem, Submenu} from '../menu/menu.jsx';
 import languageIcon from '../language-selector/language-icon.svg';
 import {languageMenuOpen, openLanguageMenu} from '../../reducers/menus.js';
 import {selectLocale} from '../../reducers/locales.js';
 
 import styles from './settings-menu.css';
+import menuStyles from '../menu/menu.css';
 
 import dropdownCaret from './dropdown-caret.svg';
 
@@ -60,13 +62,13 @@ class LanguageMenu extends React.PureComponent {
 
     render () {
         return (
-            <MenuItem
-                expanded={this.props.menuOpen}
-            >
-                <div
-                    className={styles.option}
-                    onClick={this.props.onRequestOpen}
-                    onMouseOver={this.handleMouseOver}
+            <Menubar.Sub>
+                <Menubar.SubTrigger
+                    className={classNames(
+                        menuStyles.menuItem,
+                        menuStyles.hoverable,
+                        styles.option
+                    )}
                 >
                     <img
                         className={styles.icon}
@@ -85,36 +87,43 @@ class LanguageMenu extends React.PureComponent {
                         src={dropdownCaret}
                         draggable={false}
                     />
-                </div>
-                <Submenu
-                    className={styles.languageSubmenu}
-                    place={this.props.isRtl ? 'left' : 'right'}
-                >
-                    {
-                        Object.keys(locales)
-                            .map(locale => (
-                                <MenuItem
-                                    key={locale}
-                                    className={styles.languageMenuItem}
-                                    // eslint-disable-next-line react/jsx-no-bind
-                                    onClick={() => this.props.onChangeLanguage(locale)}
-                                >
-                                    <img
-                                        className={classNames(
-                                            styles.check,
-                                            styles.iconFilter,
-                                            {[styles.selected]: this.props.currentLocale === locale}
-                                        )}
-                                        src={check}
-                                        draggable={false}
-                                        {...(this.props.currentLocale === locale && {ref: this.setRef})}
-                                    />
-                                    {locales[locale].name}
-                                </MenuItem>
-                            ))
-                    }
-                </Submenu>
-            </MenuItem>
+                </Menubar.SubTrigger>
+                <Menubar.Portal>
+                    <Submenu
+                        className={styles.languageSubmenu}
+                        place={this.props.isRtl ? 'left' : 'right'}
+                    >
+                        <Menubar.RadioGroup
+                            value={this.props.currentLocale}
+                            onValueChange={this.props.onChangeLanguage}
+                        >
+                            {
+                                Object.keys(locales)
+                                    .map(locale => (
+                                        <MenuRadioItem
+                                            key={locale}
+                                            className={classNames(styles.languageMenuItem, styles.option, styles.inset)}
+                                            value={locale}
+                                        >
+                                            <Menubar.ItemIndicator className={styles.checkArea}>
+                                                <img
+                                                    className={classNames(
+                                                        styles.check,
+                                                        styles.iconFilter
+                                                    )}
+                                                    src={check}
+                                                    draggable={false}
+                                                    {...(this.props.currentLocale === locale && {ref: this.setRef})}
+                                                />
+                                            </Menubar.ItemIndicator>
+                                            {locales[locale].name}
+                                        </MenuRadioItem>
+                                    ))
+                            }
+                        </Menubar.RadioGroup>
+                    </Submenu>
+                </Menubar.Portal>
+            </Menubar.Sub>
         );
     }
 }

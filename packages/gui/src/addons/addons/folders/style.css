@@ -4,6 +4,6 @@
   text-overflow: ellipsis;
 }
 
-[sa-folders-context-type="folder"] .react-contextmenu > :not(.sa-ctx-menu) {
+[sa-folders-context-type="folder"] [class*="context-menu_menu-item"]:not(.sa-ctx-menu) {
   display: none;
 }

@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import Draggable from 'react-draggable';
 import {FormattedMessage} from 'react-intl';
-import {ContextMenuTrigger} from 'react-contextmenu';
-import {BorderedMenuItem, ContextMenu, MenuItem} from '../context-menu/context-menu.jsx';
+import {ContextMenu} from 'radix-ui';
+import {BorderedMenuItem, StyledContextMenu, StyledMenuItem} from '../context-menu/context-menu.jsx';
 import Box from '../box/box.jsx';
 import DefaultMonitor from './default-monitor.jsx';
 import LargeMonitor from './large-monitor.jsx';
@@ -41,65 +41,63 @@ const getCategoryColor = (theme, category) => {
 };
 
 const MonitorComponent = props => (
-    <ContextMenuTrigger
-        // TW: if export is defined, we always show it, even outside of the editor
-        disable={!props.draggable && !props.onExport}
-        holdToDisplay={props.mode === 'slider' ? -1 : 1000}
-        id={`monitor-${props.id}`}
-    >
-        <Draggable
-            bounds=".monitor-overlay" // Class for monitor container
-            cancel=".no-drag" // Class used for slider input to prevent drag
-            defaultClassNameDragging={styles.dragging}
-            disabled={!props.draggable}
-            onStop={props.onDragEnd}
-
-            // https://github.com/TurboWarp/scratch-gui/issues/950
-            enableUserSelectHack={false}
+    <ContextMenu.Root>
+        <ContextMenu.Trigger
+            // TW: if export is defined, we always show it, even outside of the editor
+            disable={!props.draggable && !props.onExport}
+            holdToDisplay={props.mode === 'slider' ? -1 : 1000}
+            id={`monitor-${props.id}`}
         >
-            <Box
-                className={styles.monitorContainer}
-                componentRef={props.componentRef}
-                onDoubleClick={props.mode === 'list' || !props.draggable ? null : props.onNextMode}
-                data-id={props.id}
-                data-opcode={props.opcode}
+            <Draggable
+                bounds=".monitor-overlay" // Class for monitor container
+                cancel=".no-drag" // Class used for slider input to prevent drag
+                defaultClassNameDragging={styles.dragging}
+                disabled={!props.draggable}
+                onStop={props.onDragEnd}
+
+                // https://github.com/TurboWarp/scratch-gui/issues/950
+                enableUserSelectHack={false}
             >
-                {React.createElement(modes[props.mode], {
-                    categoryColor: getCategoryColor(props.theme, props.category),
-                    ...props
-                })}
-            </Box>
-        </Draggable>
-        {ReactDOM.createPortal((
-            // Use a portal to render the context menu outside the flow to avoid
-            // positioning conflicts between the monitors `transform: scale` and
-            // the context menus `position: fixed`. For more details, see
-            // http://meyerweb.com/eric/thoughts/2011/09/12/un-fixing-fixed-elements-with-css-transforms/
-            <ContextMenu id={`monitor-${props.id}`}>
+                <Box
+                    className={styles.monitorContainer}
+                    componentRef={props.componentRef}
+                    onDoubleClick={props.mode === 'list' || !props.draggable ? null : props.onNextMode}
+                    data-id={props.id}
+                    data-opcode={props.opcode}
+                >
+                    {React.createElement(modes[props.mode], {
+                        categoryColor: getCategoryColor(props.theme, props.category),
+                        ...props
+                    })}
+                </Box>
+            </Draggable>
+        </ContextMenu.Trigger>
+        <ContextMenu.Portal>
+            <StyledContextMenu id={`monitor-${props.id}`}>
                 {props.draggable && props.onSetModeToDefault &&
-                    <MenuItem onClick={props.onSetModeToDefault}>
+                    <StyledMenuItem onClick={props.onSetModeToDefault}>
                         <FormattedMessage
                             defaultMessage="normal readout"
                             description="Menu item to switch to the default monitor"
                             id="gui.monitor.contextMenu.default"
                         />
-                    </MenuItem>}
+                    </StyledMenuItem>}
                 {props.draggable && props.onSetModeToLarge &&
-                    <MenuItem onClick={props.onSetModeToLarge}>
+                    <StyledMenuItem onClick={props.onSetModeToLarge}>
                         <FormattedMessage
                             defaultMessage="large readout"
                             description="Menu item to switch to the large monitor"
                             id="gui.monitor.contextMenu.large"
                         />
-                    </MenuItem>}
+                    </StyledMenuItem>}
                 {props.draggable && props.onSetModeToSlider &&
-                    <MenuItem onClick={props.onSetModeToSlider}>
+                    <StyledMenuItem onClick={props.onSetModeToSlider}>
                         <FormattedMessage
                             defaultMessage="slider"
                             description="Menu item to switch to the slider monitor"
                             id="gui.monitor.contextMenu.slider"
                         />
-                    </MenuItem>}
+                    </StyledMenuItem>}
                 {props.draggable && props.onSliderPromptOpen && props.mode === 'slider' &&
                     <BorderedMenuItem onClick={props.onSliderPromptOpen}>
                         <FormattedMessage
@@ -109,21 +107,21 @@ const MonitorComponent = props => (
                         />
                     </BorderedMenuItem>}
                 {props.onImport &&
-                    <MenuItem onClick={props.onImport}>
+                    <StyledMenuItem onClick={props.onImport}>
                         <FormattedMessage
                             defaultMessage="import"
                             description="Menu item to import into list monitors"
                             id="gui.monitor.contextMenu.import"
                         />
-                    </MenuItem>}
+                    </StyledMenuItem>}
                 {props.onExport &&
-                    <MenuItem onClick={props.onExport}>
+                    <StyledMenuItem onClick={props.onExport}>
                         <FormattedMessage
                             defaultMessage="export"
                             description="Menu item to export from list monitors"
                             id="gui.monitor.contextMenu.export"
                         />
-                    </MenuItem>}
+                    </StyledMenuItem>}
                 {props.draggable && props.onHide &&
                     <BorderedMenuItem onClick={props.onHide}>
                         <FormattedMessage
@@ -132,10 +130,9 @@ const MonitorComponent = props => (
                             id="gui.monitor.contextMenu.hide"
                         />
                     </BorderedMenuItem>}
-            </ContextMenu>
-        ), document.body)}
-    </ContextMenuTrigger>
-
+            </StyledContextMenu>
+        </ContextMenu.Portal>
+    </ContextMenu.Root>
 );
 
 const monitorModes = Object.keys(modes);

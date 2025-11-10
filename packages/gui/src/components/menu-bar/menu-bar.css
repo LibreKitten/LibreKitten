@@ -58,7 +58,11 @@
 
 .menu-bar-item {
     display: flex;
+    background: transparent;
+    border: none;
     text-decoration: none;
+    color: $menu-bar-foreground;
+    font-weight: bold;
     user-select: none;
     align-self: center;
     position: relative;
@@ -67,13 +71,15 @@
     border-radius: 0.5rem;
     transition: 0.1s background-color;
     height: calc($menu-bar-height - 0.75rem);
+    outline: none;
 }
 
 .menu-bar-item.hoverable {
     cursor: pointer;
 }
 
-.menu-bar-item.active,
+.menu-bar-item[data-highlighted],
+.menu-bar-item[data-state="open"],
 .menu-bar-item.hoverable:hover {
     background-color: $menu-bar-item-hover;
 }
@@ -100,7 +106,7 @@
 }
 
 .menu-bar-menu {
-    margin-top: $menu-bar-height;
+    margin-top: 0.375rem !important;
     z-index: $z-index-menu-bar;
 }
 

@@ -1,5 +1,11 @@
 import {sanitizeSvg} from '@turbowarp/scratch-svg-renderer';
 
+import {
+    BLOCKS_TAB_INDEX,
+    COSTUMES_TAB_INDEX,
+    SOUNDS_TAB_INDEX
+} from '../../../reducers/editor-tab';
+
 export default async function ({ addon, console, msg }) {
   const paper = await addon.tab.traps.getPaper();
 
@@ -783,7 +789,7 @@ export default async function ({ addon, console, msg }) {
           "scratch-gui/targets/UPDATE_TARGET_LIST",
         ],
         reduxCondition: (state) =>
-          state.scratchGui.editorTab.activeTabIndex === 1 && !state.scratchGui.mode.isPlayerOnly,
+          state.scratchGui.editorTab.activeTabIndex === COSTUMES_TAB_INDEX && !state.scratchGui.mode.isPlayerOnly,
       });
       const zoomControlsContainer = canvasControls.querySelector("[class^='paint-editor_zoom-controls']");
 

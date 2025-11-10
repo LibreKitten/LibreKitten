@@ -14,6 +14,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+import {COSTUMES_TAB_INDEX} from '../reducers/editor-tab';
+
 import IntlMessageFormat from 'intl-messageformat';
 import SettingsStore from './settings-store-singleton';
 import dataURLToBlob from '../lib/data-uri-to-blob';
@@ -213,7 +215,8 @@ class Tab extends EventTargetShim {
             getPaper: async () => {
                 const modeSelector = await this.waitForElement("[class*='paint-editor_mode-selector']", {
                     reduxCondition: state => (
-                        state.scratchGui.editorTab.activeTabIndex === 1 && !state.scratchGui.mode.isPlayerOnly
+                        state.scratchGui.editorTab.activeTabIndex === COSTUMES_TAB_INDEX &&
+                        !state.scratchGui.mode.isPlayerOnly
                     )
                 });
                 const reactInternalKey = Object.keys(modeSelector)
@@ -334,8 +337,8 @@ class Tab extends EventTargetShim {
                 until: () => []
             },
             afterSoundTab: {
-                element: () => q("[class^='react-tabs_react-tabs__tab-list']"),
-                from: () => [q("[class^='react-tabs_react-tabs__tab-list']").children[2]],
+                element: () => q("[class^='gui_tab-list']"),
+                from: () => [q("[class^='gui_tab-list']").children[2]],
                 // Element used in find-bar addon
                 until: () => [q('.sa-find-bar')]
             },

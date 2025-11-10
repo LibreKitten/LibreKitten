@@ -5,6 +5,12 @@ import renderBlock, { BlockComponent, getBlockHeight } from "./BlockRenderer.js"
 import { BlockInstance, BlockShape, BlockTypeInfo } from "./BlockTypeInfo.js";
 import { onClearTextWidthCache } from "./module.js";
 
+import {
+    BLOCKS_TAB_INDEX,
+    COSTUMES_TAB_INDEX,
+    SOUNDS_TAB_INDEX
+} from '../../../reducers/editor-tab';
+
 export default async function ({ addon, msg, console }) {
   const Blockly = await addon.tab.traps.getBlockly();
   const vm = addon.tab.traps.vm;
@@ -110,7 +116,7 @@ export default async function ({ addon, msg, console }) {
 
     // Don't show the menu if we're not in the code editor
     if (addon.tab.editorMode !== "editor") return;
-    if (addon.tab.redux.state.scratchGui.editorTab.activeTabIndex !== 0) return;
+    if (addon.tab.redux.state.scratchGui.editorTab.activeTabIndex !== BLOCKS_TAB_INDEX) return;
 
     blockTypes = BlockTypeInfo.getBlocks(Blockly, vm, Blockly.getMainWorkspace(), msg);
     querier.indexWorkspace([...blockTypes]);

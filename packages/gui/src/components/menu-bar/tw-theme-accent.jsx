@@ -3,15 +3,17 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
 import {connect} from 'react-redux';
+import {Menubar} from 'radix-ui';
 
 import check from './check.svg';
 import dropdownCaret from './dropdown-caret.svg';
-import {MenuItem, Submenu} from '../menu/menu.jsx';
+import {MenuRadioItem, Submenu} from '../menu/menu.jsx';
 import {ACCENT_LABELS, ACCENT_MAP, Theme} from '../../lib/themes/index.js';
 import {openAccentMenu, accentMenuOpen, closeSettingsMenu} from '../../reducers/menus.js';
 import {setTheme} from '../../reducers/theme.js';
 import {persistTheme} from '../../lib/themes/themePersistance.js';
 import styles from './settings-menu.css';
+import menuStyles from '../menu/menu.css';
 
 const ColorIcon = props => (
     'icon' in ACCENT_LABELS[props.id] ? (
@@ -39,39 +41,41 @@ ColorIcon.propTypes = {
 };
 
 const AccentMenuItem = props => (
-    <MenuItem onClick={props.onClick}>
-        <div className={styles.option}>
+    <MenuRadioItem
+        className={classNames(styles.option, styles.inset)}
+        value={props.id}
+    >
+        <Menubar.ItemIndicator className={styles.checkArea}>
             <img
-                className={classNames(styles.check, styles.iconFilter, {[styles.selected]: props.isSelected})}
+                className={classNames(styles.check, styles.iconFilter)}
                 width={15}
                 Matches
                 height={12}
                 src={check}
                 draggable={false}
             />
-            <ColorIcon id={props.id} />
-            <FormattedMessage {...ACCENT_LABELS[props.id]} />
-        </div>
-    </MenuItem>
+        </Menubar.ItemIndicator>
+        <ColorIcon id={props.id} />
+        <FormattedMessage {...ACCENT_LABELS[props.id]} />
+    </MenuRadioItem>
 );
 
 AccentMenuItem.propTypes = {
-    id: PropTypes.string,
-    isSelected: PropTypes.bool,
-    onClick: PropTypes.func
+    id: PropTypes.string
 };
 
 const AccentThemeMenu = ({
-    isOpen,
     isRtl,
     onChangeTheme,
-    onOpen,
     theme
 }) => (
-    <MenuItem expanded={isOpen}>
-        <div
-            className={styles.option}
-            onClick={onOpen}
+    <Menubar.Sub>
+        <Menubar.SubTrigger
+            className={classNames(
+                menuStyles.menuItem,
+                menuStyles.hoverable,
+                styles.option
+            )}
         >
             <ColorIcon id={theme.accent} />
             <span className={styles.submenuLabel}>
@@ -86,26 +90,29 @@ const AccentThemeMenu = ({
                 src={dropdownCaret}
                 draggable={false}
             />
-        </div>
-        <Submenu place={isRtl ? 'left' : 'right'}>
-            {Object.keys(ACCENT_LABELS).map(item => (
-                <AccentMenuItem
-                    key={item}
-                    id={item}
-                    isSelected={theme.accent === item}
+        </Menubar.SubTrigger>
+        <Menubar.Portal>
+            <Submenu place={isRtl ? 'left' : 'right'}>
+                <Menubar.RadioGroup
+                    value={theme.accent}
                     // eslint-disable-next-line react/jsx-no-bind
-                    onClick={() => onChangeTheme(theme.set('accent', item))}
-                />
-            ))}
-        </Submenu>
-    </MenuItem>
+                    onValueChange={item => onChangeTheme(theme.set('accent', item))}
+                >
+                    {Object.keys(ACCENT_LABELS).map(item => (
+                        <AccentMenuItem
+                            key={item}
+                            id={item}
+                        />
+                    ))}
+                </Menubar.RadioGroup>
+            </Submenu>
+        </Menubar.Portal>
+    </Menubar.Sub>
 );
 
 AccentThemeMenu.propTypes = {
-    isOpen: PropTypes.bool,
     isRtl: PropTypes.bool,
     onChangeTheme: PropTypes.func,
-    onOpen: PropTypes.func,
     theme: PropTypes.instanceOf(Theme)
 };
 

@@ -5,6 +5,12 @@ import createPerformanceTab from "./performance.js";
 import Utils from "../find-bar/blockly/Utils.js";
 import addSmallStageClass from "../../libraries/common/cs/small-stage.js";
 
+import {
+    BLOCKS_TAB_INDEX,
+    COSTUMES_TAB_INDEX,
+    SOUNDS_TAB_INDEX
+} from '../../../reducers/editor-tab';
+
 const removeAllChildren = (element) => {
   while (element.firstChild) {
     element.removeChild(element.firstChild);
@@ -300,10 +306,10 @@ export default async function ({ addon, console, msg }) {
 
   const activateCodeTab = () => {
     const redux = addon.tab.redux;
-    if (redux.state.scratchGui.editorTab.activeTabIndex !== 0) {
+    if (redux.state.scratchGui.editorTab.activeTabIndex !== BLOCKS_TAB_INDEX) {
       redux.dispatch({
         type: "scratch-gui/navigation/ACTIVATE_TAB",
-        activeTabIndex: 0,
+        activeTabIndex: BLOCKS_TAB_INDEX,
       });
     }
   };
