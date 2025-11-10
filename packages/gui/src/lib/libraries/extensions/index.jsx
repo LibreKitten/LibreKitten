@@ -53,9 +53,9 @@ import twIcon from './tw/tw.svg';
 import customExtensionIcon from './custom/custom.svg';
 import returnIcon from './custom/return.svg';
 import galleryIcon from './gallery/gallery.svg';
-import appmaker from './appmaker/software.png';
+import appmaker from './appmaker/appmaker.svg';
 import appmakerIcon from './appmaker/software-small.svg';
-import server from './server/server.png';
+import server from './server/server.svg';
 import serverIcon from './server/server-small.svg';
 import {APP_NAME} from '../../brand';
 
@@ -190,6 +190,52 @@ export default [
         tags: ['scratch'],
         featured: true,
         internetConnectionRequired: true
+    },
+    {
+        name: (
+            <FormattedMessage
+                defaultMessage="Web Server"
+                description="Name of the Web Server extension"
+                id="lk.server.name"
+            />
+        ),
+        iconURL: server,
+        insetIconURL: serverIcon,
+        extensionId: 'server',
+        description: (
+            <FormattedMessage
+                defaultMessage="Program a website API in {APP_NAME}."
+                description="Description of the Web Server extension"
+                id="lk.server.description"
+                values={{APP_NAME}}
+            />
+        ),
+        incompatibleWithScratch: false,
+        tags: ['lk'],
+        featured: true
+    },
+    {
+        name: (
+            <FormattedMessage
+                defaultMessage="App Utilities"
+                description="Name of the App Utilities extension"
+                id="lk.appmaker.name"
+            />
+        ),
+        iconURL: appmaker,
+        insetIconURL: appmakerIcon,
+        extensionId: 'appmaker',
+        description: (
+            <FormattedMessage
+                defaultMessage="Develop apps in {APP_NAME}."
+                description="Description of the App Utilities extension"
+                id="lk.appmaker.description"
+                values={{APP_NAME}}
+            />
+        ),
+        incompatibleWithScratch: false,
+        tags: ['lk'],
+        featured: true
     },
     {
         name: 'Makey Makey',
@@ -390,50 +436,6 @@ export default [
         featured: true
     },
     */
-    {
-        name: (
-            <FormattedMessage
-                defaultMessage="App Utilites"
-                description="Name of the App Utilites extension"
-                id="lk.appmaker.name"
-            />
-        ),
-        iconURL: appmaker,
-        insetIconURL: appmakerIcon,
-        extensionId: 'appmaker',
-        description: (
-            <FormattedMessage
-                defaultMessage="These are some utilities that can be used for app development."
-                description="Description of the App Utilites extension"
-                id="lk.appmaker.description"
-            />
-        ),
-        incompatibleWithScratch: false,
-        tags: ['lk'],
-        featured: true
-    },
-    {
-        name: (
-            <FormattedMessage
-                defaultMessage="Web Server"
-                description="Name of the Web Server extension"
-                id="lk.server.name"
-            />
-        ),
-        iconURL: server,
-        insetIconURL: serverIcon,
-        extensionId: 'server',
-        description: (
-            <FormattedMessage
-                defaultMessage="Program an website API in LibreKitten. WARNING: This extension is not finished and could change and **break the project** using this extension at any time."
-                description="Description of the Web Server extension"
-                id="lk.server.description"
-            />
-        ),
-        incompatibleWithScratch: false,
-        tags: ['lk'],
-        featured: true
-    },
     {
         name: (
             <FormattedMessage
