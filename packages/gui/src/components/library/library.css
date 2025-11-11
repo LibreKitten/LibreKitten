@@ -32,7 +32,6 @@
     justify-content: flex-start;
     align-items: flex-start;
     min-width: 20rem;
-    height: 100%;
     background-color: $ui-tertiary;
     border: 2px solid $ui-black-transparent;
     border-radius: $space;
