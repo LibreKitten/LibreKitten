@@ -45,16 +45,6 @@
     flex-grow: 0;
 }
 
-.filter-input {
-    width: 11.5rem;
-    transition: .2s;
-}
-
-.filter-input:focus,
-.filter-input:not([value=""]) {
-    width: 18.75rem;
-}
-
 .divider {
     width: 100%;
     margin: 1rem 0;
