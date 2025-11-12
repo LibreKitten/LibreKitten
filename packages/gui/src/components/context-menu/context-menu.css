@@ -11,8 +11,9 @@
     text-align: left;
     background-color: $ui-white;
     border: 1px solid $ui-black-transparent;
-    border-radius: calc($radius / 2);
+    border-radius: $radius;
     box-shadow: 0px 0px 5px 1px $shadow;
+    overflow: hidden;
     pointer-events: none;
     transition: opacity 0.2s ease;
     z-index: $z-index-context-menu;
