@@ -195,10 +195,6 @@ const base = {
         }]
     },
     plugins: [
-        // To fix a weird bug in the SQL extension that causes Webpack to bundle sqlite3
-        new webpack.IgnorePlugin({
-            resourceRegExp: /^sqlite3$/
-        }),
         new CopyWebpackPlugin({
             patterns: [
                 {

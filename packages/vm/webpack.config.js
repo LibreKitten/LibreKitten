@@ -54,10 +54,6 @@ const base = {
         ]
     },
     plugins: [
-        // To fix a weird bug in the SQL extension that causes Webpack to bundle sqlite3
-        new webpack.IgnorePlugin({
-            resourceRegExp: /^sqlite3$/
-        }),
         new DefinePlugin({
             importMetaURL: 'import.meta.url'
         })
@@ -96,7 +92,14 @@ module.exports = [
                     ]
                 }
             ])
-        }
+        },
+        plugins: [
+            // To fix a weird bug in the SQL extension that causes Webpack
+            // to bundle sqlite3 in browser builds.
+            new webpack.IgnorePlugin({
+                resourceRegExp: /^sqlite3$/
+            })
+        ]
     }),
     // Node-compatible
     defaultsDeep({}, base, {
@@ -132,7 +135,10 @@ module.exports = [
         plugins: base.plugins.concat([
             new CopyWebpackPlugin([{
                 from: 'package.json'
-            }])
+            }]),
+            new webpack.IgnorePlugin({
+                resourceRegExp: /^sql\.js$/
+            })
         ])
     }),
     // Playground
