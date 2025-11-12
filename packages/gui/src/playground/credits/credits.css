@@ -1,0 +1,24 @@
+@import "../../css/colors.css";
+
+.users {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.user-image {
+    margin-right: 12px;
+}
+.user {
+    display: flex;
+    align-items: center;
+    width: 300px;
+    padding: 4px;
+    border-radius: 4px;
+    font-size: 1.25rem;
+    color: inherit !important;
+    text-decoration: none;
+    transition: background .2s;
+}
+.user:link:hover {
+    background: $ui-black-transparent;
+}
