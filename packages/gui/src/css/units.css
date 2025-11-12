@@ -2,6 +2,7 @@
 e.g. STAGE_DIMENSION_DEFAULTS in lib/screen-utils.js */
 
 $space: 0.5rem;
+$radius: 0.5rem;
 
 $sprites-per-row: 5;
 

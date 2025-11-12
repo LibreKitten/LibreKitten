@@ -12,12 +12,12 @@
 }
 
 [dir="ltr"] .wrapper {
-    border-radius: $space;
+    border-radius: $radius;
 }
 
 [dir="rtl"] .wrapper {
-    border-top-left-radius: $space;
-    border-bottom-left-radius: $space;
+    border-top-left-radius: $radius;
+    border-bottom-left-radius: $radius;
 }
 
 .detail-area {

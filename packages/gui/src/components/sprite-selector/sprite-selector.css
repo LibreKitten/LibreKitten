@@ -8,8 +8,8 @@
     font-family: "Inter Variable", "Helvetica Neue", Helvetica, sans-serif;
     margin-right: calc($space / 2);
     background-color: $ui-secondary;
-    border-top-right-radius: $space;
-    border-top-left-radius: $space;
+    border-top-right-radius: $radius;
+    border-top-left-radius: $radius;
     border-color: $ui-black-transparent;
     border-width: 1px;
     border-style: solid;

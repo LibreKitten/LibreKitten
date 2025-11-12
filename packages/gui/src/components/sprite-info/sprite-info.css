@@ -7,8 +7,8 @@
     font-family: "Inter Variable", "Helvetica Neue", Helvetica, sans-serif;
     background-color: $ui-white;
     color: $text-primary;
-    border-top-left-radius: $space;
-    border-top-right-radius: $space;
+    border-top-left-radius: $radius;
+    border-top-right-radius: $radius;
     border-bottom: 1px solid $ui-black-transparent;
 }
 

@@ -34,7 +34,7 @@
     min-width: 20rem;
     background-color: $ui-tertiary;
     border: 2px solid $ui-black-transparent;
-    border-radius: $space;
+    border-radius: $radius;
     padding: 1rem;
     margin: $space;
     font-size: 1em;
@@ -68,7 +68,7 @@
 
 .label {
     padding: 0.5rem;
-    border-radius: $space;
+    border-radius: $radius;
     width: 100%;
     display: flex;
     flex-direction: row;

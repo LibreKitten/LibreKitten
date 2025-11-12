@@ -24,7 +24,7 @@ $ui-gray: hsla(0, 0%, 95%, 1);
     outline: none;
     border: .25rem solid $ui-white-transparent;
     padding: 0;
-    border-radius: $space;
+    border-radius: $radius;
     user-select: none;
     width: 640px;
 
