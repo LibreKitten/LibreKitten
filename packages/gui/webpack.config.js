@@ -18,7 +18,7 @@ const postcssImport = require('postcss-import');
 const {SwcMinifyWebpackPlugin} = require('swc-minify-webpack-plugin');
 
 const STATIC_PATH = process.env.STATIC_PATH || '/static';
-const {APP_NAME} = require('./src/lib/brand');
+const {APP_NAME, DESCRIPTION} = require('./src/lib/brand');
 
 const root = process.env.ROOT || '';
 if (root.length > 0 && !root.endsWith('/')) {
@@ -278,7 +278,8 @@ module.exports = [
                 chunks: ['editor'],
                 template: 'src/playground/player.ejs',
                 filename: 'editor.html',
-                title: `${APP_NAME} - Block-based visual programming language with server support`,
+                title: `Editor - ${APP_NAME}`,
+                description: DESCRIPTION,
                 isEditor: true,
                 ...htmlWebpackPluginCommon
             }),
@@ -286,14 +287,15 @@ module.exports = [
                 chunks: ['player'],
                 template: 'src/playground/player.ejs',
                 filename: 'projects.html',
-                title: `${APP_NAME} - Block-based visual programming language with server support`,
+                title: `Player - ${APP_NAME}`,
+                description: DESCRIPTION,
                 ...htmlWebpackPluginCommon
             }),
             new HtmlWebpackPlugin({
                 chunks: ['fullscreen'],
                 template: 'src/playground/player.ejs',
                 filename: 'fullscreen.html',
-                title: `${APP_NAME} - Block-based visual programming language with server support`,
+                title: `Editor - ${APP_NAME}`,
                 ...htmlWebpackPluginCommon
             }),
             new HtmlWebpackPlugin({
@@ -336,7 +338,8 @@ module.exports = [
                 chunks: ['index'],
                 template: 'src/playground/simple.ejs',
                 filename: 'index.html',
-                title: `Home - ${APP_NAME}`,
+                title: `${APP_NAME} - Blocks not just for the browser; say hello to the server!`,
+                description: DESCRIPTION,
                 noSplash: true,
                 ...htmlWebpackPluginCommon
             }),

@@ -2,6 +2,7 @@
 @import "./units.css";
 @import "./typography.css";
 
+/* Base styles used by Scratch https://github.com/LLK/scratch-www/blob/develop/src/main.scss */
 * {
     box-sizing: border-box;
 }
@@ -57,6 +58,26 @@ ol li::marker {
 
 .header-container a {
     color: $page-header-anchor-text;
+}
+
+.header-options-text {
+    font-weight: bold;
+}
+
+.header-options {
+    display: inline-flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    text-align: center;
+}
+
+.canary-warning-border {
+    display: inline-block;
+    width: 100%;
+    max-width: 900px;
+
+    border-bottom: 1px dashed white;
+    margin-bottom: 0.5rem;
 }
 
 .header-button {
