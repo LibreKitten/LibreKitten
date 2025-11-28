@@ -73,6 +73,14 @@ class Server {
             blockIconURI: iconURI,
             blocks: [
                 {
+                    func: '_openManual',
+                    text: formatMessage({
+                        id: 'lk_server.buttons.openManual',
+                        default: 'How to Setup This Server'
+                    }),
+                    blockType: BlockType.BUTTON
+                },
+                {
                     opcode: 'whenPageIsRequested',
                     text: formatMessage({
                         id: 'lk_server.blocks.whenPageIsRequested',
@@ -397,6 +405,11 @@ class Server {
                 }
             }
         };
+    }
+
+    _openManual () {
+        if (typeof window === 'undefined') return;
+        window.open('/server-manual.html', '_blank');
     }
 
     whenPageIsRequested ({PAGE}, util) {

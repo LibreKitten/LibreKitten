@@ -1,0 +1,39 @@
+@import "../../css/colors.css";
+
+.main code {
+    font-family: monospace;
+
+    padding: 0.25em;
+    background-color: $ui-secondary;
+
+    border: 1px solid $ui-black-transparent;
+    border-radius: 0.25em;
+}
+
+.server-example {
+    width: 100%;
+}
+
+.infobox {
+    line-height: 1.5em;
+    padding: 0.5rem;
+    margin: 5px 0 8px 0;
+    border-radius: 0.5rem;
+    border: 1px solid $badge-border;
+    background-color: $badge-background;
+}
+.infobox p {
+    margin: 4px 0;
+}
+.infobox a {
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.danger {
+    border-color: #ff52526e;
+    background-color: #ff525240;
+}
+.danger p {
+    font-weight: bold;
+}

@@ -55,6 +55,7 @@ const base = {
             rewrites: [
                 {from: /^\/\d+\/\/?$/, to: '/'},
                 {from: /^\/\d+\/for-contributors\/?$/, to: '/for-contributors.html'},
+                {from: /^\/\d+\/server-manual\/?$/, to: '/server-manual.html'},
                 {from: /^\/\d+\/projects\/?$/, to: '/projects.html'},
                 {from: /^\/\d+\/fullscreen\/?$/, to: '/fullscreen.html'},
                 {from: /^\/\d+\/editor\/?$/, to: '/editor.html'},
@@ -229,6 +230,7 @@ module.exports = [
             'embed': './src/playground/embed.jsx',
             'addon-settings': './src/playground/addon-settings.jsx',
             'for-contributors': './src/playground/for-contributors/for-contributors.jsx',
+            'server-manual': './src/playground/server-manual/server-manual.jsx',
             'credits': './src/playground/credits/credits.jsx',
             'not_found': './src/playground/not_found/not_found.jsx',
             'index': './src/playground/index/index.jsx'
@@ -317,6 +319,16 @@ module.exports = [
                 template: 'src/playground/simple.ejs',
                 filename: 'for-contributors.html',
                 title: `Contributing to ${APP_NAME} - ${APP_NAME}`,
+                ...htmlWebpackPluginCommon
+            }),
+            new HtmlWebpackPlugin({
+                chunks: ['server-manual'],
+                template: 'src/playground/simple.ejs',
+                filename: 'server-manual.html',
+                title: `How to Setup a ${APP_NAME} Web Server - ${APP_NAME}`,
+                description:
+                    `Ever wanted to write a website or API with ${APP_NAME}? Then you have found the right place! ` +
+                    'We will show you how to do just that.',
                 ...htmlWebpackPluginCommon
             }),
             new HtmlWebpackPlugin({
