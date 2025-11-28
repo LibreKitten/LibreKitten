@@ -89,9 +89,10 @@ class Server {
                     }),
                     tooltip: formatMessage({
                         id: 'lk_server.tooltip.whenPageIsRequested',
-                        default: 'I run my contents under me when a page maching the page I listen for is requested.',
-                        // eslint-disable-next-line max-len
+                        /* eslint-disable max-len */
+                        default: 'This block runs the blocks under it when a page maching the page it listens for is requested.',
                         description: 'Tooltip for a hat that executes the the code under it when a certain page is requested.'
+                        /* eslint-enable max-len */
                     }),
                     blockType: BlockType.HAT,
                     arguments: {
@@ -111,9 +112,10 @@ class Server {
                     }),
                     tooltip: formatMessage({
                         id: 'lk_server.tooltip.whenPageIsNotFound',
-                        default: 'I run my contents under me when a requested page has no one listening for it.',
-                        // eslint-disable-next-line max-len
+                        /* eslint-disable max-len */
+                        default: 'This block runs the blocks under it when a requested page has no hat listening for it.',
                         description: 'Tooltip for a hat that executes the the code under it when a certain page is not fouund.'
+                        /* eslint-enable max-len */
                     }),
                     blockType: BlockType.HAT,
                     isEdgeActivated: false
@@ -159,7 +161,7 @@ class Server {
                     }),
                     tooltip: formatMessage({
                         id: 'lk_server.tooltip.returnRequest',
-                        default: 'I send a page to the user that requested it.',
+                        default: 'This block sends a page to the user that requested it.',
                         description: 'Tooltip for a block that sends the requested HTTP response.'
                     }),
                     blockType: BlockType.COMMAND,
@@ -181,7 +183,7 @@ class Server {
                     tooltip: formatMessage({
                         id: 'lk_server.tooltip.setMime',
                         // eslint-disable-next-line max-len
-                        default: 'I set the type of page to be sent to a MIME type. A MIME type is a way of specifying a format of a page to the browser.',
+                        default: 'This block sets the type of page to be sent to a MIME type. A MIME type is a way of specifying the format of a page to the browser.',
                         description: 'Tooltip for a block that sets the sent MIME (a.k.a. format) to a MIME-type.'
                     }),
                     blockType: BlockType.COMMAND,
@@ -203,7 +205,7 @@ class Server {
                     tooltip: formatMessage({
                         id: 'lk_server.tooltip.setStatus',
                         // eslint-disable-next-line max-len
-                        default: 'I set information for the browser to know if things are OK or not. When things are working, it should be set to 200. For more information, search "HTTP status codes" online.',
+                        default: 'This block sets information for the browser to know if things are OK or not. When things are working, the status should be set to 200. For more information, search "HTTP status codes" online.',
                         description: 'Tooltip for a block that sets a HTTP status.'
                     }),
                     blockType: BlockType.COMMAND,
@@ -249,7 +251,7 @@ class Server {
                     }),
                     tooltip: formatMessage({
                         id: 'lk_server.tooltip.ipAddress',
-                        default: 'I return the IP address of the user requesting a page.',
+                        default: 'This block returns the IP address of the user requesting a page.',
                         description: 'Tooltip for a block that returns the IP Address from the request.'
                     }),
                     blockType: BlockType.REPORTER,
@@ -265,7 +267,7 @@ class Server {
                     tooltip: formatMessage({
                         id: 'lk_server.tooltip.method',
                         // eslint-disable-next-line max-len
-                        default: 'I return the type of request that the user is making. For example, if a user just wants to look at a page, then this block returns is "GET". If a user is filling out a form, then this block returns "POST".',
+                        default: 'This block returns the type of request that the user is making. For example, if a user just wants to look at a page, then it returns "GET". If a user is filling out a form, then this block returns "POST".',
                         description: 'Tooltip for a block that returns the request method.'
                     }),
                     blockType: BlockType.REPORTER,
@@ -290,8 +292,7 @@ class Server {
                     }),
                     tooltip: formatMessage({
                         id: 'lk_server.tooltip.data',
-                        // eslint-disable-next-line max-len
-                        default: 'I return the contents of a request, if there is any.',
+                        default: 'This block returns the contents of a request, if there is any.',
                         description: 'Tooltip for a block that returns the request data.'
                     }),
                     blockType: BlockType.REPORTER,
@@ -308,7 +309,7 @@ class Server {
                     tooltip: formatMessage({
                         id: 'lk_server.tooltip.checkMethod',
                         /* eslint-disable max-len */
-                        default: 'I check if the type of request that the user is making is equal to the selected request method. If a user is looking at a page, then the request method is "GET". If a user is filling out a form, then the request method is "POST".',
+                        default: 'This block checks if the type of request that the user is making is equal to the selected request method. If a user is looking at a page, then the request method is "GET". If a user is filling out a form, then the request method is "POST".',
                         description: 'Tooltip for a block that checks if the request method a user is making is equal to the selected request method.'
                         /* eslint-enable max-len */
                     }),
