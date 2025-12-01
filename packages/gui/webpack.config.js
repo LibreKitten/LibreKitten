@@ -14,6 +14,12 @@ const autoprefixer = require('autoprefixer');
 const postcssVars = require('postcss-simple-vars');
 const postcssImport = require('postcss-import');
 
+// CSS
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const lightningcss = require('lightningcss');
+const browserslist = require('browserslist');
+
 // SWC
 const {SwcMinifyWebpackPlugin} = require('swc-minify-webpack-plugin');
 
@@ -167,29 +173,29 @@ const base = {
         },
         {
             test: /\.css$/,
-            use: [{
-                loader: 'style-loader'
-            }, {
-                loader: 'css-loader',
-                options: {
-                    modules: true,
-                    importLoaders: 1,
-                    localIdentName: '[name]_[local]_[hash:base64:5]',
-                    camelCase: true
-                }
-            }, {
-                loader: 'postcss-loader',
-                options: {
-                    ident: 'postcss',
-                    plugins: function () {
-                        return [
-                            postcssImport,
-                            postcssVars,
-                            autoprefixer
-                        ];
+            use: [
+                MiniCssExtractPlugin.loader,
+                {
+                    loader: 'css-loader',
+                    options: {
+                        modules: true,
+                        importLoaders: 1,
+                        localIdentName: '[name]_[local]_[hash:base64:5]',
+                        camelCase: true
                     }
-                }
-            }]
+                }, {
+                    loader: 'postcss-loader',
+                    options: {
+                        ident: 'postcss',
+                        plugins: function () {
+                            return [
+                                postcssImport,
+                                postcssVars,
+                                autoprefixer
+                            ];
+                        }
+                    }
+                }]
         }]
     },
     plugins: [
@@ -212,7 +218,8 @@ const base = {
         }),
         new webpack.ProvidePlugin({
             Buffer: ['buffer', 'Buffer']
-        })
+        }),
+        new MiniCssExtractPlugin()
     ]
 };
 
@@ -256,10 +263,16 @@ module.exports = [
                 new SwcMinifyWebpackPlugin({
                     compress: true,
                     mangle: true
+                }),
+                new CssMinimizerPlugin({
+                    minify: CssMinimizerPlugin.lightningCssMinify,
+                    minimizerOptions: {
+                        minify: true,
+                        targets: lightningcss.browserslistToTargets(browserslist())
+                    }
                 })
             ],
             splitChunks: {
-                chunks: 'all',
                 minChunks: 2,
                 minSize: 50000,
                 maxInitialRequests: 5
