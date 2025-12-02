@@ -11,7 +11,7 @@
     text-align: left;
     background-color: $ui-white;
     border: 1px solid $ui-black-transparent;
-    border-radius: $radius;
+    border-radius: 0.25rem; /* lk: TODO: Replace this with $radius after changing the dropdown radius in the paint editor. */
     box-shadow: 0px 0px 5px 1px $shadow;
     overflow: hidden;
     pointer-events: none;
