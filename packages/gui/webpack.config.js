@@ -363,8 +363,10 @@ module.exports = [
                 chunks: ['index'],
                 template: 'src/playground/simple.ejs',
                 filename: 'index.html',
-                title: `${APP_NAME} - Blocks not just for the browser; say hello to the server!`,
-                description: DESCRIPTION,
+                title: `Blocks not just for the browser; say hello to the server! - ${APP_NAME}`,
+                description:
+                    `${APP_NAME} is a block-based coding language in alpha, that allows you to program more than ` +
+                    `just the browser; you can program the server. You can reach the clouds with ${APP_NAME}!`,
                 noSplash: true,
                 ...htmlWebpackPluginCommon
             }),
