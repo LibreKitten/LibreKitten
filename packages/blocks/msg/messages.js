@@ -62,29 +62,29 @@ Blockly.Msg.CONTROL_CLEARCOUNTER = 'clear counter';
 Blockly.Msg.CONTROL_ALLATONCE = 'all at once';
 Blockly.Msg.CONTROL_GREEN_FLAG = 'restart';
 // Control blocks tooltips
-Blockly.Msg.CONTROL_TERNARY_IF_TOOLTIP = "I return the content that's returned from my first reporter input if my inputted boolean value is true, otherwise I return the content that's returned from my second reporter input.";
-Blockly.Msg.CONTROL_FOREVER_TOOLTIP = "I run my contents inside me forever until I'm terminated.";
-Blockly.Msg.CONTROL_REPEAT_TOOLTIP = "I repeatably run my contents inside me for how many times that is specified in my inputted value.";
-Blockly.Msg.CONTROL_IF_TOOLTIP = "I run my contents inside me if my inputted value is true, otherwise I do nothing.";
-Blockly.Msg.CONTROL_SWITCH_TOOLTIP = "I run my cases inside me that match with my inputted value. If a case is not terminated, I'll move to the next case even if it doesn't match.";
-Blockly.Msg.CONTROL_CASE_TOOLTIP = "I run my contents inside me when I match with the value inputted in the switch block.";
-Blockly.Msg.CONTROL_DEFAULT_TOOLTIP = "I run my contents inside me when there is no case for the value inputted in the switch block.";
-Blockly.Msg.CONTROL_BREAK_TOOLTIP = "I terminate a loop or a check.";
-Blockly.Msg.CONTROL_IF_ELSE_TOOLTIP = "I run the contents inside my first branch if my inputted value is true, otherwise I run the contents inside my second branch.";
-Blockly.Msg.CONTROL_WAIT_TOOLTIP = "I pause the script for how many seconds that is specified in my inputted value.";
-Blockly.Msg.CONTROL_WAITUNTIL_TOOLTIP = "I pause the script until my inputted value is true.";
-Blockly.Msg.CONTROL_REPEATUNTIL_TOOLTIP = "I repeatedly run my contents inside me while my inputted value is false.";
-Blockly.Msg.CONTROL_WHILE_TOOLTIP = "I repeatedly run my contents inside me while my inputted value is true.";
-Blockly.Msg.CONTROL_FOREACH_TOOLTIP = "I repeatably run my contents inside me for how many times that is specified in my inputted value while also increasing the selected variable by one.";
-Blockly.Msg.CONTROL_STARTASCLONE_TOOLTIP = "I run my contents under me when my sprite starts as a clone.";
-Blockly.Msg.CONTROL_CREATECLONEOF_MENU_TOOLTIP = "I run my contents when my sprite starts as a clone.";
-Blockly.Msg.CONTROL_CREATECLONEOF_TOOLTIP = "I create a clone of the selected sprite.";
-Blockly.Msg.CONTROL_DELETETHISCLONE_TOOLTIP = "I delete my sprite if it's a clone.";
-Blockly.Msg.CONTROL_COUNTER_TOOLTIP = "I get the counter value.";
-Blockly.Msg.CONTROL_INCRCOUNTER_TOOLTIP = "I add one to the counter.";
-Blockly.Msg.CONTROL_CLEARCOUNTER_TOOLTIP = "I clear the counter.";
-Blockly.Msg.CONTROL_ALLATONCE_TOOLTIP = "WARNING! I don't function anymore. This feature was removed in place of custom blocks marked \"run without screen refresh\". Please don't use me.";
-Blockly.Msg.CONTROL_GREEN_FLAG_TOOLTIP = "I restart the project.";
+Blockly.Msg.CONTROL_TERNARY_IF_TOOLTIP = "This block returns the content that is returned from its first reporter input if its boolean input is true; otherwise it returns the content from its second reporter input.";
+Blockly.Msg.CONTROL_FOREVER_TOOLTIP = "This block runs the blocks inside it forever until it is stopped.";
+Blockly.Msg.CONTROL_REPEAT_TOOLTIP = "This block runs the blocks inside it repeatably for the number of times that is specified in its input.";
+Blockly.Msg.CONTROL_IF_TOOLTIP = "This block runs the blocks inside it if its input is true; otherwise the block does nothing.";
+Blockly.Msg.CONTROL_SWITCH_TOOLTIP = "This block runs the test inside it that matches with its input. If a check is not stopped, this block will move on to the next check, even if it does not match.";
+Blockly.Msg.CONTROL_CASE_TOOLTIP = "This block runs the blocks inside it if it matches with the input in the testing block. See the \"check if () matches to my tests\" block for more information.";
+Blockly.Msg.CONTROL_DEFAULT_TOOLTIP = "This block runs the blocks inside it when there is no test for the input in the testing block.";
+Blockly.Msg.CONTROL_BREAK_TOOLTIP = "This block stops the loop or check it is in.";
+Blockly.Msg.CONTROL_IF_ELSE_TOOLTIP = "This block the blocks inside its first branch if its input is true; otherwise the block runs the blocks inside its second branch.";
+Blockly.Msg.CONTROL_WAIT_TOOLTIP = "This block pauses the script it is in for the number of seconds that is specified in its input.";
+Blockly.Msg.CONTROL_WAITUNTIL_TOOLTIP = "This block pauses the script it is in until the inputted boolean is true.";
+Blockly.Msg.CONTROL_REPEATUNTIL_TOOLTIP = "This block runs the blocks inside it repeatably while its input is false.";
+Blockly.Msg.CONTROL_WHILE_TOOLTIP = "This block runs the blocks inside it repeatably while its input is true.";
+Blockly.Msg.CONTROL_FOREACH_TOOLTIP = "This block runs the blocks inside it for the number of times that is specified in its input, while also increasing the selected variable by one.";
+Blockly.Msg.CONTROL_STARTASCLONE_TOOLTIP = "This block runs the blocks under it when the sprite it is in starts as a clone.";
+Blockly.Msg.CONTROL_CREATECLONEOF_MENU_TOOLTIP = "This block runs the blocks under it when the sprite it is in starts as a clone.";
+Blockly.Msg.CONTROL_CREATECLONEOF_TOOLTIP = "This block creates a clone of the sprite in its menu.";
+Blockly.Msg.CONTROL_DELETETHISCLONE_TOOLTIP = "This block deletes the sprite it is in if it is a clone.";
+Blockly.Msg.CONTROL_COUNTER_TOOLTIP = "This block gets the counter value.";
+Blockly.Msg.CONTROL_INCRCOUNTER_TOOLTIP = "This block adds one to the counter.";
+Blockly.Msg.CONTROL_CLEARCOUNTER_TOOLTIP = "This block clears the counter.";
+Blockly.Msg.CONTROL_ALLATONCE_TOOLTIP = "OBSOLETE: This block does not function anymore. The block was removed in place of custom blocks marked \"run without screen refresh\".";
+Blockly.Msg.CONTROL_GREEN_FLAG_TOOLTIP = "This block restarts the project.";
 
 // Data blocks
 Blockly.Msg.DATA_SETVARIABLETO = 'set %1 to %2';
@@ -128,8 +128,8 @@ Blockly.Msg.EVENT_WHENKEYPRESSED_DOWN = 'down arrow';
 Blockly.Msg.EVENT_WHENKEYPRESSED_UP = 'up arrow';
 Blockly.Msg.EVENT_WHENKEYPRESSED_ANY = 'any';
 // Event blocks tooltips
-Blockly.Msg.EVENT_WHENFLAGCLICKED_TOOLTIP = "I run my contents under me when the project starts.";
-Blockly.Msg.EVENT_WHENSTOPCLICKED_TOOLTIP = "I run my contents under me when the project stops.";
+Blockly.Msg.EVENT_WHENFLAGCLICKED_TOOLTIP = "This block runs the blocks under it when the project starts.";
+Blockly.Msg.EVENT_WHENSTOPCLICKED_TOOLTIP = "This block runs the blocks under it when the project stops.";
 
 // Looks blocks
 Blockly.Msg.LOOKS_SAYFORSECS = 'say %1 for %2 seconds';
@@ -217,7 +217,7 @@ Blockly.Msg.MOTION_XSCROLL = 'x scroll';
 Blockly.Msg.MOTION_YSCROLL = 'y scroll';
 Blockly.Msg.MOTION_STAGE_SELECTED = 'Stage selected: no motion blocks';
 // Motion blocks tooltips
-Blockly.Msg.MOTION_MOVESTEPS_TOOLTIP = "I move my sprite by the amount of pixels set in my inputted value in the direction it's facing."
+Blockly.Msg.MOTION_MOVESTEPS_TOOLTIP = "This block moves the sprite it is in by the number of pixels set in its input, in the direction the sprite is facing."
 
 // Operators blocks
 Blockly.Msg.OPERATORS_ADD = '%1 + %2';
@@ -263,8 +263,8 @@ Blockly.Msg.OPERATORS_MATHOP_LOG = 'log';
 Blockly.Msg.OPERATORS_MATHOP_EEXP = 'e ^';
 Blockly.Msg.OPERATORS_MATHOP_10EXP = '10 ^';
 // Operator blocks tooltips
-Blockly.Msg.OPERATORS_STRICTLYEQUALS_TOOLTIP = "I return true if my first inputted value EXACTLY matches my second inputted value, otherwise I return false.";
-Blockly.Msg.OPERATORS_MOD_TOOLTIP = "I'm the operator for the remainder of a division";
+Blockly.Msg.OPERATORS_STRICTLYEQUALS_TOOLTIP = "This block returns true if its first input EXACTLY matches its second input; otherwise it returns false.";
+Blockly.Msg.OPERATORS_MOD_TOOLTIP = "The block returns divides its inputs and returns the remainder.";
 
 // Procedures blocks
 Blockly.Msg.PROCEDURES_DEFINITION = 'define %1';
@@ -283,6 +283,9 @@ Blockly.Msg.SENSING_TOUCHINGCOLOR = 'touching color %1?';
 Blockly.Msg.SENSING_COLORISTOUCHINGCOLOR = 'color %1 is touching %2?';
 Blockly.Msg.SENSING_DISTANCETO = 'distance to %1';
 Blockly.Msg.SENSING_DISTANCETO_POINTER = 'mouse-pointer';
+Blockly.Msg.SENSING_STAGESIZE = 'stage %1';
+Blockly.Msg.SENSING_STAGESIZE_WIDTH = 'width';
+Blockly.Msg.SENSING_STAGESIZE_HEIGHT = 'height';
 Blockly.Msg.SENSING_ASKANDWAIT = 'ask %1 and wait';
 Blockly.Msg.SENSING_ASK_TEXT = 'What\'s your name?';
 Blockly.Msg.SENSING_ANSWER = 'answer';
@@ -317,8 +320,18 @@ Blockly.Msg.SENSING_CURRENT_HOUR = 'hour';
 Blockly.Msg.SENSING_CURRENT_MINUTE = 'minute';
 Blockly.Msg.SENSING_CURRENT_SECOND = 'second';
 Blockly.Msg.SENSING_DAYSSINCE2000 = 'days since 2000';
+Blockly.Msg.SENSING_DELTATIME = 'delta time';
 Blockly.Msg.SENSING_USERNAME = 'username';
 Blockly.Msg.SENSING_USERID = 'user id';
+// Sensing blocks tooltips
+Blockly.Msg.SENSING_STAGESIZE_TOOLTIP = 'This block reports the width or height of the stage in pixels, depending on the option selected.'
+Blockly.Msg.SENSING_DELTATIME_TOOLTIP =
+    "This block reports the seconds elasped since the last frame. It is useful for things such as " +
+    "making a sprite move at the same speed, even with different refresh rates. For example, you can " +
+    "mutiply you can mutiply delta time by 300, and it will move roughly 5 pixels per frame when the  " +
+    "framerate is 60 FPS; but when the framerate is 120 FPS, it moves around 3 pixels per frame. If you " +
+    "want to use the pixel values you are used to with Scratch, multiply delta time by 30, and then multiply " +
+    "it again with the value you want to use.";
 
 // Sound blocks
 Blockly.Msg.SOUND_PLAY = 'start sound %1';

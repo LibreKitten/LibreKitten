@@ -14,7 +14,7 @@
     border-width: 2px;
     border-style: solid;
     border-color: $ui-black-transparent;
-    border-radius: $space;
+    border-radius: $radius;
 
     text-align: center;
     cursor: pointer;
@@ -63,8 +63,8 @@
 
 .sprite-info {
     padding: 0.25rem;
-    border-bottom-left-radius: 0.25rem;
-    border-bottom-right-radius: 0.25rem;
+    border-bottom-left-radius: calc($radius / 2);
+    border-bottom-right-radius: calc($radius / 2);
 
     font-size: 0.625rem;
     color: $text-primary;
@@ -108,7 +108,8 @@
 
 .number {
     position: absolute;
-    top: 0.15rem;
+    top: 0.25rem;
+    margin-left: 0.15rem;
     font-size: 0.625rem;
     font-weight: bold;
     z-index: 2;

@@ -6,7 +6,7 @@
     background: $looks-secondary;
     border-radius: 1.375rem;
     color: white;
-    height: $library-filter-bar-height;
+    height: $library-filter-bar-item;
 }
 
 .tag-button-icon {

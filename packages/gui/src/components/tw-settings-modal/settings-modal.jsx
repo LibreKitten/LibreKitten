@@ -6,6 +6,7 @@ import bindAll from 'lodash.bindall';
 import Box from '../box/box.jsx';
 import Modal from '../../containers/modal.jsx';
 import FancyCheckbox from '../tw-fancy-checkbox/checkbox.jsx';
+import ToggleButtons from '../toggle-buttons/toggle-buttons.jsx';
 import Input from '../forms/input.jsx';
 import BufferedInputHOC from '../forms/buffered-input-hoc.jsx';
 import DocumentationLink from '../tw-documentation-link/documentation-link.jsx';
@@ -19,14 +20,24 @@ const BufferedInput = BufferedInputHOC(Input);
 
 const messages = defineMessages({
     title: {
-        defaultMessage: 'Advanced Settings',
+        defaultMessage: 'Project Settings',
         description: 'Title of settings modal',
-        id: 'tw.settingsModal.title'
+        id: 'lk.settingsModal.title'
     },
     help: {
         defaultMessage: 'Click for help',
         description: 'Hover text of help icon in settings',
         id: 'tw.settingsModal.help'
+    },
+    fpsDynamic: {
+        defaultMessage: 'Dynamic',
+        description: 'The dynamic mode for the framerate',
+        id: 'lk.settingsModal.fpsDynamic'
+    },
+    fpsCapped: {
+        defaultMessage: 'Capped',
+        description: 'The capped mode for the framerate',
+        id: 'lk.settingsModal.fpsCapped'
     }
 });
 
@@ -128,6 +139,39 @@ BooleanSetting.propTypes = {
     label: PropTypes.node.isRequired
 };
 
+// lk: Added toggle-based settings.
+const ToggleSetting = ({buttons, selectedOption, label, extraInputs, ...props}) => (
+    <Setting
+        {...props}
+        primary={
+            <label className={styles.label}>
+                {label}
+                <ToggleButtons
+                    buttons={buttons.map((button, index) => ({
+                        ...button,
+                        isSelected: selectedOption === index
+                    }))}
+                    className={styles.toggle}
+                />
+                {extraInputs}
+            </label>
+        }
+    />
+);
+ToggleSetting.propTypes = {
+    buttons: PropTypes.arrayOf(PropTypes.shape({
+        children: PropTypes.element,
+        title: PropTypes.string.isRequired,
+        handleClick: PropTypes.func.isRequired,
+        icon: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+        iconClassName: PropTypes.string,
+        isSelected: PropTypes.bool
+    })),
+    selectedOption: PropTypes.number.isRequired,
+    label: PropTypes.node.isRequired,
+    extraInputs: PropTypes.element
+};
+
 const HighQualityPen = props => (
     <BooleanSetting
         {...props}
@@ -151,45 +195,64 @@ const HighQualityPen = props => (
 );
 
 const CustomFPS = props => (
-    <BooleanSetting
-        value={props.framerate !== 30}
-        onChange={props.onChange}
+    <ToggleSetting
+        active={false}
+        buttons={[
+            {
+                children: (
+                    <FormattedMessage
+                        {...messages.fpsDynamic}
+                    />
+                ),
+                handleClick: () => props.onSetFramerate(0),
+                title: props.intl.formatMessage(messages.fpsDynamic)
+            },
+            {
+                children: (
+                    <FormattedMessage
+                        {...messages.fpsCapped}
+                    />
+                ),
+                handleClick: () => props.onSetFramerate(60),
+                title: props.intl.formatMessage(messages.fpsCapped)
+            }
+        ]}
+        selectedOption={props.framerate === 0 ? 0 : 1}
         label={
             <FormattedMessage
-                defaultMessage="60 FPS (Custom FPS)"
-                description="FPS setting"
-                id="tw.settingsModal.fps"
+                defaultMessage="Framerate:"
+                description="Framerate setting"
+                id="lk.settingsModal.fps"
             />
+        }
+        extraInputs={
+            props.framerate !== 0 && (
+                <BufferedInput
+                    value={props.framerate}
+                    onSubmit={props.onSetFramerate}
+                    className={styles.fpsInput}
+                    type="number"
+                    min="0"
+                    max="250"
+                    step="1"
+                />
+            )
         }
         help={
             <FormattedMessage
                 // eslint-disable-next-line max-len
-                defaultMessage="Runs scripts 60 times per second instead of 30. Most projects will not work properly with this enabled. You should try Interpolation with 60 FPS mode disabled if that is the case. {customFramerate}."
+                defaultMessage={"Runs scripts either at the monitor's refresh rate (when the mode is set to Dynamic), or capped to a specific max framerate (when the mode is set to Capped). Some legacy projects (or most Scratch projects) may not work properly without the framerate capped to a specific number. It is 30 FPS in the case of Scratch (or LibreKitten before 0.10.0 due to a bug). You should either adapt the project to use the \"delta time\" block, use Interpolation, or keep the FPS at 30."}
                 description="FPS setting help"
-                id="tw.settingsModal.fpsHelp"
-                values={{
-                    customFramerate: (
-                        <a
-                            onClick={props.onCustomizeFramerate}
-                            tabIndex="0"
-                        >
-                            <FormattedMessage
-                                defaultMessage="Click to use a framerate other than 30 or 60"
-                                description="FPS settings help"
-                                id="tw.settingsModal.fpsHelp.customFramerate"
-                            />
-                        </a>
-                    )
-                }}
+                id="lk.settingsModal.fpsHelp"
             />
         }
         slug="custom-fps"
     />
 );
 CustomFPS.propTypes = {
+    intl: intlShape,
     framerate: PropTypes.number,
-    onChange: PropTypes.func,
-    onCustomizeFramerate: PropTypes.func
+    onSetFramerate: PropTypes.func
 };
 
 const Interpolation = props => (
@@ -235,46 +298,47 @@ const InfiniteClones = props => (
     />
 );
 
-const RemoveFencing = props => (
+const Fencing = props => (
     <BooleanSetting
         {...props}
         label={
             <FormattedMessage
-                defaultMessage="Remove Fencing"
-                description="Remove Fencing setting"
-                id="tw.settingsModal.removeFencing"
+                defaultMessage="Fence Sprites"
+                description="Fence Sprites setting"
+                id="lk.settingsModal.fencing"
             />
         }
         help={
             <FormattedMessage
                 // eslint-disable-next-line max-len
-                defaultMessage="Allows sprites to move offscreen, become as large or as small as they want, and makes touching blocks work offscreen."
-                description="Remove Fencing setting help"
-                id="tw.settingsModal.removeFencingHelp"
+                defaultMessage="Stops sprites from moving fully offscreen, becoming too large or small, and stops touching blocks from sensing offscreen. Useful for compatibility with Scratch projects."
+                description="Fence Sprites setting help"
+                id="lk.settingsModal.fencingHelp"
             />
         }
-        slug="remove-fencing"
+        slug="fencing"
     />
 );
 
-const RemoveMiscLimits = props => (
+const MiscLimits = props => (
     <BooleanSetting
         {...props}
         label={
             <FormattedMessage
-                defaultMessage="Remove Miscellaneous Limits"
-                description="Remove Miscellaneous Limits setting"
-                id="tw.settingsModal.removeMiscLimits"
+                defaultMessage="Restore Miscellaneous Limits"
+                description="Restore Miscellaneous Limits setting, for compatibility"
+                id="lk.settingsModal.miscLimits"
             />
         }
         help={
             <FormattedMessage
-                defaultMessage="Removes sound effect limits and pen size limits."
-                description="Remove Miscellaneous Limits setting help"
-                id="tw.settingsModal.removeMiscLimitsHelp"
+                // eslint-disable-next-line max-len
+                defaultMessage="Adds back sound effect limits and pen size limits. Useful for compatibility with Scratch projects."
+                description="Restore Miscellaneous Limits setting help"
+                id="lk.settingsModal.miscLimitsHelp"
             />
         }
-        slug="remove-misc-limits"
+        slug="misc-limits"
     />
 );
 
@@ -448,9 +512,10 @@ const SettingsModalComponent = props => (
                 />
             </Header>
             <CustomFPS
+                intl={props.intl}
                 framerate={props.framerate}
                 onChange={props.onFramerateChange}
-                onCustomizeFramerate={props.onCustomizeFramerate}
+                onSetFramerate={props.onSetFramerate}
             />
             <Interpolation
                 value={props.interpolation}
@@ -475,13 +540,20 @@ const SettingsModalComponent = props => (
                 value={props.infiniteClones}
                 onChange={props.onInfiniteClonesChange}
             />
-            <RemoveFencing
-                value={props.removeFencing}
-                onChange={props.onRemoveFencingChange}
+            <Header>
+                <FormattedMessage
+                    defaultMessage="Compatibility"
+                    description="Settings modal section"
+                    id="lk.settingsModal.compat"
+                />
+            </Header>
+            <Fencing
+                value={props.fencing}
+                onChange={props.onFencingChange}
             />
-            <RemoveMiscLimits
-                value={props.removeLimits}
-                onChange={props.onRemoveLimitsChange}
+            <MiscLimits
+                value={props.restoreLimits}
+                onChange={props.onRestoreLimitsChange}
             />
             <Header>
                 <FormattedMessage
@@ -514,17 +586,17 @@ SettingsModalComponent.propTypes = {
     isEmbedded: PropTypes.bool,
     framerate: PropTypes.number,
     onFramerateChange: PropTypes.func,
-    onCustomizeFramerate: PropTypes.func,
+    onSetFramerate: PropTypes.func,
     highQualityPen: PropTypes.bool,
     onHighQualityPenChange: PropTypes.func,
     interpolation: PropTypes.bool,
     onInterpolationChange: PropTypes.func,
     infiniteClones: PropTypes.bool,
     onInfiniteClonesChange: PropTypes.func,
-    removeFencing: PropTypes.bool,
-    onRemoveFencingChange: PropTypes.func,
-    removeLimits: PropTypes.bool,
-    onRemoveLimitsChange: PropTypes.func,
+    fencing: PropTypes.bool,
+    onFencingChange: PropTypes.func,
+    restoreLimits: PropTypes.bool,
+    onRestoreLimitsChange: PropTypes.func,
     warpTimer: PropTypes.bool,
     onWarpTimerChange: PropTypes.func,
     disableCompiler: PropTypes.bool,

@@ -11,11 +11,16 @@
     text-align: left;
     background-color: $ui-white;
     border: 1px solid $ui-black-transparent;
-    border-radius: calc($space / 2);
+    border-radius: 0.25rem; /* lk: TODO: Replace this with $radius after changing the dropdown radius in the paint editor. */
     box-shadow: 0px 0px 5px 1px $shadow;
+    overflow: hidden;
     pointer-events: none;
     transition: opacity 0.2s ease;
     z-index: $z-index-context-menu;
+}
+
+[dir="rtl"] .context-menu {
+    text-align: right;
 }
 
 .menu-item {
@@ -23,9 +28,10 @@
     white-space: nowrap;
     cursor: pointer;
     transition: 0.1s ease;
+    outline: none;
 }
 
-.menu-item:hover {
+.menu-item[data-highlighted] {
     background: $context-menu-item-hover-background;
     color: $context-menu-item-hover-foreground;
 }
@@ -34,6 +40,6 @@
     border-top: 1px solid $ui-black-transparent;
 }
 
-.menu-item-danger:hover {
+.menu-item-danger[data-highlighted] {
     background: $context-menu-item-hover-danger;
 }

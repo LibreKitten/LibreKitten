@@ -2,6 +2,12 @@ import BlockItem from "./blockly/BlockItem.js";
 import BlockInstance from "./blockly/BlockInstance.js";
 import Utils from "./blockly/Utils.js";
 
+import {
+    BLOCKS_TAB_INDEX,
+    COSTUMES_TAB_INDEX,
+    SOUNDS_TAB_INDEX
+} from '../../../reducers/editor-tab';
+
 export default async function ({ addon, msg, console }) {
   const Blockly = await addon.tab.traps.getBlockly();
 
@@ -64,7 +70,7 @@ export default async function ({ addon, msg, console }) {
         return;
       }
       const tab = addon.tab.redux.state.scratchGui.editorTab.activeTabIndex;
-      const visible = tab === 0 || tab === 1 || tab === 2;
+      const visible = tab === BLOCKS_TAB_INDEX || tab === COSTUMES_TAB_INDEX || tab === SOUNDS_TAB_INDEX;
       this.findBarOuter.hidden = !visible;
     }
 
@@ -831,7 +837,8 @@ export default async function ({ addon, msg, console }) {
   });
 
   while (true) {
-    const root = await addon.tab.waitForElement("ul[class*=gui_tab-list_]", {
+    // lk: Changed ul to div since tabs were rewriten using Radix. 
+    const root = await addon.tab.waitForElement("div[class*=gui_tab-list_]", {
       markAsSeen: true,
       reduxEvents: ["scratch-gui/mode/SET_PLAYER", "fontsLoaded/SET_FONTS_LOADED", "scratch-gui/locales/SELECT_LOCALE"],
       reduxCondition: (state) => !state.scratchGui.mode.isPlayerOnly,

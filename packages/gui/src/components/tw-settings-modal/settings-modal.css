@@ -61,6 +61,10 @@
     margin-right: 0.5rem;
 }
 
+.toggle {
+    margin-left: 0.5rem;
+}
+
 .help-icon {
     position: relative;
     border: 0;
@@ -84,8 +88,12 @@
 .custom-stage-size > * {
     margin-right: 0.5rem;
 }
-.custom-stage-size-input {
+.custom-stage-size-input, .fps-input {
     width: 80px;
+}
+
+.fps-input {
+    margin-left: 0.5rem;
 }
 
 .info {

@@ -5,8 +5,7 @@ import React from 'react';
 import {defineMessages, FormattedMessage, injectIntl, intlShape} from 'react-intl';
 import {connect} from 'react-redux';
 import MediaQuery from 'react-responsive';
-import {Tab, Tabs, TabList, TabPanel} from 'react-tabs';
-import tabStyles from 'react-tabs/style/react-tabs.css';
+import {Tabs} from 'radix-ui';
 import VM from 'scratch-vm';
 
 import Blocks from '../../containers/blocks.jsx';
@@ -37,12 +36,19 @@ import TWRestorePointManager from '../../containers/tw-restore-point-manager.jsx
 import TWFontsModal from '../../containers/tw-fonts-modal.jsx';
 import TWUnknownPlatformModal from '../../containers/tw-unknown-platform-modal.jsx';
 import TWInvalidProjectModal from '../../containers/tw-invalid-project-modal.jsx';
+import TWWindChimeSubmitter from '../../containers/tw-windchime-submitter.jsx';
 
 import {STAGE_SIZE_MODES, FIXED_WIDTH, UNCONSTRAINED_NON_STAGE_WIDTH} from '../../lib/layout-constants';
 import {resolveStageSize} from '../../lib/screen-utils';
 import {Theme} from '../../lib/themes';
 
 import {isRendererSupported, isBrowserSupported} from '../../lib/tw-environment-support-prober';
+
+import {
+    BLOCKS_TAB_INDEX,
+    COSTUMES_TAB_INDEX,
+    SOUNDS_TAB_INDEX
+} from '../../reducers/editor-tab';
 
 import styles from './gui.css';
 import addExtensionIcon from './icon--extensions.svg';
@@ -51,7 +57,7 @@ import costumesIcon from '!../../lib/tw-recolor/build!./icon--costumes.svg';
 import soundsIcon from '!../../lib/tw-recolor/build!./icon--sounds.svg';
 import WelcomeModal from '../../containers/lk-welcome-modal.jsx';
 
-import {styleResets} from '../../css/lk-style-resets.css';
+import styleResets from '../../css/lk-style-resets.css';
 
 const messages = defineMessages({
     addExtension: {
@@ -171,11 +177,11 @@ const GUIComponent = props => {
 
     const tabClassNames = {
         tabs: styles.tabs,
-        tab: classNames(tabStyles.reactTabsTab, styles.tab),
-        tabList: classNames(tabStyles.reactTabsTabList, styles.tabList),
-        tabPanel: classNames(tabStyles.reactTabsTabPanel, styles.tabPanel),
-        tabPanelSelected: classNames(tabStyles.reactTabsTabPanelSelected, styles.isSelected),
-        tabSelected: classNames(tabStyles.reactTabsTabSelected, styles.isSelected)
+        tab: styles.tab,
+        tabList: styles.tabList,
+        tabPanel: styles.tabPanel,
+        tabPanelSelected: styles.isSelected,
+        tabSelected: styles.isSelected
     };
 
     const unconstrainedWidth = (
@@ -190,6 +196,7 @@ const GUIComponent = props => {
             <React.Fragment>
                 <TWSecurityManager securityManager={securityManager} />
                 <TWRestorePointManager />
+                <TWWindChimeSubmitter isEmbedded={isEmbedded} />
                 {usernameModalVisible && <TWUsernameModal />}
                 {settingsModalVisible && <TWSettingsModal />}
                 {customExtensionModalVisible && <TWCustomExtensionModal />}
@@ -230,7 +237,7 @@ const GUIComponent = props => {
             </React.Fragment>
         ) : (
             <Box
-                className={classNames(styles.pageWrapper, styleResets)}
+                className={classNames(styles.pageWrapper, Object.values(styleResets).concat(' '))}
                 dir={isRtl ? 'rtl' : 'ltr'}
                 style={{
                     minWidth: 1024 + Math.max(0, customStageSize.width - 480),
@@ -333,16 +340,16 @@ const GUIComponent = props => {
                 <Box className={styles.bodyWrapper}>
                     <Box className={styles.flexWrapper}>
                         <Box className={styles.editorWrapper}>
-                            <Tabs
-                                forceRenderTabPanel
+                            <Tabs.Root
                                 className={tabClassNames.tabs}
-                                selectedIndex={activeTabIndex}
-                                selectedTabClassName={tabClassNames.tabSelected}
-                                selectedTabPanelClassName={tabClassNames.tabPanelSelected}
-                                onSelect={onActivateTab}
+                                value={activeTabIndex}
+                                onValueChange={onActivateTab}
                             >
-                                <TabList className={tabClassNames.tabList}>
-                                    <Tab className={tabClassNames.tab}>
+                                <Tabs.List className={tabClassNames.tabList}>
+                                    <Tabs.Trigger
+                                        className={tabClassNames.tab}
+                                        value={BLOCKS_TAB_INDEX}
+                                    >
                                         <img
                                             draggable={false}
                                             src={codeIcon()}
@@ -352,10 +359,10 @@ const GUIComponent = props => {
                                             description="Button to get to the code panel"
                                             id="gui.gui.codeTab"
                                         />
-                                    </Tab>
-                                    <Tab
+                                    </Tabs.Trigger>
+                                    <Tabs.Trigger
                                         className={tabClassNames.tab}
-                                        onClick={onActivateCostumesTab}
+                                        value={COSTUMES_TAB_INDEX}
                                     >
                                         <img
                                             draggable={false}
@@ -374,10 +381,10 @@ const GUIComponent = props => {
                                                 id="gui.gui.costumesTab"
                                             />
                                         )}
-                                    </Tab>
-                                    <Tab
+                                    </Tabs.Trigger>
+                                    <Tabs.Trigger
                                         className={tabClassNames.tab}
-                                        onClick={onActivateSoundsTab}
+                                        value={SOUNDS_TAB_INDEX}
                                     >
                                         <img
                                             draggable={false}
@@ -388,15 +395,18 @@ const GUIComponent = props => {
                                             description="Button to get to the sounds panel"
                                             id="gui.gui.soundsTab"
                                         />
-                                    </Tab>
-                                </TabList>
-                                <TabPanel className={tabClassNames.tabPanel}>
+                                    </Tabs.Trigger>
+                                </Tabs.List>
+                                <Tabs.Content
+                                    className={tabClassNames.tabPanel}
+                                    value={BLOCKS_TAB_INDEX}
+                                >
                                     <Box className={styles.blocksWrapper}>
                                         <Blocks
                                             key={`${blocksId}/${theme.id}`}
                                             canUseCloud={canUseCloud}
                                             grow={1}
-                                            isVisible={blocksTabVisible}
+                                            isVisible
                                             options={{
                                                 media: `${basePath}static/${theme.getBlocksMediaFolder()}/`
                                             }}
@@ -422,16 +432,20 @@ const GUIComponent = props => {
                                     <Box className={styles.watermark}>
                                         <Watermark />
                                     </Box>
-                                </TabPanel>
-                                <TabPanel className={tabClassNames.tabPanel}>
-                                    {costumesTabVisible ? <CostumeTab
-                                        vm={vm}
-                                    /> : null}
-                                </TabPanel>
-                                <TabPanel className={tabClassNames.tabPanel}>
-                                    {soundsTabVisible ? <SoundTab vm={vm} /> : null}
-                                </TabPanel>
-                            </Tabs>
+                                </Tabs.Content>
+                                <Tabs.Content
+                                    className={tabClassNames.tabPanel}
+                                    value={COSTUMES_TAB_INDEX}
+                                >
+                                    <CostumeTab vm={vm} />
+                                </Tabs.Content>
+                                <Tabs.Content
+                                    className={tabClassNames.tabPanel}
+                                    value={SOUNDS_TAB_INDEX}
+                                >
+                                    <SoundTab vm={vm} />
+                                </Tabs.Content>
+                            </Tabs.Root>
                             {backpackVisible ? (
                                 <Backpack host={backpackHost} />
                             ) : null}

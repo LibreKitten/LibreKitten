@@ -20,12 +20,12 @@
 }
 
 [dir="ltr"] .backpack-header {
-    border-top-left-radius: $space;
-    border-top-right-radius: $space;
+    border-top-left-radius: $radius;
+    border-top-right-radius: $radius;
 }
 
 [dir="rtl"] .backpack-header {
-    border-top-left-radius: $space;
+    border-top-left-radius: $radius;
 }
 
 .backpack-list {

@@ -46,7 +46,7 @@ a {
 }
 
 .editor {
-    height: 100%;
+    height: 100vh; /* lk: Changed this to vh to stop a resizing bug with "position: relative;" (which Radix uses sometimes). */
 }
 .editor .center {
     height: 100%;

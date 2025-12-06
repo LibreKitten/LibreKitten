@@ -4,10 +4,12 @@
 
 .page-wrapper {
     height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .body-wrapper {
-    height: calc(100% - $menu-bar-height);
+    flex-grow: 1;
     background-color: $ui-primary;
 }
 
@@ -92,6 +94,8 @@
 
     user-select: none;
     white-space: nowrap;
+
+    outline: none;
 }
 
 [dir="ltr"] .tab:nth-of-type(1) {
@@ -117,7 +121,7 @@
   background-color: $ui-primary;
 }
 
-.tab.is-selected {
+.tab[data-state="active"] {
     color: $looks-secondary;
     background-color: $ui-white;
 }
@@ -144,22 +148,22 @@
     transform: scaleX(-1);
 }
 
-.tab.is-selected img {
+.tab[data-state="active"] img {
     filter: none;
 }
 
 /* Tab style overrides from react-tabs */
-.tab.is-selected:after {
+.tab[data-state="active"]:after {
     display: none;
 }
 
-.tab.is-selected:focus {
+.tab[data-state="active"]:focus {
     outline: none;
     box-shadow: none;
     border-color: $ui-black-transparent;
 }
 
-.tab.is-selected:focus:after {
+.tab[data-state="active"]:focus:after {
     display: none;
 }
 
@@ -175,9 +179,9 @@
     position: relative;
     flex-grow: 1;
     display: none;
+    outline: none;
 }
-
-.tab-panel.is-selected {
+.tab-panel[data-state="active"] {
     display: flex;
 }
 
@@ -232,7 +236,7 @@
     background: $looks-secondary;
 
     border: 1px solid $looks-secondary;
-    border-bottom-left-radius: $space;
+    border-bottom-left-radius: $radius;
     box-sizing: content-box; /* To match scratch-block vertical toolbox borders */
 }
 

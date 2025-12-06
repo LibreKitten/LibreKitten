@@ -18,19 +18,26 @@ const ToggleButtons = ({buttons, className, disabled}) => (
         {buttons.map((button, index) => (
             <button
                 key={`toggle-${index}`}
-                className={styles.button}
+                className={classNames(
+                    styles.button,
+                    'children' in button ? styles.stretchyButton : null
+                )}
                 title={button.title}
                 aria-label={button.title}
                 aria-pressed={button.isSelected}
                 onClick={button.handleClick}
                 disabled={disabled}
             >
-                <TWRenderRecoloredImage
-                    src={button.icon}
-                    aria-hidden="true"
-                    className={button.iconClassName}
-                    draggable={false}
-                />
+                {/* lk: Allow custom childern of the buttons, such as labels. */
+                    button.children ? button.children : (
+                        <TWRenderRecoloredImage
+                            src={button.icon}
+                            aria-hidden="true"
+                            className={button.iconClassName}
+                            draggable={false}
+                        />
+                    )
+                }
             </button>
         ))}
     </div>
@@ -38,6 +45,7 @@ const ToggleButtons = ({buttons, className, disabled}) => (
 
 ToggleButtons.propTypes = {
     buttons: PropTypes.arrayOf(PropTypes.shape({
+        children: PropTypes.node,
         title: PropTypes.string.isRequired,
         handleClick: PropTypes.func.isRequired,
         icon: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),

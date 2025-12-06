@@ -1,5 +1,11 @@
 // this script was happily stolen from the color-picker addon, developed by Richie Bendall and apple502j
 
+import {
+    BLOCKS_TAB_INDEX,
+    COSTUMES_TAB_INDEX,
+    SOUNDS_TAB_INDEX
+} from '../../../reducers/editor-tab';
+
 // import required libraries
 import { normalizeHex } from "../../libraries/common/cs/normalize-color.js";
 import RateLimiter from "../../libraries/common/cs/rate-limiter.js";
@@ -65,7 +71,7 @@ export default async ({ addon, console, msg }) => {
     // wait for color dialog box appearance
     const element = await addon.tab.waitForElement('div[class*="color-picker_swatch-row"]', {
       markAsSeen: true,
-      reduxCondition: (state) => state.scratchGui.editorTab.activeTabIndex === 1 && !state.scratchGui.mode.isPlayerOnly,
+      reduxCondition: (state) => state.scratchGui.editorTab.activeTabIndex === COSTUMES_TAB_INDEX && !state.scratchGui.mode.isPlayerOnly,
     });
     rateLimiter.abort(false);
     if (!("colorIndex" in addon.tab.redux.state.scratchPaint.fillMode)) {

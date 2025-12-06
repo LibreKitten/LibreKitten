@@ -473,6 +473,12 @@ class Runtime extends EventEmitter {
         this._lastStepTime = Date.now();
         this.interpolationEnabled = false;
 
+        /**
+         * lk: The the amount of seconds elasped since the last frame.
+         * @type {number}
+         */
+        this.deltaTime = 0;
+
         this._defaultStoredSettings = this._generateAllProjectOptions();
 
         /**
@@ -2579,6 +2585,8 @@ class Runtime extends EventEmitter {
      * inactive threads after each iteration.
      */
     _step () {
+        this.deltaTime = (Date.now() / 1000) - (this._lastStepTime / 1000);
+
         if (this.interpolationEnabled) {
             interpolate.setupInitialState(this);
         }
@@ -2659,9 +2667,7 @@ class Runtime extends EventEmitter {
             this.profiler.reportFrames();
         }
 
-        if (this.interpolationEnabled) {
-            this._lastStepTime = Date.now();
-        }
+        this._lastStepTime = Date.now();
     }
 
     /**
@@ -2709,7 +2715,7 @@ class Runtime extends EventEmitter {
         // tw: "compatibility mode" is replaced with a generic framerate setter,
         // but this method is kept for compatibility
         if (compatibilityModeOn) {
-            this.setFramerate(30);
+            this.setFramerate(0);
         } else {
             this.setFramerate(60);
         }

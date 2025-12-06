@@ -1,56 +1,51 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
+import {Menubar} from 'radix-ui';
 
 import styles from './menu.css';
+
+const DividerContext = React.createContext(false);
 
 const MenuComponent = ({
     className = '',
     children,
-    componentRef,
-    place = 'right'
+    place = 'right',
+    ...props
 }) => (
-    <ul
-        className={classNames(
-            styles.menu,
-            className,
-            {
-                [styles.left]: place === 'left',
-                [styles.right]: place === 'right'
-            }
-        )}
-        ref={componentRef}
+    <Menubar.Content
+        className={classNames(styles.menu, className)}
+        place={place === 'right' ? 'start' : 'end'}
+        {...props}
     >
         {children}
-    </ul>
+    </Menubar.Content>
 );
 
 MenuComponent.propTypes = {
     children: PropTypes.node,
     className: PropTypes.string,
-    componentRef: PropTypes.func,
     place: PropTypes.oneOf(['left', 'right'])
 };
 
 
 const Submenu = ({children, className, place, ...props}) => (
-    <div
-        className={classNames(
-            styles.submenu,
-            className,
-            {
-                [styles.left]: place === 'left',
-                [styles.right]: place === 'right'
-            }
-        )}
-    >
-        <MenuComponent
-            place={place}
+    <DividerContext.Provider value={false}>
+        <Menubar.SubContent
+            className={classNames(
+                styles.menu,
+                styles.submenu,
+                className,
+                {
+                    [styles.left]: place === 'left',
+                    [styles.right]: place === 'right'
+                }
+            )}
             {...props}
         >
             {children}
-        </MenuComponent>
-    </div>
+        </Menubar.SubContent>
+    </DividerContext.Provider>
 );
 
 Submenu.propTypes = {
@@ -59,47 +54,81 @@ Submenu.propTypes = {
     place: PropTypes.oneOf(['left', 'right'])
 };
 
-const MenuItem = ({
-    children,
-    className,
-    expanded = false,
-    onClick
-}) => (
-    <li
-        className={classNames(
-            styles.menuItem,
-            styles.hoverable,
-            className,
-            {[styles.expanded]: expanded}
-        )}
-        onClick={onClick}
-    >
-        {children}
-    </li>
-);
+/**
+ * lk: A curried component, that makes a custom menubar item component.
+ * @param {React.Component} ComponentToWrap A Radix menubar item-like component.
+ * @returns {React.FC} The wrapped menubar item component, ready for use.
+ */
+const menuItemComponentGenerator = ComponentToWrap => {
+    const Component = ({
+        children,
+        className,
+        expanded = false,
+        ...props
+    }) => {
+        const hasDivider = React.useContext(DividerContext);
+        return (
+            <ComponentToWrap
+                className={classNames(
+                    styles.menuItem,
+                    styles.hoverable,
+                    className,
+                    {
+                        [styles.expanded]: expanded,
+                        [styles.menuSection]: hasDivider
+                    }
+                )}
+                {...props}
+            >
+                {children}
+            </ComponentToWrap>
+        );
+    };
 
+    Component.propTypes = {
+        children: PropTypes.node,
+        className: PropTypes.string,
+        disabled: PropTypes.bool,
+        expanded: PropTypes.bool
+    };
+
+    return Component;
+};
+
+const MenuItem = menuItemComponentGenerator(Menubar.Item);
+MenuItem.displayName = 'MenuItem';
 MenuItem.propTypes = {
-    children: PropTypes.node,
-    className: PropTypes.string,
-    expanded: PropTypes.bool,
+    ...MenuItem.propTypes,
     onClick: PropTypes.func
 };
 
+const MenuRadioItem = menuItemComponentGenerator(Menubar.RadioItem);
+MenuRadioItem.displayName = 'MenuRadioItem';
+MenuRadioItem.propTypes = {
+    ...MenuRadioItem.propTypes,
+    onSelect: PropTypes.func,
+    textValue: PropTypes.string,
+    value: PropTypes.string
+};
 
 const addDividerClassToFirstChild = (child, id) => (
-    child && React.cloneElement(child, {
-        className: classNames(
-            child.className,
-            {[styles.menuSection]: id === 0}
-        ),
-        key: id
-    })
+    child ? (
+        id === 0 ? (
+            <DividerContext.Provider
+                value
+                key={id}
+            >
+                {child}
+            </DividerContext.Provider>
+        ) : child
+    ) : null
 );
 
 const MenuSection = ({children}) => (
-    <React.Fragment>{
-        React.Children.map(children, addDividerClassToFirstChild)
-    }</React.Fragment>
+    <React.Fragment>
+        <Menubar.Separator />
+        {React.Children.map(children, addDividerClassToFirstChild)}
+    </React.Fragment>
 );
 
 MenuSection.propTypes = {
@@ -109,6 +138,8 @@ MenuSection.propTypes = {
 export {
     MenuComponent as default,
     MenuItem,
+    menuItemComponentGenerator,
+    MenuRadioItem,
     MenuSection,
     Submenu
 };

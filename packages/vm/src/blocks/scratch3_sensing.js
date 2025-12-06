@@ -57,6 +57,7 @@ class Scratch3SensingBlocks {
             sensing_touchingcolor: this.touchingColor,
             sensing_coloristouchingcolor: this.colorTouchingColor,
             sensing_distanceto: this.distanceTo,
+            sensing_stagesize: this.stageSize,
             sensing_timer: this.getTimer,
             sensing_resettimer: this.resetTimer,
             sensing_of: this.getAttributeOf,
@@ -67,6 +68,7 @@ class Scratch3SensingBlocks {
             sensing_keypressed: this.getKeyPressed,
             sensing_current: this.current,
             sensing_dayssince2000: this.daysSince2000,
+            sensing_deltatime: this.deltaTime,
             sensing_loudness: this.getLoudness,
             sensing_loud: this.isLoud,
             sensing_askandwait: this.askAndWait,
@@ -98,6 +100,12 @@ class Scratch3SensingBlocks {
             },
             sensing_dayssince2000: {
                 getId: () => 'dayssince2000'
+            },
+            sensing_deltatime: {
+                getId: () => 'deltatime'
+            },
+            sensing_stagesize: {
+                getId: (_, fields) => getMonitorIdForBlockWithArgs('stagesize', fields)
             },
             sensing_current: {
                 // This is different from the default toolbox xml id in order to support
@@ -218,6 +226,13 @@ class Scratch3SensingBlocks {
         return Math.sqrt((dx * dx) + (dy * dy));
     }
 
+    stageSize (args, util) {
+        const runtime = util.runtime;
+        const side = Cast.toString(args.SIDE).toLowerCase();
+        if (side === 'height') return runtime.stageHeight;
+        return runtime.stageWidth;
+    }
+
     setDragMode (args, util) {
         util.target.setDraggable(args.DRAG_MODE === 'draggable');
     }
@@ -269,6 +284,10 @@ class Scratch3SensingBlocks {
         let mSecsSinceStart = today.valueOf() - start.valueOf();
         mSecsSinceStart += ((today.getTimezoneOffset() - dstAdjust) * 60 * 1000);
         return mSecsSinceStart / msPerDay;
+    }
+
+    deltaTime () {
+        return this.runtime.deltaTime;
     }
 
     getLoudness () {

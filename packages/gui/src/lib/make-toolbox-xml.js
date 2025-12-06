@@ -522,6 +522,7 @@ const sensing = function (isInitialSetup, isStage, targetId, colors) {
                     <shadow type="sensing_distancetomenu"/>
                 </value>
             </block>
+            <block type="sensing_stagesize"/>
             ${blockSeparator}
         `}
         ${isInitialSetup ? '' : `
@@ -562,6 +563,8 @@ const sensing = function (isInitialSetup, isStage, targetId, colors) {
         ${blockSeparator}
         <block id="current" type="sensing_current"/>
         <block type="sensing_dayssince2000"/>
+        ${blockSeparator}
+        <block type="sensing_deltatime"/>
         ${blockSeparator}
         <block type="sensing_username"/>
         ${categorySeparator}
