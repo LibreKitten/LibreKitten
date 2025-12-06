@@ -30,20 +30,22 @@ MenuComponent.propTypes = {
 
 
 const Submenu = ({children, className, place, ...props}) => (
-    <Menubar.SubContent
-        className={classNames(
-            styles.menu,
-            styles.submenu,
-            className,
-            {
-                [styles.left]: place === 'left',
-                [styles.right]: place === 'right'
-            }
-        )}
-        {...props}
-    >
-        {children}
-    </Menubar.SubContent>
+    <DividerContext.Provider value={false}>
+        <Menubar.SubContent
+            className={classNames(
+                styles.menu,
+                styles.submenu,
+                className,
+                {
+                    [styles.left]: place === 'left',
+                    [styles.right]: place === 'right'
+                }
+            )}
+            {...props}
+        >
+            {children}
+        </Menubar.SubContent>
+    </DividerContext.Provider>
 );
 
 Submenu.propTypes = {
