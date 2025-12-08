@@ -29,15 +29,17 @@ class FileTree extends React.Component {
         container.innerHTML = '<file-tree></file-tree>';
 
         this.fileTreeEl = container.querySelector('file-tree');
-        this.fileTreeEl.setContent(resourceNames);
+        this.fileTreeEl.setContent({
+            files: resourceNames
+        });
 
         this.fileTreeEl.addEventListener(`file:click`, ({detail}) => {
-            const {element, path, grant} = detail;
-            this.props.onClick(element, path, grant);
+            const {grant, element, path} = detail;
+            this.props.onClick(grant, element, path);
         });
         this.fileTreeEl.addEventListener(`file:create`, ({detail}) => {
-            const {path, content, grant} = detail;
-            this.props.onCreate(path, content, grant);
+            const {grant, path, content, bulk} = detail;
+            this.props.onCreate(grant, path, content, bulk);
         });
     }
 

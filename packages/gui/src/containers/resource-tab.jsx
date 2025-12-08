@@ -17,7 +17,7 @@ class ResourceTab extends React.Component {
         this.editingTarget = this.vm.editingTarget;
     }
 
-    handleCreate (path, content, grant) {
+    handleCreate (grant, path /* content, bulk */) {
         this.editingTarget.addResource({
             name: path,
             mime: 'text/plain',

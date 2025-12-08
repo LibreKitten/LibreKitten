@@ -27,7 +27,7 @@ class ResourceEditor extends React.Component {
         this.editingTarget = this.props.editingTarget;
     }
 
-    handleClick (element, path, grant) {
+    handleClick (grant, element, path) {
         const state = this.state;
         const i = this.editingTarget.getResourceIndexByName(path);
         if (i === -1) return false;
@@ -46,8 +46,8 @@ class ResourceEditor extends React.Component {
         grant();
     }
 
-    handleCreate (path, content, grant) {
-        this.props.onCreate(path, content, grant);
+    handleCreate (grant, path, content) {
+        this.props.onCreate(grant, path, content);
     }
 
     handleEdit (doc) {
