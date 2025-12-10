@@ -19,6 +19,7 @@ import {
     activateTab,
     BLOCKS_TAB_INDEX
 } from '../reducers/editor-tab';
+import {clearSpriteDirectories} from '../reducers/resources.js';
 
 import log from './log';
 import storage from './storage';
@@ -96,6 +97,8 @@ const ProjectFetcherHOC = function (WrappedComponent) {
             }
             if (this.props.isShowingProject && (prevProps.isLoadingProject || prevProps.isCreatingNew)) {
                 this.props.onActivateTab(BLOCKS_TAB_INDEX);
+                // lk: Clear resource directories with no files, as they are meant to be only temporary.
+                this.props.clearSpriteDirectories();
             }
         }
         fetchProject (projectId, loadingState) {
@@ -180,6 +183,7 @@ const ProjectFetcherHOC = function (WrappedComponent) {
     ProjectFetcherComponent.propTypes = {
         assetHost: PropTypes.string,
         canSave: PropTypes.bool,
+        clearSpriteDirectories: PropTypes.func,
         intl: intlShape.isRequired,
         isCreatingNew: PropTypes.bool,
         isFetchingWithId: PropTypes.bool,
@@ -217,7 +221,8 @@ const ProjectFetcherHOC = function (WrappedComponent) {
         onFetchedProjectData: (projectData, loadingState) =>
             dispatch(onFetchedProjectData(projectData, loadingState)),
         setProjectId: projectId => dispatch(setProjectId(projectId)),
-        onProjectUnchanged: () => dispatch(setProjectUnchanged())
+        onProjectUnchanged: () => dispatch(setProjectUnchanged()),
+        clearSpriteDirectories: () => dispatch(clearSpriteDirectories())
     });
     // Allow incoming props to override redux-provided props. Used to mock in tests.
     const mergeProps = (stateProps, dispatchProps, ownProps) => Object.assign(

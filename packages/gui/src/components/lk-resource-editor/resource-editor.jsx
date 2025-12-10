@@ -14,9 +14,10 @@ class ResourceEditor extends React.Component {
     constructor (props) {
         super(props);
         bindAll(this, [
-            'handleClick',
-            'handleCreate',
-            'handleEdit'
+            'handleDirClick',
+            'handleDirToggle',
+            'handleFileClick',
+            'handleFileEdit'
         ]);
 
         this.state = {
@@ -27,7 +28,15 @@ class ResourceEditor extends React.Component {
         this.editingTarget = this.props.editingTarget;
     }
 
-    handleClick (grant, element, path) {
+    handleDirClick (grant /* path */) {
+        grant();
+    }
+
+    handleDirToggle (grant /* path */) {
+        grant();
+    }
+
+    handleFileClick (grant, element, path) {
         const state = this.state;
         const i = this.editingTarget.getResourceIndexByName(path);
         if (i === -1) return false;
@@ -46,25 +55,33 @@ class ResourceEditor extends React.Component {
         grant();
     }
 
-    handleCreate (grant, path, content) {
-        this.props.onCreate(grant, path, content);
-    }
-
-    handleEdit (doc) {
-        this.props.onEdit(doc, this.state.openedResourceI);
+    handleFileEdit (doc) {
+        this.props.onFileEdit(doc, this.state.openedResourceI);
     }
 
     render () {
         return (
             <div className={styles.flexWrapper}>
                 <FileTree
-                    onClick={this.handleClick}
-                    onCreate={this.handleCreate}
+                    onDirClick={this.handleDirClick}
+                    onDirCreate={this.props.onDirCreate}
+                    onDirDelete={this.props.onDirDelete}
+                    onDirMove={this.props.onDirMove}
+                    onDirRename={this.props.onDirRename}
+                    onDirToggle={this.handleDirToggle}
+
+                    onFileClick={this.handleFileClick}
+                    onFileCreate={this.props.onFileCreate}
+                    onFileDelete={this.props.onFileDelete}
+                    onFileMove={this.props.onFileMove}
+                    onFileRename={this.props.onFileRename}
+
                     resources={this.state.resources}
+                    directories={this.props.directories}
                 />
                 <TextEditor
                     content={this.state.openedResourceText}
-                    onEdit={this.handleEdit}
+                    onEdit={this.handleFileEdit}
                 />
             </div>
         );
@@ -73,9 +90,20 @@ class ResourceEditor extends React.Component {
 
 ResourceEditor.propTypes = {
     editingTarget: PropTypes.instanceOf(RenderedTarget),
-    onCreate: PropTypes.func,
-    onEdit: PropTypes.func,
-    resources: PropTypes.array
+
+    onDirCreate: PropTypes.func,
+    onDirDelete: PropTypes.func,
+    onDirMove: PropTypes.func,
+    onDirRename: PropTypes.func,
+
+    onFileCreate: PropTypes.func,
+    onFileDelete: PropTypes.func,
+    onFileEdit: PropTypes.func,
+    onFileMove: PropTypes.func,
+    onFileRename: PropTypes.func,
+
+    resources: PropTypes.array,
+    directories: PropTypes.array
 };
 
 export default ResourceEditor;
