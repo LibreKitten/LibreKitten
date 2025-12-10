@@ -51,6 +51,7 @@
     "webpack-dev-server": "^5.2.1"
   },
   "dependencies": {
+    "custom-file-tree": "^7.0.2",
     "js-md5": "0.7.3",
     "regenerator-runtime": "^0.14.1"
   }

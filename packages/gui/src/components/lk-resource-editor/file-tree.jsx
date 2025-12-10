@@ -5,8 +5,8 @@ import Box from '../box/box.jsx';
 
 import styles from './resource-editor.css';
 
-import '../../lib/vendor/custom-file-tree/file-tree.esm.js';
-import '../../lib/vendor/custom-file-tree/file-tree.css';
+import 'custom-file-tree';
+import 'custom-file-tree/dist/file-tree.css';
 
 class FileTree extends React.Component {
     constructor (props) {

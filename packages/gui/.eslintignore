@@ -9,5 +9,3 @@ src/addons/addons
 src/addons/libraries
 src/addons/api-libraries
 src/addons/generated
-# lk:
-src/lib/vendor
