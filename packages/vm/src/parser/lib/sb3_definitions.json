@@ -76,6 +76,27 @@
                 "name"
             ]
         },
+        "resource": {
+            "type": "object",
+            "properties": {
+                "mime": {
+                    "type": "string",
+                    "description": "The MIME type of the resource."
+                },
+                "name": {
+                    "type": "string"
+                },
+                "text": {
+                    "type": "string",
+                    "description": "The content of the resource."
+                }
+            },
+            "required": [
+                "mime",
+                "name",
+                "text"
+            ]
+        },
         "sound": {
             "type": "object",
             "properties": {
@@ -462,6 +483,11 @@
                     "type": "array",
                     "items": {"$ref":"#/definitions/costume"},
                     "minItems": 1,
+                    "uniqueItems": true
+                },
+                "resources": {
+                    "type": "array",
+                    "items": {"$ref":"#/definitions/resource"},
                     "uniqueItems": true
                 },
                 "sounds": {

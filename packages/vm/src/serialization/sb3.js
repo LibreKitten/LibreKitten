@@ -485,6 +485,20 @@ const serializeSound = function (sound) {
     return obj;
 };
 
+/**
+ * Serialize the given resource.
+ * @param {object} resource The resource to be serialized.
+ * @return {object} A serialized representation of the resource.
+ */
+const serializeResource = function (resource) {
+    const obj = Object.create(null);
+    obj.name = resource.name;
+    obj.mime = resource.mime;
+    obj.text = String(resource.text);
+
+    return obj;
+};
+
 // Using some bugs, it can be possible to get values like undefined, null, or complex objects into
 // variables or lists. This will cause make the project unusable after exporting without JSON editing
 // as it will fail validation in scratch-parser.
@@ -607,6 +621,7 @@ const serializeTarget = function (target, extensions) {
     obj.currentCostume = target.currentCostume;
     obj.costumes = target.costumes.map(serializeCostume);
     obj.sounds = target.sounds.map(serializeSound);
+    obj.resources = target.resources.map(serializeResource);
     if (Object.prototype.hasOwnProperty.call(target, 'volume')) obj.volume = target.volume;
     if (Object.prototype.hasOwnProperty.call(target, 'layerOrder')) obj.layerOrder = target.layerOrder;
     if (obj.isStage) { // Only the stage should have these properties
@@ -1091,6 +1106,7 @@ const parseScratchAssets = function (object, runtime, zip) {
 
     const assets = {
         costumePromises: null,
+        resources: null,
         soundPromises: null,
         soundBank: runtime.audioEngine && runtime.audioEngine.createBank()
     };
@@ -1154,6 +1170,12 @@ const parseScratchAssets = function (object, runtime, zip) {
         // Only attempt to load the sound after the deserialization
         // process has been completed.
     });
+    // lk: Resources from JSON. There is no need to do extra work, so these are direct objects and not promises.
+    assets.resources = (object.resources || []).map(resourceSource => ({
+        name: resourceSource.name,
+        mime: resourceSource.mime,
+        text: resourceSource.text
+    }));
 
     return assets;
 };
@@ -1203,6 +1225,8 @@ const parseScratchObject = function (object, runtime, extensions, zip, assets) {
     const {costumePromises} = assets;
     // Sounds from JSON
     const {soundBank, soundPromises} = assets;
+    // lk: Resources from JSON.
+    const {resources} = assets;
     // Create the first clone, and load its run-state from JSON.
     const target = sprite.createClone(object.isStage ? StageLayering.BACKGROUND_LAYER : StageLayering.SPRITE_LAYER);
     // Load target properties from JSON.
@@ -1333,6 +1357,9 @@ const parseScratchObject = function (object, runtime, extensions, zip, assets) {
         // Make sure if soundBank is undefined, sprite.soundBank is then null.
         sprite.soundBank = soundBank || null;
     });
+    if (typeof resources === 'object' && resources !== null) {
+        sprite.resources = resources;
+    }
     return Promise.all(costumePromises.concat(soundPromises)).then(() => target);
 };
 
