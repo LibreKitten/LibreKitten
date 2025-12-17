@@ -1184,6 +1184,82 @@ class VirtualMachine extends EventEmitter {
     }
 
     /**
+     * lk: Add a resource to the current editing target.
+     * @param {!object} resourceObject Object representing the resource.
+     * @param {string} optTargetId - the id of the target to add to, if not the editing target.
+     * @returns {?Promise} - a promise that resolves when the resource has been added
+     */
+    addResource (resourceObject, optTargetId) {
+        const target = optTargetId ? this.runtime.getTargetById(optTargetId) :
+            this.editingTarget;
+        if (target) {
+            target.addResource(resourceObject);
+            this.runtime.emitProjectChanged();
+            return Promise.resolve();
+        }
+        // If the target cannot be found by id, return a rejected promise
+        // TODO: reject with an Error (possible breaking API change!)
+        // eslint-disable-next-line prefer-promise-reject-errors
+        return Promise.reject();
+    }
+
+    /**
+     * lk: Duplicate the resource at the given index. Add it at that index + 1.
+     * @param {!int} resourceIndex Index of resource to duplicate
+     * @returns {?Promise} - a promise that resolves when the resource has been added
+     */
+    duplicateResource (resourceIndex) {
+        const originalResource = this.editingTarget.getResources()[resourceIndex];
+        const clone = Object.assign({}, originalResource);
+        
+        this.editingTarget.addResource(clone, resourceIndex + 1);
+        this.emitTargetsUpdate();
+        return Promise.resolve();
+    }
+
+    /**
+     * lk: Rename a resource on the current editing target.
+     * @param {int} resourceIndex - the index of the resource to be renamed.
+     * @param {string} newName - the desired new name of the resource (will be modified if already in use).
+     */
+    renameResource (resourceIndex, newName) {
+        this.editingTarget.renameResource(resourceIndex, newName);
+        this.emitTargetsUpdate();
+    }
+
+    /**
+     * lk: Edit a resource from the current editing target.
+     * @param {int} resourceIndex - the index of the resource to be edited.
+     * @param {int} newContents - the new contents of the resource.
+     * @throws throws if no resource was found.
+     */
+    editResource (resourceIndex, newContents) {
+        const resources = this.editingTarget.sprite.resources;
+
+        if (!resources[resourceIndex]) throw new Error('Invalid resource index.');
+        this.editingTarget.sprite.resources[resourceIndex].text = newContents;
+    }
+
+    /**
+     * lk: Delete a resource from the current editing target.
+     * @param {int} resourceIndex - the index of the resource to be removed.
+     * @return {?function} A function to restore the deleted resource, or null,
+     * if no resource was deleted.
+     */
+    deleteResource (resourceIndex) {
+        const deletedResource = this.editingTarget.deleteResource(resourceIndex);
+        if (deletedResource) {
+            const target = this.editingTarget;
+            this.runtime.emitProjectChanged();
+            return () => {
+                target.addResource(deletedResource);
+                this.emitTargetsUpdate();
+            };
+        }
+        return null;
+    }
+
+    /**
      * Update a costume with the given bitmap
      * @param {!int} costumeIndex - the index of the costume to be updated.
      * @param {!ImageData} bitmap - new bitmap for the renderer.

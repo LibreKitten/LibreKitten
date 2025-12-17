@@ -39,11 +39,13 @@ class ResourceTab extends React.Component {
 
     handleDirDelete (grant, path) {
         const directories = this.props.directories;
-        const sprite = this.editingTarget.sprite;
         const spriteId = this.editingTarget.id;
         const spriteDirectories = [...directories[spriteId] ?? []];
 
-        sprite.resources = sprite.resources.filter(resource => !resource.name.startsWith(path));
+        const resources = this.editingTarget.getResources();
+        resources.forEach((resource, i) => {
+            if (resource.name.startsWith(path)) this.vm.deleteResource(i);
+        });
 
         // Clean up the lingering subdirectories.
         this.props.setSpriteDirectories(spriteId,
@@ -55,16 +57,13 @@ class ResourceTab extends React.Component {
 
     handleDirRename (grant, oldPath, newPath) {
         const directories = this.props.directories;
-        const sprite = this.editingTarget.sprite;
         const spriteId = this.editingTarget.id;
         const spriteDirectories = [...directories[spriteId] ?? []];
 
-        sprite.resources = sprite.resources.map(resource => {
+        const resources = this.editingTarget.getResources();
+        resources.forEach((resource, i) => {
             const name = resource.name;
-            const newResource = {...resource};
-            
-            if (name.startsWith(oldPath)) newResource.name = name.replace(oldPath, newPath);
-            return newResource;
+            if (name.startsWith(oldPath)) this.vm.renameResource(i, name.replace(oldPath, newPath));
         });
 
         const index = spriteDirectories.indexOf(sliceLastChar(oldPath));
@@ -81,7 +80,7 @@ class ResourceTab extends React.Component {
     }
 
     handleFileCreate (grant, path /* content, bulk */) {
-        this.editingTarget.addResource({
+        this.vm.addResource({
             name: path,
             mime: 'text/plain',
             text: ''
@@ -93,20 +92,19 @@ class ResourceTab extends React.Component {
         const resource = this.editingTarget.getResourceIndexByName(path);
         if (resource === -1) return false;
 
-        this.editingTarget.deleteResource(resource);
+        this.vm.deleteResource(resource);
         grant();
     }
 
     handleFileEdit (doc, i) {
-        const resources = this.editingTarget.sprite.resources;
-        resources[i].text = doc;
+        this.vm.editResource(i, doc);
     }
 
     handleFileRename (grant, oldPath, newPath) {
         const resource = this.editingTarget.getResourceIndexByName(oldPath);
         if (resource === -1) return false;
 
-        this.editingTarget.renameResource(resource, newPath);
+        this.vm.renameResource(resource, newPath);
         grant();
     }
 
