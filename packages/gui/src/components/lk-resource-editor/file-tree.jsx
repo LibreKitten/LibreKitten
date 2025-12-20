@@ -11,8 +11,7 @@ import 'custom-file-tree/dist/file-tree.css';
 class FileTree extends React.Component {
     constructor (props) {
         super(props);
-        this.container = React.createRef();
-        this.fileTreeEl = null;
+        this.fileTreeRef = React.createRef();
     }
 
     componentDidMount () {
@@ -25,58 +24,55 @@ class FileTree extends React.Component {
             resourceNames.push(resource.name);
         });
 
-        const container = this.container.current;
-        // We need to do this instead of createElement, because otherwise the browser will throw an error.
-        container.innerHTML = '<file-tree></file-tree>';
+        const fileTree = this.fileTreeRef.current;
 
-        this.fileTreeEl = container.querySelector('file-tree');
-        this.fileTreeEl.setContent({
+        fileTree.setContent({
             files: resourceNames,
             dirs: directories
         });
 
-        this.fileTreeEl.addEventListener(`file:click`, ({detail}) => {
+        fileTree.addEventListener(`file:click`, ({detail}) => {
             const {grant, element, path} = detail;
             this.props.onFileClick(grant, element, path);
         });
-        this.fileTreeEl.addEventListener(`file:create`, ({detail}) => {
+        fileTree.addEventListener(`file:create`, ({detail}) => {
             const {grant, path, content, bulk} = detail;
             this.props.onFileCreate(grant, path, content, bulk);
         });
-        this.fileTreeEl.addEventListener(`file:delete`, ({detail}) => {
+        fileTree.addEventListener(`file:delete`, ({detail}) => {
             const {grant, path} = detail;
             this.props.onFileDelete(grant, path);
         });
-        this.fileTreeEl.addEventListener(`file:move`, ({detail}) => {
+        fileTree.addEventListener(`file:move`, ({detail}) => {
             const {grant, oldPath, newPath} = detail;
             this.props.onFileMove(grant, oldPath, newPath);
         });
-        this.fileTreeEl.addEventListener(`file:rename`, ({detail}) => {
+        fileTree.addEventListener(`file:rename`, ({detail}) => {
             const {grant, oldPath, newPath} = detail;
             this.props.onFileRename(grant, oldPath, newPath);
         });
 
-        this.fileTreeEl.addEventListener(`dir:click`, ({detail}) => {
+        fileTree.addEventListener(`dir:click`, ({detail}) => {
             const {grant, path} = detail;
             this.props.onDirClick(grant, path);
         });
-        this.fileTreeEl.addEventListener(`dir:create`, ({detail}) => {
+        fileTree.addEventListener(`dir:create`, ({detail}) => {
             const {grant, path} = detail;
             this.props.onDirCreate(grant, path);
         });
-        this.fileTreeEl.addEventListener(`dir:delete`, ({detail}) => {
+        fileTree.addEventListener(`dir:delete`, ({detail}) => {
             const {grant, path} = detail;
             this.props.onDirDelete(grant, path);
         });
-        this.fileTreeEl.addEventListener(`dir:move`, ({detail}) => {
+        fileTree.addEventListener(`dir:move`, ({detail}) => {
             const {grant, oldPath, newPath} = detail;
             this.props.onDirMove(grant, oldPath, newPath);
         });
-        this.fileTreeEl.addEventListener(`dir:rename`, ({detail}) => {
+        fileTree.addEventListener(`dir:rename`, ({detail}) => {
             const {grant, oldPath, newPath} = detail;
             this.props.onDirRename(grant, oldPath, newPath);
         });
-        this.fileTreeEl.addEventListener(`dir:toggle`, ({detail}) => {
+        fileTree.addEventListener(`dir:toggle`, ({detail}) => {
             const {grant, path, currentState} = detail;
             this.props.onDirToggle(grant, path, currentState);
         });
@@ -89,9 +85,9 @@ class FileTree extends React.Component {
     render () {
         return (
             <Box>
-                <div
-                    className={styles.fileTree}
-                    ref={this.container}
+                <file-tree
+                    class={styles.fileTree}
+                    ref={this.fileTreeRef}
                 />
             </Box>
         );
