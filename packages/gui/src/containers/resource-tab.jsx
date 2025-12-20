@@ -42,10 +42,13 @@ class ResourceTab extends React.Component {
         const spriteId = this.editingTarget.id;
         const spriteDirectories = [...directories[spriteId] ?? []];
 
-        const resources = this.editingTarget.getResources();
-        resources.forEach((resource, i) => {
-            if (resource.name.startsWith(path)) this.vm.deleteResource(i);
-        });
+        const resources = [...this.editingTarget.getResources()];
+        for (let i = 0; i < resources.length; i++) {
+            // lk: We cannot rely on the current index, as the indexing will change as we delete items, so we have to
+            // recalculate it every time.
+            const newIndex = this.editingTarget.getResourceIndexByName(resources[i].name);
+            if (newIndex !== -1 && resources[i].name.startsWith(path)) this.vm.deleteResource(newIndex);
+        }
 
         // Clean up the lingering subdirectories.
         this.props.setSpriteDirectories(spriteId,
