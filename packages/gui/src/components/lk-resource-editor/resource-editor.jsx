@@ -61,7 +61,10 @@ class ResourceEditor extends React.Component {
 
     render () {
         return (
-            <div className={styles.flexWrapper}>
+            <div
+                className={styles.flexWrapper}
+                dir={this.props.isRtl ? 'rtl' : 'ltr'}
+            >
                 <FileTree
                     onDirClick={this.handleDirClick}
                     onDirCreate={this.props.onDirCreate}
@@ -103,7 +106,9 @@ ResourceEditor.propTypes = {
     onFileRename: PropTypes.func,
 
     resources: PropTypes.array,
-    directories: PropTypes.array
+    directories: PropTypes.array,
+
+    isRtl: PropTypes.bool
 };
 
 export default ResourceEditor;

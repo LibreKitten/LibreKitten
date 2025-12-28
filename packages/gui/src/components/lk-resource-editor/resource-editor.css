@@ -1,18 +1,30 @@
+@import "../../css/units.css";
+@import "../../css/colors.css";
+
 .flex-wrapper {
     display: flex;
     flex-direction: row;
     flex-grow: 1;
+    background: $assets-background;
+    border: 1px solid $ui-black-transparent;
+    overflow: hidden;
 }
 
-.file-tree {
-    display: block;
-    width: 15rem;
+[dir='ltr'] .flex-wrapper {
+    border-radius: $radius;
+}
+
+[dir='rtl'] .flex-wrapper {
+    border-top-left-radius: $radius;
+    border-bottom-left-radius: $radius;
 }
 
 .text-editor {
     width: 100%;
     display: flex;
     flex-direction: row;
+    border: 1px dotted transparent;
+    border-left: 1px solid $ui-black-transparent;
 }
 
 .text-editor [class~='cm-editor'] {
@@ -21,7 +33,66 @@
     flex: 1 1 0px;
 }
 
+[dir='ltr'] .text-editor [class~='cm-editor'] {
+    border-top-right-radius: calc($radius - 2px);
+    border-bottom-right-radius: calc($radius - 2px);
+}
+
+[dir='rtl'] .text-editor [class~='cm-editor'] {
+    border-top-left-radius: calc($radius - 2px);
+    border-bottom-left-radius: calc($radius - 2px);
+}
+
 .text-editor [class~='cm-editor'] [class~='cm-scroller'] {
     flex: 1 1 0px;
     overflow-y: auto;
+}
+
+.file-tree {
+    display: block;
+    width: 15rem;
+    height: 100%;
+    background: $ui-tertiary;
+    padding: 0.25rem !important;
+}
+
+.file-tree [class~='buttons'] {
+    display: inline-flex;
+    flex-direction: row;
+    gap: 0.15rem;
+}
+
+.file-tree [class~='buttons'] button {
+    background: $looks-secondary;
+    border: 0.25em transparent;
+    margin: 0.25em;
+    border-radius: 100em;
+    box-shadow: 0 0 0 0.25em $looks-transparent;
+
+    font-size: 0.75em;
+    width: 2em;
+    height: 2em;
+}
+
+.file-tree dir-entry file-entry, .file-tree dir-entry:not([path='.']) {
+    margin-top: 0.5rem;
+    &:nth-child(4) {
+        margin-top: 0.25rem;
+    }
+}
+
+.file-tree dir-entry[path='.'] [class~='icon'] {
+    display: none;
+}
+
+.file-tree entry-heading {
+    margin-right: 0.25em;
+}
+
+[dir='ltr'] .file-tree entry-heading {
+    margin-right: 0.25em;
+}
+
+[dir='rtl'] .file-tree entry-heading {
+    margin-left: 0.25em;
 }

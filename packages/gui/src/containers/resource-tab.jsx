@@ -129,6 +129,8 @@ class ResourceTab extends React.Component {
 
                 resources={this.editingTarget.sprite.resources}
                 directories={this.props.directories[this.editingTarget.id]}
+
+                isRtl={this.props.isRtl}
             />
         );
     }
@@ -136,12 +138,14 @@ class ResourceTab extends React.Component {
 
 ResourceTab.propTypes = {
     directories: PropTypes.func,
+    isRtl: PropTypes.bool,
     setSpriteDirectories: PropTypes.func,
     vm: PropTypes.instanceOf(VM)
 };
 
 const mapStateToProps = state => ({
-    directories: state.scratchGui.resources.directories
+    directories: state.scratchGui.resources.directories,
+    isRtl: state.locales.isRtl
 });
 
 const mapDispatchToProps = dispatch => ({
