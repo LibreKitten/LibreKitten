@@ -29,10 +29,11 @@ There are two ways to run the server: downloading the build and running it, or r
 2. Install Node.js and pnpm, if you haven't already.
 3. Run `pnpm install` in the terminal.
 4. Run `node /path/to/LibreKitten/packages/vm/src/server/cli.js serve /path/to/your/Project.lb 8080` in the terminal.
-### Third way:
-If you use Arch Linux, you can install the unofficial `librekitten-cli-bin` AUR package using your favourite helper. E.g.
+### Third way (if you use Arch Linux):
+1. Install the unofficial `librekitten-cli-bin` AUR package using your favourite helper.
 ```bash
 paru -S librekitten-cli-bin
 # or:
 yay -S librekitten-cli-bin
 ```
+2. Run `librekitten serve /path/to/your/Project.lb 8080` in the terminal.
