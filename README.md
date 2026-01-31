@@ -1,4 +1,4 @@
-# LibreKitten - A powerful block-based visual programming language.
+# LibreKitten - Blocks not just for the browser; say hello to the server!
 LibreKitten is an **alpha-quality** block-based visual programming language based on TurboWarp, that allows you to program more than just the browser; you can program the server. You can reach the clouds with LibreKitten!
 
 This is the source code for LibreKitten. If you want to try out LibreKitten, go to [https://librekitten.org/](https://librekitten.org/).
