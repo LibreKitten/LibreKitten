@@ -10,6 +10,8 @@ import {setFileHandle} from '../reducers/tw';
 import {getIsShowingProject} from '../reducers/project-state';
 import log from '../lib/log';
 
+import {APP_NAME} from '../lib/brand';
+
 // from sb-file-uploader-hoc.jsx
 const getProjectTitleFromFilename = fileInputFilename => {
     if (!fileInputFilename) return '';
@@ -100,9 +102,9 @@ class SB3Downloader extends React.Component {
                 suggestedName: this.props.projectFilename,
                 types: [
                     {
-                        description: 'Scratch 3 Project',
+                        description: `${APP_NAME} Project`,
                         accept: {
-                            'application/octet-stream': '.sb3'
+                            'application/octet-stream': '.lb'
                         }
                     }
                 ],
