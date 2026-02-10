@@ -53,7 +53,7 @@
     min-width: 186px;
     margin: 0;
     height: min(calc(100vh - $menu-bar-height), max-content);
-    overflow: scroll;
+    overflow-y: auto;
     border-radius: $radius;
     z-index: $z-index-menu-bar;
 }
