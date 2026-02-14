@@ -34,7 +34,8 @@ if (root.length > 0 && !root.endsWith('/')) {
 const htmlWebpackPluginCommon = {
     root: root,
     meta: JSON.parse(process.env.EXTRA_META || '{}'),
-    APP_NAME
+    APP_NAME,
+    trackerId: String(process.env.TRACKER_ID ?? '')
 };
 
 // When this changes, the path for all JS files will change, bypassing any HTTP caches
