@@ -10,7 +10,7 @@
     background: $ui-white;
     border-radius: 10rem;
     user-select: none;
-    height: $library-filter-bar-height;
+    height: $library-filter-bar-item;
 
     position: relative;
 }
@@ -103,7 +103,7 @@
 
 .filter-input {
     flex-grow: 1;
-    height: $library-filter-bar-height;
+    height: $library-filter-bar-item;
     background-color: transparent;
     -webkit-appearance: none;
     outline: none;

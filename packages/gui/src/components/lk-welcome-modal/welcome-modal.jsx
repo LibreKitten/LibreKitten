@@ -50,7 +50,7 @@ const WelcomeModalComponent = ({intl, ...props}) => {
                     <>
                         <p>
                             <FormattedMessage
-                                defaultMessage="{APP_NAME} is an alpha-quality block-based visual programming language based on TurboWarp. The primary feature is being able to function as a web server, but it is also an experimentation ground to push the limits of block-based languages."
+                                defaultMessage="{APP_NAME} is an alpha-quality block-based visual programming language based on TurboWarp, that allows you to program more than just the browser; you can program the server. You can reach the clouds with {APP_NAME}!"
                                 description="An explanation about the app."
                                 id="lk.welcomeModal.about"
                                 values={{

@@ -14,11 +14,17 @@ const autoprefixer = require('autoprefixer');
 const postcssVars = require('postcss-simple-vars');
 const postcssImport = require('postcss-import');
 
+// CSS
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const lightningcss = require('lightningcss');
+const browserslist = require('browserslist');
+
 // SWC
 const {SwcMinifyWebpackPlugin} = require('swc-minify-webpack-plugin');
 
 const STATIC_PATH = process.env.STATIC_PATH || '/static';
-const {APP_NAME} = require('./src/lib/brand');
+const {APP_NAME, DESCRIPTION} = require('./src/lib/brand');
 
 const root = process.env.ROOT || '';
 if (root.length > 0 && !root.endsWith('/')) {
@@ -28,7 +34,8 @@ if (root.length > 0 && !root.endsWith('/')) {
 const htmlWebpackPluginCommon = {
     root: root,
     meta: JSON.parse(process.env.EXTRA_META || '{}'),
-    APP_NAME
+    APP_NAME,
+    trackerId: String(process.env.TRACKER_ID ?? '')
 };
 
 // When this changes, the path for all JS files will change, bypassing any HTTP caches
@@ -55,6 +62,7 @@ const base = {
             rewrites: [
                 {from: /^\/\d+\/\/?$/, to: '/'},
                 {from: /^\/\d+\/for-contributors\/?$/, to: '/for-contributors.html'},
+                {from: /^\/\d+\/server-manual\/?$/, to: '/server-manual.html'},
                 {from: /^\/\d+\/projects\/?$/, to: '/projects.html'},
                 {from: /^\/\d+\/fullscreen\/?$/, to: '/fullscreen.html'},
                 {from: /^\/\d+\/editor\/?$/, to: '/editor.html'},
@@ -169,29 +177,29 @@ const base = {
         },
         {
             test: /\.css$/,
-            use: [{
-                loader: 'style-loader'
-            }, {
-                loader: 'css-loader',
-                options: {
-                    modules: true,
-                    importLoaders: 1,
-                    localIdentName: '[name]_[local]_[hash:base64:5]',
-                    camelCase: true
-                }
-            }, {
-                loader: 'postcss-loader',
-                options: {
-                    ident: 'postcss',
-                    plugins: function () {
-                        return [
-                            postcssImport,
-                            postcssVars,
-                            autoprefixer
-                        ];
+            use: [
+                MiniCssExtractPlugin.loader,
+                {
+                    loader: 'css-loader',
+                    options: {
+                        modules: true,
+                        importLoaders: 1,
+                        localIdentName: '[name]_[local]_[hash:base64:5]',
+                        camelCase: true
                     }
-                }
-            }]
+                }, {
+                    loader: 'postcss-loader',
+                    options: {
+                        ident: 'postcss',
+                        plugins: function () {
+                            return [
+                                postcssImport,
+                                postcssVars,
+                                autoprefixer
+                            ];
+                        }
+                    }
+                }]
         }]
     },
     plugins: [
@@ -214,7 +222,8 @@ const base = {
         }),
         new webpack.ProvidePlugin({
             Buffer: ['buffer', 'Buffer']
-        })
+        }),
+        new MiniCssExtractPlugin()
     ]
 };
 
@@ -232,6 +241,7 @@ module.exports = [
             'embed': './src/playground/embed.jsx',
             'addon-settings': './src/playground/addon-settings.jsx',
             'for-contributors': './src/playground/for-contributors/for-contributors.jsx',
+            'server-manual': './src/playground/server-manual/server-manual.jsx',
             'credits': './src/playground/credits/credits.jsx',
             'not_found': './src/playground/not_found/not_found.jsx',
             'index': './src/playground/index/index.jsx'
@@ -257,10 +267,16 @@ module.exports = [
                 new SwcMinifyWebpackPlugin({
                     compress: true,
                     mangle: true
+                }),
+                new CssMinimizerPlugin({
+                    minify: CssMinimizerPlugin.lightningCssMinify,
+                    minimizerOptions: {
+                        minify: true,
+                        targets: lightningcss.browserslistToTargets(browserslist())
+                    }
                 })
             ],
             splitChunks: {
-                chunks: 'all',
                 minChunks: 2,
                 minSize: 50000,
                 maxInitialRequests: 5
@@ -280,7 +296,8 @@ module.exports = [
                 chunks: ['editor'],
                 template: 'src/playground/player.ejs',
                 filename: 'editor.html',
-                title: `${APP_NAME} - Block-based visual programming language with server support`,
+                title: `Editor - ${APP_NAME}`,
+                description: DESCRIPTION,
                 isEditor: true,
                 ...htmlWebpackPluginCommon
             }),
@@ -288,14 +305,15 @@ module.exports = [
                 chunks: ['player'],
                 template: 'src/playground/player.ejs',
                 filename: 'projects.html',
-                title: `${APP_NAME} - Block-based visual programming language with server support`,
+                title: `Player - ${APP_NAME}`,
+                description: DESCRIPTION,
                 ...htmlWebpackPluginCommon
             }),
             new HtmlWebpackPlugin({
                 chunks: ['fullscreen'],
                 template: 'src/playground/player.ejs',
                 filename: 'fullscreen.html',
-                title: `${APP_NAME} - Block-based visual programming language with server support`,
+                title: `Editor - ${APP_NAME}`,
                 ...htmlWebpackPluginCommon
             }),
             new HtmlWebpackPlugin({
@@ -320,6 +338,16 @@ module.exports = [
                 ...htmlWebpackPluginCommon
             }),
             new HtmlWebpackPlugin({
+                chunks: ['server-manual'],
+                template: 'src/playground/simple.ejs',
+                filename: 'server-manual.html',
+                title: `How to Setup a ${APP_NAME} Web Server - ${APP_NAME}`,
+                description:
+                    `Ever wanted to write a website or API with ${APP_NAME}? Then you have found the right place! ` +
+                    'We will show you how to do just that.',
+                ...htmlWebpackPluginCommon
+            }),
+            new HtmlWebpackPlugin({
                 chunks: ['credits'],
                 template: 'src/playground/simple.ejs',
                 filename: 'credits.html',
@@ -338,7 +366,10 @@ module.exports = [
                 chunks: ['index'],
                 template: 'src/playground/simple.ejs',
                 filename: 'index.html',
-                title: `Home - ${APP_NAME}`,
+                title: `Blocks not just for the browser; say hello to the server! - ${APP_NAME}`,
+                description:
+                    `${APP_NAME} is a block-based coding language in alpha, that allows you to program more than ` +
+                    `just the browser; you can program the server. You can reach the clouds with ${APP_NAME}!`,
                 noSplash: true,
                 ...htmlWebpackPluginCommon
             }),

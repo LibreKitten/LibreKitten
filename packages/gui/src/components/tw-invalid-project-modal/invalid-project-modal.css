@@ -23,7 +23,7 @@
     box-sizing: border-box;
     resize: vertical;
     padding: $space;
-    border-radius: $space;
+    border-radius: $radius;
     border: 1px solid $ui-black-transparent;
     background-color: $input-background;
     color: inherit;

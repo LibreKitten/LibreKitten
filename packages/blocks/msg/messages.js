@@ -283,6 +283,9 @@ Blockly.Msg.SENSING_TOUCHINGCOLOR = 'touching color %1?';
 Blockly.Msg.SENSING_COLORISTOUCHINGCOLOR = 'color %1 is touching %2?';
 Blockly.Msg.SENSING_DISTANCETO = 'distance to %1';
 Blockly.Msg.SENSING_DISTANCETO_POINTER = 'mouse-pointer';
+Blockly.Msg.SENSING_STAGESIZE = 'stage %1';
+Blockly.Msg.SENSING_STAGESIZE_WIDTH = 'width';
+Blockly.Msg.SENSING_STAGESIZE_HEIGHT = 'height';
 Blockly.Msg.SENSING_ASKANDWAIT = 'ask %1 and wait';
 Blockly.Msg.SENSING_ASK_TEXT = 'What\'s your name?';
 Blockly.Msg.SENSING_ANSWER = 'answer';
@@ -321,6 +324,7 @@ Blockly.Msg.SENSING_DELTATIME = 'delta time';
 Blockly.Msg.SENSING_USERNAME = 'username';
 Blockly.Msg.SENSING_USERID = 'user id';
 // Sensing blocks tooltips
+Blockly.Msg.SENSING_STAGESIZE_TOOLTIP = 'This block reports the width or height of the stage in pixels, depending on the option selected.'
 Blockly.Msg.SENSING_DELTATIME_TOOLTIP =
     "This block reports the seconds elasped since the last frame. It is useful for things such as " +
     "making a sprite move at the same speed, even with different refresh rates. For example, you can " +

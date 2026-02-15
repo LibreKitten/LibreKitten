@@ -522,6 +522,7 @@ const sensing = function (isInitialSetup, isStage, targetId, colors) {
                     <shadow type="sensing_distancetomenu"/>
                 </value>
             </block>
+            <block type="sensing_stagesize"/>
             ${blockSeparator}
         `}
         ${isInitialSetup ? '' : `

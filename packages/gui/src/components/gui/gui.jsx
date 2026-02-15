@@ -57,7 +57,7 @@ import costumesIcon from '!../../lib/tw-recolor/build!./icon--costumes.svg';
 import soundsIcon from '!../../lib/tw-recolor/build!./icon--sounds.svg';
 import WelcomeModal from '../../containers/lk-welcome-modal.jsx';
 
-import {styleResets} from '../../css/lk-style-resets.css';
+import styleResets from '../../css/lk-style-resets.css';
 
 const messages = defineMessages({
     addExtension: {
@@ -237,7 +237,7 @@ const GUIComponent = props => {
             </React.Fragment>
         ) : (
             <Box
-                className={classNames(styles.pageWrapper, styleResets)}
+                className={classNames(styles.pageWrapper, Object.values(styleResets).concat(' '))}
                 dir={isRtl ? 'rtl' : 'ltr'}
                 style={{
                     minWidth: 1024 + Math.max(0, customStageSize.width - 480),

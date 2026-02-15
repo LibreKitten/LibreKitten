@@ -16,6 +16,7 @@
 	"settings": {
 		"files.associations": {
 			"*.css": "scss"
-		}
+		},
+		"liveServer.settings.multiRootWorkspaceName": "LibreKitten-monorepo"
 	}
 }

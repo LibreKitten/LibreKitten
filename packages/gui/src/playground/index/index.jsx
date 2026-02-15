@@ -20,6 +20,8 @@ import Vision from '../components/vision/vision.tsx';
 applyGuiColors(detectTheme());
 document.documentElement.lang = 'en';
 
+const MOTTO = 'Blocks not just for the browser; say hello to the server!';
+
 const Index = () => (
     <>
         <Header />
@@ -39,28 +41,51 @@ const Index = () => (
             </div>
             <header className={styles.headerContainer}>
                 <h1 className={styles.headerText}>
-                    {process.env.CANARY_MODE ?
-                        'LibreKitten (Canary Build)' :
-                        'LibreKitten - A powerful block-based visual programming language.'}
+                    {`LibreKitten - ${MOTTO}`}
                 </h1>
-                {process.env.CANARY_MODE && <p>
-                    <strong>Please do not write serious projects in the canary build.</strong> Features that you
-                    are using may be removed, your project may get corrupted, among other things that may happen. <a href="https://librekitten.org/">
-                        Click here to go to stable LibreKitten.
-                    </a>
-                </p>}
+                {process.env.CANARY_MODE && <>
+                    <p>
+                        <strong>You are using the canary build.</strong> Please do not write serious projects in the
+                        canary build. Features that you are using may be removed, your project may get corrupted, among
+                        other things that may happen. <a href="https://librekitten.org/">
+                            Click here to go to stable LibreKitten.
+                        </a>
+                    </p>
+                    <div className={styles.canaryWarningBorder} />
+                </>}
+                {/* lk: Keep this in sync with "DESCRIPTION" in "src/lib/brand.js" */}
                 <p>
                     LibreKitten is an <strong>alpha-quality</strong> block-based visual programming language based
-                    on <a href="https://turbowarp.org/">TurboWarp</a>. The primary feature is being able to function as a web server, but it is
-                    also an experimentation ground to push the limits of block-based languages.
+                    on <a href="https://turbowarp.org/">TurboWarp</a>, that allows you to program more than just the
+                    browser; <em>you can program the server.</em> You can reach the clouds with LibreKitten!
                 </p>
-                <a
-                    href="/editor.html"
-                    className={styles.headerButton}
-                >
-                    Try now!
-                </a>
+                <p className={styles.headerOptionsText}>
+                    What do you want to do today: make an app, or make a website/API?
+                </p>
+                <div className={styles.headerOptions}>
+                    <a
+                        href="/editor.html"
+                        className={styles.headerButton}
+                    >
+                        Code an App
+                    </a>
+                    <a
+                        href="/editor.html?extension=server"
+                        className={styles.headerButton}
+                    >
+                        Code a Server
+                    </a>
+                </div>
             </header>
+            <section id="server">
+                <h2>Write a website with blocks!</h2>
+                <p>
+                    Using LibreKitten, you can build websites and APIs that can run on any Node.js-capable server.
+                    This can be useful for many things, such as learning how to make websites in a simple environment,
+                    building hobby projects in a simpler and easier programming language, prototyping your dream app
+                    without worrying about missing semicolons, and much more!
+                </p>
+            </section>
             <section id="prototype">
                 <h2>Zoooooom! Quickly build something.</h2>
                 <p>
@@ -93,13 +118,16 @@ const Index = () => (
                 <Vision />
             </section>
             <section id="license">
-                <h2>LibreKitten is free software.</h2>
-                <p>The LibreKitten editor is licensed under the GNU General Public License v3.</p>
+                <h2>Truly free software; no open-core!</h2>
+                <p>
+                    The LibreKitten editor is licensed under the GNU General Public License v3; and the runtime
+                    is licensed under the Mozilla Public License v2.0.
+                </p>
                 <div className={classNames(styles.buttonContainer, myStyles.buttonContainer)}>
                     <a
                         href="/LICENSE.txt"
                         className={styles.button}
-                    >View</a>
+                    >View the editor&apos;s license</a>
                 </div>
             </section>
             <Footer />

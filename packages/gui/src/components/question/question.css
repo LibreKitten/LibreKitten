@@ -5,7 +5,7 @@
 .question-container {
     margin: $space;
     border: 1px solid $ui-black-transparent-default;
-    border-radius: $space;
+    border-radius: $radius;
     border-width: 2px;
     padding: 1rem;
     background: white;

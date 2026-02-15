@@ -42,7 +42,7 @@ steps:
       # Run build stage
       - pnpm install --frozen-lockfile
       - pnpm run prepublish
-      - NODE_ENV=production CANARY_MODE=true pnpm run gui-ci-build
+      - NODE_ENV=production CANARY_MODE=true TRACKER_ID="a54bbad3-cbe0-4ed8-9654-3bd855e29a69" pnpm run gui-ci-build
 
   - name: push
     when:

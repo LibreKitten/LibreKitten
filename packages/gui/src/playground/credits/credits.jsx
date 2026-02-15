@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import render from '../app-target';
 import styles from '../../css/info-page.css';
+import myStyles from './credits.css';
 
 import 'modern-normalize/modern-normalize.css';
 import '../load-fonts.css';
@@ -25,16 +26,16 @@ const User = ({image, text, href}) => (
         href={href}
         target="_blank"
         rel="noreferrer"
-        className={styles.user}
+        className={myStyles.user}
     >
         <img
             loading="lazy"
-            className={styles.userImage}
+            className={myStyles.userImage}
             src={image}
             width="60"
             height="60"
         />
-        <div className={styles.userInfo}>
+        <div className={myStyles.userInfo}>
             {text}
         </div>
     </a>
@@ -46,7 +47,7 @@ User.propTypes = {
 };
 
 const UserList = ({users}) => (
-    <div className={styles.users}>
+    <div className={myStyles.users}>
         {users.map((data, index) => (
             <User
                 key={index}

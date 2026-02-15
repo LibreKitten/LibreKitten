@@ -44,7 +44,7 @@ import {loadServiceWorker} from './load-service-worker';
 import runAddons from '../addons/entry';
 import InvalidEmbed from '../components/tw-invalid-embed/invalid-embed.jsx';
 import Footer from '../components/lk-footer/footer.jsx';
-import {APP_NAME} from '../lib/brand.js';
+import {APP_NAME, DESCRIPTION} from '../lib/brand.js';
 
 import styles from './interface.css';
 
@@ -59,7 +59,7 @@ const handleClickAddonSettings = addonId => {
 
 const messages = defineMessages({
     defaultTitle: {
-        defaultMessage: 'Block-based visual programming language with server support',
+        defaultMessage: 'Editor',
         description: 'Title of homepage',
         id: 'lk.guiDefaultTitle'
     }
@@ -96,7 +96,7 @@ class Interface extends React.Component {
     }
     handleUpdateProjectTitle (title, isDefault) {
         if (isDefault || !title) {
-            document.title = `${APP_NAME} - ${this.props.intl.formatMessage(messages.defaultTitle)}`;
+            document.title = `${this.props.intl.formatMessage(messages.defaultTitle)} - ${APP_NAME}`;
         } else {
             document.title = `${title} - ${APP_NAME}`;
         }
@@ -255,17 +255,7 @@ class Interface extends React.Component {
                                 </div>
                             ) : null}
                             <div className={styles.section}>
-                                <p>
-                                    <FormattedMessage
-                                        // eslint-disable-next-line max-len
-                                        defaultMessage='{APP_NAME} is a TurboWarp mod that adds some cool blocks and features to TurboWarp. Try it out by pressing "See inside"!'
-                                        description="Description of TurboWarp on the homepage"
-                                        id="tw.home.description"
-                                        values={{
-                                            APP_NAME
-                                        }}
-                                    />
-                                </p>
+                                <p>{DESCRIPTION}</p>
                             </div>
                             <div className={styles.section}>
                                 <FeaturedProjects studio="27205657" />

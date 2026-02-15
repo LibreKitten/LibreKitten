@@ -450,6 +450,10 @@ class JSGenerator {
             return 'daysSince2000()';
         case InputOpcode.SENSING_DELTA_TIME:
             return 'runtime.deltaTime';
+        case InputOpcode.SENSING_STAGE_SIZE_WIDTH:
+            return 'runtime.stageWidth';
+        case InputOpcode.SENSING_STAGE_SIZE_HEIGHT:
+            return 'runtime.stageHeight';
         case InputOpcode.SENSING_DISTANCE:
             // TODO: on stages, this can be computed at compile time
             return `distance(${this.descendInput(node.target)})`;

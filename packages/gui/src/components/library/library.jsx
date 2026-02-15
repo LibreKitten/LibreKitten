@@ -2,13 +2,13 @@ import classNames from 'classnames';
 import bindAll from 'lodash.bindall';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {defineMessages, injectIntl, intlShape} from 'react-intl';
+import {defineMessages, FormattedMessage, injectIntl, intlShape} from 'react-intl';
 
 import LibraryItem from '../../containers/library-item.jsx';
 import Modal from '../../containers/modal.jsx';
-import Divider from '../divider/divider.jsx';
 import Filter from '../filter/filter.jsx';
 import TagButton from '../../containers/tag-button.jsx';
+import FancyCheckbox from '../tw-fancy-checkbox/checkbox.jsx';
 import Spinner from '../spinner/spinner.jsx';
 import Separator from '../tw-extension-separator/separator.jsx';
 import RemovedTrademarks from '../tw-removed-trademarks/removed-trademarks.jsx';
@@ -29,8 +29,35 @@ const messages = defineMessages({
     }
 });
 
-const ALL_TAG = {tag: 'all', intlLabel: messages.allTag};
-const tagListPrefix = [ALL_TAG];
+const NarrowDownTag = ({
+    intlLabel,
+    onChange,
+    tag
+}) => (
+    <label className={styles.label}>
+        <FancyCheckbox
+            className={styles.checkbox}
+            onChange={e => onChange(e, tag)} // eslint-disable-line react/jsx-no-bind
+        />
+        {typeof intlLabel === 'string' ? intlLabel : (
+            <FormattedMessage {...intlLabel} />
+        )}
+    </label>
+);
+
+NarrowDownTag.propTypes = {
+    active: PropTypes.bool,
+    intlLabel: PropTypes.oneOfType([
+        PropTypes.shape({
+            defaultMessage: PropTypes.string,
+            description: PropTypes.string,
+            id: PropTypes.string
+        }),
+        PropTypes.string
+    ]).isRequired,
+    onChange: PropTypes.func.isRequired,
+    tag: PropTypes.string.isRequired
+};
 
 class LibraryComponent extends React.Component {
     constructor (props) {
@@ -44,14 +71,14 @@ class LibraryComponent extends React.Component {
             'handlePlayingEnd',
             'handleSelect',
             'handleFavorite',
-            'handleTagClick',
+            'handleTagChange',
             'setFilteredDataRef'
         ]);
         const favorites = this.readFavoritesFromStorage();
         this.state = {
             playingItem: null,
             filterQuery: '',
-            selectedTag: ALL_TAG.tag,
+            selectedTags: [],
             canDisplay: false,
             favorites,
             initialFavorites: favorites
@@ -69,7 +96,7 @@ class LibraryComponent extends React.Component {
     }
     componentDidUpdate (prevProps, prevState) {
         if (prevState.filterQuery !== this.state.filterQuery ||
-            prevState.selectedTag !== this.state.selectedTag) {
+            prevState.selectedTags !== this.state.selectedTags) {
             this.scrollToTop();
         }
 
@@ -114,18 +141,20 @@ class LibraryComponent extends React.Component {
     handleClose () {
         this.props.onRequestClose();
     }
-    handleTagClick (tag) {
+    handleTagChange (e, tag) {
+        const newSelection = e.currentTarget.checked ?
+            [...this.state.selectedTags, tag.toLowerCase()] :
+            this.state.selectedTags.filter(selected => selected !== tag.toLowerCase());
+
         if (this.state.playingItem === null) {
             this.setState({
-                filterQuery: '',
-                selectedTag: tag.toLowerCase()
+                selectedTags: newSelection
             });
         } else {
             this.props.onItemMouseLeave(this.getFilteredData()[[this.state.playingItem]]);
             this.setState({
-                filterQuery: '',
                 playingItem: null,
-                selectedTag: tag.toLowerCase()
+                selectedTags: newSelection
             });
         }
     }
@@ -156,15 +185,13 @@ class LibraryComponent extends React.Component {
     handleFilterChange (event) {
         if (this.state.playingItem === null) {
             this.setState({
-                filterQuery: event.target.value,
-                selectedTag: ALL_TAG.tag
+                filterQuery: event.target.value
             });
         } else {
             this.props.onItemMouseLeave(this.getFilteredData()[[this.state.playingItem]]);
             this.setState({
                 filterQuery: event.target.value,
-                playingItem: null,
-                selectedTag: ALL_TAG.tag
+                playingItem: null
             });
         }
     }
@@ -173,7 +200,7 @@ class LibraryComponent extends React.Component {
     }
     getFilteredData () {
         // When no filtering, favorites get their own section
-        if (this.state.selectedTag === 'all' && !this.state.filterQuery) {
+        if (this.state.selectedTags.length === 0 && !this.state.filterQuery) {
             const favoriteItems = this.props.data
                 .filter(dataItem => (
                     this.state.initialFavorites.includes(dataItem[this.props.persistableKey])
@@ -208,11 +235,14 @@ class LibraryComponent extends React.Component {
 
         let filteredItems = favoriteItems.concat(nonFavoriteItems);
 
-        if (this.state.selectedTag !== 'all') {
-            filteredItems = filteredItems.filter(dataItem => (
-                dataItem.tags &&
-                dataItem.tags.map(i => i.toLowerCase()).includes(this.state.selectedTag)
-            ));
+        if (this.state.selectedTags.length !== 0) {
+            filteredItems = filteredItems.filter(dataItem => {
+                const itemTags = dataItem.tags.map(i => i.toLowerCase());
+                return (
+                    dataItem.tags &&
+                    this.state.selectedTags.every(tag => itemTags.includes(tag))
+                );
+            });
         }
 
         if (this.state.filterQuery) {
@@ -255,104 +285,105 @@ class LibraryComponent extends React.Component {
                 id={this.props.id}
                 onRequestClose={this.handleClose}
             >
-                {(this.props.filterable || this.props.tags) && (
-                    <div className={styles.filterBar}>
-                        {this.props.filterable && (
-                            <Filter
-                                className={classNames(
-                                    styles.filterBarItem,
-                                    styles.filter
-                                )}
-                                filterQuery={this.state.filterQuery}
-                                inputClassName={styles.filterInput}
-                                placeholderText={this.props.intl.formatMessage(messages.filterPlaceholder)}
-                                onChange={this.handleFilterChange}
-                                onClear={this.handleFilterClear}
-                            />
-                        )}
-                        {this.props.filterable && this.props.tags && (
-                            <Divider className={classNames(styles.filterBarItem, styles.divider)} />
-                        )}
-                        {this.props.tags &&
-                            <div className={styles.tagWrapper}>
-                                {tagListPrefix.concat(this.props.tags).map((tagProps, id) => (
-                                    <TagButton
-                                        active={this.state.selectedTag === tagProps.tag.toLowerCase()}
-                                        className={classNames(
-                                            styles.filterBarItem,
-                                            styles.tagButton,
-                                            tagProps.className
-                                        )}
-                                        key={`tag-button-${id}`}
-                                        onClick={this.handleTagClick}
-                                        {...tagProps}
-                                    />
-                                ))}
-                            </div>
-                        }
-                    </div>
-                )}
-                <div
-                    className={classNames(styles.libraryScrollGrid, {
-                        [styles.withFilterBar]: this.props.filterable || this.props.tags
-                    })}
-                    ref={this.setFilteredDataRef}
-                >
-                    {filteredData && this.getFilteredData().map((dataItem, index) => (
-                        dataItem === '---' ? (
-                            <Separator key={index} />
-                        ) : (
-                            <LibraryItem
-                                bluetoothRequired={dataItem.bluetoothRequired}
-                                collaborator={dataItem.collaborator}
-                                description={dataItem.description}
-                                disabled={dataItem.disabled}
-                                extensionId={dataItem.extensionId}
-                                href={dataItem.href}
-                                featured={dataItem.featured}
-                                hidden={dataItem.hidden}
-                                iconMd5={dataItem.costumes ? dataItem.costumes[0].md5ext : dataItem.md5ext}
-                                iconRawURL={dataItem.rawURL}
-                                icons={dataItem.costumes}
-                                id={index}
-                                incompatibleWithScratch={dataItem.incompatibleWithScratch}
-                                favorite={this.state.favorites.includes(dataItem[this.props.persistableKey])}
-                                onFavorite={this.handleFavorite}
-                                insetIconURL={dataItem.insetIconURL}
-                                internetConnectionRequired={dataItem.internetConnectionRequired}
-                                isPlaying={this.state.playingItem === index}
-                                key={dataItem.key || (
-                                    typeof dataItem.name === 'string' ?
-                                        dataItem.name :
-                                        dataItem.rawURL
-                                )}
-                                name={dataItem.name}
-                                credits={dataItem.credits}
-                                samples={dataItem.samples}
-                                docsURI={dataItem.docsURI}
-                                showPlayButton={this.props.showPlayButton}
-                                onMouseEnter={this.handleMouseEnter}
-                                onMouseLeave={this.handleMouseLeave}
-                                onSelect={this.handleSelect}
-                            />
-                        )
-                    ))}
-                    {filteredData && this.props.removedTrademarks && (
-                        <React.Fragment>
-                            {filteredData.length > 0 && (
-                                <Separator />
+                <div className={styles.libraryContainer}>
+                    {(this.props.filterable || this.props.tags) && (
+                        <div className={styles.filterBar}>
+                            {this.props.filterable && (
+                                <Filter
+                                    className={classNames(
+                                        styles.filterBarItem,
+                                        styles.filter
+                                    )}
+                                    filterQuery={this.state.filterQuery}
+                                    inputClassName={styles.filterInput}
+                                    placeholderText={this.props.intl.formatMessage(messages.filterPlaceholder)}
+                                    onChange={this.handleFilterChange}
+                                    onClear={this.handleFilterClear}
+                                />
                             )}
-                            <RemovedTrademarks />
-                        </React.Fragment>
-                    )}
-                    {!filteredData && (
-                        <div className={styles.spinnerWrapper}>
-                            <Spinner
-                                large
-                                level="primary"
-                            />
+                            {this.props.filterable && this.props.tags && (
+                                <div className={styles.divider} />
+                            )}
+                            {this.props.tags &&
+                                <div className={styles.tagWrapper}>
+                                    {this.props.tags.map((tagProps, id) => (
+                                        <NarrowDownTag
+                                            /* className={classNames(
+                                                styles.filterBarItem,
+                                                styles.tagButton,
+                                                tagProps.className
+                                            )} */
+                                            key={`narrow-down-${id}`}
+                                            onChange={this.handleTagChange}
+                                            {...tagProps}
+                                        />
+                                    ))}
+                                </div>
+                            }
                         </div>
                     )}
+                    <div
+                        className={classNames(styles.libraryScrollGrid, {
+                            [styles.withFilterBar]: this.props.filterable || this.props.tags
+                        })}
+                        ref={this.setFilteredDataRef}
+                    >
+                        {filteredData && this.getFilteredData().map((dataItem, index) => (
+                            dataItem === '---' ? (
+                                <Separator key={index} />
+                            ) : (
+                                <LibraryItem
+                                    bluetoothRequired={dataItem.bluetoothRequired}
+                                    collaborator={dataItem.collaborator}
+                                    description={dataItem.description}
+                                    disabled={dataItem.disabled}
+                                    extensionId={dataItem.extensionId}
+                                    href={dataItem.href}
+                                    featured={dataItem.featured}
+                                    hidden={dataItem.hidden}
+                                    iconMd5={dataItem.costumes ? dataItem.costumes[0].md5ext : dataItem.md5ext}
+                                    iconRawURL={dataItem.rawURL}
+                                    icons={dataItem.costumes}
+                                    id={index}
+                                    incompatibleWithScratch={dataItem.incompatibleWithScratch}
+                                    favorite={this.state.favorites.includes(dataItem[this.props.persistableKey])}
+                                    onFavorite={this.handleFavorite}
+                                    insetIconURL={dataItem.insetIconURL}
+                                    internetConnectionRequired={dataItem.internetConnectionRequired}
+                                    isPlaying={this.state.playingItem === index}
+                                    key={dataItem.key || (
+                                        typeof dataItem.name === 'string' ?
+                                            dataItem.name :
+                                            dataItem.rawURL
+                                    )}
+                                    name={dataItem.name}
+                                    credits={dataItem.credits}
+                                    samples={dataItem.samples}
+                                    docsURI={dataItem.docsURI}
+                                    showPlayButton={this.props.showPlayButton}
+                                    onMouseEnter={this.handleMouseEnter}
+                                    onMouseLeave={this.handleMouseLeave}
+                                    onSelect={this.handleSelect}
+                                />
+                            )
+                        ))}
+                        {filteredData && this.props.removedTrademarks && (
+                            <React.Fragment>
+                                {filteredData.length > 0 && (
+                                    <Separator />
+                                )}
+                                <RemovedTrademarks />
+                            </React.Fragment>
+                        )}
+                        {!filteredData && (
+                            <div className={styles.spinnerWrapper}>
+                                <Spinner
+                                    large
+                                    level="primary"
+                                />
+                            </div>
+                        )}
+                    </div>
                 </div>
             </Modal>
         );

@@ -50,7 +50,7 @@ class TurboWarpBlocks {
                     }),
                     tooltip: formatMessage({
                         id: 'tw.blockTooltip.checkDarkMode',
-                        default: 'I check if the system-wide dark mode is on.',
+                        default: 'This block checks if the system-wide dark mode is on.',
                         description: 'Tooltip for a block that returns if the system dark mode is on.'
                     }),
                     blockType: BlockType.BOOLEAN
@@ -277,7 +277,7 @@ class TurboWarpBlocks {
                     tooltip: formatMessage({
                         id: 'tw.blockTooltip.comment',
                         // eslint-disable-next-line max-len
-                        default: 'I am a note about the code below me for people to read. I don\'t have any other purpose.',
+                        default: 'This block is a note about the code below it for people to read. This block does not have any other purpose.',
                         description: 'Tooltip for a block that is a comment.'
                     }),
                     blockType: BlockType.COMMAND,
@@ -298,7 +298,7 @@ class TurboWarpBlocks {
                     tooltip: formatMessage({
                         id: 'tw.blockTooltip.commentCBlock',
                         // eslint-disable-next-line max-len
-                        default: 'I am a note about the code inside me for people to read. I run the code inside me every time.',
+                        default: 'This block is a note about the code inside it for people to read. It runs the code inside itself every time.',
                         description: 'Tooltip for a block that is a comment.'
                     }),
                     blockType: BlockType.CONDITIONAL,
@@ -318,7 +318,7 @@ class TurboWarpBlocks {
                     }),
                     tooltip: formatMessage({
                         id: 'tw.blockTooltip.noOpCBlock',
-                        default: 'I make the code inside me not run.',
+                        default: 'This block makes the code inside it not run.',
                         description: 'Tooltip for a block that is no-op.'
                     }),
                     blockType: BlockType.CONDITIONAL
@@ -333,7 +333,7 @@ class TurboWarpBlocks {
                     }),
                     tooltip: formatMessage({
                         id: 'tw.blockTooltip.renderMarkdown',
-                        default: 'I convert Markdown to HTML.',
+                        default: 'This block converts Markdown to HTML.',
                         description: 'Tooltip for a block that renders Markdown to HTML.'
                     }),
                     blockType: BlockType.REPORTER,
@@ -354,7 +354,7 @@ class TurboWarpBlocks {
                     tooltip: formatMessage({
                         id: 'tw.blockTooltip.sanitizeXML',
                         // eslint-disable-next-line max-len
-                        default: 'I neutralize XML/SGML-like markup with JavaScript (HTML, SVG, and etc.) by stripping out JavaScript. Useful for security.',
+                        default: 'This block cleans XML/SGML-like markup with JavaScript (HTML, SVG, and etc.) by stripping out JavaScript. This is useful for security.',
                         description: 'Tooltip for a block that sanitizes JavaScript out of XML.'
                     }),
                     blockType: BlockType.REPORTER,
@@ -375,7 +375,7 @@ class TurboWarpBlocks {
                     tooltip: formatMessage({
                         id: 'tw.blockTooltip.escapeXML',
                         // eslint-disable-next-line max-len
-                        default: 'I neutralize XML/SGML-like markup (HTML, XML, and etc.) by converting the unsafe characters to the equivelant character entity references. Useful for security.',
+                        default: 'This block cleans XML/SGML-like markup (HTML, XML, and etc.) by converting the unsafe characters to the equivelant safe replacements. This is useful for security.',
                         description: 'Tooltip for a block that converts XML to text.'
                     }),
                     blockType: BlockType.REPORTER,

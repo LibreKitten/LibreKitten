@@ -23,7 +23,7 @@
     outline: none;
     border: 4px solid $ui-white-transparent;
     padding: 0;
-    border-radius: $space;
+    border-radius: $radius;
     user-select: none;
     box-sizing: content-box;
 

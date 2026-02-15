@@ -10,7 +10,7 @@
     */
     display: block;
 
-    border-radius: $space;
+    border-radius: $radius;
     border: $stage-standard-border-width solid $ui-black-transparent;
     overflow: hidden;
 

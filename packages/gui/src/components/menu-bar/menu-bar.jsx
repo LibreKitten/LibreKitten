@@ -723,14 +723,23 @@ class MenuBar extends React.Component {
                                         {this.props.onClickPackager && (
                                             <MenuSection>
                                                 <MenuItem
-                                                    onClick={this.handleClickPackager}
+                                                    // lk: This is disabled because we don't currently have a packager.
+                                                    className={styles.disabled}
+                                                    disabled
                                                 >
                                                     <FormattedMessage
+                                                        defaultMessage="Packaging is currently not supported"
+                                                        description="Message that packaging is currently not supported."
+                                                        id="lk.menuBar.packagingNotSupported"
+                                                    />
+                                                    {/* eslint-disable max-len */
+                                                    /* <FormattedMessage
                                                         defaultMessage="Package project"
                                                         // eslint-disable-next-line max-len
                                                         description="Menu bar item to open the current project in the packager"
                                                         id="tw.menuBar.package"
-                                                    />
+                                                    /> */
+                                                    /* eslint-enable max-len */}
                                                 </MenuItem>
                                             </MenuSection>
                                         )}

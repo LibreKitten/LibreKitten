@@ -157,6 +157,32 @@ Blockly.Blocks['sensing_distancetomenu'] = {
   }
 };
 
+Blockly.Blocks['sensing_stagesize'] = {
+  /**
+   * Block to report the stage width or height
+   * @this Blockly.Block
+   */
+  init: function() {
+    this.jsonInit({
+      "message0": Blockly.Msg.SENSING_STAGESIZE,
+      "args0": [
+        {
+          "type": "field_dropdown",
+          "name": "SIDE",
+          "options": [
+            [Blockly.Msg.SENSING_STAGESIZE_WIDTH, 'width'],
+            [Blockly.Msg.SENSING_STAGESIZE_HEIGHT, 'height']
+          ]
+        }
+      ],
+      "category": Blockly.Categories.sensing,
+      "checkboxInFlyout": true,
+      "tooltip": Blockly.Msg.SENSING_STAGESIZE_TOOLTIP,
+      "extensions": ["colours_sensing", "output_number"]
+    });
+  }
+};
+
 Blockly.Blocks['sensing_askandwait'] = {
   /**
    * Block to ask a question and wait

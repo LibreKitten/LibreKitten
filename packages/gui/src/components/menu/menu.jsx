@@ -5,6 +5,8 @@ import {Menubar} from 'radix-ui';
 
 import styles from './menu.css';
 
+const DividerContext = React.createContext(false);
+
 const MenuComponent = ({
     className = '',
     children,
@@ -28,20 +30,22 @@ MenuComponent.propTypes = {
 
 
 const Submenu = ({children, className, place, ...props}) => (
-    <Menubar.SubContent
-        className={classNames(
-            styles.menu,
-            styles.submenu,
-            className,
-            {
-                [styles.left]: place === 'left',
-                [styles.right]: place === 'right'
-            }
-        )}
-        {...props}
-    >
-        {children}
-    </Menubar.SubContent>
+    <DividerContext.Provider value={false}>
+        <Menubar.SubContent
+            className={classNames(
+                styles.menu,
+                styles.submenu,
+                className,
+                {
+                    [styles.left]: place === 'left',
+                    [styles.right]: place === 'right'
+                }
+            )}
+            {...props}
+        >
+            {children}
+        </Menubar.SubContent>
+    </DividerContext.Provider>
 );
 
 Submenu.propTypes = {
@@ -61,19 +65,25 @@ const menuItemComponentGenerator = ComponentToWrap => {
         className,
         expanded = false,
         ...props
-    }) => (
-        <ComponentToWrap
-            className={classNames(
-                styles.menuItem,
-                styles.hoverable,
-                className,
-                {[styles.expanded]: expanded}
-            )}
-            {...props}
-        >
-            {children}
-        </ComponentToWrap>
-    );
+    }) => {
+        const hasDivider = React.useContext(DividerContext);
+        return (
+            <ComponentToWrap
+                className={classNames(
+                    styles.menuItem,
+                    styles.hoverable,
+                    className,
+                    {
+                        [styles.expanded]: expanded,
+                        [styles.menuSection]: hasDivider
+                    }
+                )}
+                {...props}
+            >
+                {children}
+            </ComponentToWrap>
+        );
+    };
 
     Component.propTypes = {
         children: PropTypes.node,
@@ -102,13 +112,16 @@ MenuRadioItem.propTypes = {
 };
 
 const addDividerClassToFirstChild = (child, id) => (
-    child && React.cloneElement(child, {
-        className: classNames(
-            child.className,
-            {[styles.menuSection]: id === 0}
-        ),
-        key: id
-    })
+    child ? (
+        id === 0 ? (
+            <DividerContext.Provider
+                value
+                key={id}
+            >
+                {child}
+            </DividerContext.Provider>
+        ) : child
+    ) : null
 );
 
 const MenuSection = ({children}) => (

@@ -1,11 +1,13 @@
 import bindAll from 'lodash.bindall';
 import React from 'react';
 import PropTypes from 'prop-types';
+import {APP_NAME} from './brand';
 import {intlShape, injectIntl} from 'react-intl';
 import {connect} from 'react-redux';
 import log from '../lib/log';
 import sharedMessages from './shared-messages';
 import {setFileHandle, setProjectError} from '../reducers/tw';
+
 
 import {
     LoadingStates,
@@ -80,6 +82,12 @@ const SBFileUploaderHOC = function (WrappedComponent) {
                             multiple: false,
                             types: [
                                 {
+                                    description: `${APP_NAME} Project`,
+                                    accept: {
+                                        '*/*': ['.sb', '.sb2', '.sb3', '.lb']
+                                    }
+                                },
+                                {
                                     description: 'Scratch Project',
                                     accept: {
                                         // Chrome on Android tracks the MIME type of files that get downloaded and
@@ -91,7 +99,7 @@ const SBFileUploaderHOC = function (WrappedComponent) {
                                         // fault of their own.
                                         '*/*': ['.sb', '.sb2', '.sb3']
                                     }
-                                }
+                                },
                             ]
                         });
                         const file = await handle.getFile();

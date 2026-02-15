@@ -236,7 +236,7 @@
     background: $looks-secondary;
 
     border: 1px solid $looks-secondary;
-    border-bottom-left-radius: $space;
+    border-bottom-left-radius: $radius;
     box-sizing: content-box; /* To match scratch-block vertical toolbox borders */
 }
 

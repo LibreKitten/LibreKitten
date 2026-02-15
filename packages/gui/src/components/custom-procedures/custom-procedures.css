@@ -43,7 +43,7 @@
 .option-card {
     background: $ui-white;
     border: 2px solid $ui-black-transparent;
-    border-radius: $space;
+    border-radius: $radius;
     padding: calc($space * 2);
     text-align: center;
     flex-grow: 1;
