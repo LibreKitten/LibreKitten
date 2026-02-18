@@ -5,6 +5,7 @@ const createTranslate = require('./tw-l10n');
 const staticFetch = require('../util/tw-static-fetch');
 
 /* eslint-disable require-await */
+/* eslint-env node, browser */
 
 /**
  * Parse a URL object or return null.
@@ -182,7 +183,7 @@ const teardownUnsandboxedExtensionAPI = () => {
 const loadUnsandboxedExtension = (extensionURL, vm) => new Promise((resolve, reject) => {
     setupUnsandboxedExtensionAPI(vm).then(resolve);
 
-    if (typeof process === 'undefined' || vm.runtime.testing.forceBrowserMode) {
+    if (typeof process === 'undefined' || !process.versions?.node || vm.runtime.testing.forceBrowserMode) {
         const script = document.createElement('script');
         script.onerror = () => {
             reject(new Error(`Error in unsandboxed script ${extensionURL}. Check the console for more information.`));
