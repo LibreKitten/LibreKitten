@@ -185,9 +185,9 @@ class JSGenerator {
                 return `(+${this.descendInput(node.target.toType(InputType.BOOLEAN))})`;
             }
             if (node.target.isAlwaysType(InputType.NUMBER_OR_NAN)) {
-                return `(${this.descendInput(node.target)} || 0)`;
+                return `toNotNaN(${this.descendInput(node.target)})`;
             }
-            return `(+${this.descendInput(node.target)} || 0)`;
+            return `toNotNaN(+${this.descendInput(node.target)})`;
         case InputOpcode.CAST_NUMBER_OR_NAN:
             return `(+${this.descendInput(node.target)})`;
         case InputOpcode.CAST_NUMBER_INDEX:
@@ -301,6 +301,10 @@ class JSGenerator {
             const left = node.left;
             const right = node.right;
 
+            // When either operand is known to never be a number, only use string comparison to avoid all number parsing.
+            if (!left.isSometimesType(InputType.NUMBER_INTERPRETABLE) || !right.isSometimesType(InputType.NUMBER_INTERPRETABLE)) {
+                return `(${this.descendInput(left.toType(InputType.STRING))}.toLowerCase() === ${this.descendInput(right.toType(InputType.STRING))}.toLowerCase())`;
+            }
             // When both operands are known to be numbers, we can use ===
             if (left.isAlwaysType(InputType.NUMBER_INTERPRETABLE) && right.isAlwaysType(InputType.NUMBER_INTERPRETABLE)) {
                 return `(${this.descendInput(left.toType(InputType.NUMBER))} === ${this.descendInput(right.toType(InputType.NUMBER))})`;
@@ -308,10 +312,6 @@ class JSGenerator {
             // In certain conditions, we can use === when one of the operands is known to be a safe number.
             if (isSafeInputForEqualsOptimization(left, right) || isSafeInputForEqualsOptimization(right, left)) {
                 return `(${this.descendInput(left.toType(InputType.NUMBER))} === ${this.descendInput(right.toType(InputType.NUMBER))})`;
-            }
-            // When either operand is known to never be a number, only use string comparison to avoid all number parsing.
-            if (!left.isSometimesType(InputType.NUMBER_INTERPRETABLE) || !right.isSometimesType(InputType.NUMBER_INTERPRETABLE)) {
-                return `(${this.descendInput(left.toType(InputType.STRING))}.toLowerCase() === ${this.descendInput(right.toType(InputType.STRING))}.toLowerCase())`;
             }
             // No compile-time optimizations possible - use fallback method.
             return `compareEqual(${this.descendInput(left)}, ${this.descendInput(right)})`;
@@ -823,6 +823,12 @@ class JSGenerator {
             break;
         case StackOpcode.LOOKS_COSTUME_SET:
             this.source += `runtime.ext_scratch3_looks._setCostume(target, ${this.descendInput(node.costume)});\n`;
+            break;
+        case StackOpcode.LOOKS_SAY:
+            this.source += `runtime.ext_scratch3_looks._say(${this.descendInput(node.message)}, target);\n`;
+            break;
+        case StackOpcode.LOOKS_THINK:
+            this.source += `runtime.ext_scratch3_looks._think(${this.descendInput(node.message)}, target);\n`;
             break;
 
         // lk: Use one big case for all the relevant blocks.

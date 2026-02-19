@@ -311,7 +311,7 @@ class ScriptTreeGenerator {
                 return new IntermediateInput(InputOpcode.LOOKS_COSTUME_NAME, InputType.STRING);
             }
         case 'looks_size':
-            return new IntermediateInput(InputOpcode.LOOKS_SIZE_GET, InputType.NUMBER_POS);
+            return new IntermediateInput(InputOpcode.LOOKS_SIZE_GET, InputType.NUMBER_POS | InputType.NUMBER_ZERO);
 
         case 'motion_direction':
             return new IntermediateInput(InputOpcode.MOTION_DIRECTION_GET, InputType.NUMBER_REAL);
@@ -569,6 +569,7 @@ class ScriptTreeGenerator {
             }
 
             if (object.isConstant('_stage_')) {
+                // We assume that the stage always exists, so these don't need to be able to return 0.
                 switch (property) {
                 case 'background #': // fallthrough for scratch 1.0 compatibility
                 case 'backdrop #':
@@ -577,6 +578,7 @@ class ScriptTreeGenerator {
                     return new IntermediateInput(InputOpcode.SENSING_OF_BACKDROP_NAME, InputType.STRING);
                 }
             } else {
+                // If the target sprite does not exist, these may all return 0, even the costume name one.
                 switch (property) {
                 case 'x position':
                     return new IntermediateInput(InputOpcode.SENSING_OF_POS_X, InputType.NUMBER, {object});
@@ -585,11 +587,11 @@ class ScriptTreeGenerator {
                 case 'direction':
                     return new IntermediateInput(InputOpcode.SENSING_OF_DIRECTION, InputType.NUMBER_REAL, {object});
                 case 'costume #':
-                    return new IntermediateInput(InputOpcode.SENSING_OF_COSTUME_NUMBER, InputType.NUMBER_POS_INT, {object});
+                    return new IntermediateInput(InputOpcode.SENSING_OF_COSTUME_NUMBER, InputType.NUMBER_POS_INT | InputType.NUMBER_ZERO, {object});
                 case 'costume name':
-                    return new IntermediateInput(InputOpcode.SENSING_OF_COSTUME_NAME, InputType.STRING, {object});
+                    return new IntermediateInput(InputOpcode.SENSING_OF_COSTUME_NAME, InputType.STRING | InputType.NUMBER_ZERO, {object});
                 case 'size':
-                    return new IntermediateInput(InputOpcode.SENSING_OF_SIZE, InputType.NUMBER_POS, {object});
+                    return new IntermediateInput(InputOpcode.SENSING_OF_SIZE, InputType.NUMBER_POS | InputType.NUMBER_ZERO, {object});
                 }
             }
 
@@ -731,7 +733,7 @@ class ScriptTreeGenerator {
             // Dirty hack: automatically enable warp timer for this block if it uses timer
             // This fixes project that do things like "repeat until timer > 0.5"
             this.usesTimer = false;
-            const condition = this.descendInputOfBlock(block, 'CONDITION');
+            const condition = this.descendInputOfBlock(block, 'CONDITION').toType(InputType.BOOLEAN);
             const needsWarpTimer = this.usesTimer;
             return new IntermediateStackBlock(StackOpcode.CONTROL_WHILE, {
                 condition: new IntermediateInput(InputOpcode.OP_NOT, InputType.BOOLEAN, {
@@ -879,6 +881,10 @@ class ScriptTreeGenerator {
             return new IntermediateStackBlock(StackOpcode.LOOKS_BACKDROP_NEXT);
         case 'looks_nextcostume':
             return new IntermediateStackBlock(StackOpcode.LOOKS_COSTUME_NEXT);
+        case 'looks_say':
+            return new IntermediateStackBlock(StackOpcode.LOOKS_SAY, {
+                message: this.descendInputOfBlock(block, 'MESSAGE')
+            });
         case 'looks_seteffectto':
             return new IntermediateStackBlock(StackOpcode.LOOKS_EFFECT_SET, {
                 effect: block.fields.EFFECT.value.toLowerCase(),
@@ -897,6 +903,10 @@ class ScriptTreeGenerator {
         case 'looks_switchcostumeto':
             return new IntermediateStackBlock(StackOpcode.LOOKS_COSTUME_SET, {
                 costume: this.descendInputOfBlock(block, 'COSTUME', true)
+            });
+        case 'looks_think':
+            return new IntermediateStackBlock(StackOpcode.LOOKS_THINK, {
+                message: this.descendInputOfBlock(block, 'MESSAGE')
             });
 
         case 'motion_changexby':
