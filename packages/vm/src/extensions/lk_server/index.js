@@ -34,8 +34,9 @@ class Server {
          * @type {Runtime}
          */
         this.runtime = runtime;
+        this.securityManager = this.runtime.extensionManager.securityManager;
 
-        this.renderer = this.runtime.renderer;
+        this.fileAccessError = false;
 
         this.runtime.on(Runtime.SERVER_REQUEST, (page, ip, method, headers, data, id) => {
             this.request = {
@@ -56,6 +57,8 @@ class Server {
             if (threadStatuses.every(status => (status === Thread.STATUS_DONE))) {
                 runtime.startHats('server_whenPageIsNotFound');
             }
+
+            this.request = null;
         });
     }
 
@@ -65,7 +68,7 @@ class Server {
     getInfo () {
         return {
             id: 'server',
-            name: 'Web Server (Subject to change)',
+            name: 'Web Server',
             color1: '#7000d9',
             color2: '#5400a3',
             color3: '#39006e',
@@ -85,7 +88,7 @@ class Server {
                     text: formatMessage({
                         id: 'lk_server.blocks.whenPageIsRequested',
                         default: 'when page [PAGE] is requested',
-                        description: 'Hat that executes the the code under it when a certain page is requested.'
+                        description: 'Hat that executes the code under it when a certain page is requested.'
                     }),
                     tooltip: formatMessage({
                         id: 'lk_server.tooltip.whenPageIsRequested',
@@ -108,7 +111,7 @@ class Server {
                     text: formatMessage({
                         id: 'lk_server.blocks.whenPageIsNotFound',
                         default: 'when page is not found',
-                        description: 'Hat that executes the the code under it when a certain page is not fouund.'
+                        description: 'Hat that executes the code under it when a certain page is not found.'
                     }),
                     tooltip: formatMessage({
                         id: 'lk_server.tooltip.whenPageIsNotFound',
@@ -127,7 +130,7 @@ class Server {
                         id: 'lk_server.blocks.returnContent',
                         // eslint-disable-next-line max-len
                         default: 'return content [CONTENT] as [MIME] with the status [STATUS] and headers [EXTRA_HEADERS]',
-                        description: 'Hat that executes the the code under it when a certain page is requested.'
+                        description: 'Hat that executes the code under it when a certain page is requested.'
                     }),
                     blockType: BlockType.COMMAND,
                     isTerminal: true,
@@ -357,12 +360,21 @@ class Server {
                         }
                     }
                 },
-                '---',
+                {
+                    opcode: 'fileAccessStatus',
+                    text: formatMessage({
+                        id: 'lk_server.blocks.fileAccessStatus',
+                        default: 'failed to access file?',
+                        description: 'Block that checks if the was an error while accessing a file.'
+                    }),
+                    blockType: BlockType.BOOLEAN
+                },
+                // Blocks that are no longer supported.
                 {
                     opcode: 'executeJS',
                     text: formatMessage({
-                        id: 'lk_appmaker.blocks.executeJS',
-                        default: 'execute JavaScript [JS]',
+                        id: 'lk_server.blocks.executeJS',
+                        default: 'NO LONGER SUPPORTED: execute JavaScript [JS]',
                         description: 'Block that executes JavaScript'
                     }),
                     blockType: BlockType.COMMAND,
@@ -371,13 +383,14 @@ class Server {
                             type: ArgumentType.STRING,
                             defaultValue: 'alert("Hello!");'
                         }
-                    }
+                    },
+                    hideFromPalette: true
                 },
                 {
                     opcode: 'executeJSReporter',
                     text: formatMessage({
-                        id: 'lk_appmaker.blocks.executeJSReporter',
-                        default: 'execute JavaScript [JS]',
+                        id: 'lk_server.blocks.executeJSReporter',
+                        default: 'NO LONGER SUPPORTED: execute JavaScript [JS]',
                         description: 'Block that executes JavaScript'
                     }),
                     blockType: BlockType.UNIVERSAL,
@@ -386,7 +399,8 @@ class Server {
                             type: ArgumentType.STRING,
                             defaultValue: 'return true;'
                         }
-                    }
+                    },
+                    hideFromPalette: true
                 }
             ],
             menus: {
@@ -418,7 +432,6 @@ class Server {
         if (PAGE === this.request?.page) {
             thread.serverRequest = this.request;
             thread.serverResponse.status = 200;
-            this.request = null;
             return true;
         }
         return false;
@@ -435,14 +448,14 @@ class Server {
 
     returnContent ({CONTENT, MIME, STATUS, EXTRA_HEADERS}, util) {
         const thread = util.thread;
-        if (!thread.serverRequest) return;
-        console.log(CONTENT);
+        if (!thread.serverRequest) return; // Do absolutely nothing in the browser.
         this.runtime.emit(Runtime.SERVER_RESPONSE, CONTENT, MIME, STATUS, EXTRA_HEADERS, thread.serverRequest.id);
+        // No script stopping is intended behaviour for backwards compatibility.
     }
 
     returnRequest ({CONTENT}, util) {
         const thread = util.thread;
-        if (!thread.serverRequest) return;
+        if (!thread.serverRequest) return; // Do absolutely nothing in the browser.
         this.runtime.emit(
             Runtime.SERVER_RESPONSE,
             Cast.toString(CONTENT),
@@ -500,27 +513,40 @@ class Server {
         return thread.serverRequest.data;
     }
 
-    executeJS (args) {
-        if (this.runtime.isPackaged) {
-            new Function(args.JS)();
-        }
-    }
-    executeJSReporter (args) {
-        if (this.runtime.isPackaged) {
-            return new Function(args.JS)();
-        }
+    executeJS () {
+        // No-op.
     }
 
-    readFile ({PATH}) {
+    executeJSReporter () {
+        return '';
+    }
+
+    async readFile ({PATH}) {
         // Bail out if not privileged.
         if (!this.runtime.isPrivileged) return '';
-        return this.runtime.privilegedUtils.readFile(PATH);
+        try {
+            const file = await this.runtime.privilegedUtils.readFile(PATH);
+            this.fileAccessError = false;
+            return file;
+        } catch {
+            this.fileAccessError = true;
+            return '';
+        }
     }
 
     async writeFile ({PATH, CONTENT}) {
         // Bail out if not privileged.
         if (!this.runtime.isPrivileged) return;
-        await this.runtime.privilegedUtils.writeFile(PATH, CONTENT);
+        try {
+            await this.runtime.privilegedUtils.writeFile(PATH, CONTENT);
+            this.fileAccessError = false;
+        } catch {
+            this.fileAccessError = true;
+        }
+    }
+
+    fileAccessStatus () {
+        return this.fileAccessError;
     }
 }
 
