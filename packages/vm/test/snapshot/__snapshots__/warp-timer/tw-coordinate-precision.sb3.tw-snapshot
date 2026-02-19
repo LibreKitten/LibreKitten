@@ -16,16 +16,16 @@ runtime.ext_scratch3_looks._say("pass initial 'of' test", target);
 target.setXY(target.x + 0, target.y + 0);
 runtime.ext_scratch3_motion._moveSteps(0, target);
 target.setXY(target.x + -9e-10, target.y + 0);
-if (((b1 ? b1.x : 0) === 1.0000000000000007e-10)) {
-yield* executeInCompatibilityLayer({"MESSAGE":"pass 'of' never rounds - positive x",}, b0, false, false, "zt/Fd,i768/rohNq-OU/", null);
+if (((b0 ? b0.x : 0) === 1.0000000000000007e-10)) {
+runtime.ext_scratch3_looks._say("pass 'of' never rounds - positive x", target);
 }
 if ((limitPrecision(target.x) === 0)) {
 runtime.ext_scratch3_looks._say("pass x slightly above 0 rounds", target);
 }
 target.setXY(target.x + -9e-10, target.y + 0);
 target.setXY(target.x + 0, target.y + 0);
-if (((b1 ? b1.x : 0) === -7.999999999999999e-10)) {
-yield* executeInCompatibilityLayer({"MESSAGE":"pass 'of' never rounds and change x - negative x",}, b0, false, false, "![=|9E8]xp_9QR]fu}4M", null);
+if (((b0 ? b0.x : 0) === -7.999999999999999e-10)) {
+runtime.ext_scratch3_looks._say("pass 'of' never rounds and change x - negative x", target);
 }
 if ((limitPrecision(target.x) === 0)) {
 runtime.ext_scratch3_looks._say("pass x slightly below 0 rounds", target);
