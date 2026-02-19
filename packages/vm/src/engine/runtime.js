@@ -3182,15 +3182,6 @@ class Runtime extends EventEmitter {
     }
 
     /**
-     * lk: Emit error glow to show in the blocks.
-     * @param {string} blockId ID for the block.
-     * @param {string} value Value to show associated with the block.
-     */
-    errorGlow (blockId, value) {
-        this.emit(Runtime.ERROR_GLOW, {id: blockId, glow: value});
-    }
-
-    /**
      * Add a monitor to the state. If the monitor already exists in the state,
      * updates those properties that are defined in the given monitor record.
      * @param {import('./monitor-record.js')} monitor Monitor to add.
