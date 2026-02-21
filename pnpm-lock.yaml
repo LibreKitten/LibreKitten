@@ -134,8 +134,8 @@ importers:
         specifier: ^3.11.1
         version: 3.11.1
       '@turbowarp/nanolog':
-        specifier: ^0.2.0
-        version: 0.2.0
+        specifier: ^1.0.1
+        version: 1.0.1
       '@turbowarp/scratch-l10n':
         specifier: ^3.1001.0-202401241456-994097a5
         version: 3.1001.202405101234
@@ -199,9 +199,6 @@ importers:
       get-user-media-promise:
         specifier: 1.1.4
         version: 1.1.4
-      immutable:
-        specifier: 3.8.2
-        version: 3.8.2
       intl:
         specifier: 1.2.5
         version: 1.2.5
@@ -524,9 +521,6 @@ importers:
       htmlparser2:
         specifier: 3.10.0
         version: 3.10.0
-      immutable:
-        specifier: 3.8.2
-        version: 3.8.2
       jsdom:
         specifier: ^24.1.0
         version: 24.1.3
@@ -543,8 +537,8 @@ importers:
         specifier: 0.2.7
         version: 0.2.7
       scratch-translate-extension-languages:
-        specifier: 0.0.20191118205314
-        version: 0.0.20191118205314
+        specifier: ^1.0.7
+        version: 1.0.7
       sweetalert2:
         specifier: ^11.10.5
         version: 11.22.2
@@ -2825,6 +2819,9 @@ packages:
 
   '@turbowarp/nanolog@0.2.0':
     resolution: {integrity: sha512-texcM9oxfEsADVlVDR5UhLkYclPKsV9mytJh+9pHHonNcUrxRVGF6FkJTzWO/Hl5NafU1crSdw737nqKE3atSA==}
+
+  '@turbowarp/nanolog@1.0.1':
+    resolution: {integrity: sha512-jdkH5MMdEo81Z9CJDDKsUqnTD5W3oeVt9SWyRSPLT3Q5NPGD6E4SnffD5pXWIZbjF052u2SamDxp/awW7W7cVQ==}
 
   '@turbowarp/paper@0.12.202505131813':
     resolution: {integrity: sha512-phLfQ9oJvXZvrnATbxRDB80reaS1BJiBO4QFGfOPkIIJzn41RR+TUxwNZdCQBkoTpnMA+jfr6o1LMu6ZvW2R9Q==}
@@ -5712,10 +5709,6 @@ packages:
   immediate@3.0.6:
     resolution: {integrity: sha512-XXOFtyqDjNDAQxVfYxuF7g9Il/IbWmmlQg2MYKOH8ExIT1qg6xc4zyS3HaEEATgs1btfzxq15ciUiY7gjSXRGQ==}
 
-  immutable@3.8.2:
-    resolution: {integrity: sha512-15gZoQ38eYjEjxkorfbcgBKBL6R7T459OuK+CpcWt7O3KF4uPCx2tD0uFETlUDIyo+1789crbMhTvQBSR5yBMg==}
-    engines: {node: '>=0.10.0'}
-
   import-cwd@2.1.0:
     resolution: {integrity: sha512-Ew5AZzJQFqrOV5BTW3EIoHAnoie1LojZLXKcCQ/yTRyVZosBhK1x1ViYjHGf5pAFOq8ZyChZp6m/fSN7pJyZtg==}
     engines: {node: '>=4'}
@@ -8258,8 +8251,8 @@ packages:
     peerDependencies:
       scratch-render-fonts: ^1.0.0-prerelease
 
-  scratch-translate-extension-languages@0.0.20191118205314:
-    resolution: {integrity: sha512-r0lvpgQjPMjbhI2wROrgoXzBhCvWJdkbAqJMfl2CdNqrwBpUXqLvNNtI3VtNLPJAcp9VfxEylkU9lVZ0gvU46Q==}
+  scratch-translate-extension-languages@1.0.7:
+    resolution: {integrity: sha512-6+bQU9iVYv23T8J0SjpV6MTugm0y8myh/4DPgu1BGfccysdkaWzu3MkNGQyQRUlbqAiW9wM7ctfv3USPEkzTgg==}
 
   script-loader@0.7.2:
     resolution: {integrity: sha512-UMNLEvgOAQuzK8ji8qIscM3GIrRCWN6MmMXGD4SD5l6cSycgGsCo0tX5xRnfQcoghqct0tjHjcykgI1PyBE2aA==}
@@ -12393,6 +12386,8 @@ snapshots:
 
   '@turbowarp/nanolog@0.2.0': {}
 
+  '@turbowarp/nanolog@1.0.1': {}
+
   '@turbowarp/paper@0.12.202505131813': {}
 
   '@turbowarp/scratch-l10n@3.1001.202405101234':
@@ -16191,8 +16186,6 @@ snapshots:
 
   immediate@3.0.6: {}
 
-  immutable@3.8.2: {}
-
   import-cwd@2.1.0:
     dependencies:
       import-from: 2.1.0
@@ -19197,7 +19190,7 @@ snapshots:
       scratch-render-fonts: https://codeload.github.com/TurboWarp/scratch-render-fonts/tar.gz/7b6768fc6dfef6b343a06f992587b74807043961
       transformation-matrix: 1.15.0
 
-  scratch-translate-extension-languages@0.0.20191118205314: {}
+  scratch-translate-extension-languages@1.0.7: {}
 
   script-loader@0.7.2:
     dependencies:
