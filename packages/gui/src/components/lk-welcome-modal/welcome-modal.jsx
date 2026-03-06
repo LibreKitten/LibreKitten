@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import ReactModal from 'react-modal';
+import Modal from '../../containers/modal.jsx';
 import Box from '../box/box.jsx';
 import Button from '../button/button.jsx';
 import {defineMessages, injectIntl, intlShape, FormattedMessage} from 'react-intl';
@@ -23,9 +23,11 @@ const messages = defineMessages({
 const WelcomeModalComponent = ({intl, ...props}) => {
     const title = messages.welcome;
     return (
-        <ReactModal
+        <Modal
             isOpen
+            centered
             className={styles.modalContent}
+            headerClassName={styles.modalHeader}
             contentLabel={intl.formatMessage(title)}
             overlayClassName={styles.modalOverlay}
             onRequestClose={props.onClose}
@@ -142,7 +144,7 @@ const WelcomeModalComponent = ({intl, ...props}) => {
                     {/* eslint-enable max-len */}
                 </Box>
             </div>
-        </ReactModal>
+        </Modal>
     );
 };
 
@@ -156,6 +158,6 @@ WelcomeModalComponent.propTypes = {
 
 const WrappedWelcomeModalComponent = injectIntl(WelcomeModalComponent);
 
-WrappedWelcomeModalComponent.setAppElement = ReactModal.setAppElement;
+WrappedWelcomeModalComponent.setAppElement = Modal.setAppElement;
 
 export default WrappedWelcomeModalComponent;
