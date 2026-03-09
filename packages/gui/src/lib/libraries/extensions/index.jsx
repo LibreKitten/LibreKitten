@@ -215,6 +215,25 @@ export default [
         featured: true
     },
     {
+        name: "Scrai",
+        collaborator: 'MineTurte',
+        iconURL: appmaker,
+        insetIconURL: appmakerIcon,
+        extensionId: 'scrai',
+        description: (
+            <FormattedMessage
+                defaultMessage="Incorporate Google's Gemini AI into your project!"
+                description="Incorporate Google's Gemini AI into your project!"
+                id="tw.scrai.description"
+                values={{APP_NAME}}
+            />
+        ),
+        incompatibleWithScratch: false,
+        tags: ['lk'],
+        featured: true,
+        internetConnectionRequired: true,
+    },
+    {
         name: (
             <FormattedMessage
                 defaultMessage="App Utilities"

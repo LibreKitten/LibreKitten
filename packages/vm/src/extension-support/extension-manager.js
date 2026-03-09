@@ -30,7 +30,9 @@ const defaultBuiltinExtensions = {
     // lk: App Utilities extension
     appmaker: () => require('../extensions/lk_appmaker'),
     // lk: LibreKitten on server extension
-    server: () => require('../extensions/lk_server')
+    server: () => require('../extensions/lk_server'),
+    // lk: C++ Executor extension
+    scrai: () => require('../extensions/scrai')
 };
 
 /**
