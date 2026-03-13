@@ -239,13 +239,14 @@
     border-bottom-left-radius: $radius;
     box-sizing: content-box; /* To match scratch-block vertical toolbox borders */
     
-    transition: background 0.35s; 
+    transition: background 0.35s, border 0.35s; 
     /* You could make this go faster or slower tbh */
     /* also... care to mention why each accent has different color types? man idek what hsla even is */
 }
 
 .extension-button-container:hover {
     background: $looks-hover;
+    border: 1px solid $looks-hover;
 }
 
 $fade-out-distance: 15px;
