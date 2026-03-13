@@ -226,12 +226,16 @@ class MenuBar extends React.Component {
             'handleClickSeeCommunity',
             'handleClickShare',
             'handleDevServerUpload',
+            'handleMenuOpen',
             'handleSetMode',
             'handleKeyPress',
             'handleRestoreOption',
             'getSaveToComputerHandler',
             'restoreOptionMessage'
         ]);
+        this.state = {
+            opened: false
+        };
     }
     componentDidMount () {
         document.addEventListener('keydown', this.handleKeyPress);
@@ -317,6 +321,14 @@ class MenuBar extends React.Component {
                 method: 'POST',
                 body: reader.result
             });
+        });
+    }
+    handleMenuOpen (value) {
+        if (typeof value !== 'string') return;
+        // The value doesn't really matter here -- we just need to know if the menu is open or not.
+        // If the value is an empty string, the menu is closed: if it isn't empty, it is open.
+        this.setState({
+            opened: value !== ''
         });
     }
     handleSetMode (mode) {
@@ -505,10 +517,17 @@ class MenuBar extends React.Component {
             <Box
                 className={classNames(
                     this.props.className,
-                    styles.menuBar
+                    styles.menuBar,
+                    {
+                        [styles.slidable]: this.props.slidable,
+                        [styles.opened]: this.state.opened && this.props.slidable
+                    }
                 )}
             >
-                <Menubar.Root className={styles.mainMenu}>
+                <Menubar.Root
+                    className={styles.mainMenu}
+                    onValueChange={this.handleMenuOpen}
+                >
                     <div className={styles.fileGroup}>
                         <a href="/">
                             <MenuLabel onOpen={() => {}}>
@@ -1129,6 +1148,7 @@ MenuBar.propTypes = {
     shouldSaveBeforeTransition: PropTypes.func,
     showSaveFilePicker: PropTypes.func,
     showComingSoon: PropTypes.bool,
+    slidable: PropTypes.bool,
     username: PropTypes.string,
     userOwnsProject: PropTypes.bool,
     vm: PropTypes.instanceOf(VM).isRequired
