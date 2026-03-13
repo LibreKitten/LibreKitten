@@ -33,6 +33,13 @@
     background-color: $menu-bar-background;
     background-image: $menu-bar-background-image;
     color: $menu-bar-foreground;
+    margin-top: -2.45em;
+
+    transition: background 0.35s, margin-top 0.35s;
+}
+
+.menu-bar:hover {
+    margin-top: 0;
 }
 
 .main-menu {

@@ -5,6 +5,7 @@ const guiColors = {
 
     'looks-secondary': '#ff8200',
     'looks-transparent': '#ff820059',
+    'looks-hover': 'rgba(180, 80, 0, 1)',
     'looks-light-transparent': '#ff820026',
     'looks-secondary-dark': 'rgba(209, 108, 0, 1)',
     'error-primary': 'rgba(255, 0, 0, 1)',
