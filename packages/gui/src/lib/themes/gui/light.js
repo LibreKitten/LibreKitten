@@ -30,6 +30,7 @@ const guiColors = {
     'motion-tertiary': 'hsla(215, 60%, 50%, 1)', /* #3373CC */
 
     'looks-secondary': 'hsla(260, 60%, 60%, 1)', /* #855CD6 */
+    'looks-hover': 'var(--motion-tertiary)',
     'looks-transparent': 'hsla(260, 60%, 60%, 0.35)', /* 35% transparent version of looks-tertiary */
     'looks-light-transparent': 'hsla(260, 60%, 60%, 0.15)', /* 15% transparent version of looks-tertiary */
     'looks-secondary-dark': 'hsla(260, 42%, 51%, 1)', /* #714EB6 */
