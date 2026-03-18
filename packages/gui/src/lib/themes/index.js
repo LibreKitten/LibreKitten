@@ -10,6 +10,7 @@ import * as accentDarkBlue from './accent/dark-blue';
 import * as guiLight from './gui/light';
 import * as guiLightModern from './gui/light-modern';
 import * as guiDark from './gui/dark';
+import * as guiDarkModern from './gui/dark-modern';
 
 import * as blocksThree from './blocks/three';
 import * as blocksHighContrast from './blocks/high-contrast';
@@ -66,10 +67,12 @@ const ACCENT_DEFAULT = ACCENT_ORANGE;
 const GUI_LIGHT = 'light';
 const GUI_LIGHT_MODERN = 'light-modern';
 const GUI_DARK = 'dark';
+const GUI_DARK_MODERN = 'dark-modern';
 const GUI_MAP = {
     [GUI_LIGHT]: guiLight,
     [GUI_LIGHT_MODERN]: guiLightModern,
-    [GUI_DARK]: guiDark
+    [GUI_DARK]: guiDark,
+    [GUI_DARK_MODERN]: guiDarkModern
 };
 const GUI_LABELS = defineMessages({
     [GUI_LIGHT_MODERN]: {
@@ -78,14 +81,21 @@ const GUI_LABELS = defineMessages({
         icon: lightModeIcon,
         id: 'lk.theme.lk-light-modern'
     },
+    [GUI_DARK_MODERN]: {
+        defaultMessage: 'LibreKitten — Dark (Modern)',
+        description: 'Name of LibreKitten\'s "Dark (Modern)" theme.',
+        icon: darkModeIcon,
+        id: 'lk.theme.lk-dark-modern'
+    },
     [GUI_LIGHT]: {
         defaultMessage: 'LibreKitten — Light (Colourful)',
         description: 'Name of LibreKitten\'s light theme.',
         icon: lightModeIcon,
-        id: 'lk.theme.lk-light'
+        id: 'lk.theme.lk-light',
+        menuDivider: true
     },
     [GUI_DARK]: {
-        defaultMessage: 'LibreKitten — Dark',
+        defaultMessage: 'LibreKitten — Dark (Colourful)',
         description: 'Name of LibreKitten\'s dark theme.',
         icon: darkModeIcon,
         id: 'lk.theme.lk-dark'
@@ -175,7 +185,7 @@ class Theme {
     }
 
     static light = new Theme(ACCENT_DEFAULT, GUI_LIGHT_MODERN, BLOCKS_HIGH_CONTRAST);
-    static dark = new Theme(ACCENT_DEFAULT, GUI_DARK, BLOCKS_HIGH_CONTRAST);
+    static dark = new Theme(ACCENT_DEFAULT, GUI_DARK_MODERN, BLOCKS_HIGH_CONTRAST);
 
     set (what, to) {
         if (what === 'accent') {
@@ -224,7 +234,8 @@ class Theme {
     }
 
     isDark () {
-        return this.getGuiColors()['color-scheme'] === 'dark';
+        const theme = this.getGuiColors()['color-scheme'];
+        return theme === 'dark' || theme === 'dark-modern';
     }
 
     getStageBlockColors () {

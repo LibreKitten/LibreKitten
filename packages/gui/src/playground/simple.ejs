@@ -42,10 +42,12 @@
           theme = 'dark';
         } else if (themeSetting === 'light-modern') {
           theme = 'light-modern';
+        } else if (themeSetting === 'dark-modern') {
+          theme = 'dark-modern';
         } else if (themeSetting) {
           try {
             var parsed = JSON.parse(themeSetting);
-            if (parsed.gui === 'dark' || parsed.gui === 'light' || parsed.gui === 'light-modern') {
+            if (parsed.gui === 'dark' || parsed.gui === 'light' || parsed.gui === 'light-modern' || parsed.gui === 'dark-modern') {
               theme = parsed.gui;
             }
           } catch (e) {

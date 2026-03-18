@@ -68,14 +68,15 @@ const guiColors = {
     'menu-bar-white': 'var(--ui-white-default)',
     'menu-bar-text-primary': 'var(--text-primary-default)',
     'menu-bar-item-hover': 'var(--menu-bar-black-transparent)',
-    'menu-bar-primary-button': 'var(--menu-bar-foreground)',
+    'menu-bar-primary-button-foreground': 'var(--menu-bar-background)',
+    'menu-bar-primary-button-background': 'var(--menu-bar-foreground)',
 
     'context-menu-item-text': 'var(--text-primary)',
     'context-menu-item-hover-background': 'var(--looks-secondary)',
     'context-menu-item-hover-foreground': 'white',
     'context-menu-item-hover-danger': 'hsla(0, 100%, 43.5%, 1)',
 
-    'navbar-background': 'var(--looks-secondary)', /* lk: added nav bar colour */
+    'navbar-background': 'var(--menu-bar-background)', /* lk: added nav bar colour */
 
     'assets-background': '#ffffff',
 
