@@ -1,6 +1,8 @@
 /* eslint-env node */
 /* eslint-disable no-console */
 
+const path = require('node:path');
+
 const awaitEvent = require('../util/await-event');
 const {resolvePath} = require('./resolve-path');
 
@@ -10,22 +12,24 @@ const setupFileSecurity = (securityManager, permissions) => {
         const location = resolvePath(fileLocation);
 
         for (let i = 0; i < permissions.fileScope.length; i++) {
-            const folder = permissions.fileScope[i];
-            const escapedFolder = folder.endsWith('/') ? folder : `${folder}/`;
-            if (location.startsWith(escapedFolder)) return true;
+            const folder = path.resolve(permissions.fileScope[i]);
+            const relative = path.relative(folder, location);
+            if (relative === '' || (!relative.startsWith('..') && !path.isAbsolute(relative))) {
+                return true;
+            }
         }
         
         return false;
     };
 
     /* eslint-disable-next-line prefer-template */
-    const warn = (message, last) => process.stdout.write('\x1b[93m' + message + '\x1b[0m' + (last ? '' : '\n'));
+    const warn = (message, last) => process.stdout.write('\n\x1b[93m' + message + '\x1b[0m' + (last ? '' : '\n'));
 
     // FILE ACCESS
 
     securityManager.canReadFile = async function (fileLocation) {
         if (!permissions.fileReadAccess) {
-            if (!process.stdout.isTTY) return false;
+            if (!process.stdin.isTTY || !process.stdout.isTTY) return false;
 
             /* eslint-disable max-len */
             warn('This project wants read access to your filesystem. Allowing read access will mean the project will be able to read ANY file you can.');
@@ -46,7 +50,7 @@ const setupFileSecurity = (securityManager, permissions) => {
 
         if (!canAccessFolder(fileLocation)) {
             /* eslint-disable max-len */
-            warn('The project attemped to read a file outside of the allowed file scope. The read has been prevented.');
+            warn('The project attempted to read a file outside of the allowed file scope. The read has been prevented.');
             warn('If the project needs to read a file outside the file scope, append "--file-scope /path/to/folder /add/more/folders/if/you/want --" to the command.');
             warn('You should not let the folder read outside of the home folder, unless it is absolutely necessary.');
             /* eslint-enable max-len */
@@ -58,10 +62,10 @@ const setupFileSecurity = (securityManager, permissions) => {
 
     securityManager.canWriteFile = async function (fileLocation) {
         if (!permissions.fileWriteAccess) {
-            if (!process.stdout.isTTY) return false;
+            if (!process.stdin.isTTY || !process.stdout.isTTY) return false;
 
             /* eslint-disable max-len */
-            warn('This project wants write access to your filesystem. Allowing read access will mean the project will be able to write to and replace ANY file you can.');
+            warn('This project wants write access to your filesystem. Allowing write access will mean the project will be able to write to and replace ANY file you can.');
             warn('This includes personal documents and files, program settings, and more.');
             warn('If you don\'t trust this project, or you are not sure, you should not give permission.');
             warn('Are you sure you want to allow filesystem write access? (Y/N)', true);
@@ -74,12 +78,12 @@ const setupFileSecurity = (securityManager, permissions) => {
 
             if (String(key).toLowerCase() !== 'y') return false;
 
-            if (!permissions.fileReadAccess) permissions.fileWriteAccess = true;
+            if (!permissions.fileWriteAccess) permissions.fileWriteAccess = true;
         }
 
         if (!canAccessFolder(fileLocation)) {
             /* eslint-disable max-len */
-            warn('The project attemped to write to a file outside of the allowed file scope. The write has been prevented.');
+            warn('The project attempted to write to a file outside of the allowed file scope. The write has been prevented.');
             warn('If the project needs to write to a file outside the file scope, append "--file-scope /path/to/folder /add/more/folders/if/you/want --" to the command.');
             warn('You should not let the folder write outside of the home folder, unless it is absolutely necessary.');
             /* eslint-enable max-len */
@@ -93,7 +97,7 @@ const setupFileSecurity = (securityManager, permissions) => {
 
     securityManager.canFetch = async function () {
         if (!permissions.networkAccess) {
-            if (!process.stdout.isTTY) return false;
+            if (!process.stdin.isTTY || !process.stdout.isTTY) return false;
 
             /* eslint-disable max-len */
             warn('This project wants network access. Allowing network access will mean the project will be able to access ANY website on the internet and ANY website on your local network.');

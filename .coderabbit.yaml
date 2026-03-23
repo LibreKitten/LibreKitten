@@ -1,0 +1,52 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+# Before you get angry: it's a code review tool, not a vibe coding tool. :melting_face:
+# Inspired by https://github.com/OmniBlocks/scratch-gui/blob/main/.coderabbit.yaml
+
+language: "en-AU"
+tone_instructions: "Be polite, and don't be harsh. This is an alpha-quality hobby project."
+early_access: true
+enable_free_tier: true
+inheritance: false
+
+reviews:
+  profile: "chill"
+  request_changes_workflow: false
+  high_level_summary: true
+  poem: true
+  review_status: true
+  collapse_walkthrough: false
+  auto_review:
+    enabled: true
+    ignore_title_keywords: []
+    drafts: false
+  tools:
+    eslint:
+      enabled: true
+  path_filters: []
+  path_instructions:
+    - path: "packages/gui/src/**"
+      instructions: "This codebase is spaghetti: treat as a codebase with pre-existing lint errors. This codebase uses React 16.14.x with Redux 3.7.x."
+    - path: "packages/vm/src/**"
+      instructions: "This package has a test suite runnable via `pnpm test` inside the folder. When reviewing logic changes, consider whether the existing tests would cover them, and suggest test cases where gaps are apparent."
+    - path: "packages/blocks/**"
+      instructions: "This codebase uses a horrendously outdated version of JavaScript with the Closure Library, mandated by the Google Closure Compiler. It is based on TurboWarp's fork of Scratch's scratch-blocks, which itself is a fork of an outdated version of Blockly."
+
+chat:
+  auto_reply: true
+
+knowledge_base:
+  opt_out: false
+  code_guidelines:
+    enabled: true
+    filePatterns:
+      - "README.md"
+  web_search:
+    enabled: true
+  learnings:
+    scope: auto
+  issues:
+    scope: auto
+  jira:
+    usage: auto
+  linear:
+    usage: auto

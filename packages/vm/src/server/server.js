@@ -57,10 +57,17 @@ class Server {
         this.vm.runtime.on(Runtime.SERVER_RESPONSE, (content, mime, status, extraHeaders, requestId) => {
             const res = this.resMap.get(requestId);
             if (typeof res === 'undefined') return;
-            res.writeHead(status, {
+            if (res._lkTimeout) clearTimeout(res._lkTimeout);
+            let parsedJSON;
+            try {
+                parsedJSON = JSON.parse(extraHeaders);
+            } catch {
+                parsedJSON = {};
+            }
+            res.writeHead(status, Object.assign(Object.create(null), {
                 'Content-Type': mime,
-                ...JSON.parse(extraHeaders)
-            });
+                ...parsedJSON
+            }));
             res.end(String(content));
             this.resMap.delete(requestId);
         });
@@ -69,29 +76,20 @@ class Server {
         this.vm.securityManager.canFetch = () => Promise.resolve(false);
         this.vm.securityManager.canLoadExtensionFromProject = () => Promise.resolve(false);
 
-        // These are not possible in this enviroment.
+        // These are not possible in this environment.
         this.vm.securityManager.canOpenWindow = () => Promise.resolve(false);
         this.vm.securityManager.canRedirect = () => Promise.resolve(false);
 
         this.vm.runtime.privilegedUtils.readFile = async path => {
             const resolvedPath = resolvePath(path);
             if (!await this.securityManager.canReadFile(resolvedPath)) return '';
-            try {
-                return fs.readFileSync(resolvedPath, 'utf8');
-            } catch (err) {
-                return '';
-            }
+            return fs.readFileSync(resolvedPath, 'utf8');
         };
 
         this.vm.runtime.privilegedUtils.writeFile = async (path, content) => {
             const resolvedPath = resolvePath(path);
             if (!await this.securityManager.canWriteFile(resolvedPath)) return;
-            try {
-                fs.writeFileSync(resolvedPath, String(content));
-            } catch (err) {
-                // Empty on purpose.
-                // lk: TODO: Maybe add some form of error handling?
-            }
+            fs.writeFileSync(resolvedPath, String(content));
         };
 
         this.vm.setCompatibilityMode(false);
@@ -109,8 +107,18 @@ class Server {
      */
     httpServer (req, res) {
         const dataRaw = [];
+        let bodySize = 0;
+        // lk: TODO: Make this configurable.
+        const MAX_BODY_SIZE = 10 * 1024 * 1024; // 10 MB limit
 
         req.on('data', chunk => {
+            bodySize += chunk.length;
+            if (bodySize > MAX_BODY_SIZE) {
+                res.writeHead(413, {'Content-Type': 'text/plain'});
+                res.end('Request Entity Too Large');
+                req.destroy();
+                return;
+            }
             dataRaw.push(chunk);
         });
         req.on('end', async () => {
@@ -118,15 +126,18 @@ class Server {
             const dataString = String(dataBuffer);
 
             if (this.dev && req.url === '/_lk_devServer_updateLb') {
-                if (!('origin' in req.headers)) return;
+                if (!('origin' in req.headers)) return res.end('denied');
                 
                 const isEditor = req.headers.origin === 'http://localhost:8601' ||
-                    req.headers.origin.endsWith('librekitten.org');
-                if (!isEditor) return;
+                    req.headers.origin === 'https://librekitten.org' ||
+                    req.headers.origin === 'https://canary.librekitten.org';
+                if (!isEditor) return res.end('denied');
                 
-                await this.runProject(dataBuffer).catch(err => {
-                    throw new Error(err);
-                });
+                try {
+                    await this.runProject(dataBuffer);
+                } catch {
+                    return res.end('corrupt');
+                }
                 
                 res.writeHead(200, {
                     'Content-Type': 'text/plain',
@@ -137,6 +148,17 @@ class Server {
             
             const requestId = crypto.randomUUID();
             this.resMap.set(requestId, res);
+            
+            const timeout = setTimeout(() => {
+                if (this.resMap.has(requestId)) {
+                    this.resMap.delete(requestId);
+                    res.writeHead(504, {'Content-Type': 'text/plain'});
+                    res.end('Gateway Timeout');
+                }
+            }, 30000); // 30 second timeout
+            
+            // Store timeout with response for cleanup on successful response
+            res._lkTimeout = timeout;
             this.vm.runtime.emit(
                 Runtime.SERVER_REQUEST,
                 req.url,

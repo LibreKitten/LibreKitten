@@ -566,6 +566,7 @@ const sensing = function (isInitialSetup, isStage, targetId, colors) {
         ${blockSeparator}
         <block type="sensing_deltatime"/>
         ${blockSeparator}
+        <block id="online" type="sensing_online"/>
         <block type="sensing_username"/>
         ${categorySeparator}
     </category>

@@ -130,8 +130,13 @@ const messages = defineMessages({
     },
     sensing_dayssince2000: {
         defaultMessage: 'days since 2000',
-        description: 'Label for the days since 2000 monitor when show on the stage',
+        description: 'Label for the days since 2000 monitor when shown on the stage',
         id: 'tw.opcode.2000'
+    },
+    sensing_online: {
+        defaultMessage: 'online?',
+        description: 'Name of "online?" block',
+        id: 'tw.opcode.online'
     },
     sensing_deltatime: {
         defaultMessage: 'delta time',
@@ -194,6 +199,7 @@ class OpcodeLabels {
             sensing_current: {category: 'sensing'},
             sensing_timer: {category: 'sensing'},
             sensing_dayssince2000: {category: 'sensing'},
+            sensing_online: {category: 'sensing'},
             sensing_deltatime: {category: 'sensing'},
             sensing_stagesize: {category: 'sensing'}
         };
@@ -278,6 +284,7 @@ class OpcodeLabels {
             if (params.SIDE.toLowerCase() === 'height') return this._translator(messages.sensing_stagesize_height);
             return this._translator(messages.sensing_stagesize_width);
         };
+        this._opcodeMap.sensing_online.labelFn = () => this._translator(messages.sensing_online);
     }
 
     /**

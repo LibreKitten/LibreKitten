@@ -41,17 +41,14 @@
                         description: 'Runs with the ability to hot-swap projects'
                     })
                     .option('allow-file-read', {
-                        alias: 'D',
                         type: 'boolean',
                         description: 'Allows the project to read any file in your home folder'
                     })
                     .option('allow-file-write', {
-                        alias: 'D',
                         type: 'boolean',
                         description: 'Allows the project to write to any file in your home folder'
                     })
                     .option('allow-network-access', {
-                        alias: 'D',
                         type: 'boolean',
                         description: 'Allows the project to access anything on the network'
                     })
@@ -68,9 +65,7 @@
 
                 if (argv.allowFileRead) permissions.fileReadAccess = true;
                 if (argv.allowFileWrite) permissions.fileWriteAccess = true;
-                if (argv.networkAccess) permissions.networkAccess = true;
-                if (argv.allowNonHomeRead) permissions.nonHomeReadAccess = true;
-                if (argv.allowNonHomeWrite) permissions.nonHomeWriteAccess = true;
+                if (argv.allowNetworkAccess) permissions.networkAccess = true;
 
                 if (argv.fileScope) {
                     permissions.fileScope = argv.fileScope.map(location => resolvePath(location));
@@ -79,14 +74,18 @@
                 const server = new Server(!!argv.dev, argv.port);
                 setupFileSecurity(server.securityManager, permissions);
 
-                server.runProject(
-                    fs.readFileSync(resolvePath(argv.file))
-                ).catch(() => {
+                const projectLoadError = () => {
                     console.log('Failed to load the project. :(');
                     server.halt();
                     process.exitCode = 2;
+                };
+
+                try {
+                    server.runProject(fs.readFileSync(resolvePath(argv.file))).catch(projectLoadError);
+                } catch {
+                    projectLoadError();
                     return;
-                });
+                }
             })
         .demandCommand()
         .parse();

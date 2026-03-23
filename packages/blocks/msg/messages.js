@@ -332,6 +332,9 @@ Blockly.Msg.SENSING_DELTATIME_TOOLTIP =
     "framerate is 60 FPS; but when the framerate is 120 FPS, it moves around 3 pixels per frame. If you " +
     "want to use the pixel values you are used to with Scratch, multiply delta time by 30, and then multiply " +
     "it again with the value you want to use.";
+Blockly.Msg.SENSING_ONLINE_TOOLTIP =
+    'This block returns true if you are connected to the internet, otherwise it returns false. If you are ' +
+    'running the project outside of a browser, the block will always return true.'
 
 // Sound blocks
 Blockly.Msg.SOUND_PLAY = 'start sound %1';
