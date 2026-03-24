@@ -75,7 +75,7 @@ const ForContributors = () => (
                     </li>
                     <li>
                         <p>
-                            Complete something on <a href="https://codeberg.org/LibreKitten/-/projects/9653">the roadmap</a>.
+                            Complete something on <a href="https://codeberg.org/LibreKitten/LibreKitten/projects/37988">the roadmap</a>.
                         </p>
                     </li>
                 </ol>
