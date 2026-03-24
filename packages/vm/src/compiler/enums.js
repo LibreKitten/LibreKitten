@@ -31,11 +31,11 @@ const InputType = {
     NUMBER_ZERO: 0x008,
     /** The value -0 */
     NUMBER_NEG_ZERO: 0x010,
-    /** Any negitive integer excluding -0 */
+    /** Any negative integer excluding -0 */
     NUMBER_NEG_INT: 0x020,
-    /** Any negitive fractional number, excluding integers. */
+    /** Any negative fractional number, excluding integers. */
     NUMBER_NEG_FRACT: 0x040,
-    /** Any negitive number excluding -0 and -Infinity. Equal to NUMBER_NEG_INT | NUMBER_NEG_FRACT */
+    /** Any negative number excluding -0 and -Infinity. Equal to NUMBER_NEG_INT | NUMBER_NEG_FRACT */
     NUMBER_NEG_REAL: 0x060,
     /** The value -Infinity */
     NUMBER_NEG_INF: 0x080,
@@ -49,7 +49,7 @@ const InputType = {
     NUMBER_INF: 0x081,
     /** Any positive number, excluding 0. Equal to NUMBER_POS_REAL | NUMBER_POS_INF */
     NUMBER_POS: 0x007,
-    /** Any negitive number, excluding -0. Equal to NUMBER_NEG_REAL | NUMBER_NEG_INF */
+    /** Any negative number, excluding -0. Equal to NUMBER_NEG_REAL | NUMBER_NEG_INF */
     NUMBER_NEG: 0x0E0,
     /** Any whole number. Equal to NUMBER_POS_INT | NUMBER_ZERO */
     NUMBER_WHOLE: 0x00A,
