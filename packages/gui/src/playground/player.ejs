@@ -49,8 +49,12 @@
       .splash-screen[hidden] {
         display: none;
       }
-      .splash-screen[data-theme="dark"] {
+      .splash-screen[data-theme="dark"]{
         background-color: #333;
+        color: white;
+      }
+      .splash-screen[data-theme="dark-modern"]{
+        background-color: #1c1c1c;
         color: white;
       }
       .splash-screen[data-theme="light-modern"] {
@@ -70,7 +74,8 @@
         height: 128px;
         animation: splash-spinner 0.75s infinite alternate ease-in-out;
       }
-      .splash-screen[data-theme="light-modern"] .splash-spinner::after {
+      .splash-screen[data-theme="light-modern"] .splash-spinner::after,
+      .splash-screen[data-theme="dark-modern"] .splash-spinner::after {
         background-image: url('/images/librekitten-colour.svg');
       }
       @keyframes splash-spinner {

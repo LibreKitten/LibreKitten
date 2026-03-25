@@ -66,7 +66,7 @@ const GuiThemeMenu = ({
                 >
                     {Object.keys(GUI_LABELS).map(item => {
                         const label = GUI_LABELS[item];
-                        return (<>
+                        return (<React.Fragment key={item}>
                             {label.menuDivider && <Menubar.Separator />}
                             <MenuRadioItem
                                 className={classNames(
@@ -74,14 +74,12 @@ const GuiThemeMenu = ({
                                     styles.inset,
                                     {[menuStyles.menuSection]: label.menuDivider}
                                 )}
-                                key={item}
                                 value={item}
                             >
                                 <Menubar.ItemIndicator className={styles.checkArea}>
                                     <img
                                         className={classNames(styles.check, styles.iconFilter)}
                                         width={15}
-                                        Matches
                                         height={12}
                                         src={check}
                                         draggable={false}
@@ -90,7 +88,7 @@ const GuiThemeMenu = ({
                                 <ThemeIcon item={item} />
                                 <FormattedMessage {...label} />
                             </MenuRadioItem>
-                        </>);
+                        </React.Fragment>);
                     })}
                 </Menubar.RadioGroup>
             </Submenu>
@@ -103,11 +101,6 @@ GuiThemeMenu.propTypes = {
     isRtl: PropTypes.bool,
     onChangeTheme: PropTypes.func,
     onOpen: PropTypes.func,
-    theme: PropTypes.instanceOf(Theme)
-};
-
-GuiThemeMenu.propTypes = {
-    onChangeTheme: PropTypes.func,
     theme: PropTypes.instanceOf(Theme)
 };
 

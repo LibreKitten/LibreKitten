@@ -15,7 +15,6 @@ const guiColors = {
     'assets-background': '#111111',
 
     'menu-bar-background': 'rgba(40, 40, 42, 1)',
-    'menu-bar-item-hover': 'var(--context-menu-item-hover-background)',
     'menu-bar-black-transparent': 'var(--ui-black-transparent)',
 
     'context-menu-item-hover-background': 'hsla(210, 100%, 60%, 0.35)',

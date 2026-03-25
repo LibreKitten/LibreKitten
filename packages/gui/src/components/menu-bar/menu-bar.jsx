@@ -784,7 +784,6 @@ class MenuBar extends React.Component {
                                     src={editIcon}
                                     draggable={false}
                                     width={20}
-                                    edit
                                     height={20}
                                     className={styles.iconFilter}
                                 />

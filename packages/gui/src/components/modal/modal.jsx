@@ -25,7 +25,8 @@ const ModalComponent = props => {
         <ReactModal
             isOpen
             className={classNames(styles.modalContent, Object.values(styleResets).concat(' '), props.className, {
-                [styles.fullScreen]: props.fullScreen
+                [styles.fullScreen]: props.fullScreen,
+                [styles.centered]: props.centered
             })}
             contentLabel={props.contentLabel}
             overlayClassName={classNames(styles.modalOverlay, {[styles.centered]: props.centered})}

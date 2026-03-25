@@ -29,7 +29,6 @@ const WelcomeModalComponent = ({intl, ...props}) => {
             className={styles.modalContent}
             headerClassName={styles.modalHeader}
             contentLabel={intl.formatMessage(title)}
-            overlayClassName={styles.modalOverlay}
             onRequestClose={props.onClose}
         >
             <div dir={props.isRtl ? 'rtl' : 'ltr'} >
@@ -132,7 +131,7 @@ const WelcomeModalComponent = ({intl, ...props}) => {
                             ref={props.dontShowAgainRef}
                             id="dontShowAgain"
                         />
-                        <label for="dontShowAgain">
+                        <label htmlFor="dontShowAgain">
                             <FormattedMessage
                                 defaultMessage="Don't show again"
                                 description=""

@@ -271,6 +271,7 @@ export {
     GUI_LIGHT,
     GUI_LIGHT_MODERN,
     GUI_DARK,
+    GUI_DARK_MODERN,
     GUI_MAP,
     GUI_LABELS,
 
