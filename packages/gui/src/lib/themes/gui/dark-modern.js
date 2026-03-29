@@ -23,7 +23,10 @@ const guiColors = {
 
 const blockColors = {
     ...baseBlockColors,
-    workspace: '#111112'
+    workspace: '#111112',
+    tooltipBackground: '#161617',
+    tooltipBorder: '#323232',
+    tooltipText: '#fff'
 };
 
 export {
