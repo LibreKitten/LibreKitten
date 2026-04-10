@@ -15,6 +15,8 @@ import {
 } from '../reducers/project-state';
 import log from './log';
 
+import Swal from 'sweetalert2';
+
 /**
  * List of fonts that could be used by security prompts.
  */
@@ -51,6 +53,29 @@ const vmManagerHOC = function (WrappedComponent) {
                 }
                 this.props.vm.initialized = true;
                 this.props.vm.setLocale(this.props.locale, this.props.messages);
+                // lk: Added dialogs.
+                this.props.vm.runtime.dialogUtils.showAlert = ({toast, title, text, icon}) => Swal.fire({
+                    toast: toast,
+                    titleText: title,
+                    text: text,
+                    icon: icon,
+                    position: toast ? 'top-end' : 'center',
+                    showConfirmButton: !toast,
+                    timer: toast ? 2500 : null,
+                    timerProgressBar: toast
+                });
+                this.props.vm.runtime.dialogUtils.showConfirmation = async ({title, text, icon}) => (await Swal.fire({
+                    titleText: title,
+                    text: text,
+                    icon: icon,
+                    showCancelButton: true
+                })).isConfirmed;
+                this.props.vm.runtime.dialogUtils.showInputDialog = async ({title, text, icon}) => (await Swal.fire({
+                    titleText: title,
+                    input: 'text',
+                    text: text,
+                    icon: icon
+                })).value;
             }
             if (!this.props.isPlayerOnly && !this.props.isStarted) {
                 this.props.vm.start();
