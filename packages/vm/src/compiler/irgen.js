@@ -638,7 +638,8 @@ class ScriptTreeGenerator {
                 const blockInfo = this.getBlockInfo(block.opcode);
                 if (blockInfo) {
                     const type = blockInfo.info.blockType;
-                    if (type === BlockType.REPORTER || type === BlockType.BOOLEAN) {
+                    // lk: Register our universal type in the compiler.
+                    if (type === BlockType.REPORTER || type === BlockType.BOOLEAN || type === BlockType.UNIVERSAL) {
                         return this.descendCompatLayerInput(block);
                     }
                 }
