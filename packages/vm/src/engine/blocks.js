@@ -97,7 +97,13 @@ class Blocks {
             /**
              * tw: Whether populateProcedureCache has been run
              */
-            proceduresPopulated: false
+            proceduresPopulated: false,
+
+            /**
+             * lk: A cache of block IDs and their located parents.
+             * @type {object.<string, object.<string, object>>}
+             */
+            blockIdParents: {}
         };
 
         /**
@@ -174,19 +180,33 @@ class Blocks {
     findParentBlock (childId) {
         let block = this.getBlock(childId);
         if (!block) return null;
+
         if (typeof block.parent !== 'string') return null;
+
+        // If it was cached, just return that.
+        const blockIdParents = this._cache.blockIdParents;
+        if (blockIdParents[childId]?._direct_) return blockIdParents[childId]._direct_;
+
         while (block.parent !== null) {
             block = this._blocks[block.parent];
             if (typeof block.inputs !== 'object') continue;
-            for (const value of Object.values(block.inputs)) {
+            for (const key in block.inputs) {
+                const value = block.inputs[key];
                 if (value.block !== block.next) {
-                    return {
+                    // A block was found. We should cache it.
+                    const data = {
                         id: block.id,
                         opcode: block.opcode
                     };
+
+                    if (blockIdParents[childId]) blockIdParents[childId]._direct_ = data;
+                    return data;
                 }
             }
         }
+
+        // If we reach here, no block was found. We should cache that.
+        if (blockIdParents[childId]) blockIdParents[childId]._direct_ = null;
         return null;
     }
 
@@ -199,9 +219,16 @@ class Blocks {
     findParentBlockOfType (opcode, childId) {
         let block = this.getBlock(childId);
         if (!block) return null;
+        
         if (typeof opcode !== 'string' && !(opcode instanceof RegExp)) return null;
         if (typeof block.parent !== 'string') return null;
-        // lk: TODO: Is there a way to avoid using a while loop?
+
+        // If it was cached, just return that.
+        const blockIdParents = this._cache.blockIdParents;
+        if (blockIdParents[childId]?.[opcode]) return blockIdParents[childId][opcode];
+
+        blockIdParents[childId] = blockIdParents[childId] ?? {};
+
         while (block.parent !== null) {
             block = this._blocks[block.parent];
             if (typeof block.inputs !== 'object') {
@@ -213,15 +240,23 @@ class Blocks {
             if (opcode instanceof RegExp && !block.opcode.match(opcode)) {
                 continue;
             }
-            for (const value of Object.values(block.inputs)) {
+            for (const key in block.inputs) {
+                const value = block.inputs[key];
                 if (value.block !== block.next) {
-                    return {
+                    // A block was found. We should cache it.
+                    const data = {
                         id: block.id,
                         opcode: block.opcode
                     };
+
+                    if (opcode !== '_direct_' && blockIdParents[childId]) blockIdParents[childId][opcode] = data;
+                    return data;
                 }
             }
         }
+
+        // If we reach here, no block was found. We should cache that.
+        if (opcode !== '_direct_' && blockIdParents[childId]) blockIdParents[childId][opcode] = null;
         return null;
     }
 
@@ -480,6 +515,8 @@ class Blocks {
             this.runtime.toggleScript(e.blockId, {stackClick: true});
             return;
         }
+
+        if (!(e.type.startsWith('comment_') || e.type.startsWith('var_'))) this._cache.blockIdParents = {};
 
         // Block create/update/destroy
         switch (e.type) {
