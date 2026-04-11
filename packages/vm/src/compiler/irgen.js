@@ -714,21 +714,21 @@ class ScriptTreeGenerator {
                 cases: this.descendSubstack(block, 'SUBSTACK')
             });
         // lk: If we don't no-op case blocks outside of a switch block, JS (and in extension, the compiler) will throw an error.
-        case 'control_case':
-            if (this.blocks.getBlock(block.parent)?.opcode !== 'control_switch') {
-                return new IntermediateStackBlock(StackOpcode.NOP);
-            }
+        case 'control_case': {
+            const parentBlock = this.blocks.findParentBlockOfType('control_switch', block.id);
+            if (parentBlock === null) return new IntermediateStackBlock(StackOpcode.NOP);
             return new IntermediateStackBlock(StackOpcode.CONTROL_CASE, {
                 value: this.descendInputOfBlock(block, 'VALUE').toType(InputType.STRING),
                 whenMatched: this.descendSubstack(block, 'SUBSTACK')
             });
-        case 'control_default':
-            if (this.blocks.getBlock(block.parent)?.opcode !== 'control_switch') {
-                return new IntermediateStackBlock(StackOpcode.NOP);
-            }
+        }
+        case 'control_default': {
+            const parentBlock = this.blocks.findParentBlockOfType('control_switch', block.id);
+            if (parentBlock === null) return new IntermediateStackBlock(StackOpcode.NOP);
             return new IntermediateStackBlock(StackOpcode.CONTROL_DEFAULT, {
                 whenNoMatches: this.descendSubstack(block, 'SUBSTACK')
             });
+        }
         case 'control_break': {
             const breakableBlocks = this.runtime.getBreakableBlocksRegExp();
             const parentBlock = this.blocks.findParentBlockOfType(breakableBlocks, block.id);
