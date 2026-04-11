@@ -729,8 +729,13 @@ class ScriptTreeGenerator {
             return new IntermediateStackBlock(StackOpcode.CONTROL_DEFAULT, {
                 whenNoMatches: this.descendSubstack(block, 'SUBSTACK')
             });
-        case 'control_break':
+        case 'control_break': {
+            const breakableBlocks = this.runtime.getBreakableBlocksRegExp();
+            const parentBlock = this.blocks.findParentBlockOfType(breakableBlocks, block.id);
+            if (parentBlock === null) return new IntermediateStackBlock(StackOpcode.NOP);
+
             return new IntermediateStackBlock(StackOpcode.CONTROL_BREAK);
+        }
         case 'control_repeat':
             return new IntermediateStackBlock(StackOpcode.CONTROL_REPEAT, {
                 times: this.descendInputOfBlock(block, 'TIMES').toType(InputType.NUMBER),
