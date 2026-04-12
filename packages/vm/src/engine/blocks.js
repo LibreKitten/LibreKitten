@@ -730,6 +730,7 @@ class Blocks {
         this._cache.compiledScripts = {};
         this._cache.compiledProcedures = {};
         this._cache.proceduresPopulated = false;
+        this._cache.blockIdParents = {};
     }
 
     /**
