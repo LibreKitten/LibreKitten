@@ -1038,3 +1038,69 @@ test('getAllVariableAndListReferences returns broadcast when we tell it to', t =
 
     t.end();
 });
+
+test('lk: findParentBlockOfType', t => {
+    const b = new Blocks(new Runtime());
+    b.createBlock({
+        id: 'foo',
+        opcode: 'TEST_STACK',
+        next: null,
+        fields: {},
+        inputs: {
+            SUBSTACK: {
+                block: 'bar',
+                name: 'SUBSTACK',
+                shadow: null
+            }
+        },
+        topLevel: true
+    });
+    b.createBlock({
+        id: 'bar',
+        opcode: 'TEST_BLOCK',
+        next: null,
+        parent: 'foo',
+        fields: {},
+        inputs: {},
+        topLevel: false
+    });
+    const block = b.findParentBlockOfType('TEST_STACK', 'bar');
+    t.type(block, 'object');
+    const notBlock = b.findParentBlockOfType('TEST_STACK', '?');
+    t.type(notBlock, 'null');
+    const notParentBlock = b.findParentBlockOfType('?', 'bar');
+    t.type(notParentBlock, 'null');
+    t.end();
+});
+
+test('lk: findParentBlock', t => {
+    const b = new Blocks(new Runtime());
+    b.createBlock({
+        id: 'foo',
+        opcode: 'TEST_STACK',
+        next: null,
+        fields: {},
+        inputs: {
+            SUBSTACK: {
+                block: 'bar',
+                name: 'SUBSTACK',
+                shadow: null
+            }
+        },
+        topLevel: true
+    });
+    b.createBlock({
+        id: 'bar',
+        opcode: 'TEST_BLOCK',
+        next: null,
+        parent: 'foo',
+        fields: {},
+        inputs: {},
+        topLevel: false
+    });
+    const block = b.findParentBlock('bar');
+    t.type(block, 'object');
+    const notBlock = b.findParentBlockOfType('?');
+    t.type(notBlock, 'null');
+    t.end();
+});
