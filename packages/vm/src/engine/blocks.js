@@ -189,6 +189,7 @@ class Blocks {
 
         while (block.parent !== null) {
             block = this._blocks[block.parent];
+            if (!block) return null;
             if (typeof block.inputs !== 'object') continue;
             for (const key in block.inputs) {
                 const value = block.inputs[key];
@@ -231,6 +232,7 @@ class Blocks {
 
         while (block.parent !== null) {
             block = this._blocks[block.parent];
+            if (!block) return null;
             if (typeof block.inputs !== 'object') {
                 continue;
             }
