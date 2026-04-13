@@ -244,9 +244,11 @@ class Blocks {
                 continue;
             }
             if (typeof opcode === 'string' && block.opcode !== opcode) {
+                currentId = block.id;
                 continue;
             }
             if (opcode instanceof RegExp && !block.opcode.match(opcode)) {
+                currentId = block.id;
                 continue;
             }
             for (const key in block.inputs) {
@@ -262,6 +264,7 @@ class Blocks {
                     return data;
                 }
             }
+            currentId = block.id;
         }
 
         // If we reach here, no block was found. We should cache that.
