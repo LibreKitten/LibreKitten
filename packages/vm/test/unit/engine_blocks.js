@@ -1104,3 +1104,33 @@ test('lk: findParentBlock', t => {
     t.type(notBlock, 'null');
     t.end();
 });
+
+test('lk: findParentBlock should return correct parent', t => {
+    const b = new Blocks(new Runtime());
+    b.createBlock({
+        id: 'foo',
+        opcode: 'TEST_STACK',
+        next: 'bar',
+        fields: {},
+        inputs: {
+            SUBSTACK: {
+                block: null,
+                name: 'SUBSTACK',
+                shadow: null
+            }
+        },
+        topLevel: true
+    });
+    b.createBlock({
+        id: 'bar',
+        opcode: 'TEST_BLOCK',
+        next: null,
+        parent: 'foo',
+        fields: {},
+        inputs: {},
+        topLevel: false
+    });
+    const block = b.findParentBlock('bar');
+    t.type(block, 'null');
+    t.end();
+});

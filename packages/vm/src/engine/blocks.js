@@ -187,13 +187,17 @@ class Blocks {
         const blockIdParents = this._cache.blockIdParents;
         if (blockIdParents[childId]?._direct_) return blockIdParents[childId]._direct_;
 
+        let currentId = childId;
         while (block.parent !== null) {
             block = this._blocks[block.parent];
             if (!block) return null;
-            if (typeof block.inputs !== 'object') continue;
+            if (typeof block.inputs !== 'object') {
+                currentId = block.id;
+                continue;
+            }
             for (const key in block.inputs) {
                 const value = block.inputs[key];
-                if (value.block !== block.next) {
+                if (value && value.block === currentId) {
                     // A block was found. We should cache it.
                     const data = {
                         id: block.id,
@@ -204,6 +208,7 @@ class Blocks {
                     return data;
                 }
             }
+            currentId = block.id;
         }
 
         // If we reach here, no block was found. We should cache that.
@@ -230,10 +235,12 @@ class Blocks {
 
         blockIdParents[childId] = blockIdParents[childId] ?? {};
 
+        let currentId = childId;
         while (block.parent !== null) {
             block = this._blocks[block.parent];
             if (!block) return null;
             if (typeof block.inputs !== 'object') {
+                currentId = block.id;
                 continue;
             }
             if (typeof opcode === 'string' && block.opcode !== opcode) {
@@ -244,7 +251,7 @@ class Blocks {
             }
             for (const key in block.inputs) {
                 const value = block.inputs[key];
-                if (value.block !== block.next) {
+                if (value && value.block === currentId) {
                     // A block was found. We should cache it.
                     const data = {
                         id: block.id,
