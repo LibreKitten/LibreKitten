@@ -57,7 +57,15 @@ class Scratch3ControlBlocks {
     }
 
     switch (args, util) {
+        const blocks = util.target.blocks;
         const thread = util.thread;
+
+        if (!blocks.validateSubstack(
+            thread.peekStack(),
+            'SUBSTACK',
+            child => child.opcode === 'control_case' || child.opcode === 'control_default'
+        )) return;
+
         thread.setBlockContext(thread.peekStack(), {
             type: 'switch',
             value: Cast.toString(args.VALUE)

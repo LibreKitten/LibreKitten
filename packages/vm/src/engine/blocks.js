@@ -103,7 +103,13 @@ class Blocks {
              * lk: A cache of block IDs and their located parents.
              * @type {object.<string, object.<string, object>>}
              */
-            blockIdParents: {}
+            blockIdParents: {},
+
+            /**
+             * lk: A cache of block IDs and their validated (or not) substacks.
+             * @type {object.<string, object.<string, object>>}
+             */
+            validatedSubstacks: {}
         };
 
         /**
@@ -270,6 +276,42 @@ class Blocks {
         // If we reach here, no block was found. We should cache that.
         if (opcode !== '_direct_' && blockIdParents[childId]) blockIdParents[childId][opcode] = null;
         return null;
+    }
+
+    /**
+     * lk: Validates if a substack's inner blocks conform to a certain way.
+     * @param {string} blockId The ID of the block to validate the substack of.
+     * @param {string} input Where the substack is located.
+     * @param {(child) => boolean} childId The function that validates the sub-block.
+     * @return {boolean} Returns if the substack is valid or not.
+     */
+    validateSubstack (blockId, input, validator) {
+        const thisBlock = this.getBlock(blockId);
+
+        if (typeof input !== 'string') throw new TypeError('"input" must be a string.');
+        if (typeof validator !== 'function') throw new TypeError('"validator" must be a function.');
+        if (!(input in thisBlock.inputs)) throw new Error(`"${input}" is an invalid block input.`);
+
+        // If it was cached, just return that.
+        const validatedSubstacks = this._cache.validatedSubstacks;
+        if (validatedSubstacks[blockId]?.[input]) return validatedSubstacks[blockId][input];
+
+        validatedSubstacks[blockId] = validatedSubstacks[blockId] ?? {};
+
+        let walkedBlock = null;
+        if (thisBlock.inputs[input].block) {
+            walkedBlock = this.getBlock(thisBlock.inputs[input].block);
+        }
+        while (walkedBlock) {
+            if (!validator(walkedBlock)) {
+                if (validatedSubstacks[blockId]) validatedSubstacks[blockId][input] = false;
+                return false;
+            }
+            walkedBlock = this.getBlock(walkedBlock.next);
+        }
+
+        if (validatedSubstacks[blockId]) validatedSubstacks[blockId][input] = true;
+        return true;
     }
 
     /**
@@ -528,7 +570,10 @@ class Blocks {
             return;
         }
 
-        if (!(e.type.startsWith('comment_') || e.type.startsWith('var_'))) this._cache.blockIdParents = {};
+        if (!(e.type.startsWith('comment_') || e.type.startsWith('var_'))) {
+            this._cache.blockIdParents = {};
+            this._cache.validatedSubstacks = {};
+        }
 
         // Block create/update/destroy
         switch (e.type) {
@@ -743,6 +788,7 @@ class Blocks {
         this._cache.compiledProcedures = {};
         this._cache.proceduresPopulated = false;
         this._cache.blockIdParents = {};
+        this._cache.validatedSubstacks = {};
     }
 
     /**
