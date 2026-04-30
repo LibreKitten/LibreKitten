@@ -77,8 +77,8 @@ class Scratch3ControlBlocks {
         const thread = util.thread;
         const blocks = util.target.blocks;
         
-        const block = blocks.findParentBlockOfType('control_switch', thread.peekStack());
-        if (!block) return;
+        const block = blocks.findParentBlock(thread.peekStack());
+        if (block === null || block.opcode !== 'control_switch') return;
         const blockContext = thread.getBlockContext(block.id);
         if (!blockContext || blockContext.type !== 'switch') return;
         
@@ -95,8 +95,8 @@ class Scratch3ControlBlocks {
         const thread = util.thread;
         const blocks = util.target.blocks;
         
-        const block = blocks.findParentBlockOfType('control_switch', thread.peekStack());
-        if (!block) return;
+        const block = blocks.findParentBlock(thread.peekStack());
+        if (block === null || block.opcode !== 'control_switch') return;
         const blockContext = thread.getBlockContext(block.id);
         if (!blockContext || blockContext.type !== 'switch') return;
         
