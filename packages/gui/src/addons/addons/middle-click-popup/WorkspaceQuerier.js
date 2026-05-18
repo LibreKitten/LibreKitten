@@ -6,7 +6,8 @@
  * Once you *think* you understand the function of the major classes, read the docs on
  * {@link WorkspaceQuerier._createTokenGroups} for some more specifics on the algorithm works,
  * and to achieve maximum enlightenment.
- *
+ * 
+ * lk: Added support for the Universal block type.
  * @author Tacodiva
  */
 
@@ -1319,6 +1320,7 @@ export default class WorkspaceQuerier {
 
     this.tokenGroupRoundBlocks = new TokenProviderGroup(); // Round blocks like (() + ()) or (my variable)
     this.tokenGroupBooleanBlocks = new TokenProviderGroup(); // Boolean blocks like <not ()>
+    this.tokenGroupUniversalBlocks = new TokenProviderGroup(); // Boolean blocks like <not ()>
     this.tokenGroupStackBlocks = new TokenProviderGroup(); // Stackable blocks like `move (10) steps`
     this.tokenGroupHatBlocks = new TokenProviderGroup(); // Hat block like `when green flag clicked`
 
@@ -1327,6 +1329,8 @@ export default class WorkspaceQuerier {
     this.tokenGroupBoolean.inner.pushProviders([
       this.tokenGroupBooleanBlocks,
       new TokenTypeBrackets(this.tokenGroupBoolean),
+      // lk:
+      this.tokenGroupUniversalBlocks,
     ]);
     this.tokenGroupBoolean.inner.pushProviders([this.tokenGroupRoundBlocks], false);
 
@@ -1337,6 +1341,8 @@ export default class WorkspaceQuerier {
       this.tokenGroupRoundBlocks,
       this.tokenGroupBooleanBlocks,
       new TokenTypeBrackets(this.tokenGroupNumber),
+      // lk:
+      this.tokenGroupUniversalBlocks,
     ]);
 
     // Anything that fits into a string hole (Round blocks + Boolean blocks + String Literals + Brackets)
@@ -1346,6 +1352,8 @@ export default class WorkspaceQuerier {
       this.tokenGroupRoundBlocks,
       this.tokenGroupBooleanBlocks,
       new TokenTypeBrackets(this.tokenGroupString),
+      // lk:
+      this.tokenGroupUniversalBlocks,
     ]);
 
     // Anything that fits into a c shaped hole (Stackable blocks)
@@ -1358,6 +1366,8 @@ export default class WorkspaceQuerier {
       this.tokenGroupBooleanBlocks,
       this.tokenGroupRoundBlocks,
       this.tokenGroupHatBlocks,
+      // lk:
+      this.tokenGroupUniversalBlocks,
     ]);
   }
 
@@ -1400,6 +1410,9 @@ export default class WorkspaceQuerier {
         case BlockShape.Hat:
           this.tokenGroupHatBlocks.pushProviders([blockTokenType]);
           break;
+        // lk:
+        case BlockShape.Universal:
+          this.tokenGroupUniversalBlocks.pushProviders([blockTokenType]);
       }
     }
   }
