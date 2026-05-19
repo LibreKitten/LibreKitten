@@ -76,10 +76,9 @@
 
 .blocks :global(.blocklyBlockDragSurface) {
     /*
-        Fix an issue where the drag surface was preventing hover events for sharing blocks.
-        This does not prevent user interaction on the blocks themselves.
+        lk: There was a fix here, but it doesn't seem to be needed anymore, and removing it makes the cursor properly themed.
+        AmpMod crab speedrun, here we come!11!1! /j
     */
-    pointer-events: none;
     z-index: $z-index-drag-layer; /* make blocks match gui drag layer */
 }
 
