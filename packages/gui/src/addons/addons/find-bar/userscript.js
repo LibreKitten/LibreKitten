@@ -154,7 +154,7 @@ export default async function ({ addon, msg, console }) {
           return;
         }
 
-        if (this.selectedTab === 0) {
+        if (this.selectedTab === 'codeTab') {
           this.utils.navigationHistory.goBack();
           e.cancelBubble = true;
           e.preventDefault();
@@ -168,7 +168,7 @@ export default async function ({ addon, msg, console }) {
           return;
         }
 
-        if (this.selectedTab === 0) {
+        if (this.selectedTab === 'codeTab') {
           this.utils.navigationHistory.goForward();
           e.cancelBubble = true;
           e.preventDefault();
