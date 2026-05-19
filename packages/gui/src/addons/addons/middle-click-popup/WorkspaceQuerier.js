@@ -1434,6 +1434,7 @@ export default class WorkspaceQuerier {
 
     this.tokenGroupBooleanBlocks = null;
     this.tokenGroupRoundBlocks = null;
+    this.tokenGroupUniversalBlocks = null;
     this.tokenGroupStackBlocks = null;
     this.tokenGroupHatBlocks = null;
     this.tokenGroupBoolean = null;
