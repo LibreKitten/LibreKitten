@@ -1,6 +1,8 @@
 /**
  * @file Contains the code for enumerating the different types of blocks in a workspace,
  * and provides a more friendly way to create instances blocks with some inputs.
+ * 
+ * lk: Added support for the Universal block type.
  */
 
 /**
@@ -149,7 +151,7 @@ export class BlockInputBoolean extends BlockInput {
   setValue(block, value) {
     if (value instanceof BlockInstance) {
       const subblock = value.createWorkspaceForm();
-      if (!subblock.outputConnection || value.typeInfo.shape !== BlockShape.Boolean)
+      if (!subblock.outputConnection || !(value.typeInfo.shape === BlockShape.Boolean || value.typeInfo.shape === BlockShape.Universal))
         throw new Error('Cannot put block "' + value.typeInfo.id + '" into a boolean type input.');
       subblock.outputConnection.connect(this.getInput(block).connection);
     } else {
@@ -293,12 +295,15 @@ export class BlockInstance {
 export class BlockShape {
   static Round = new BlockShape(false, false, true);
   static Boolean = new BlockShape(false, false, true);
+  static Universal = new BlockShape(false, false, true);
   static Hat = new BlockShape(false, true, false);
   static End = new BlockShape(true, false, false);
   static Stack = new BlockShape(true, true, false);
 
   static getBlockShape(workspaceBlock) {
-    if (workspaceBlock.edgeShape_ === 2) {
+    if (workspaceBlock.edgeShape_ === 3) {
+      return BlockShape.Universal;
+    } else if (workspaceBlock.edgeShape_ === 2) {
       return BlockShape.Round;
     } else if (workspaceBlock.edgeShape_ === 1) {
       return BlockShape.Boolean;

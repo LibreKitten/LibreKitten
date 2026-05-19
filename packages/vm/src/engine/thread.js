@@ -622,10 +622,6 @@ class Thread {
                 if (canCache) {
                     blocks.cacheCompileError(topBlock, error);
                 }
-                if (!this.target.runtime.isPackaged) {
-                    this.target.runtime.errorGlow(this.topBlock, true);
-                    return;
-                }
                 this.target.runtime.emitCompileError(this.target, error);
                 return;
             }

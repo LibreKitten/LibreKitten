@@ -1,6 +1,8 @@
 /**
  * @file Contains the code for rendering the blocks in the middle click dropdown.
  * Main function is {@link renderBlock} which takes in a block and returns a renderer SVG element.
+ * 
+ * lk: Added support for the Universal block type.
  * @author Tacodiva
  */
 
@@ -39,6 +41,18 @@ const BlockShapes = {
     snugglePadding: 0,
     get snuggleWith() {
       return [BlockShapes.Boolean];
+    },
+  },
+
+  // lk: Universal type for things like ternary ifs.
+  Universal: {
+    padding: 8,
+    minWidth: 20,
+    backgroundPath: (width) => `m -8 -20 A 4 4 0 0 1 -4 -24 H ${width + 8} a 4 4 0 0 1 4 4 v 36 a 4 4 0 0 1 -4 4 H -4 a 4 4 0 0 1 -4 -4 z`,
+
+    snugglePadding: 0,
+    get snuggleWith() {
+      return [BlockShapes.Round, BlockShapes.Boolean];
     },
   },
 
@@ -82,7 +96,7 @@ const BlockShapes = {
 
     snugglePadding: 4,
     get snuggleWith() {
-      return [BlockShapes.Round];
+      return [BlockShapes.Round, BlockShapes.Universal];
     },
   },
 
@@ -93,7 +107,7 @@ const BlockShapes = {
 
     snugglePadding: 6,
     get snuggleWith() {
-      return [BlockShapes.Boolean];
+      return [BlockShapes.Boolean, BlockShapes.Universal];
     },
   },
 
@@ -123,6 +137,7 @@ const BlockShapes = {
 function getShapeInfo(shape, isVertical) {
   if (shape === BlockShape.Round) return BlockShapes.Round;
   if (shape === BlockShape.Boolean) return BlockShapes.Boolean;
+  if (shape === BlockShape.Universal) return BlockShapes.Universal;
   if (shape === BlockShape.Stack) return isVertical ? BlockShapes.Stack : BlockShapes.HorizontalBlock;
   if (shape === BlockShape.Hat) return BlockShapes.Hat;
   if (shape === BlockShape.End) return isVertical ? BlockShapes.End : BlockShapes.HorizontalBlockEnd;
@@ -141,6 +156,7 @@ export function getBlockHeight(block) {
       return 62;
     case BlockShape.Boolean:
     case BlockShape.Round:
+    case BlockShape.Universal:
       return 48;
   }
   return 0;

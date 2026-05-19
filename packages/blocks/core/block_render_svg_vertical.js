@@ -1153,6 +1153,9 @@ Blockly.BlockSvg.prototype.renderDraw_ = function(iconWidth, inputRows) {
       this.edgeShapeWidth_ = inputRows.bottomEdge / 2;
       this.edgeShape_ = shape;
       this.squareTopLeftCorner_ = true;
+    } else if (shape === Blockly.OUTPUT_SHAPE_SQUARE) {
+      // lk: Special case square inputs, because putting it above makes rendering buggy.
+      this.edgeShape_ = shape;
     }
   }
 
@@ -1192,6 +1195,8 @@ Blockly.BlockSvg.prototype.renderClassify_ = function() {
       shapes.push('boolean');
     } else if (this.edgeShape_ === Blockly.OUTPUT_SHAPE_ROUND) {
       shapes.push('round');
+    } else if (this.edgeShape_ === Blockly.OUTPUT_SHAPE_SQUARE) {
+      shapes.push('square');
     }
   } else {
     // count the number of statement inputs
@@ -1323,7 +1328,7 @@ Blockly.BlockSvg.prototype.renderDrawRight_ = function(steps,
       // Move to the right edge
       cursorX = Math.max(cursorX, inputRows.rightEdge);
       this.width = Math.max(this.width, cursorX);
-      if (!this.edgeShape_) {
+      if (!this.edgeShape_ || this.edgeShape_ === Blockly.OUTPUT_SHAPE_SQUARE) {
         // Include corner radius in drawing the horizontal line.
         steps.push('H', cursorX - Blockly.BlockSvg.CORNER_RADIUS - this.edgeShapeWidth_);
         steps.push(Blockly.BlockSvg.TOP_RIGHT_CORNER);
@@ -1333,7 +1338,7 @@ Blockly.BlockSvg.prototype.renderDrawRight_ = function(steps,
       }
       // Subtract CORNER_RADIUS * 2 to account for the top right corner
       // and also the bottom right corner. Only move vertically the non-corner length.
-      if (!this.edgeShape_) {
+      if (!this.edgeShape_ || this.edgeShape_ === Blockly.OUTPUT_SHAPE_SQUARE) {
         steps.push('v', row.height - Blockly.BlockSvg.CORNER_RADIUS * 2);
       }
     } else if (row.type == Blockly.NEXT_STATEMENT) {
@@ -1425,7 +1430,7 @@ Blockly.BlockSvg.prototype.renderInputShape_ = function(input, x, y) {
  */
 Blockly.BlockSvg.prototype.renderDrawBottom_ = function(steps, cursorY) {
   this.height = cursorY;
-  if (!this.edgeShape_) {
+  if (!this.edgeShape_ || this.edgeShape_ === Blockly.OUTPUT_SHAPE_SQUARE) {
     steps.push(Blockly.BlockSvg.BOTTOM_RIGHT_CORNER);
   }
   if (this.nextConnection) {
@@ -1445,7 +1450,7 @@ Blockly.BlockSvg.prototype.renderDrawBottom_ = function(steps, cursorY) {
     this.height += Blockly.BlockSvg.NOTCH_HEIGHT;
   }
   // Bottom horizontal line
-  if (!this.edgeShape_) {
+  if (!this.edgeShape_ || this.edgeShape_ === Blockly.OUTPUT_SHAPE_SQUARE) {
     steps.push('H', Blockly.BlockSvg.CORNER_RADIUS);
     // Bottom left corner
     steps.push(Blockly.BlockSvg.BOTTOM_LEFT_CORNER);
@@ -1465,7 +1470,7 @@ Blockly.BlockSvg.prototype.renderDrawLeft_ = function(steps) {
     // Scratch-style reporters have output connection y at half block height.
     this.outputConnection.setOffsetInBlock(0, this.height / 2);
   }
-  if (this.edgeShape_) {
+  if (this.edgeShape_ || this.edgeShape_ === Blockly.OUTPUT_SHAPE_SQUARE) {
     // Draw the left-side edge shape.
     if (this.edgeShape_ === Blockly.OUTPUT_SHAPE_ROUND) {
       // Draw a rounded arc.

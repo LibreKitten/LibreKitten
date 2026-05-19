@@ -25,6 +25,7 @@ const platform = require('./tw-platform.js');
 const safeStringify = require('../util/tw-safe-stringify.js');
 const MonitorState = require('./tw-monitor-state.js');
 const escapeRegExp = require('../util/regex-escape.js');
+const DialogUtils = require('../util/lk-dialog-utils.js');
 
 // Virtual I/O devices.
 const Clock = require('../io/clock');
@@ -550,6 +551,12 @@ class Runtime extends EventEmitter {
          * @type {Object.<string, object>}
          */
         this.extensionStorage = {};
+
+        /**
+         * lk: Provides utilities for opening dialogs. Registered in the GUI.
+         * @type {DialogUtils}
+         */
+        this.dialogUtils = new DialogUtils();
 
         /**
          * Total number of scratch-storage load() requests since the runtime was created or cleared.

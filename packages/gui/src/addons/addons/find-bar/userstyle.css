@@ -125,7 +125,7 @@
 }
 
 .sa-find-dropdown .sa-block-color {
-  color: var(--sa-block-colored-text);
+  color: var(--sa-block-background-tertiary);
 }
 .sa-find-dropdown .sa-block-color:hover,
 .sa-find-dropdown .sa-block-color.sel {

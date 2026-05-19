@@ -21,7 +21,7 @@
   },
   "keywords": [],
   "author": "",
-  "packageManager": "pnpm@10.13.1",
+  "packageManager": "pnpm@11.1.2",
   "pnpm": {
     "onlyBuiltDependencies": [
       "@swc/core",

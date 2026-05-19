@@ -1,4 +1,5 @@
 const defaultsDeep = require('lodash.defaultsdeep');
+const fs = require('fs');
 const path = require('path');
 const webpack = require('webpack');
 
@@ -31,6 +32,30 @@ if (root.length > 0 && !root.endsWith('/')) {
     throw new Error('If ROOT is defined, it must have a trailing slash.');
 }
 
+// lk: Added the option to have a worktree tree folder config to ease developing multiple branches at a time.
+const getWorktreeConfig = () => {
+    let wtConfig = null;
+    let wtConfigParsed = null;
+
+    try {
+        wtConfig = fs.readFileSync('../../worktree-cfg.json');
+    } catch {
+        console.log(
+            'NOTE: No worktree folder config file was detected. If you didn\'t intend for one, ' +
+            'you can safely ignore this message.'
+        );
+        return null;
+    }
+
+    try {
+        wtConfigParsed = JSON.parse(wtConfig);
+    } catch {
+        throw new Error('Failed to parse worktree folder config! Is it valid JSON?');
+    }
+    // lk: We only need the config for the GUI, so extract that one.
+    if (wtConfigParsed.packages && wtConfigParsed.packages.gui) return wtConfigParsed.packages.gui;
+};
+
 const htmlWebpackPluginCommon = {
     root: root,
     meta: JSON.parse(process.env.EXTRA_META || '{}'),
@@ -40,6 +65,8 @@ const htmlWebpackPluginCommon = {
 
 // When this changes, the path for all JS files will change, bypassing any HTTP caches
 const CACHE_EPOCH = 'pentapod';
+
+const wtConfig = getWorktreeConfig();
 
 const base = {
     mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
@@ -56,7 +83,7 @@ const base = {
         host: '0.0.0.0',
         // disableHostCheck: true,
         compress: true,
-        port: process.env.PORT || 8601,
+        port: process.env.PORT || wtConfig?.port || 8601,
         // allows ROUTING_STYLE=wildcard to work properly
         historyApiFallback: {
             rewrites: [

@@ -51,7 +51,7 @@ Blockly.Blocks['control_ternary_if'] = {
       ],
       "output": null,
       "outputShape": Blockly.OUTPUT_SHAPE_SQUARE,
-      "category": Blockly.Categories.operators,
+      "category": Blockly.Categories.control,
       "extensions": ["colours_control"],
       "tooltip": Blockly.Msg.CONTROL_TERNARY_IF_TOOLTIP
     });

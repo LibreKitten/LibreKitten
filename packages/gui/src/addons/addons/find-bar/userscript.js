@@ -154,7 +154,7 @@ export default async function ({ addon, msg, console }) {
           return;
         }
 
-        if (this.selectedTab === 0) {
+        if (this.selectedTab === 'codeTab') {
           this.utils.navigationHistory.goBack();
           e.cancelBubble = true;
           e.preventDefault();
@@ -168,7 +168,7 @@ export default async function ({ addon, msg, console }) {
           return;
         }
 
-        if (this.selectedTab === 0) {
+        if (this.selectedTab === 'codeTab') {
           this.utils.navigationHistory.goForward();
           e.cancelBubble = true;
           e.preventDefault();
@@ -187,11 +187,11 @@ export default async function ({ addon, msg, console }) {
 
       this.dropdownOut.classList.add("visible");
       let scratchBlocks =
-        this.selectedTab === 0
+        this.selectedTab === 'codeTab'
           ? this.getScratchBlocks()
-          : this.selectedTab === 1
+          : this.selectedTab === 'costumesTab'
             ? this.getScratchCostumes()
-            : this.selectedTab === 2
+            : this.selectedTab === 'soundsTab'
               ? this.getScratchSounds()
               : [];
 

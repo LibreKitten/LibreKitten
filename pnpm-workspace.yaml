@@ -1,2 +1,9 @@
 packages:
   - 'packages/*'
+allowBuilds:
+  '@swc/core': true
+  chromedriver: true
+  core-js: true
+  es5-ext: true
+  esbuild: true
+  scratch-blocks: true

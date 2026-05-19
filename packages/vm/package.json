@@ -57,7 +57,6 @@
     "pify": "^4.0.1",
     "scratch-sb1-converter": "0.2.7",
     "scratch-translate-extension-languages": "^1.0.7",
-    "sweetalert2": "^11.10.5",
     "text-encoding": "0.7.0",
     "uuid": "8.3.2",
     "worker-loader": "^1.1.1",

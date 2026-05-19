@@ -525,6 +525,7 @@ class MenuBar extends React.Component {
                                         draggable={false}
                                         width={20}
                                         height={20}
+                                        className={styles.iconFilter}
                                     />
                                     <img
                                         src={dropdownCaret}
