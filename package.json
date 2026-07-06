@@ -21,20 +21,7 @@
   },
   "keywords": [],
   "author": "",
-  "packageManager": "pnpm@11.1.2",
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "@swc/core",
-      "core-js",
-      "es5-ext",
-      "esbuild",
-      "fsevents",
-      "chromedriver",
-      "esbuild",
-      "fsevents",
-      "scratch-blocks"
-    ]
-  },
+  "packageManager": "pnpm@11.10.0",
   "devDependencies": {
     "@swc/core": "^1.11.21",
     "browserslist": "4.28.0",
