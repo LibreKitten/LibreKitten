@@ -16,7 +16,7 @@
     color: $text-primary;
     cursor: pointer;
     user-select: none;
-    transition: background 0.6s;
+    transition: background 0.25s;
 }
 
 .backpack-header:hover {
