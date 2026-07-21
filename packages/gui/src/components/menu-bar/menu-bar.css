@@ -34,7 +34,7 @@
     background-image: $menu-bar-background-image;
     color: $menu-bar-foreground;
 
-    transition: background 0.35s, margin 0.35s;
+    transition: background 0.35s, margin 0.35s, border-radius, 0.35s;
     margin: 0.35rem 0.35rem 0 0.35rem;
     border-radius: $radius;
     box-shadow: 0 0 0.25rem $ui-black-transparent;
@@ -42,6 +42,11 @@
 
 .menu-bar.slidable {
     margin-top: -2.45em;
+}
+
+.menu-bar:not(.slidable) {
+    margin: 0;
+    border-radius: 0;
 }
 
 .menu-bar.slidable:hover, .menu-bar.slidable.opened, .menu-bar.slidable:focus-within {
@@ -265,4 +270,8 @@
 
 .icon-filter {
     filter: $icon-filter;
+}
+
+.lock-icon-margin {
+    margin-right: 0.25rem;
 }

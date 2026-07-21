@@ -98,6 +98,8 @@ import fileIcon from './icon--file.svg';
 import editIcon from './icon--edit.svg';
 import errorIcon from './tw-error.svg';
 import advancedIcon from './tw-advanced.svg';
+import lockIcon from './lk-lock.svg';
+import lockOpenIcon from './lk-lock-open.svg';
 
 import ninetiesLogo from './nineties_logo.svg';
 import catLogo from './cat_logo.svg';
@@ -226,6 +228,7 @@ class MenuBar extends React.Component {
             'handleClickSeeCommunity',
             'handleClickShare',
             'handleDevServerUpload',
+            'handleLock',
             'handleMenuOpen',
             'handleSetMode',
             'handleKeyPress',
@@ -234,7 +237,8 @@ class MenuBar extends React.Component {
             'restoreOptionMessage'
         ]);
         this.state = {
-            opened: false
+            opened: false,
+            slidable: this.props.slidable
         };
     }
     componentDidMount () {
@@ -321,6 +325,12 @@ class MenuBar extends React.Component {
                 method: 'POST',
                 body: reader.result
             });
+        });
+    }
+    handleLock () {
+        this.setState({
+            ...this.state,
+            slidable: !this.state.slidable
         });
     }
     handleMenuOpen (value) {
@@ -519,8 +529,8 @@ class MenuBar extends React.Component {
                     this.props.className,
                     styles.menuBar,
                     {
-                        [styles.slidable]: this.props.slidable,
-                        [styles.opened]: this.state.opened && this.props.slidable
+                        [styles.slidable]: this.state.slidable,
+                        [styles.opened]: this.state.opened && this.state.slidable
                     }
                 )}
             >
@@ -1033,6 +1043,43 @@ class MenuBar extends React.Component {
                     <TWSaveStatus
                         showSaveFilePicker={this.props.showSaveFilePicker}
                     />
+                    <MenuLabel
+                        onOpen={this.handleLock}
+                    >
+                        {this.state.slidable ? (
+                            <>
+                                <img
+                                    src={lockOpenIcon}
+                                    draggable={false}
+                                    width={20}
+                                    height={20}
+                                    className={classNames(styles.iconFilter, styles.lockIconMargin)}
+                                />
+                                <FormattedMessage
+                                    defaultMessage="Pin"
+                                    // eslint-disable-next-line max-len
+                                    description="Menu bar button for stopping the menu bar from shifting around, a.k.a. unpinning."
+                                    id="lk.menuBar.pin"
+                                />
+                            </>
+                        ) : (
+                            <>
+                                <img
+                                    src={lockIcon}
+                                    draggable={false}
+                                    width={20}
+                                    height={20}
+                                    className={classNames(styles.iconFilter, styles.lockIconMargin)}
+                                />
+                                <FormattedMessage
+                                    defaultMessage="Unpin"
+                                    // eslint-disable-next-line max-len
+                                    description="Menu bar button for setting the menu bar to shift around, a.k.a. unpinning"
+                                    id="lk.menuBar.unpin"
+                                />
+                            </>
+                        )}
+                    </MenuLabel>
                 </div>
 
                 {aboutButton}
