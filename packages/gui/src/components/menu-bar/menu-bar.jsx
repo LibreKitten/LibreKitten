@@ -112,6 +112,8 @@ import SeeInsideButton from './tw-see-inside.jsx';
 import {notScratchDesktop} from '../../lib/isScratchDesktop.js';
 import {APP_NAME} from '../../lib/brand.js';
 
+import userConfigStore from '../../lib/lk-user-config-store.js';
+
 const ariaMessages = defineMessages({
     tutorials: {
         id: 'gui.menuBar.tutorialsLibrary',
@@ -238,7 +240,7 @@ class MenuBar extends React.Component {
         ]);
         this.state = {
             opened: false,
-            slidable: this.props.slidable
+            slidable: userConfigStore.get('lk:menu-bar-slidable', 'boolean') ?? true
         };
     }
     componentDidMount () {
@@ -328,10 +330,14 @@ class MenuBar extends React.Component {
         });
     }
     handleLock () {
-        this.setState({
-            ...this.state,
-            slidable: !this.state.slidable
-        });
+        try {
+            this.setState({
+                ...this.state,
+                slidable: userConfigStore.set('lk:menu-bar-slidable', !this.state.slidable)
+            });
+        } catch {
+            // ignore
+        }
     }
     handleMenuOpen (value) {
         if (typeof value !== 'string') return;
