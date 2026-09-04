@@ -170,7 +170,7 @@ class UserConfigStore extends EventTarget {
         this.#properties.set(key, value);
         localStorage.setItem(key, this.#castToString(value, propertyType, key)); // This is uncaught on purpose.
 
-        this.dispatchEvent(new Event(UserConfigEvents.PROPERTY_SET, {
+        this.dispatchEvent(new CustomEvent(UserConfigEvents.PROPERTY_SET, {
             detail: {key, value}
         }));
 
