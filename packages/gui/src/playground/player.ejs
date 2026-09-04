@@ -49,8 +49,12 @@
       .splash-screen[hidden] {
         display: none;
       }
-      .splash-screen[data-theme="dark"] {
+      .splash-screen[data-theme="dark"]{
         background-color: #333;
+        color: white;
+      }
+      .splash-screen[data-theme="dark-modern"]{
+        background-color: #1c1c1c;
         color: white;
       }
       .splash-screen[data-theme="light-modern"] {
@@ -70,7 +74,8 @@
         height: 128px;
         animation: splash-spinner 0.75s infinite alternate ease-in-out;
       }
-      .splash-screen[data-theme="light-modern"] .splash-spinner::after {
+      .splash-screen[data-theme="light-modern"] .splash-spinner::after,
+      .splash-screen[data-theme="dark-modern"] .splash-spinner::after {
         background-image: url('/images/librekitten-colour.svg');
       }
       @keyframes splash-spinner {
@@ -149,6 +154,8 @@
           theme = 'dark';
         } else if (themeSetting === 'light-modern') {
           theme = 'light-modern';
+        } else if (themeSetting === 'dark-modern') {
+          theme = 'dark-modern';
         } else if (themeSetting) {
           try {
             var parsed = JSON.parse(themeSetting);
@@ -164,7 +171,8 @@
             if (
               parsed.gui === 'dark' ||
               parsed.gui === 'light' ||
-              parsed.gui === 'light-modern'
+              parsed.gui === 'light-modern' ||
+              parsed.gui === 'dark-modern'
             ) {
               theme = parsed.gui;
             }
@@ -174,12 +182,12 @@
         }
 
         if (!theme) {
-          theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light-modern';
+          theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark-modern' : 'light-modern';
         }
 
         var splash = document.querySelector('.spash-waiting-for-js');
         splash.setAttribute('data-theme', theme);
-        if (!(theme === 'light-modern' || theme === 'dark')) {
+        if (!(theme === 'light-modern' || theme === 'dark' || theme === 'dark-modern')) {
             splash.style.backgroundColor = accent;
             splash.style.color = 'white';
         }

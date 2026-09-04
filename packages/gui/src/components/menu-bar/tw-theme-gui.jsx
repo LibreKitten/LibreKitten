@@ -64,26 +64,32 @@ const GuiThemeMenu = ({
                     // eslint-disable-next-line react/jsx-no-bind
                     onValueChange={value => onChangeTheme(theme.set('gui', value))}
                 >
-                    {Object.keys(GUI_LABELS).map(item => (
-                        <MenuRadioItem
-                            className={classNames(styles.option, styles.inset)}
-                            key={item}
-                            value={item}
-                        >
-                            <Menubar.ItemIndicator className={styles.checkArea}>
-                                <img
-                                    className={classNames(styles.check, styles.iconFilter)}
-                                    width={15}
-                                    Matches
-                                    height={12}
-                                    src={check}
-                                    draggable={false}
-                                />
-                            </Menubar.ItemIndicator>
-                            <ThemeIcon item={item} />
-                            <FormattedMessage {...GUI_LABELS[item]} />
-                        </MenuRadioItem>
-                    ))}
+                    {Object.keys(GUI_LABELS).map(item => {
+                        const label = GUI_LABELS[item];
+                        return (<React.Fragment key={item}>
+                            {label.menuDivider && <Menubar.Separator />}
+                            <MenuRadioItem
+                                className={classNames(
+                                    styles.option,
+                                    styles.inset,
+                                    {[menuStyles.menuSection]: label.menuDivider}
+                                )}
+                                value={item}
+                            >
+                                <Menubar.ItemIndicator className={styles.checkArea}>
+                                    <img
+                                        className={classNames(styles.check, styles.iconFilter)}
+                                        width={15}
+                                        height={12}
+                                        src={check}
+                                        draggable={false}
+                                    />
+                                </Menubar.ItemIndicator>
+                                <ThemeIcon item={item} />
+                                <FormattedMessage {...label} />
+                            </MenuRadioItem>
+                        </React.Fragment>);
+                    })}
                 </Menubar.RadioGroup>
             </Submenu>
         </Menubar.Portal>
@@ -95,11 +101,6 @@ GuiThemeMenu.propTypes = {
     isRtl: PropTypes.bool,
     onChangeTheme: PropTypes.func,
     onOpen: PropTypes.func,
-    theme: PropTypes.instanceOf(Theme)
-};
-
-GuiThemeMenu.propTypes = {
-    onChangeTheme: PropTypes.func,
     theme: PropTypes.instanceOf(Theme)
 };
 

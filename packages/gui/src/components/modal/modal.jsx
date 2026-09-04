@@ -25,10 +25,11 @@ const ModalComponent = props => {
         <ReactModal
             isOpen
             className={classNames(styles.modalContent, Object.values(styleResets).concat(' '), props.className, {
-                [styles.fullScreen]: props.fullScreen
+                [styles.fullScreen]: props.fullScreen,
+                [styles.centered]: props.centered
             })}
             contentLabel={props.contentLabel}
-            overlayClassName={styles.modalOverlay}
+            overlayClassName={classNames(styles.modalOverlay, {[styles.centered]: props.centered})}
             onRequestClose={props.onRequestClose}
         >
             <Box
@@ -106,6 +107,7 @@ const ModalComponent = props => {
 };
 
 ModalComponent.propTypes = {
+    centered: PropTypes.bool,
     children: PropTypes.node,
     className: PropTypes.string,
     contentLabel: PropTypes.oneOfType([

@@ -98,6 +98,8 @@ import fileIcon from './icon--file.svg';
 import editIcon from './icon--edit.svg';
 import errorIcon from './tw-error.svg';
 import advancedIcon from './tw-advanced.svg';
+import lockIcon from './lk-lock.svg';
+import lockOpenIcon from './lk-lock-open.svg';
 
 import ninetiesLogo from './nineties_logo.svg';
 import catLogo from './cat_logo.svg';
@@ -109,6 +111,8 @@ import sharedMessages from '../../lib/shared-messages';
 import SeeInsideButton from './tw-see-inside.jsx';
 import {notScratchDesktop} from '../../lib/isScratchDesktop.js';
 import {APP_NAME} from '../../lib/brand.js';
+
+import userConfigStore from '../../lib/lk-user-config-store.js';
 
 const ariaMessages = defineMessages({
     tutorials: {
@@ -226,12 +230,18 @@ class MenuBar extends React.Component {
             'handleClickSeeCommunity',
             'handleClickShare',
             'handleDevServerUpload',
+            'handleLock',
+            'handleMenuOpen',
             'handleSetMode',
             'handleKeyPress',
             'handleRestoreOption',
             'getSaveToComputerHandler',
             'restoreOptionMessage'
         ]);
+        this.state = {
+            opened: false,
+            slidable: userConfigStore.get('lk:menu-bar-slidable', 'boolean') ?? true
+        };
     }
     componentDidMount () {
         document.addEventListener('keydown', this.handleKeyPress);
@@ -317,6 +327,24 @@ class MenuBar extends React.Component {
                 method: 'POST',
                 body: reader.result
             });
+        });
+    }
+    handleLock () {
+        try {
+            this.setState({
+                ...this.state,
+                slidable: userConfigStore.set('lk:menu-bar-slidable', !this.state.slidable)
+            });
+        } catch {
+            // ignore
+        }
+    }
+    handleMenuOpen (value) {
+        if (typeof value !== 'string') return;
+        // The value doesn't really matter here -- we just need to know if the menu is open or not.
+        // If the value is an empty string, the menu is closed: if it isn't empty, it is open.
+        this.setState({
+            opened: value !== ''
         });
     }
     handleSetMode (mode) {
@@ -505,10 +533,17 @@ class MenuBar extends React.Component {
             <Box
                 className={classNames(
                     this.props.className,
-                    styles.menuBar
+                    styles.menuBar,
+                    {
+                        [styles.slidable]: this.state.slidable,
+                        [styles.opened]: this.state.opened && this.state.slidable
+                    }
                 )}
             >
-                <Menubar.Root className={styles.mainMenu}>
+                <Menubar.Root
+                    className={styles.mainMenu}
+                    onValueChange={this.handleMenuOpen}
+                >
                     <div className={styles.fileGroup}>
                         <a href="/">
                             <MenuLabel onOpen={() => {}}>
@@ -765,7 +800,6 @@ class MenuBar extends React.Component {
                                     src={editIcon}
                                     draggable={false}
                                     width={20}
-                                    edit
                                     height={20}
                                     className={styles.iconFilter}
                                 />
@@ -1015,6 +1049,43 @@ class MenuBar extends React.Component {
                     <TWSaveStatus
                         showSaveFilePicker={this.props.showSaveFilePicker}
                     />
+                    <MenuLabel
+                        onOpen={this.handleLock}
+                    >
+                        {this.state.slidable ? (
+                            <>
+                                <img
+                                    src={lockOpenIcon}
+                                    draggable={false}
+                                    width={20}
+                                    height={20}
+                                    className={classNames(styles.iconFilter, styles.lockIconMargin)}
+                                />
+                                <FormattedMessage
+                                    defaultMessage="Pin"
+                                    // eslint-disable-next-line max-len
+                                    description="Menu bar button for stopping the menu bar from shifting around, a.k.a. unpinning."
+                                    id="lk.menuBar.pin"
+                                />
+                            </>
+                        ) : (
+                            <>
+                                <img
+                                    src={lockIcon}
+                                    draggable={false}
+                                    width={20}
+                                    height={20}
+                                    className={classNames(styles.iconFilter, styles.lockIconMargin)}
+                                />
+                                <FormattedMessage
+                                    defaultMessage="Unpin"
+                                    // eslint-disable-next-line max-len
+                                    description="Menu bar button for setting the menu bar to shift around, a.k.a. unpinning"
+                                    id="lk.menuBar.unpin"
+                                />
+                            </>
+                        )}
+                    </MenuLabel>
                 </div>
 
                 {aboutButton}
@@ -1129,6 +1200,7 @@ MenuBar.propTypes = {
     shouldSaveBeforeTransition: PropTypes.func,
     showSaveFilePicker: PropTypes.func,
     showComingSoon: PropTypes.bool,
+    slidable: PropTypes.bool,
     username: PropTypes.string,
     userOwnsProject: PropTypes.bool,
     vm: PropTypes.instanceOf(VM).isRequired

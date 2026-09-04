@@ -321,6 +321,7 @@ const GUIComponent = props => {
                     showComingSoon={showComingSoon}
                     showOpenFilePicker={showOpenFilePicker}
                     showSaveFilePicker={showSaveFilePicker}
+                    slidable
                     onClickAbout={onClickAbout}
                     onClickAccountNav={onClickAccountNav}
                     onClickAddonSettings={onClickAddonSettings}

@@ -25,6 +25,7 @@ $motion-primary: var(--motion-primary);
 $motion-tertiary: var(--motion-tertiary);
 
 $looks-secondary: var(--looks-secondary);
+$looks-hover: var(--looks-hover);
 $looks-transparent: var(--looks-transparent);
 $looks-light-transparent: var(--looks-light-transparent);
 $looks-secondary-dark: var(--looks-secondary-dark);
@@ -62,7 +63,8 @@ $menu-bar-black-transparent: var(--menu-bar-black-transparent);
 $menu-bar-white: var(--menu-bar-white);
 $menu-bar-text-primary: var(--menu-bar-text-primary);
 $menu-bar-item-hover: var(--menu-bar-item-hover);
-$menu-bar-primary-button: var(--menu-bar-primary-button);
+$menu-bar-primary-button-foreground: var(--menu-bar-primary-button-foreground);
+$menu-bar-primary-button-background: var(--menu-bar-primary-button-background);
 
 $context-menu-item-text: var(--context-menu-item-text);
 $context-menu-item-hover-background: var(--context-menu-item-hover-background);

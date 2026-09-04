@@ -30,6 +30,7 @@ const guiColors = {
     'motion-tertiary': 'hsla(215, 60%, 50%, 1)', /* #3373CC */
 
     'looks-secondary': 'hsla(260, 60%, 60%, 1)', /* #855CD6 */
+    'looks-hover': 'var(--motion-tertiary)',
     'looks-transparent': 'hsla(260, 60%, 60%, 0.35)', /* 35% transparent version of looks-tertiary */
     'looks-light-transparent': 'hsla(260, 60%, 60%, 0.15)', /* 15% transparent version of looks-tertiary */
     'looks-secondary-dark': 'hsla(260, 42%, 51%, 1)', /* #714EB6 */
@@ -67,14 +68,15 @@ const guiColors = {
     'menu-bar-white': 'var(--ui-white-default)',
     'menu-bar-text-primary': 'var(--text-primary-default)',
     'menu-bar-item-hover': 'var(--menu-bar-black-transparent)',
-    'menu-bar-primary-button': 'var(--menu-bar-foreground)',
+    'menu-bar-primary-button-foreground': 'var(--menu-bar-background)',
+    'menu-bar-primary-button-background': 'var(--menu-bar-foreground)',
 
     'context-menu-item-text': 'var(--text-primary)',
     'context-menu-item-hover-background': 'var(--looks-secondary)',
     'context-menu-item-hover-foreground': 'white',
     'context-menu-item-hover-danger': 'hsla(0, 100%, 43.5%, 1)',
 
-    'navbar-background': 'var(--looks-secondary)', /* lk: added nav bar colour */
+    'navbar-background': 'var(--menu-bar-background)', /* lk: added nav bar colour */
 
     'assets-background': '#ffffff',
 

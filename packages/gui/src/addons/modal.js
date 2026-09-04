@@ -2,9 +2,12 @@
 // https://github.com/ScratchAddons/ScratchAddons/blob/master/addon-api/content-script/modal.js
 
 import closeIcon from '../components/close-button/icon--close.svg';
+import closeIconBlack from '../components/close-button/icon--close-black.svg';
 import styles from './modal.css';
 
 export const createEditorModal = (tab, title, {isOpen = false} = {}) => {
+    const closeIconColor = tab.redux.state.scratchGui.theme.theme.getGuiColors()['ui-modal-header-close-button-color'];
+
     const container = Object.assign(document.createElement('div'), {
         className: tab.scratchClass('modal_modal-overlay'),
         dir: tab.direction
@@ -12,7 +15,7 @@ export const createEditorModal = (tab, title, {isOpen = false} = {}) => {
     container.style.display = isOpen ? '' : 'none';
     document.body.appendChild(container);
     const modal = Object.assign(document.createElement('div'), {
-        className: tab.scratchClass('modal_modal-content')
+        className: tab.scratchClass('modal_modal-content', 'lk-style-resets_style-resets')
     });
     modal.addEventListener('click', e => e.stopPropagation());
     container.appendChild(modal);
@@ -31,13 +34,17 @@ export const createEditorModal = (tab, title, {isOpen = false} = {}) => {
     });
     header.appendChild(closeContainer);
     const closeButton = Object.assign(document.createElement('div'), {
-        className: tab.scratchClass('close-button_close-button', 'close-button_large')
+        className: tab.scratchClass('close-button_close-button', 'close-button_large',
+            closeIconColor === 'black' && 'close-button_black'
+        )
     });
     closeContainer.appendChild(closeButton);
     closeButton.appendChild(
         Object.assign(document.createElement('img'), {
-            className: tab.scratchClass('close-button_close-icon'),
-            src: closeIcon
+            className: tab.scratchClass('close-button_close-icon',
+                closeIconColor === 'black' && 'close-button_black'
+            ),
+            src: closeIconColor === 'black' ? closeIconBlack : closeIcon
         })
     );
     const content = Object.assign(document.createElement('div'), {

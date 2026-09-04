@@ -6,6 +6,7 @@
     height: 100%;
     display: flex;
     flex-direction: column;
+    background-color: $ui-primary;
 }
 
 .body-wrapper {
@@ -238,6 +239,13 @@
     border: 1px solid $looks-secondary;
     border-bottom-left-radius: $radius;
     box-sizing: content-box; /* To match scratch-block vertical toolbox borders */
+    
+    transition: background 0.35s, border 0.35s; 
+}
+
+.extension-button-container:hover {
+    background: $looks-hover;
+    border: 1px solid $looks-hover;
 }
 
 $fade-out-distance: 15px;

@@ -30,6 +30,9 @@ npm run prepublish
 
 scratch-gui development server must be restarted to update linked scratch-blocks.
 
+## Backport Notice
+Code for resizing Scratch-Blocks when the container resizes was backported from https://github.com/scratchfoundation/scratch-blocks/pull/3355, as it is useful for use in LibreKitten.
+
 <!--
 #### Scratch Blocks is a library for building creative computing interfaces.
 [![CircleCI](https://dl.circleci.com/status-badge/img/gh/LLK/scratch-blocks/tree/develop.svg?style=shield)](https://dl.circleci.com/status-badge/redirect/gh/LLK/scratch-blocks/tree/develop)

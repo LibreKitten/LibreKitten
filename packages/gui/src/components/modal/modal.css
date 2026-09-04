@@ -12,6 +12,12 @@
     background-color: $ui-modal-overlay;
     backdrop-filter: blur(4px);
     color: $ui-modal-foreground;
+
+    &.centered {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 }
 
 .modal-content * {
@@ -20,6 +26,10 @@
 
 .modal-content {
     margin: 100px auto;
+    &.centered {
+        margin: 0;
+    }
+
     outline: none;
     border: 4px solid $ui-white-transparent;
     padding: 0;
