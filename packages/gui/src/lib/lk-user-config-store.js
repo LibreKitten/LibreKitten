@@ -166,9 +166,8 @@ class UserConfigStore extends EventTarget {
             // eslint-disable-next-line max-len
             throw new UserConfigTypeError(`Property "${key}" was attempted to be set with a ${typeof value} value but it is typed as a ${propertyType}.`);
         }
-
-        this.#properties.set(key, value);
         localStorage.setItem(key, this.#castToString(value, propertyType, key)); // This is uncaught on purpose.
+        this.#properties.set(key, value);
 
         this.dispatchEvent(new CustomEvent(UserConfigEvents.PROPERTY_SET, {
             detail: {key, value}
