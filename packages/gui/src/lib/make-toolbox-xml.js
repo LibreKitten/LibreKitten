@@ -768,6 +768,7 @@ const operators = function (isInitialSetup, isStage, targetId, colors) {
                     </shadow>
                 </value>
             </block>
+            <block type="operator_expandablejoin"/>
             <block type="operator_letter_of">
                 <value name="LETTER">
                     <shadow type="math_whole_number">

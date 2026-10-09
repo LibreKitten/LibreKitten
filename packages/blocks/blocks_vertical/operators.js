@@ -26,6 +26,7 @@ goog.require('Blockly.Blocks');
 goog.require('Blockly.Colours');
 goog.require('Blockly.constants');
 goog.require('Blockly.ScratchBlocks.VerticalExtensions');
+goog.require('Blockly.ScratchBlocks.ExpandableExtensions');
 
 
 Blockly.Blocks['operator_add'] = {
@@ -393,6 +394,33 @@ Blockly.Blocks['operator_join'] = {
       ],
       "category": Blockly.Categories.operators,
       "extensions": ["colours_operators", "output_string"]
+    });
+  }
+};
+Blockly.Blocks['operator_expandablejoin'] = {
+  /**
+   * Block for string join operator.
+   * @this Blockly.Block
+   */
+  init: function() {
+    this.minExpandedInputs = 2;
+    this.jsonInit({
+      "message0": Blockly.Msg.OPERATORS_JOIN,
+      "args0": [
+        {
+          "type": "field_expandable",
+          "buttonType": "add",
+          "name": "ADD"
+        },
+        {
+          "type": "field_expandable",
+          "buttonType": "subtract",
+          "name": "SUBTRACT"
+        },
+      ],
+      "category": Blockly.Categories.operators,
+      "extensions": ["colours_operators", "output_string"],
+      "mutator": ["expandable_inputs"]
     });
   }
 };
