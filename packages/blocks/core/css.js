@@ -493,6 +493,10 @@ Blockly.Css.CONTENT = [
     'fill: $colour_text !important;',
   '}',
 
+  '.blocklyExpandableText {',
+    'fill: $colour_text !important;',
+  '}',
+
   '.blocklyBubbleText {',
     'fill: $colour_textFieldText;',
   '}',

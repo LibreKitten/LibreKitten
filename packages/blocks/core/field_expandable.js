@@ -29,8 +29,6 @@ Blockly.FieldExpandable = function(type, opt_validator) {
 
   // Call parent's constructor.
   Blockly.FieldExpandable.superClass_.constructor.call(this, null, opt_validator);
-
-  this.size_.width = this.size_.height;
 };
 goog.inherits(Blockly.FieldExpandable, Blockly.Field);
 
@@ -84,7 +82,6 @@ Blockly.FieldExpandable.prototype.init = function() {
     'class': 'blocklyBlockBackground',
     'fill-opacity': 1
   }, null);
-  this.className_ = 'blocklyText';
 
   this.fieldGroup_.appendChild(this.textElement_);
   this.fieldGroup_.insertBefore(this.box_, this.textElement_);
@@ -95,6 +92,7 @@ Blockly.FieldExpandable.prototype.init = function() {
   this.sourceBlock_.getSvgRoot().appendChild(this.fieldGroup_);
 
   this.setText(this.buttonType_ === 'add' ? '+' : '-');
+  this.textElement_.classList.add('blocklyExpandableText');
 
   // Force a re-render.
   this.render_();
@@ -132,6 +130,14 @@ Blockly.FieldExpandable.prototype.dispose = function() {
  */
 Blockly.FieldExpandable.prototype.getValue = function() {
   return null;
+};
+
+/**
+ * Hardcoded to just set width to be the same as height and set arrow width to 0.
+ **/
+Blockly.FieldExpandable.prototype.updateWidth = function() {
+  this.size_.width = Blockly.BlockSvg.FIELD_HEIGHT;
+  this.arrowWidth_ = 0;
 };
 
 /**
