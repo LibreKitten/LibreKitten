@@ -236,6 +236,7 @@ Blockly.Msg.OPERATORS_AND = '%1 and %2';
 Blockly.Msg.OPERATORS_OR = '%1 or %2';
 Blockly.Msg.OPERATORS_NOT = 'not %1';
 Blockly.Msg.OPERATORS_JOIN = 'join %1 %2';
+Blockly.Msg.OPERATORS_EXPANDABLEJOIN = 'join';
 Blockly.Msg.OPERATORS_REPLACE = 'in %1 replace %2 with %3';
 Blockly.Msg.OPERATORS_REVERSE = 'reverse %1';
 Blockly.Msg.OPERATORS_GET_FROM_STRING = 'from %1 get letters %2 to %3';

@@ -405,19 +405,7 @@ Blockly.Blocks['operator_expandablejoin'] = {
   init: function() {
     this.minExpandedInputs = 2;
     this.jsonInit({
-      "message0": Blockly.Msg.OPERATORS_JOIN,
-      "args0": [
-        {
-          "type": "field_expandable",
-          "buttonType": "add",
-          "name": "BLOCK_EXPAND"
-        },
-        {
-          "type": "field_expandable",
-          "buttonType": "subtract",
-          "name": "BLOCK_CONTRACT"
-        },
-      ],
+      "message0": Blockly.Msg.OPERATORS_EXPANDABLEJOIN,
       "category": Blockly.Categories.operators,
       "extensions": ["colours_operators", "output_string"],
       "mutator": ["expandable_inputs"]

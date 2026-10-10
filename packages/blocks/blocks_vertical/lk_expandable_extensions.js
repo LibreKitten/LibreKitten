@@ -109,6 +109,17 @@ Blockly.ScratchBlocks.ExpandableExtensions.spoofMutationEvent_ = function() {
   Blockly.Events.fire(new Blockly.Events.BlockChange(this, 'mutation', null, null, xml));
 };
 
+/**
+ * Generates the expandable button fields for a block.
+ */
+Blockly.ScratchBlocks.ExpandableExtensions.genExpandableButtons_ = function() {
+  this.expandableAdd_ = new Blockly.FieldExpandable('add');
+  this.expandableSubtract_ = new Blockly.FieldExpandable('subtract');
+
+  this.appendDummyInput().appendField(this.expandableAdd_);
+  this.appendDummyInput().appendField(this.expandableSubtract_);
+};
+
 // EXTENSIONS //
 
 /**
@@ -203,18 +214,14 @@ Blockly.ScratchBlocks.ExpandableExtensions.EXPANDABLE_INPUTS_FUNC = function() {
     this.inputs_ = 0;
     this.minExpandedInputs = 0;
   }
-  this.expandableAdd_ = this.getField('BLOCK_EXPAND');
-  this.expandableSubtract_ = this.getField('BLOCK_CONTRACT');
-
-  if (!this.expandableAdd_ || !this.expandableSubtract_) {
-    throw 'One or two expandable buttons are missing.';
-  }
 
   this.addExpandedInput_ = Blockly.ScratchBlocks.ExpandableExtensions.addExpandedInput_.bind(this);
   this.fillExpandedInputBlock_ = Blockly.ScratchBlocks.ExpandableExtensions.fillExpandedInputBlock_.bind(this);
   this.spoofMutationEvent_ = Blockly.ScratchBlocks.ExpandableExtensions.spoofMutationEvent_.bind(this);
+  this.genExpandableButtons_ = Blockly.ScratchBlocks.ExpandableExtensions.genExpandableButtons_.bind(this);
 
   if (!this.initialInputsAdded_) {
+    this.genExpandableButtons_();
     this.updateShape_(this.inputs_, false);
   }
 
