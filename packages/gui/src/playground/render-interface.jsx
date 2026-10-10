@@ -169,22 +169,6 @@ class Interface extends React.Component {
                         {...props}
                     />
                     {isHomepage ? (
-                        <div className={classNames(styles.infobox, styles.unsharedUpdate)}>
-                            <p>
-                                <FormattedMessage
-                                    // eslint-disable-next-line max-len
-                                    defaultMessage="WARNING! {APP_NAME} is still in very early alpha and is subject to change. Your projects may break in the future as LibreKitten gets finalized. We may break compatibility with Scratch in the near future. We are sorry that we did not make this clear earlier. We may or may not provide compatibiity modes, but do not get your hopes up. - The Librekitty."
-                                    description="Description of TurboWarp on the homepage"
-                                    id="tw.home.unfinished"
-                                    values={{
-                                        APP_NAME
-                                    }}
-                                />
-                            </p>
-                        </div>
-                    ) : null
-                    }
-                    {isHomepage ? (
                         <React.Fragment>
                             {isBrowserSupported() ? null : (
                                 <BrowserModal isRtl={isRtl} />
