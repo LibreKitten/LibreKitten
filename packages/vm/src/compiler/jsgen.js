@@ -360,6 +360,8 @@ class JSGenerator {
             return `${this.descendInput(node.string)}.substring(${this.descendInput(node.from)} - 1, ${this.descendInput(node.to)} - 1)`;
         case InputOpcode.OP_JOIN:
             return `(${this.descendInput(node.left)} + ${this.descendInput(node.right)})`;
+        case InputOpcode.OP_EXPANDABLE_JOIN:
+            return `(${this.getAllInputsFrom(node).join(' + ')})`;
         case InputOpcode.OP_LENGTH:
             return `${this.descendInput(node.string)}.length`;
         case InputOpcode.OP_LESS: {

@@ -244,6 +244,7 @@ const InputOpcode = {
     OP_STRICT_EQL: 'op.strictEql',
     OP_SUBSTR: 'op.substr',
     OP_JOIN: 'op.join',
+    OP_EXPANDABLE_JOIN: 'op.expandableJoin',
     OP_LENGTH: 'op.length',
     OP_LETTER_OF: 'op.letterOf',
     OP_ABS: 'op.abs',
