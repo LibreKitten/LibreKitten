@@ -203,8 +203,8 @@ Blockly.ScratchBlocks.ExpandableExtensions.EXPANDABLE_INPUTS_FUNC = function() {
     this.inputs_ = 0;
     this.minExpandedInputs = 0;
   }
-  this.expandableAdd_ = this.getField('ADD');
-  this.expandableSubtract_ = this.getField('SUBTRACT');
+  this.expandableAdd_ = this.getField('BLOCK_EXPAND');
+  this.expandableSubtract_ = this.getField('BLOCK_CONTRACT');
 
   if (!this.expandableAdd_ || !this.expandableSubtract_) {
     throw 'One or two expandable buttons are missing.';

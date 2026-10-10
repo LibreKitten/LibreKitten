@@ -410,12 +410,12 @@ Blockly.Blocks['operator_expandablejoin'] = {
         {
           "type": "field_expandable",
           "buttonType": "add",
-          "name": "ADD"
+          "name": "BLOCK_EXPAND"
         },
         {
           "type": "field_expandable",
           "buttonType": "subtract",
-          "name": "SUBTRACT"
+          "name": "BLOCK_CONTRACT"
         },
       ],
       "category": Blockly.Categories.operators,
