@@ -163,6 +163,15 @@ class JSGenerator {
     }
 
     /**
+     * lk: Squashes all node inputs into an array.
+     * @param {Object<string, IntermediateInput>|Object} node All the intermediate inputs in a block.
+     * @returns {string[]} An array of compiled inputs.
+     */
+    getAllInputsFrom (node) {
+        return Object.values(node).map(input => this.descendInput(input));
+    }
+
+    /**
      * @param {IntermediateInput} block Input node to compile.
      * @returns {string} Compiled input.
      */

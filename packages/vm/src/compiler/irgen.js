@@ -173,6 +173,30 @@ class ScriptTreeGenerator {
     }
 
     /**
+     * lk: Gets all inputs of a block, casts it to a certain type, and generathes the final inputs object.
+     * @param {*} parentBlock The parent Scratch block that contains the inputs.
+     * @param {InputType} type The type to cast all the inputs to.
+     * @param {boolean} preserveStrings Should the inputs keep the names of costumes and sounds at strings.
+     * @private
+     * @returns {Object} An object with all inputs as compiled input nodes to insert in an intermediate block.
+     */
+    mapAllInputsOfBlock (parentBlock, type, preserveStrings = false) {
+        const inputs = Object.create(null);
+        for (const [key, input] of Object.entries(parentBlock.inputs)) {
+            if (!input) continue;
+            const inputId = input.block;
+            const block = this.getBlockById(inputId);
+            if (!block) continue;
+
+            const intermediate = this.descendInput(block, preserveStrings).toType(type);
+            this.script.yields = this.script.yields || intermediate.yields;
+            inputs[key.toLowerCase()] = intermediate;
+        }
+
+        return inputs;
+    }
+
+    /**
      * Descend into a child input of a block. (eg. the input STRING of "length of ( )")
      * @param {*} parentBlock The parent Scratch block that contains the input.
      * @param {string} inputName The name of the input to descend into.
