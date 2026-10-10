@@ -1,3 +1,6 @@
+import ampmodIcon from './assets/mods/ampmod.webp';
+import unknownIcon from './assets/unknown.png';
+
 const shuffle = list => {
     for (let i = list.length - 1; i > 0; i--) {
         const random = Math.floor(Math.random() * (i + 1));
@@ -17,7 +20,7 @@ const shuffle = list => {
 
 const fromHardcoded = ({userID = '0', username, url, img}) => {
     const result = {
-        image: 'images/unknown.png',
+        image: unknownIcon,
         text: username
     };
     if (username && userID !== '0') {
@@ -41,7 +44,7 @@ const contributors = [
     },
     {
         username: 'This could be you!',
-        url: 'https://codeberg.org/LibreKitten'
+        url: '/for-contributors.html'
     },
     {
         username: 'nmsderp',
@@ -50,13 +53,18 @@ const contributors = [
     },
     {
         username: 'dumo',
-        img: 'https://codeberg.org/avatars/c9a451e80c5aa5e03f70fa22950f60d7cad58af959a604e2964df079bf818cdd?size=80',
+        img: 'https://codeberg.org/avatars/c9a451e80c5aa5e03f70fa22950f60d7cad58af959a604e2964df079bf818cdd',
         url: 'https://codeberg.org/dumo'
     },
     {
-        username: 'aec',
-        img: 'https://codeberg.org/avatars/54f7140b31fcdbdcc97d02b556b8e81b84768c2423e23b85f1a61e0684c28b03?size=80',
-        url: 'https://codeberg.org/aec'
+        username: 'ampelc',
+        img: 'https://codeberg.org/avatars/a081e469d92323810c8d059e513e57b66e873c2ae137cd37abe9d5e747c9b8aa',
+        url: 'https://codeberg.org/ampelc'
+    },
+    {
+        username: 'MineTurte',
+        img: 'https://codeberg.org/avatars/5a8b0a1a6e9d8dd3aa4faae0b8c46e55ee498bd89e0b06e1e9eed7526fcbdeeb',
+        url: 'https://codeberg.org/MineTurte'
     }
 ].map(fromHardcoded);
 
@@ -356,9 +364,18 @@ const docs = [
     }
 ].map(fromHardcoded);
 
+const mods = [
+    {
+        username: 'AmpMod',
+        img: ampmodIcon,
+        url: 'https://ampmod.org/'
+    }
+].map(fromHardcoded);
+
 export default {
     contributors: shuffle(contributors),
     addonDevelopers: shuffle(addonDevelopers),
     extensionDevelopers: shuffle(extensionDevelopers),
-    docs: shuffle(docs)
+    docs: shuffle(docs),
+    mods: shuffle(mods)
 };

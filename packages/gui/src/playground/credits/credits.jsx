@@ -14,7 +14,7 @@ import UserData from './users';
 import Header from '../../components/lk-header/header.jsx';
 import Footer from '../../components/lk-footer/footer.jsx';
 
-import librekitty from './purring-librekitty-with-love-heart.svg';
+import librekitty from './assets/purring-librekitty-with-love-heart.svg';
 
 /* eslint-disable react/jsx-no-literals */
 
@@ -69,18 +69,28 @@ const Credits = () => (
                     {APP_NAME} Credits
                 </h1>
                 <p>
-                    The {APP_NAME} project is made possible by TurboWarp and Scratch. To them, thank you.
-                    Without them, programming would have been less accessible to people, and people would
-                    have had to learn confusing programming languages not designed for beginners as their
-                    first programming language.
+                    The {APP_NAME} project is made possible by TurboWarp and Scratch, and our contributors.
                 </p>
             </header>
             <section>
+                <i>Individual contributors are listed in no particular order. The order is randomized each visit.</i>
+                <h2>Some Thanks</h2>
                 <p>
-                    <i>
-                        Individual contributors are listed in no particular order.
-                        The order is randomized each visit.
-                    </i>
+                    We would like to thank our contributors, and other things here.
+                </p>
+                <p>
+                    To people who contributed to {APP_NAME}, we also thank you for putting your time
+                    to helping improve our project and furthering the future of blocks. We are truly
+                    grateful for your help!
+                </p>
+                <p>
+                    To TurboWarp and Scratch, thank you! Without them, programming would
+                    have been less accessible to people, and less people would of been introduced to
+                    the magic art of programming.
+                </p>
+                <p>
+                    We also thank the people of the various work we have adapted as well. Many things
+                    in {APP_NAME} would of not been realised without them.
                 </p>
             </section>
             {APP_NAME !== 'LibreKitten' && (
@@ -100,17 +110,12 @@ const Credits = () => (
                     {APP_NAME} is based on the work of the <a href="https://turbowarp.org/credits.html">TurboWarp contributors</a> but
                     is not endorsed by TurboWarp in any way.
                 </p>
-                <p>
-                    <a href="https://github.com/sponsors/GarboMuffin">
-                        Donate to support TurboWarp.
-                    </a>
-                </p>
             </section>
             <section>
                 <h2>Scratch</h2>
                 <p>
-                    {APP_NAME} & TurboWarp is based on the work of the <a href="https://scratch.mit.edu/credits">Scratch contributors</a> but
-                    is not endorsed by Scratch in any way.
+                    {APP_NAME} and TurboWarp are based on the work of the <a href="https://scratch.mit.edu/credits">Scratch contributors</a> but
+                    are not endorsed by Scratch in any way.
                 </p>
                 <p>
                     <a href="https://scratch.mit.edu/donate">
@@ -124,48 +129,59 @@ const Credits = () => (
                 Scratch from a <a href="https://scratch.mit.edu/discuss/post/8154030/">forum post</a> on that platform.
             </section>
             <section>
-                <h2>Contributors</h2>
+                <h2>Contributors for {APP_NAME}</h2>
                 <UserList users={UserData.contributors} />
             </section>
             <section>
+                <h2>Other Programming Languages</h2>
+                <p>
+                    We have adapted some code or were inspired by code from other Scratch and TurboWarp derivatives.
+                    We are not necessarily affiliated with them, except for ones involved in the Block Programming
+                    Development Community.
+                </p>
+                <UserList users={UserData.mods} />
+            </section>
+            <section>
                 <h2>Addons</h2>
+                <p>
+                    This is a list of people who created addons for Scratch or TurboWarp. They are not necessarily
+                    affiliated or involved with us, and neither are we necessarily affiliated with them.
+                </p>
                 <UserList users={UserData.addonDevelopers} />
             </section>
             <section>
                 <h2>TurboWarp Extension Gallery</h2>
+                <p>
+                    This is a list of people who submitted extensions to the extension gallery for TurboWarp. They are
+                    not necessarily affiliated or involved with us, and neither are we necessarily affiliated with them
+                    or TurboWarp.
+                </p>
                 <UserList users={UserData.extensionDevelopers} />
-            </section>
-            <section>
-                <h2>Documentation</h2>
-                <UserList users={UserData.docs} />
             </section>
             <section>
                 <h2>Translators</h2>
                 <p>
-                    Sadly, {APP_NAME} is only maintained by 1 person at the time of this being written,
-                    and that person only knows English.
-                </p>
-                <p>
-                    Note that in the future, we might provide a way for you to help us translate LibreKitten.
+                    {APP_NAME} currently has no translators. In the future, we might provide a way for you to help us
+                    translate {APP_NAME}.
                 </p>
             </section>
             <section>
-                <h2>You</h2>
+                <h2>You!</h2>
                 <p>
-                    <p>
-                        Most importantly of all, <em>you!</em> Thank you for using LibreKitten, or at least giving it a
-                        try. We appreciate that.
-                    </p>
+                    And of course, <em>you!</em> Thank you for using {APP_NAME}, or at least giving it a try. We really
+                    appreciate it. ฅ^•ﻌ•^ฅ
                 </p>
             </section>
             <section>
+                {/* You may want to change or remove this if you're forking LibreKitten. */}
                 <p>
                     <img
                         src={librekitty}
-                        alt="The Librekitty (ginger ailuromorphic/cat-shaped being) purring with a love heart."
+                        alt="The Librekitty (who looks visually like a ginger cat) purring with a love heart."
+                        height={275}
                     />
                 </p>
-                <i>The  Librekitty purring from your usage of LibreKitten.</i>
+                <i>The Librekitty purring from your usage of LibreKitten.</i>
                 <p>- The Librekitty.</p>
             </section>
             <Footer />
