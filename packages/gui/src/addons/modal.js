@@ -8,17 +8,13 @@ import styles from './modal.css';
 export const createEditorModal = (tab, title, {isOpen = false} = {}) => {
     const closeIconColor = tab.redux.state.scratchGui.theme.theme.getGuiColors()['ui-modal-header-close-button-color'];
 
-    const container = Object.assign(document.createElement('div'), {
-        className: tab.scratchClass('modal_modal-overlay'),
-        dir: tab.direction
-    });
-    container.style.display = isOpen ? '' : 'none';
-    document.body.appendChild(container);
-    const modal = Object.assign(document.createElement('div'), {
-        className: tab.scratchClass('modal_modal-content', 'lk-style-resets_style-resets')
+    const modal = Object.assign(document.createElement('dialog'), {
+        className: tab.scratchClass('modal_modal-content', 'lk-style-resets_style-resets'),
+        ariaLabel: title
     });
     modal.addEventListener('click', e => e.stopPropagation());
-    container.appendChild(modal);
+    document.querySelector(`.${tab.scratchClass('interface_container')}`).appendChild(modal);
+    if (isOpen) modal.showModal();
     const header = Object.assign(document.createElement('div'), {
         className: tab.scratchClass('modal_header')
     });
@@ -44,7 +40,8 @@ export const createEditorModal = (tab, title, {isOpen = false} = {}) => {
             className: tab.scratchClass('close-button_close-icon',
                 closeIconColor === 'black' && 'close-button_black'
             ),
-            src: closeIconColor === 'black' ? closeIconBlack : closeIcon
+            src: closeIconColor === 'black' ? closeIconBlack : closeIcon,
+            draggable: false
         })
     );
     const content = Object.assign(document.createElement('div'), {
@@ -54,15 +51,15 @@ export const createEditorModal = (tab, title, {isOpen = false} = {}) => {
     return {
         container: modal,
         content,
-        backdrop: container,
+        backdrop: document.createElement('div'), // lk: Just fake it, as there is no longer a backdrop.
         closeButton,
         open: () => {
-            container.style.display = '';
+            modal.showModal();
         },
         close: () => {
-            container.style.display = 'none';
+            modal.close();
         },
-        remove: container.remove.bind(container)
+        remove: modal.remove.bind(modal)
     };
 };
 
@@ -84,6 +81,11 @@ const createButtonRow = tab => {
 };
 
 export const confirm = (tab, title, message, {useEditorClasses = false} = {}) => {
+    // The garbage collector is going to hunt me down for this...
+    const modalState = {
+        pressingOutside: false
+    };
+
     const {remove, container, content, backdrop, closeButton} = tab.createModal(title, {
         isOpen: true,
         useEditorClasses: useEditorClasses,
@@ -112,7 +114,6 @@ export const confirm = (tab, title, message, {useEditorClasses = false} = {}) =>
             remove();
             resolve(true);
         };
-        backdrop.addEventListener('click', cancel);
         closeButton.addEventListener('click', cancel);
         cancelButton.addEventListener('click', cancel);
         okButton.addEventListener('click', ok);
@@ -120,10 +121,29 @@ export const confirm = (tab, title, message, {useEditorClasses = false} = {}) =>
             if (e.key === 'Enter') ok();
             if (e.key === 'Escape') cancel();
         });
+        // lk: Bind dialog events.
+        container.addEventListener('close', () => container.remove.bind(container));
+        container.addEventListener('pointerdown', e => {
+            if (e.target === container) {
+                modalState.pressingOutside = true;
+            } else {
+                modalState.pressingOutside = false;
+            }
+        });
+        container.addEventListener('pointerup', e => {
+            if (e.target === container && modalState.pressingOutside) {
+                cancel();
+            }
+            modalState.pressingOutside = false;
+        });
     });
 };
 
 export const prompt = (tab, title, message, defaultValue = '', {useEditorClasses = false} = {}) => {
+    const modalState = {
+        pressingOutside: false
+    };
+
     const {remove, container, content, backdrop, closeButton} = tab.createModal(title, {
         isOpen: true,
         useEditorClasses: useEditorClasses,
@@ -155,13 +175,27 @@ export const prompt = (tab, title, message, defaultValue = '', {useEditorClasses
             remove();
             resolve(input.value);
         };
-        backdrop.addEventListener('click', cancel);
         closeButton.addEventListener('click', cancel);
         cancelButton.addEventListener('click', cancel);
         okButton.addEventListener('click', ok);
         container.addEventListener('keydown', e => {
             if (e.key === 'Enter') ok();
             if (e.key === 'Escape') cancel();
+        });
+        // lk: Bind dialog events.
+        container.addEventListener('close', () => container.remove.bind(container));
+        container.addEventListener('pointerdown', e => {
+            if (e.target === container) {
+                modalState.pressingOutside = true;
+            } else {
+                modalState.pressingOutside = false;
+            }
+        });
+        container.addEventListener('pointerup', e => {
+            if (e.target === container && modalState.pressingOutside) {
+                cancel();
+            }
+            modalState.pressingOutside = false;
         });
     });
 };
