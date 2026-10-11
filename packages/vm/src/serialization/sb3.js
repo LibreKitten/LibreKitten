@@ -484,38 +484,6 @@ const serializeSound = function (sound) {
     return obj;
 };
 
-// Using some bugs, it can be possible to get values like undefined, null, or complex objects into
-// variables or lists. This will cause make the project unusable after exporting without JSON editing
-// as it will fail validation in scratch-parser.
-// To avoid this, we'll convert those objects to strings before saving them.
-const isVariableValueSafeForJSON = value => (
-    typeof value === 'number' ||
-    typeof value === 'string' ||
-    typeof value === 'boolean'
-);
-const makeSafeForJSON = value => {
-    if (Array.isArray(value)) {
-        let copy = null;
-        for (let i = 0; i < value.length; i++) {
-            if (!isVariableValueSafeForJSON(value[i])) {
-                if (!copy) {
-                    // Only copy the list when needed
-                    copy = value.slice();
-                }
-                copy[i] = `${copy[i]}`;
-            }
-        }
-        if (copy) {
-            return copy;
-        }
-        return value;
-    }
-    if (isVariableValueSafeForJSON(value)) {
-        return value;
-    }
-    return `${value}`;
-};
-
 /**
  * Serialize the given variables object.
  * @param {object} variables The variables to be serialized.
@@ -537,12 +505,12 @@ const serializeVariables = function (variables) {
             continue;
         }
         if (v.type === Variable.LIST_TYPE) {
-            obj.lists[varId] = [v.name, makeSafeForJSON(v.value)];
+            obj.lists[varId] = [v.name, v.value];
             continue;
         }
 
         // otherwise should be a scalar type
-        obj.variables[varId] = [v.name, makeSafeForJSON(v.value)];
+        obj.variables[varId] = [v.name, v.value];
         // only scalar vars have the potential to be cloud vars
         if (v.isCloud) obj.variables[varId].push(true);
     }
@@ -1155,6 +1123,54 @@ const parseScratchAssets = function (object, runtime, zip) {
 };
 
 /**
+ * Fix various backwards-incompatible changes that Scratch made in the spork migration.
+ * @param {object} blocks Blocks, mutated in-place.
+ */
+const fixSporkCompatibility = function (blocks) {
+    for (const blockId in blocks) {
+        if (!Object.prototype.hasOwnProperty.call(blocks, blockId)) continue;
+
+        const block = blocks[blockId];
+        const opcode = block.opcode;
+
+        switch (opcode) {
+        // Custom block definition prototype blocks used to be marked as shadow: true, but spork marks as shadow: false.
+        // Our scratch-blocks relies on it being shadow: true to prevent moving, so we'll force it to be that way.
+        case 'procedures_prototype':
+            block.shadow = true;
+            break;
+
+        // For completeness with the above, set the argument reporter generators to be shadow: true as well.
+        case 'argument_reporter_string_number':
+        case 'argument_reporter_boolean': {
+            const parent = blocks[block.parent];
+            if (parent && parent.opcode === 'procedures_prototype') {
+                block.shadow = true;
+            }
+            break;
+        }
+
+        // control_stop used to define a mutation for whether it has a connection below, which is what old
+        // scratch-blocks relies on to determine if there is another conneciton below or not. Spork does not define
+        // this mutation and relies only on the STOP_OPTION field. We will generate the mutation if it's missing so
+        // that a "stop other scripts in sprite" block doesn't cause the workspace to fail to load.
+        case 'control_stop': {
+            if (!block.mutation) {
+                const stopOption = block.fields?.STOP_OPTION?.value;
+                const hasNext = stopOption === 'other scripts in sprite' || stopOption === 'other scripts in stage';
+                block.mutation = {
+                    tagName: 'mutation',
+                    hasnext: hasNext ? 'true' : 'false',
+                    children: []
+                };
+            }
+            break;
+        }
+        }
+    }
+};
+
+/**
  * Parse a single "Scratch object" and create all its in-memory VM objects.
  * @param {!object} object From-JSON "Scratch object:" sprite, stage, watcher.
  * @param {!Runtime} runtime Runtime object to load all structures into.
@@ -1194,6 +1210,8 @@ const parseScratchObject = function (object, runtime, extensions, zip, assets) {
                 extensions.extensionIDs.add(extensionID);
             }
         }
+        // Take a third pass to fix various things that spork broke.
+        fixSporkCompatibility(object.blocks);
     }
     // Costumes from JSON.
     const {costumePromises} = assets;
@@ -1226,7 +1244,7 @@ const parseScratchObject = function (object, runtime, extensions, zip, assets) {
             // - the runtime can support another cloud variable
             const isCloud = (variable.length === 3) && variable[2] &&
                 object.isStage && runtime.canAddCloudVariable();
-            const newVariable = new Variable(
+            const newVariable = Variable.create(
                 varId, // var id is the index of the variable desc array in the variables obj
                 variable[0], // name of the variable
                 Variable.SCALAR_TYPE, // type of the variable
@@ -1240,7 +1258,7 @@ const parseScratchObject = function (object, runtime, extensions, zip, assets) {
     if (Object.prototype.hasOwnProperty.call(object, 'lists')) {
         for (const listId in object.lists) {
             const list = object.lists[listId];
-            const newList = new Variable(
+            const newList = Variable.create(
                 listId,
                 list[0],
                 Variable.LIST_TYPE,
@@ -1253,7 +1271,7 @@ const parseScratchObject = function (object, runtime, extensions, zip, assets) {
     if (Object.prototype.hasOwnProperty.call(object, 'broadcasts')) {
         for (const broadcastId in object.broadcasts) {
             const broadcast = object.broadcasts[broadcastId];
-            const newBroadcast = new Variable(
+            const newBroadcast = Variable.create(
                 broadcastId,
                 broadcast,
                 Variable.BROADCAST_MESSAGE_TYPE,

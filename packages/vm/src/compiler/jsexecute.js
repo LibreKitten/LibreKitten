@@ -227,10 +227,14 @@ runtimeFunctions.retire = `const retire = () => {
  * Converts NaN to zero. Used to match Scratch's string-to-number.
  * Unlike (x || 0), -0 stays as -0 and is not converted to 0.
  * This function needs to be written such that it's very easy for browsers to inline it.
+ *
+ * Avoid using Number.isNaN because Chrome 154 fails to inline it.
+ * https://github.com/TurboWarp/scratch-vm/issues/366
+ *
  * @param {number} value A number. Might be NaN.
  * @returns {number} A number. Never NaN.
  */
-runtimeFunctions.toNotNaN = `const toNotNaN = value => Number.isNaN(value) ? 0 : value`;
+runtimeFunctions.toNotNaN = `const toNotNaN = value => value !== value ? 0 : value`;
 
 /**
  * Scratch cast to boolean.
@@ -272,7 +276,7 @@ baseRuntime += `const isNotActuallyZero = val => {
     if (typeof val !== 'string') return false;
     for (let i = 0; i < val.length; i++) {
         const code = val.charCodeAt(i);
-        if (code === 48 || code === 9) {
+        if ((code >= 48 && code <= 57) || code === 9) {
             return false;
         }
     }
@@ -585,7 +589,8 @@ runtimeFunctions.mod = `const mod = (n, modulus) => {
  * @returns {number} value of tangent or Infinity or -Infinity
  */
 runtimeFunctions.tan = `const tan = (angle) => {
-    switch (angle % 360) {
+    angle = angle % 360;
+    switch (angle) {
     case -270: case 90: return Infinity;
     case -90: case 270: return -Infinity;
     }

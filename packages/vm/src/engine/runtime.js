@@ -2186,7 +2186,11 @@ class Runtime extends EventEmitter {
         // Remove any existing thread.
         for (let i = 0; i < this.threads.length; i++) {
             // Toggling a script that's already running turns it off
-            if (this.threads[i].topBlock === topBlockId && this.threads[i].status !== Thread.STATUS_DONE) {
+            if (
+                this.threads[i].target === opts.target &&
+                this.threads[i].topBlock === topBlockId &&
+                this.threads[i].status !== Thread.STATUS_DONE
+            ) {
                 const blockContainer = opts.target.blocks;
                 const opcode = blockContainer.getOpcode(blockContainer.getBlock(topBlockId));
 
@@ -2697,6 +2701,10 @@ class Runtime extends EventEmitter {
      * Queue monitor blocks to sequencer to be run.
      */
     _pushMonitors () {
+        if (this.targets.length === 0) {
+            // Project is not loaded yet, but monitors might be. Don't try to start anything.
+            return;
+        }
         this.monitorBlocks.runAllMonitored(this);
     }
 
@@ -3425,7 +3433,7 @@ class Runtime extends EventEmitter {
         const varType = (typeof optVarType === 'string') ? optVarType : Variable.SCALAR_TYPE;
         const allVariableNames = this.getAllVarNamesOfType(varType);
         const newName = StringUtil.unusedName(variableName, allVariableNames);
-        const variable = new Variable(optVarId || uid(), newName, varType);
+        const variable = Variable.create(optVarId || uid(), newName, varType);
         const stage = this.getTargetForStage();
         stage.variables[variable.id] = variable;
         return variable;

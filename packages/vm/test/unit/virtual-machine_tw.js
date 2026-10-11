@@ -24,44 +24,44 @@ test('emitTargetsUpdate targetList is lazy', t => {
     t.end();
 });
 
-test('non-primitive values in lists and variables converted to strings', t => {
+test('values in lists and variables are serialized as-is', t => {
     const vm = new VirtualMachine();
     const sprite = new Sprite();
     const target = new RenderedTarget(sprite, vm.runtime);
 
-    target.variables.var1 = new Variable('var', 'test var', Variable.SCALAR_TYPE, false);
+    target.variables.var1 = Variable.create('var', 'test var', Variable.SCALAR_TYPE, false);
     target.variables.var1.value = null;
 
-    target.variables.var2 = new Variable('var2', 'test var', Variable.SCALAR_TYPE, false);
+    target.variables.var2 = Variable.create('var2', 'test var', Variable.SCALAR_TYPE, false);
     target.variables.var2.value = undefined;
 
-    target.variables.var3 = new Variable('var3', 'test var', Variable.SCALAR_TYPE, false);
+    target.variables.var3 = Variable.create('var3', 'test var', Variable.SCALAR_TYPE, false);
     target.variables.var3.value = {};
 
-    target.variables.var4 = new Variable('var4', 'test var', Variable.SCALAR_TYPE, false);
+    target.variables.var4 = Variable.create('var4', 'test var', Variable.SCALAR_TYPE, false);
     target.variables.var4.value = 1;
 
-    target.variables.var5 = new Variable('var5', 'test var', Variable.SCALAR_TYPE, false);
+    target.variables.var5 = Variable.create('var5', 'test var', Variable.SCALAR_TYPE, false);
     target.variables.var5.value = 'abc';
 
-    target.variables.var6 = new Variable('var6', 'test var', Variable.SCALAR_TYPE, false);
+    target.variables.var6 = Variable.create('var6', 'test var', Variable.SCALAR_TYPE, false);
     target.variables.var6.value = false;
 
-    target.variables.list = new Variable('list', 'test list', Variable.LIST_TYPE, false);
+    target.variables.list = Variable.create('list', 'test list', Variable.LIST_TYPE, false);
     target.variables.list.value = ['abc', false, 1, null, undefined, {}];
 
     vm.runtime.addTarget(target);
 
     const json = JSON.parse(vm.toJSON());
 
-    t.deepEqual(json.targets[0].variables.var1[1], 'null');
-    t.deepEqual(json.targets[0].variables.var2[1], 'undefined');
-    t.deepEqual(json.targets[0].variables.var3[1], '[object Object]');
+    t.deepEqual(json.targets[0].variables.var1[1], null);
+    t.deepEqual(json.targets[0].variables.var2[1], null); // undefined becomes null due to JSON limitations
+    t.deepEqual(json.targets[0].variables.var3[1], {});
     t.deepEqual(json.targets[0].variables.var4[1], 1);
     t.deepEqual(json.targets[0].variables.var5[1], 'abc');
     t.deepEqual(json.targets[0].variables.var6[1], false);
 
-    t.deepEqual(json.targets[0].lists.list[1], ['abc', false, 1, 'null', 'undefined', '[object Object]']);
+    t.deepEqual(json.targets[0].lists.list[1], ['abc', false, 1, null, null, {}]);
 
     t.end();
 });

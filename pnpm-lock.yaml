@@ -140,11 +140,11 @@ importers:
         specifier: ^3.1001.0-202401241456-994097a5
         version: 3.1001.202405101234
       '@turbowarp/scratch-storage':
-        specifier: ^0.0.202505311821
-        version: 0.0.202505311821(webpack@5.96.1(@swc/core@1.13.3)(webpack-cli@5.1.4))
+        specifier: ^2.0.0
+        version: 2.0.0(webpack@5.96.1(@swc/core@1.13.3)(webpack-cli@5.1.4))
       '@turbowarp/scratch-svg-renderer':
-        specifier: ^1.0.0-202312242305-12c360b
-        version: 1.0.202505311824(scratch-render-fonts@https://codeload.github.com/TurboWarp/scratch-render-fonts/tar.gz/7b6768fc6dfef6b343a06f992587b74807043961)
+        specifier: ^1.1.0
+        version: 1.1.0(scratch-render-fonts@https://codeload.github.com/TurboWarp/scratch-render-fonts/tar.gz/7b6768fc6dfef6b343a06f992587b74807043961)
       '@turbowarp/startaudiocontext':
         specifier: ^1.0.0
         version: 1.0.0
@@ -480,8 +480,8 @@ importers:
         specifier: ^0.2.0
         version: 0.2.0
       '@turbowarp/scratch-svg-renderer':
-        specifier: ^1.0.0-202312300007-62fe825
-        version: 1.0.202505311824(scratch-render-fonts@https://codeload.github.com/TurboWarp/scratch-render-fonts/tar.gz/7b6768fc6dfef6b343a06f992587b74807043961)
+        specifier: ^1.1.0
+        version: 1.1.0(scratch-render-fonts@https://codeload.github.com/TurboWarp/scratch-render-fonts/tar.gz/7b6768fc6dfef6b343a06f992587b74807043961)
       '@vernier/godirect':
         specifier: 1.5.0
         version: 1.5.0
@@ -2850,12 +2850,12 @@ packages:
     resolution: {integrity: sha512-a0JTugOunBFQqAKtjdkViUSmLxuDWwtdNi+1gbqnbDQyGfHOBdOe1xVkmQekw/CzR2HgsBAlL8aS4rsuVXzR3Q==}
     hasBin: true
 
-  '@turbowarp/scratch-storage@0.0.202505311821':
-    resolution: {integrity: sha512-Q1lYZjZspPrimODclXe4hgYuqoxitKnWAqBPv50Z5GBUdIM6Yu3+lNtrHQbEQxJTbeuTDpHJYKzwbpvCPUK8iA==}
+  '@turbowarp/scratch-storage@2.0.0':
+    resolution: {integrity: sha512-Qi/wpKuf9Vd1FKYuwbh9NY4aB6nxh9V7ulQ03TFsWxZJfV1GOL8NiFRQMGFBDda00kUjWr5+f/eobbRAOqZpUg==}
 
-  '@turbowarp/scratch-svg-renderer@1.0.202505311824':
-    resolution: {integrity: sha512-EaKVqIuEwrr4SzQGOVyr8GBE+DGzUbbn38qiV6DMWFzb++/HgWl1qdlKA/j+mOK+GDwYydMFP0FuWYvWBkt6sA==}
-    version: 1.0.202505311824
+  '@turbowarp/scratch-svg-renderer@1.1.0':
+    resolution: {integrity: sha512-UPSUNKfR9f73ZNgjYdxsz5yheZYO/EiKE3Wji31thRVDGzOJOROQXcFicl/1oDWkMII4FvSLylGAw6/MPpoXqg==}
+    version: 1.1.0
     peerDependencies:
       scratch-render-fonts: github:TurboWarp/scratch-render-fonts#master
 
@@ -4529,11 +4529,11 @@ packages:
   dompurify@2.2.7:
     resolution: {integrity: sha512-jdtDffdGNY+C76jvodNTu9jt5yYj59vuTUyx+wXdzcSwAGTYZDAQkQ7Iwx9zcGrA4ixC1syU4H3RZROqRxokxg==}
 
-  dompurify@2.5.8:
-    resolution: {integrity: sha512-o1vSNgrmYMQObbSSvF/1brBYEQPHhV1+gsmrusO7/GXtp1T9rCS8cXFqVxK/9crT1jA6Ccv+5MTSjBNqr7Sovw==}
-
   dompurify@3.2.6:
     resolution: {integrity: sha512-/2GogDQlohXPZe6D6NOgQvXLPSYBqIWMnZ8zzOhn09REE4eyAzb+Hed3jhoM9OkuaJ8P6ZGTTVWQKAi8ieIzfQ==}
+
+  dompurify@3.4.16:
+    resolution: {integrity: sha512-sqo+pNp3qRhCIpbgRi1y8Tgk27Bo2Ry7w0dC1NBeNTdZChWjz9Xb/KOoZbRP/R6pQZ80Qw8YhXw13hWWBbMRnQ==}
 
   domutils@1.7.0:
     resolution: {integrity: sha512-Lgd2XcJ/NjEw+7tFvfKxOzCYKZsdct5lczQ2ZaQY8Djz7pfAD3Gbp8ySJWtreII/vDlMVmxwa6pHmdxIYgttDg==}
@@ -12425,7 +12425,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@turbowarp/scratch-storage@0.0.202505311821(webpack@5.96.1(@swc/core@1.13.3)(webpack-cli@5.1.4))':
+  '@turbowarp/scratch-storage@2.0.0(webpack@5.96.1(@swc/core@1.13.3)(webpack-cli@5.1.4))':
     dependencies:
       '@babel/runtime': 7.21.0
       '@turbowarp/nanolog': 0.2.0
@@ -12438,12 +12438,12 @@ snapshots:
       - encoding
       - webpack
 
-  '@turbowarp/scratch-svg-renderer@1.0.202505311824(scratch-render-fonts@https://codeload.github.com/TurboWarp/scratch-render-fonts/tar.gz/7b6768fc6dfef6b343a06f992587b74807043961)':
+  '@turbowarp/scratch-svg-renderer@1.1.0(scratch-render-fonts@https://codeload.github.com/TurboWarp/scratch-render-fonts/tar.gz/7b6768fc6dfef6b343a06f992587b74807043961)':
     dependencies:
       '@turbowarp/nanolog': 0.2.0
       base64-js: 1.2.1
       base64-loader: 1.0.0
-      dompurify: 2.5.8
+      dompurify: 3.4.16
       scratch-render-fonts: https://codeload.github.com/TurboWarp/scratch-render-fonts/tar.gz/7b6768fc6dfef6b343a06f992587b74807043961
       transformation-matrix: 1.15.0
 
@@ -14513,9 +14513,11 @@ snapshots:
 
   dompurify@2.2.7: {}
 
-  dompurify@2.5.8: {}
-
   dompurify@3.2.6:
+    optionalDependencies:
+      '@types/trusted-types': 2.0.7
+
+  dompurify@3.4.16:
     optionalDependencies:
       '@types/trusted-types': 2.0.7
 
@@ -19162,7 +19164,7 @@ snapshots:
     dependencies:
       '@turbowarp/ancient-hull.js': 0.2.13
       '@turbowarp/nanolog': 0.2.0
-      '@turbowarp/scratch-svg-renderer': 1.0.202505311824(scratch-render-fonts@https://codeload.github.com/TurboWarp/scratch-render-fonts/tar.gz/7b6768fc6dfef6b343a06f992587b74807043961)
+      '@turbowarp/scratch-svg-renderer': 1.1.0(scratch-render-fonts@https://codeload.github.com/TurboWarp/scratch-render-fonts/tar.gz/7b6768fc6dfef6b343a06f992587b74807043961)
       grapheme-breaker: 0.3.2
       ify-loader: 1.0.4
       linebreak: 0.3.0
