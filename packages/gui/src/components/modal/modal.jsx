@@ -1,7 +1,6 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
-import ReactModal from 'react-modal';
 import {FormattedMessage} from 'react-intl';
 
 import {Theme} from '../../lib/themes/index.js';
@@ -22,15 +21,17 @@ const ModalComponent = props => {
     const color = props.theme.getGuiColors()['ui-modal-header-close-button-color'];
 
     return (
-        <ReactModal
-            isOpen
-            className={classNames(styles.modalContent, Object.values(styleResets).concat(' '), props.className, {
-                [styles.fullScreen]: props.fullScreen,
-                [styles.centered]: props.centered
-            })}
-            contentLabel={props.contentLabel}
-            overlayClassName={classNames(styles.modalOverlay, {[styles.centered]: props.centered})}
-            onRequestClose={props.onRequestClose}
+        <dialog
+            ref={props.dialogRef}
+            className={classNames(
+                styles.modalContent,
+                Object.values(styleResets).concat(' '),
+                props.className, {
+                    [styles.fullScreen]: props.fullScreen,
+                    [styles.centered]: props.centered
+                }
+            )}
+            aria-label={props.contentLabel}
         >
             <Box
                 dir={props.isRtl ? 'rtl' : 'ltr'}
@@ -102,7 +103,7 @@ const ModalComponent = props => {
                 </div>
                 {props.children}
             </Box>
-        </ReactModal>
+        </dialog>
     );
 };
 
@@ -114,6 +115,7 @@ ModalComponent.propTypes = {
         PropTypes.string,
         PropTypes.object
     ]).isRequired,
+    dialogRef: PropTypes.instanceOf(HTMLDialogElement),
     fullScreen: PropTypes.bool,
     headerClassName: PropTypes.string,
     headerImage: PropTypes.string,
