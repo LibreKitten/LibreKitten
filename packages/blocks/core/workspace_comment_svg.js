@@ -177,7 +177,7 @@ Blockly.WorkspaceCommentSvg.prototype.showContextMenu_ = function(e) {
     menuOptions.push(Blockly.ContextMenu.commentDeleteOption(comment));
   }
 
-  Blockly.ContextMenu.show(e, menuOptions, this.RTL);
+  Blockly.ContextMenu.show(e, menuOptions, this.RTL, this.workspace.getInjectionDiv());
 };
 
 /**

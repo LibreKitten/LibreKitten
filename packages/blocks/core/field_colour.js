@@ -192,7 +192,7 @@ Blockly.FieldColour.prototype.setColumns = function(columns) {
  */
 Blockly.FieldColour.prototype.showEditor_ = function() {
   Blockly.WidgetDiv.show(this, this.sourceBlock_.RTL,
-      Blockly.FieldColour.widgetDispose_);
+      this.sourceBlock_.workspace.getInjectionDiv(), Blockly.FieldColour.widgetDispose_);
 
   // Record viewport dimensions before adding the widget.
   var viewportBBox = Blockly.utils.getViewportBBox();

@@ -222,7 +222,7 @@ Blockly.FieldNumber.prototype.position_ = function() {
   Blockly.DropDownDiv.setBoundsElement(
       this.sourceBlock_.workspace.getParentSvg().parentNode);
   Blockly.DropDownDiv.show(this, primaryX, primaryY, secondaryX, secondaryY,
-      this.onHide_.bind(this));
+      this.sourceBlock_.workspace.getInjectionDiv(), this.onHide_.bind(this));
 };
 
 /**

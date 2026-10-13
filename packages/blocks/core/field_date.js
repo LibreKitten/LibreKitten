@@ -115,7 +115,7 @@ Blockly.FieldDate.prototype.setValue = function(date) {
  */
 Blockly.FieldDate.prototype.showEditor_ = function() {
   Blockly.WidgetDiv.show(this, this.sourceBlock_.RTL,
-      Blockly.FieldDate.widgetDispose_);
+      this.sourceBlock_.workspace.getInjectionDiv(), Blockly.FieldDate.widgetDispose_);
 
   // Record viewport dimensions before adding the picker.
   var viewportBBox = Blockly.utils.getViewportBBox();

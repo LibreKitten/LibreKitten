@@ -61,9 +61,11 @@ Blockly.ContextMenu.eventWrapper_ = null;
  * @param {!Event} e Mouse event.
  * @param {!Array.<!Object>} options Array of menu options.
  * @param {boolean} rtl True if RTL, false if LTR.
+ * @param {!HTMLElement} opt_container LibreKitten-specific: the container to move the
+ *   context menu to.
  */
-Blockly.ContextMenu.show = function(e, options, rtl) {
-  Blockly.WidgetDiv.show(Blockly.ContextMenu, rtl, null);
+Blockly.ContextMenu.show = function(e, options, rtl, opt_container) {
+  Blockly.WidgetDiv.show(Blockly.ContextMenu, rtl, opt_container, null);
   if (!options.length) {
     Blockly.ContextMenu.hide();
     return;

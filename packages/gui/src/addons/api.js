@@ -560,7 +560,7 @@ class Tab extends EventTargetShim {
 
         this.traps.getBlockly().then(ScratchBlocks => {
             const oldShow = ScratchBlocks.ContextMenu.show;
-            ScratchBlocks.ContextMenu.show = function (event, items, rtl) {
+            ScratchBlocks.ContextMenu.show = function (event, items, rtl, opt_container) {
                 const gesture = ScratchBlocks.mainWorkspace.currentGesture_;
                 const block = gesture.targetBlock_;
 
@@ -584,7 +584,7 @@ class Tab extends EventTargetShim {
                     }
                 }
 
-                oldShow.call(this, event, items, rtl);
+                oldShow.call(this, event, items, rtl, opt_container);
 
                 const blocklyContextMenu = ScratchBlocks.WidgetDiv.DIV.firstChild;
                 items.forEach((item, i) => {

@@ -133,7 +133,9 @@ Blockly.Tooltip.createDom = function() {
   }
   // Create an HTML container for popup overlays (e.g. editor widgets).
   Blockly.Tooltip.DIV =
-      goog.dom.createDom(goog.dom.TagName.DIV, 'blocklyTooltipDiv');
+      goog.dom.createDom(goog.dom.TagName.DIV, 'blocklyTooltipDiv blocklyPopoverResets');
+  // lk: Mark as popover. This is so it doesn't get shadowed in top-level in things like dialogs.
+  Blockly.Tooltip.DIV.popover = 'manual';
   document.body.appendChild(Blockly.Tooltip.DIV);
 };
 
@@ -245,7 +247,7 @@ Blockly.Tooltip.hide = function() {
   if (Blockly.Tooltip.visible) {
     Blockly.Tooltip.visible = false;
     if (Blockly.Tooltip.DIV) {
-      Blockly.Tooltip.DIV.style.display = 'none';
+      Blockly.Tooltip.DIV.hidePopover();
     }
   }
   if (Blockly.Tooltip.showPid_) {
@@ -304,7 +306,7 @@ Blockly.Tooltip.show_ = function() {
   var windowSize = goog.dom.getViewportSize();
   // Display the tooltip.
   Blockly.Tooltip.DIV.style.direction = rtl ? 'rtl' : 'ltr';
-  Blockly.Tooltip.DIV.style.display = 'block';
+  Blockly.Tooltip.DIV.showPopover();
   Blockly.Tooltip.visible = true;
   // Move the tooltip to just below the cursor.
   var anchorX = Blockly.Tooltip.lastX_;

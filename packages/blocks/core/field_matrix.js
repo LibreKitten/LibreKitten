@@ -343,7 +343,7 @@ Blockly.FieldMatrix.prototype.showEditor_ = function() {
   Blockly.DropDownDiv.setColour(this.sourceBlock_.getColour(),
       this.sourceBlock_.getColourTertiary());
   Blockly.DropDownDiv.setCategory(this.sourceBlock_.getCategory());
-  Blockly.DropDownDiv.showPositionedByBlock(this, this.sourceBlock_);
+  Blockly.DropDownDiv.showPositionedByBlock(this, this.sourceBlock_, this.sourceBlock_.workspace.getInjectionDiv());
 
   this.matrixTouchWrapper_ =
       Blockly.bindEvent_(this.matrixStage_, 'mousedown', this, this.onMouseDown);

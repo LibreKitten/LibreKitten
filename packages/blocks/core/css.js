@@ -143,10 +143,17 @@ Blockly.Css.CONTENT = [
     'height: 100%;',
   '}',
 
-  '.blocklyWidgetDiv {',
-    'display: none;',
+  '.blocklyWidgetDiv:popover-open {',
     'position: absolute;',
-    'z-index: 99999;', /* big value for bootstrap3 compatibility */
+  '}',
+
+  /* lk: This is necessary so popovers aren't horribly broken. */
+  '.blocklyPopoverResets:popover-open {',
+    'border: none;',
+    'padding: 0;',
+    'margin: 0;',
+    'background: none;',
+    'overflow: visible;',
   '}',
 
   '.injectionDiv {',
@@ -222,13 +229,12 @@ Blockly.Css.CONTENT = [
     'z-index: 50;', /* Display above the toolbox */
   '}',
 
-  '.blocklyTooltipDiv {',
+  '.blocklyTooltipDiv:popover-open {',
     'background-color: $colour_tooltipBackground;',
     'border: 1px solid $colour_tooltipBorder;',
     'border-radius: 8px;',
     'box-shadow: 4px 4px 20px 1px rgba(0,0,0,.15);',
     'color: $colour_tooltipText;',
-    'display: none;',
     'font-family: "Inter Variable", "Helvetica Neue", Helvetica, sans-serif;',
     'font-size: 9pt;',
     'font-weight: bold;',
@@ -237,12 +243,11 @@ Blockly.Css.CONTENT = [
     'z-index: 100000;', /* big value for bootstrap3 compatibility */
   '}',
 
-  '.blocklyDropDownDiv {',
+  '.blocklyDropDownDiv:popover-open {',,
     'position: fixed;',
     'left: 0;',
     'top: 0;',
     'z-index: 1000;',
-    'display: none;',
     'border: 1px solid;',
     'border-radius: 4px;',
     'box-shadow: 0px 0px 8px 1px ' + Blockly.Colours.dropDownShadow + ';',
@@ -1048,7 +1053,6 @@ Blockly.Css.CONTENT = [
     'margin: 0;',
     'outline: none;',
     'padding: 4px 0;',
-    'position: absolute;',
     'overflow-y: auto;',
     'overflow-x: hidden;',
     'z-index: 20000;',  /* Arbitrary, but some apps depend on it... */

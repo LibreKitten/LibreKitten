@@ -242,7 +242,8 @@ Blockly.FieldDropdown.prototype.showEditor_ = function() {
   // Set bounds to workspace; show the drop-down.
   Blockly.DropDownDiv.setBoundsElement(this.sourceBlock_.workspace.getParentSvg().parentNode);
   Blockly.DropDownDiv.show(
-      this, primaryX, primaryY, secondaryX, secondaryY, this.onHide.bind(this));
+      this, primaryX, primaryY, secondaryX, secondaryY,
+      this.sourceBlock_.workspace.getInjectionDiv(), this.onHide.bind(this));
 
   menu.setAllowAutoFocus(true);
   menuDom.focus();

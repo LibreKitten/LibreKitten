@@ -221,8 +221,8 @@ Blockly.FieldTextInput.prototype.showEditor_ = function(
   var quietInput = opt_quietInput || false;
   var readOnly = opt_readOnly || false;
   Blockly.WidgetDiv.show(this, this.sourceBlock_.RTL,
-      this.widgetDispose_(), this.widgetDisposeAnimationFinished_(),
-      Blockly.FieldTextInput.ANIMATION_TIME);
+      this.sourceBlock_.workspace.getInjectionDiv(), this.widgetDispose_(),
+      this.widgetDisposeAnimationFinished_(), Blockly.FieldTextInput.ANIMATION_TIME);
   var div = Blockly.WidgetDiv.DIV;
   // Apply text-input-specific fixed CSS
   div.className += ' fieldTextInput';
@@ -609,7 +609,7 @@ Blockly.FieldTextInput.prototype.widgetDisposeAnimationFinished_ = function() {
     style.height = 'auto';
     style.fontSize = '';
     // Reset class
-    Blockly.WidgetDiv.DIV.className = 'blocklyWidgetDiv';
+    Blockly.WidgetDiv.DIV.className = 'blocklyWidgetDiv blocklyPopoverResets';
     // Remove all styles
     Blockly.WidgetDiv.DIV.removeAttribute('style');
     Blockly.FieldTextInput.htmlInput_.style.transition = '';

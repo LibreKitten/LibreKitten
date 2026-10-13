@@ -261,7 +261,7 @@ Blockly.FieldAngle.prototype.showEditor_ = function() {
 
   Blockly.DropDownDiv.setColour(parentBlock.getColour(), this.sourceBlock_.getColourTertiary());
   Blockly.DropDownDiv.setCategory(parentBlock.getCategory());
-  Blockly.DropDownDiv.showPositionedByBlock(this, this.sourceBlock_);
+  Blockly.DropDownDiv.showPositionedByBlock(this, this.sourceBlock_, this.sourceBlock_.workspace.getInjectionDiv());
 
   this.mouseDownWrapper_ =
       Blockly.bindEvent_(this.handle_, 'mousedown', this, this.onMouseDown);

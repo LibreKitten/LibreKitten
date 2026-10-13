@@ -10,5 +10,5 @@
 [class~='blocklyDropDownDiv'] *,
 [class~='blocklyTooltipDiv'],
 [class~='blocklyTooltipDiv'] * {
-    box-sizing: content-box;
+    box-sizing: content-box !important;
 }

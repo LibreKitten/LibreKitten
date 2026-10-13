@@ -61,6 +61,13 @@ Blockly.DropDownDiv.boundsElement_ = null;
 Blockly.DropDownDiv.owner_ = null;
 
 /**
+ * lk: The element holding this div.
+ * @type {!HTMLElement}
+ * @private
+ */
+Blockly.DropDownDiv.container_ = null;
+
+/**
  * Arrow size in px. Should match the value in CSS (need to position pre-render).
  * @type {number}
  * @const
@@ -116,7 +123,11 @@ Blockly.DropDownDiv.createDom = function() {
   if (Blockly.DropDownDiv.DIV_) {
     return;  // Already created.
   }
-  Blockly.DropDownDiv.DIV_ = goog.dom.createDom('div', 'blocklyDropDownDiv');
+  Blockly.DropDownDiv.DIV_ = goog.dom.createDom('div', 'blocklyDropDownDiv blocklyPopoverResets');
+  // lk: Mark as popover. This is so it doesn't get shadowed in top-level in things like dialogs.
+  Blockly.DropDownDiv.DIV_.popover = 'manual';
+  // lk: Allow appending to an arbitrary container.
+  Blockly.DropDownDiv.container_ = document.body;
   document.body.appendChild(Blockly.DropDownDiv.DIV_);
   Blockly.DropDownDiv.content_ = goog.dom.createDom('div', 'blocklyDropDownContent');
   Blockly.DropDownDiv.DIV_.appendChild(Blockly.DropDownDiv.content_);
@@ -179,12 +190,14 @@ Blockly.DropDownDiv.setCategory = function(category) {
  * constrained to the block's workspace.
  * @param {Object} owner The object showing the drop-down
  * @param {!Blockly.Block} block Block to position the drop-down around.
+ * @param {!HTMLElement} opt_container LibreKitten-specific: the container to move the
+ *   dropdown element to. This is optional.
  * @param {Function=} opt_onHide Optional callback for when the drop-down is hidden.
  * @param {Number} opt_secondaryYOffset Optional Y offset for above-block positioning.
  * @return {boolean} True if the menu rendered below block; false if above.
  */
 Blockly.DropDownDiv.showPositionedByBlock = function(owner, block,
-    opt_onHide, opt_secondaryYOffset) {
+    opt_container, opt_onHide, opt_secondaryYOffset) {
   var scale = block.workspace.scale;
   var bBox = {width: block.width, height: block.height};
   bBox.width *= scale;
@@ -201,7 +214,8 @@ Blockly.DropDownDiv.showPositionedByBlock = function(owner, block,
   }
   // Set bounds to workspace; show the drop-down.
   Blockly.DropDownDiv.setBoundsElement(block.workspace.getParentSvg().parentNode);
-  return Blockly.DropDownDiv.show(this, primaryX, primaryY, secondaryX, secondaryY, opt_onHide);
+  return Blockly.DropDownDiv.show(this, primaryX, primaryY, secondaryX, secondaryY,
+      opt_container, opt_onHide);
 };
 
 /**
@@ -217,11 +231,15 @@ Blockly.DropDownDiv.showPositionedByBlock = function(owner, block,
  * @param {number} primaryY Desired origin point y, in absolute px
  * @param {number} secondaryX Secondary/alternative origin point x, in absolute px
  * @param {number} secondaryY Secondary/alternative origin point y, in absolute px
+ * @param {!HTMLElement} opt_container LibreKitten-specific: the container to move the
+ *   dropdown element to. This is optional.
  * @param {Function=} opt_onHide Optional callback for when the drop-down is hidden
  * @return {boolean} True if the menu rendered at the primary origin point.
  */
-Blockly.DropDownDiv.show = function(owner, primaryX, primaryY, secondaryX, secondaryY, opt_onHide) {
+Blockly.DropDownDiv.show = function(owner, primaryX, primaryY, secondaryX, secondaryY, opt_container, opt_onHide) {
   Blockly.DropDownDiv.owner_ = owner;
+  // lk: Save dropdown DIV container.
+  Blockly.DropDownDiv.container_ = opt_container instanceof HTMLElement ? opt_container : document.body;
   Blockly.DropDownDiv.onHide_ = opt_onHide;
   var div = Blockly.DropDownDiv.DIV_;
   var metrics = Blockly.DropDownDiv.getPositionMetrics(primaryX, primaryY, secondaryX, secondaryY);
@@ -245,8 +263,10 @@ Blockly.DropDownDiv.show = function(owner, primaryX, primaryY, secondaryX, secon
   // First apply initial translation.
   div.style.left = metrics.initialX + 'px';
   div.style.top = metrics.initialY + 'px';
+  // lk: Move the widget DIV to the new container.
+  Blockly.DropDownDiv.container_.appendChild(Blockly.DropDownDiv.DIV_);
   // Show the div.
-  div.style.display = 'block';
+  div.showPopover();
   div.style.opacity = 1;
   // Add final translate, animated through `transition`.
   // Coordinates are relative to (initialX, initialY),
@@ -273,6 +293,9 @@ Blockly.DropDownDiv.getPositionMetrics = function(primaryX, primaryY, secondaryX
   var boundSize = goog.style.getSize(Blockly.DropDownDiv.boundsElement_);
   var divSize = goog.style.getSize(div);
 
+  // lk: Hack to fix an arrow separation bug.
+  var arrowPadding = Blockly.DropDownDiv.PADDING_Y - Blockly.DropDownDiv.ARROW_SIZE;
+
   // First decide if we will render at primary or secondary position
   // i.e., above or below
   // renderX, renderY will eventually be the final rendered position of the box.
@@ -288,7 +311,7 @@ Blockly.DropDownDiv.getPositionMetrics = function(primaryX, primaryY, secondaryX
     } else {
       // We can fit above, render secondary
       renderX = secondaryX;
-      renderY = secondaryY - divSize.height - Blockly.DropDownDiv.PADDING_Y;
+      renderY = secondaryY - divSize.height - Blockly.DropDownDiv.PADDING_Y + arrowPadding;
       renderedSecondary = true;
     }
   } else {
@@ -323,7 +346,7 @@ Blockly.DropDownDiv.getPositionMetrics = function(primaryX, primaryY, secondaryX
 
   // Calculate arrow Y. If we rendered secondary, add on bottom.
   // Extra pixels are added so that it covers the border of the div.
-  var arrowY = (renderedSecondary) ? divSize.height - Blockly.DropDownDiv.BORDER_SIZE : 0;
+  var arrowY = (renderedSecondary) ? divSize.height - Blockly.DropDownDiv.BORDER_SIZE - arrowPadding : 0;
   arrowY -= (Blockly.DropDownDiv.ARROW_SIZE / 2) + Blockly.DropDownDiv.BORDER_SIZE;
 
   // Initial position calculated without any padding to provide an animation point.
@@ -398,7 +421,7 @@ Blockly.DropDownDiv.hideWithoutAnimation = function() {
   div.style.transform = '';
   div.style.top = '';
   div.style.left = '';
-  div.style.display = 'none';
+  div.hidePopover();
   Blockly.DropDownDiv.clearContent();
   Blockly.DropDownDiv.owner_ = null;
   if (Blockly.DropDownDiv.onHide_) {

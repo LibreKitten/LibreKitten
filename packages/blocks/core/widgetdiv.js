@@ -52,6 +52,13 @@ Blockly.WidgetDiv.DIV = null;
 Blockly.WidgetDiv.owner_ = null;
 
 /**
+ * lk: The element holding this div.
+ * @type {!HTMLElement}
+ * @private
+ */
+Blockly.WidgetDiv.container_ = null;
+
+/**
  * Optional cleanup function set by whichever object uses the widget.
  * This is called as soon as a dispose is desired. If the dispose should
  * be animated, the animation should start on the call of dispose_.
@@ -92,14 +99,28 @@ Blockly.WidgetDiv.createDom = function() {
   }
   // Create an HTML container for popup overlays (e.g. editor widgets).
   Blockly.WidgetDiv.DIV =
-      goog.dom.createDom(goog.dom.TagName.DIV, 'blocklyWidgetDiv');
+      goog.dom.createDom(goog.dom.TagName.DIV, 'blocklyWidgetDiv blocklyPopoverResets');
+  // lk: Mark as popover. This is so it doesn't get shadowed in top-level in things like dialogs.
+  Blockly.WidgetDiv.DIV.popover = 'manual';
+  // lk: Allow appending to an arbitrary container.
+  Blockly.WidgetDiv.container_ = document.body;
   document.body.appendChild(Blockly.WidgetDiv.DIV);
+
+  // lk: Ignore context menu events directly on the element, so a browser context menu doesn't appear
+  // once in a blue moon. Well actually, it appears on a waning crescent, but whatever.
+  Blockly.WidgetDiv.DIV.addEventListener('contextmenu', function(e) {
+    if (e.target === Blockly.WidgetDiv.DIV) {
+      e.preventDefault();
+    }
+  });
 };
 
 /**
  * Initialize and display the widget div.  Close the old one if needed.
  * @param {!Object} newOwner The object that will be using this container.
  * @param {boolean} rtl Right-to-left (true) or left-to-right (false).
+ * @param {!HTMLElement} opt_container LibreKitten-specific: the container to move the
+ *   widget element to. This is optional.
  * @param {Function=} opt_dispose Optional cleanup function to be run when the widget
  *   is closed. If the dispose is animated, this function must start the animation.
  * @param {Function=} opt_disposeAnimationFinished Optional cleanup function to be run
@@ -107,10 +128,12 @@ Blockly.WidgetDiv.createDom = function() {
  * @param {number=} opt_disposeAnimationTimerLength Length of animation time in seconds
      if a dispose animation is provided.
  */
-Blockly.WidgetDiv.show = function(newOwner, rtl, opt_dispose,
+Blockly.WidgetDiv.show = function(newOwner, rtl, opt_container, opt_dispose,
     opt_disposeAnimationFinished, opt_disposeAnimationTimerLength) {
   Blockly.WidgetDiv.hide();
   Blockly.WidgetDiv.owner_ = newOwner;
+  // lk: Save widget DIV container.
+  Blockly.WidgetDiv.container_ = opt_container instanceof HTMLElement ? opt_container : document.body;
   Blockly.WidgetDiv.dispose_ = opt_dispose;
   Blockly.WidgetDiv.disposeAnimationFinished_ = opt_disposeAnimationFinished;
   Blockly.WidgetDiv.disposeAnimationTimerLength_ = opt_disposeAnimationTimerLength;
@@ -119,7 +142,9 @@ Blockly.WidgetDiv.show = function(newOwner, rtl, opt_dispose,
   var xy = goog.style.getViewportPageOffset(document);
   Blockly.WidgetDiv.DIV.style.top = xy.y + 'px';
   Blockly.WidgetDiv.DIV.style.direction = rtl ? 'rtl' : 'ltr';
-  Blockly.WidgetDiv.DIV.style.display = 'block';
+  // lk: Move the widget DIV to the new container.
+  Blockly.WidgetDiv.container_.appendChild(Blockly.WidgetDiv.DIV);
+  Blockly.WidgetDiv.DIV.showPopover();
 };
 
 /**
@@ -185,7 +210,7 @@ Blockly.WidgetDiv.hide = function(opt_noAnimate) {
  * @private
  */
 Blockly.WidgetDiv.hideAndClearDom_ = function() {
-  Blockly.WidgetDiv.DIV.style.display = 'none';
+  Blockly.WidgetDiv.DIV.hidePopover();
   Blockly.WidgetDiv.DIV.style.left = '';
   Blockly.WidgetDiv.DIV.style.top = '';
   Blockly.WidgetDiv.DIV.style.height = '';
