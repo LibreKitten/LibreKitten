@@ -43,6 +43,7 @@
   },
   "dependencies": {
     "js-md5": "0.7.3",
+    "radix-ui": "^1.4.3",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-intl": "2.9.0",

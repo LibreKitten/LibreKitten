@@ -11,6 +11,9 @@ importers:
       js-md5:
         specifier: 0.7.3
         version: 0.7.3
+      radix-ui:
+        specifier: ^1.4.3
+        version: 1.4.3(@types/react@16.14.65)(react-dom@16.14.0(react@16.14.0))(react@16.14.0)
       react:
         specifier: ^16.14.0
         version: 16.14.0
@@ -280,9 +283,6 @@ importers:
       query-string:
         specifier: ^5.1.1
         version: 5.1.1
-      radix-ui:
-        specifier: ^1.4.3
-        version: 1.4.3(@types/react@16.14.65)(react-dom@16.14.0(react@16.14.0))(react@16.14.0)
       raw-loader:
         specifier: ^0.5.1
         version: 0.5.1

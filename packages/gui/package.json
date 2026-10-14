@@ -78,7 +78,6 @@
     "postcss-simple-vars": "^5.0.2",
     "prop-types": "^15.8.1",
     "query-string": "^5.1.1",
-    "radix-ui": "^1.4.3",
     "raw-loader": "^0.5.1",
     "react-contextmenu": "2.9.4",
     "react-draggable": "3.0.5",

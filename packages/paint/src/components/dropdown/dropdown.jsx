@@ -1,6 +1,6 @@
 import bindAll from 'lodash.bindall';
 import classNames from 'classnames';
-import Popover from 'react-popover';
+import {Popover} from 'radix-ui';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -14,7 +14,7 @@ class Dropdown extends React.Component {
         super(props);
         bindAll(this, [
             'handleClosePopover',
-            'handleToggleOpenState',
+            'handleOpenChange',
             'isOpen'
         ]);
         this.state = {
@@ -26,8 +26,8 @@ class Dropdown extends React.Component {
             isOpen: false
         });
     }
-    handleToggleOpenState () {
-        const newState = !this.state.isOpen;
+    handleOpenChange (open) {
+        const newState = open;
         this.setState({
             isOpen: newState
         });
@@ -40,31 +40,39 @@ class Dropdown extends React.Component {
     }
     render () {
         return (
-            <Popover
-                body={this.props.popoverContent}
-                isOpen={this.state.isOpen}
-                preferPlace="below"
-                onOuterAction={this.props.onOuterAction ?
-                    this.props.onOuterAction : this.handleClosePopover}
+            <Popover.Root
+                open={this.state.isOpen}
+                onOpenChange={this.handleOpenChange}
                 {...this.props}
             >
-                <div
-                    className={classNames(styles.dropdown, this.props.className, {
-                        [styles.modOpen]: this.state.isOpen,
-                        [styles.modClosed]: !this.state.isOpen
-                    })}
-                    onClick={this.handleToggleOpenState}
-                >
-                    {this.props.children}
-                    <TWRenderRecoloredImage
-                        className={classNames(styles.dropdownIcon, {
-                            [styles.modCaretUp]: this.state.isOpen
+                <Popover.Trigger asChild>
+                    <div
+                        className={classNames(styles.dropdown, this.props.className, {
+                            [styles.modOpen]: this.state.isOpen,
+                            [styles.modClosed]: !this.state.isOpen
                         })}
-                        draggable={false}
-                        src={dropdownIcon}
-                    />
-                </div>
-            </Popover>
+                        onClick={this.handleToggleOpenState}
+                    >
+                        {this.props.children}
+                        <TWRenderRecoloredImage
+                            className={classNames(styles.dropdownIcon, {
+                                [styles.modCaretUp]: this.state.isOpen
+                            })}
+                            draggable={false}
+                            src={dropdownIcon}
+                        />
+                    </div>
+                </Popover.Trigger>
+                <Popover.Portal>
+                    <Popover.Content
+                        // lk: TODO: Reimplement dropdown animation.
+                        className={classNames('Popover-body', styles.dropdownAnimation)}
+                        sideOffset={4}
+                    >
+                        {this.props.popoverContent}
+                    </Popover.Content>
+                </Popover.Portal>
+            </Popover.Root>
         );
     }
 }
