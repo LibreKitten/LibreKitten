@@ -3,27 +3,43 @@ const path = require('path');
 
 // Plugins
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const lightningcss = require('lightningcss');
 
-// PostCss
+// CSS
 const autoprefixer = require('autoprefixer');
 const postcssVars = require('postcss-simple-vars');
 const postcssImport = require('postcss-import');
+const browserslist = require('browserslist');
+
+// SWC
+const {SwcMinifyWebpackPlugin} = require('swc-minify-webpack-plugin');
 
 const base = {
     mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
     devtool: 'cheap-module-source-map',
     module: {
         rules: [{
-            test: /\.jsx?$/,
-            loader: 'babel-loader',
+            test: /\.js$/,
+            loader: 'swc-loader',
             include: path.resolve(__dirname, 'src'),
             options: {
-                plugins: ['transform-object-rest-spread'],
-                presets: [
-                    ['@babel/preset-env', {
-                        targets: ['last 3 versions', 'Safari >= 8', 'iOS >= 8']}],
-                    '@babel/preset-react']
+                jsc: {
+                    target: 'es2020'
+                }
+            }
+        },
+        {
+            test: /\.jsx$/,
+            loader: 'swc-loader',
+            include: path.resolve(__dirname, 'src'),
+            options: {
+                jsc: {
+                    parser: {
+                        jsx: true
+                    },
+                    target: 'es2020'
+                }
             }
         },
         {
@@ -59,13 +75,24 @@ const base = {
         },
         {
             test: /\.svg$/,
-            loader: 'svg-url-loader?noquotes'
+            loader: 'svg-url-loader',
+            options: {
+                noquote: true
+            }
         }]
     },
     optimization: {
         minimizer: [
-            new UglifyJsPlugin({
-                include: /\.min\.js$/
+            new SwcMinifyWebpackPlugin({
+                compress: true,
+                mangle: true
+            }),
+            new CssMinimizerPlugin({
+                minify: CssMinimizerPlugin.lightningCssMinify,
+                minimizerOptions: {
+                    minify: true,
+                    targets: lightningcss.browserslistToTargets(browserslist())
+                }
             })
         ]
     },
@@ -76,7 +103,6 @@ module.exports = [
     // For the playground
     defaultsDeep({}, base, {
         devServer: {
-            contentBase: path.resolve(__dirname, 'playground'),
             host: '0.0.0.0',
             port: process.env.PORT || 8078
         },

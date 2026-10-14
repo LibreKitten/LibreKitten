@@ -17,6 +17,9 @@
     "vm-build": "pnpm --filter scratch-vm run build",
     "blocks-build": "pnpm --filter scratch-blocks run prepublish",
     "blocks-test": "pnpm --filter scratch-blocks run test",
+    "paint-start": "pnpm --filter scratch-paint run start",
+    "paint-build": "pnpm --filter scratch-paint run build",
+    "paint-test": "pnpm --filter scratch-paint run test",
     "prepare": "husky"
   },
   "keywords": [],
@@ -28,6 +31,7 @@
     "buffer": "^6.0.3",
     "css-minimizer-webpack-plugin": "^7.0.2",
     "events": "^3.3.0",
+    "html-webpack-plugin": "^4.5.2",
     "husky": "^9.1.7",
     "lightningcss": "^1.30.2",
     "mini-css-extract-plugin": "^2.9.4",
@@ -39,6 +43,15 @@
   },
   "dependencies": {
     "js-md5": "0.7.3",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
+    "react-intl": "2.9.0",
+    "react-popover": "0.5.10",
+    "react-redux": "5.0.7",
+    "react-responsive": "5.0.0",
+    "react-style-proptype": "3.2.2",
+    "react-tooltip": "3.8.0",
+    "redux": "3.7.2",
     "regenerator-runtime": "^0.14.1"
   }
 }

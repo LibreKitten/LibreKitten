@@ -135,6 +135,8 @@ const base = {
             include: [
                 path.resolve(__dirname, 'src'),
                 /node_modules[\\/]scratch-[^\\/]+[\\/]src/,
+                // lk: TODO: Temporary hack to resolve scratch-paint. Figure out what's happening later.
+                fs.realpathSync(path.resolve(__dirname, '../paint/src')),
                 /node_modules[\\/]pify/,
                 /node_modules[\\/]@vernier[\\/]godirect/
             ],
@@ -150,6 +152,8 @@ const base = {
             include: [
                 path.resolve(__dirname, 'src'),
                 /node_modules[\\/]scratch-[^\\/]+[\\/]src/,
+                // lk: TODO: Temporary hack to resolve scratch-paint. Figure out what's happening later.
+                fs.realpathSync(path.resolve(__dirname, '../paint/src')),
                 /node_modules[\\/]pify/,
                 /node_modules[\\/]@vernier[\\/]godirect/
             ],
@@ -168,6 +172,8 @@ const base = {
             include: [
                 path.resolve(__dirname, 'src'),
                 /node_modules[\\/]scratch-[^\\/]+[\\/]src/,
+                // lk: TODO: Temporary hack to resolve scratch-paint. Figure out what's happening later.
+                fs.realpathSync(path.resolve(__dirname, '../paint/src')),
                 /node_modules[\\/]pify/,
                 /node_modules[\\/]@vernier[\\/]godirect/
             ],
@@ -186,6 +192,8 @@ const base = {
             include: [
                 path.resolve(__dirname, 'src'),
                 /node_modules[\\/]scratch-[^\\/]+[\\/]src/,
+                // lk: TODO: Temporary hack to resolve scratch-paint. Figure out what's happening later.
+                fs.realpathSync(path.resolve(__dirname, '../paint/src')),
                 /node_modules[\\/]pify/,
                 /node_modules[\\/]@vernier[\\/]godirect/
             ],
