@@ -124,6 +124,7 @@ module.exports = [
     defaultsDeep({}, base, {
         externals: {
             'prop-types': 'prop-types',
+            'radix-ui': 'radix-ui',
             'react': 'react',
             'react-dom': 'react-dom',
             'react-intl': 'react-intl',
