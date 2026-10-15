@@ -132,6 +132,4 @@ BrowserModal.propTypes = {
 
 const WrappedBrowserModal = injectIntl(BrowserModal);
 
-WrappedBrowserModal.setAppElement = ReactModal.setAppElement;
-
 export default WrappedBrowserModal;

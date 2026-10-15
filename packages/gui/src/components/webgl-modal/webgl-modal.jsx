@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import ReactModal from 'react-modal';
+import Modal from '../../containers/modal.jsx';
 import Box from '../box/box.jsx';
 import {defineMessages, injectIntl, FormattedMessage} from 'react-intl';
 
@@ -15,7 +15,7 @@ const messages = defineMessages({
 });
 
 const WebGlModal = ({intl, ...props}) => (
-    <ReactModal
+    <Modal
         isOpen
         className={styles.modalContent}
         contentLabel={intl.formatMessage({...messages.label})}
@@ -89,7 +89,7 @@ const WebGlModal = ({intl, ...props}) => (
                 </div>
             </Box>
         </div>
-    </ReactModal>
+    </Modal>
 );
 
 WebGlModal.propTypes = {
