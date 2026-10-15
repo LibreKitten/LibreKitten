@@ -1,5 +1,4 @@
-import ReactDOM from 'react-dom';
-import {setAppElement} from 'react-modal';
+import {createRoot} from 'react-dom';
 
 // lk: Allow forcing the startup error screen, so we can debug and edit it more easily.
 const searchParams = new URLSearchParams(window.location.search);
@@ -17,10 +16,9 @@ while (appTarget.firstChild) {
     appTarget.removeChild(appTarget.firstChild);
 }
 
-setAppElement(appTarget);
-
 const render = children => {
-    ReactDOM.render(children, appTarget);
+    const root = createRoot(appTarget);
+    root.render(children);
 
     if (window.SplashEnd) {
         window.SplashEnd();
