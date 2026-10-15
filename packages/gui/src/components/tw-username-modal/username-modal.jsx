@@ -1,4 +1,4 @@
-import {defineMessages, FormattedMessage, intlShape, injectIntl} from 'react-intl';
+import {defineMessages, FormattedMessage, injectIntl} from 'react-intl';
 import PropTypes from 'prop-types';
 import React from 'react';
 import Box from '../box/box.jsx';
@@ -130,7 +130,7 @@ const UsernameModalComponent = props => (
 );
 
 UsernameModalComponent.propTypes = {
-    intl: intlShape,
+    intl: PropTypes.any,
     mustChangeUsername: PropTypes.bool.isRequired,
     value: PropTypes.string.isRequired,
     valueValid: PropTypes.bool.isRequired,

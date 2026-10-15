@@ -1,4 +1,4 @@
-import {defineMessages, FormattedMessage, intlShape, injectIntl} from 'react-intl';
+import {defineMessages, FormattedMessage, injectIntl} from 'react-intl';
 import PropTypes from 'prop-types';
 import React from 'react';
 import Box from '../box/box.jsx';
@@ -90,7 +90,7 @@ const SecurityManagerModalComponent = props => (
 );
 
 SecurityManagerModalComponent.propTypes = {
-    intl: intlShape,
+    intl: PropTypes.any,
     type: PropTypes.oneOf(Object.values(SecurityModals)),
     enableButtons: PropTypes.bool,
     // Each modal may have different type of data

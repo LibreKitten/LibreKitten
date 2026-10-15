@@ -1,4 +1,4 @@
-import {defineMessages, FormattedMessage, intlShape, injectIntl} from 'react-intl';
+import {defineMessages, FormattedMessage, injectIntl} from 'react-intl';
 import PropTypes from 'prop-types';
 import React from 'react';
 import classNames from 'classnames';
@@ -141,7 +141,7 @@ const FontModal = props => (
 );
 
 FontModal.propTypes = {
-    intl: intlShape,
+    intl: PropTypes.any,
     onClose: PropTypes.func.isRequired,
     fonts: PropTypes.arrayOf(PropTypes.shape({
         system: PropTypes.bool.isRequired,

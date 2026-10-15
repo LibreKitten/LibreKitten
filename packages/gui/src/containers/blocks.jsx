@@ -4,7 +4,7 @@ import defaultsDeep from 'lodash.defaultsdeep';
 import makeToolboxXML from '../lib/make-toolbox-xml';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {intlShape, injectIntl, defineMessages} from 'react-intl';
+import {injectIntl, defineMessages} from 'react-intl';
 import VMScratchBlocks from '../lib/blocks';
 import VM from 'scratch-vm';
 
@@ -797,7 +797,7 @@ class Blocks extends React.Component {
 }
 
 Blocks.propTypes = {
-    intl: intlShape,
+    intl: PropTypes.any,
     anyModalVisible: PropTypes.bool,
     canUseCloud: PropTypes.bool,
     customStageSize: PropTypes.shape({

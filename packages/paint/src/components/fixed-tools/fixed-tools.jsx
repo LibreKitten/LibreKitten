@@ -11,7 +11,7 @@ import BufferedInputHOC from '../forms/buffered-input-hoc.jsx';
 import Button from '../button/button.jsx';
 import ButtonGroup from '../button-group/button-group.jsx';
 import Dropdown from '../dropdown/dropdown.jsx';
-import {defineMessages, injectIntl, intlShape} from 'react-intl';
+import {defineMessages, injectIntl} from 'react-intl';
 import Formats, {isVector} from '../../lib/format';
 import Input from '../forms/input.jsx';
 import InputGroup from '../input-group/input-group.jsx';
@@ -299,7 +299,7 @@ FixedToolsComponent.propTypes = {
     canRedo: PropTypes.func.isRequired,
     canUndo: PropTypes.func.isRequired,
     format: PropTypes.oneOf(Object.keys(Formats)),
-    intl: intlShape,
+    intl: PropTypes.any,
     name: PropTypes.string,
     onGroup: PropTypes.func.isRequired,
     onRedo: PropTypes.func.isRequired,

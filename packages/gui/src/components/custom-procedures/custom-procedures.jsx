@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Modal from '../../containers/modal.jsx';
 import Box from '../box/box.jsx';
-import {defineMessages, injectIntl, intlShape, FormattedMessage} from 'react-intl';
+import {defineMessages, injectIntl, FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
 
 import {Theme} from '../../lib/themes';
@@ -282,7 +282,7 @@ const CustomProcedures = props => (
 CustomProcedures.propTypes = {
     color: PropTypes.string.isRequired,
     componentRef: PropTypes.func.isRequired,
-    intl: intlShape,
+    intl: PropTypes.any,
     onAddBoolean: PropTypes.func.isRequired,
     onAddLabel: PropTypes.func.isRequired,
     onAddTextNumber: PropTypes.func.isRequired,

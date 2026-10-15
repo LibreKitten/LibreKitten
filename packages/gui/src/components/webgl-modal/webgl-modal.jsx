@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import ReactModal from 'react-modal';
 import Box from '../box/box.jsx';
-import {defineMessages, injectIntl, intlShape, FormattedMessage} from 'react-intl';
+import {defineMessages, injectIntl, FormattedMessage} from 'react-intl';
 
 import styles from './webgl-modal.css';
 
@@ -93,7 +93,7 @@ const WebGlModal = ({intl, ...props}) => (
 );
 
 WebGlModal.propTypes = {
-    intl: intlShape.isRequired,
+    intl: PropTypes.any.isRequired,
     isRtl: PropTypes.bool,
     onBack: PropTypes.func.isRequired
 };

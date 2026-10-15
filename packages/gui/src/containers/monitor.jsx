@@ -1,7 +1,7 @@
 import bindAll from 'lodash.bindall';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {injectIntl, intlShape, defineMessages} from 'react-intl';
+import {injectIntl, defineMessages} from 'react-intl';
 
 import monitorAdapter from '../lib/monitor-adapter.js';
 import MonitorComponent, {monitorModes} from '../components/monitor/monitor.jsx';
@@ -247,7 +247,7 @@ Monitor.propTypes = {
     draggable: PropTypes.bool,
     height: PropTypes.number,
     id: PropTypes.string.isRequired,
-    intl: intlShape,
+    intl: PropTypes.any,
     isDiscrete: PropTypes.bool,
     max: PropTypes.number,
     min: PropTypes.number,

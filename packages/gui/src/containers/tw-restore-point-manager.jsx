@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {intlShape, injectIntl, defineMessages} from 'react-intl';
+import {injectIntl, defineMessages} from 'react-intl';
 import PropTypes from 'prop-types';
 import bindAll from 'lodash.bindall';
 import {showAlertWithTimeout, showStandardAlert} from '../reducers/alerts';
@@ -330,7 +330,7 @@ class TWRestorePointManager extends React.Component {
 }
 
 TWRestorePointManager.propTypes = {
-    intl: intlShape,
+    intl: PropTypes.any,
     projectChanged: PropTypes.bool.isRequired,
     projectTitle: PropTypes.string.isRequired,
     onStartCreatingRestorePoint: PropTypes.func.isRequired,

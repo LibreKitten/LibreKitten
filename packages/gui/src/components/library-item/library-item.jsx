@@ -1,4 +1,4 @@
-import {FormattedMessage, intlShape, defineMessages} from 'react-intl';
+import {FormattedMessage, defineMessages} from 'react-intl';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -253,7 +253,7 @@ class LibraryItemComponent extends React.PureComponent {
 
 
 LibraryItemComponent.propTypes = {
-    intl: intlShape,
+    intl: PropTypes.any,
     bluetoothRequired: PropTypes.bool,
     collaborator: PropTypes.string,
     description: PropTypes.oneOfType([

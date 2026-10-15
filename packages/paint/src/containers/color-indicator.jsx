@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import bindAll from 'lodash.bindall';
 import parseColor from 'parse-color';
-import {injectIntl, intlShape} from 'react-intl';
+import {injectIntl} from 'react-intl';
 
 import {getSelectedLeafItems} from '../helper/selection';
 import Formats, {isBitmap} from '../lib/format';
@@ -154,7 +154,7 @@ const makeColorIndicator = (label, isStroke) => {
         fillBitmapShapes: PropTypes.bool.isRequired,
         format: PropTypes.oneOf(Object.keys(Formats)),
         gradientType: PropTypes.oneOf(Object.keys(GradientTypes)).isRequired,
-        intl: intlShape,
+        intl: PropTypes.any,
         isEyeDropping: PropTypes.bool.isRequired,
         onChangeColorIndex: PropTypes.func.isRequired,
         onChangeColor: PropTypes.func.isRequired,

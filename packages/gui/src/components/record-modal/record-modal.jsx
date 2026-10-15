@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import Box from '../box/box.jsx';
-import {defineMessages, injectIntl, intlShape} from 'react-intl';
+import {defineMessages, injectIntl} from 'react-intl';
 import RecordingStep from '../../containers/recording-step.jsx';
 import PlaybackStep from '../../containers/playback-step.jsx';
 import Modal from '../../containers/modal.jsx';
@@ -53,7 +53,7 @@ const RecordModal = props => (
 
 RecordModal.propTypes = {
     encoding: PropTypes.bool.isRequired,
-    intl: intlShape.isRequired,
+    intl: PropTypes.any.isRequired,
     levels: PropTypes.arrayOf(PropTypes.number),
     onBack: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,

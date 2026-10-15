@@ -3,7 +3,7 @@ import React from 'react';
 import Modal from '../../containers/modal.jsx';
 import Box from '../box/box.jsx';
 import Button from '../button/button.jsx';
-import {defineMessages, injectIntl, intlShape, FormattedMessage} from 'react-intl';
+import {defineMessages, injectIntl, FormattedMessage} from 'react-intl';
 import {APP_NAME} from '../../lib/brand.js';
 
 import styles from './welcome-modal.css';
@@ -149,7 +149,7 @@ const WelcomeModalComponent = ({intl, ...props}) => {
 
 WelcomeModalComponent.propTypes = {
     dontShowAgainRef: PropTypes.func,
-    intl: intlShape.isRequired,
+    intl: PropTypes.any.isRequired,
     isRtl: PropTypes.bool,
     onClose: PropTypes.func,
     onOpenStable: PropTypes.func

@@ -1,6 +1,6 @@
 import bindAll from 'lodash.bindall';
 import classNames from 'classnames';
-import {defineMessages, injectIntl, intlShape, FormattedMessage} from 'react-intl';
+import {defineMessages, injectIntl, FormattedMessage} from 'react-intl';
 import PropTypes from 'prop-types';
 import React from 'react';
 import ReactTooltip from 'react-tooltip';
@@ -92,7 +92,7 @@ class ComingSoonContent extends React.Component {
 
 ComingSoonContent.propTypes = {
     className: PropTypes.string,
-    intl: intlShape,
+    intl: PropTypes.any,
     place: PropTypes.oneOf(['top', 'right', 'bottom', 'left']),
     tooltipId: PropTypes.string.isRequired
 };

@@ -2,7 +2,7 @@ import bindAll from 'lodash.bindall';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {connect} from 'react-redux';
-import {defineMessages, injectIntl, intlShape} from 'react-intl';
+import {defineMessages, injectIntl} from 'react-intl';
 import VM from 'scratch-vm';
 
 const messages = defineMessages({
@@ -52,7 +52,7 @@ class FramerateChanger extends React.Component {
 }
 
 FramerateChanger.propTypes = {
-    intl: intlShape,
+    intl: PropTypes.any,
     children: PropTypes.func,
     framerate: PropTypes.number,
     vm: PropTypes.instanceOf(VM)

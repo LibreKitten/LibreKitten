@@ -1,4 +1,4 @@
-import {defineMessages, FormattedMessage, intlShape, injectIntl} from 'react-intl';
+import {defineMessages, FormattedMessage, injectIntl} from 'react-intl';
 import PropTypes from 'prop-types';
 import React from 'react';
 import Modal from '../../containers/modal.jsx';
@@ -134,7 +134,7 @@ const InvalidProjectModal = props => (
 );
 
 InvalidProjectModal.propTypes = {
-    intl: intlShape,
+    intl: PropTypes.any,
     onClose: PropTypes.func,
     onClickRestorePoints: PropTypes.func,
     error: PropTypes.any

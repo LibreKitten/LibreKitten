@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import bindAll from 'lodash.bindall';
 import classNames from 'classnames';
-import {defineMessages, injectIntl, intlShape} from 'react-intl';
+import {defineMessages, injectIntl} from 'react-intl';
 
 import StudioView from './studioview';
 import styles from './studioview.css';
@@ -78,7 +78,7 @@ class StudioViewComponent extends React.Component {
 
 StudioViewComponent.propTypes = {
     id: PropTypes.string.isRequired,
-    intl: intlShape.isRequired,
+    intl: PropTypes.any.isRequired,
     placeholder: PropTypes.bool,
     onSelect: PropTypes.func.isRequired
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {injectIntl, intlShape, defineMessages, FormattedMessage} from 'react-intl';
+import {injectIntl, defineMessages, FormattedMessage} from 'react-intl';
 import bindAll from 'lodash.bindall';
 import {formatBytes} from '../../lib/tw-bytes-utils';
 import downloadBlob from '../../lib/download-blob';
@@ -101,7 +101,7 @@ class ManageFont extends React.Component {
 }
 
 ManageFont.propTypes = {
-    intl: intlShape,
+    intl: PropTypes.any,
     system: PropTypes.bool.isRequired,
     name: PropTypes.string.isRequired,
     family: PropTypes.string.isRequired,

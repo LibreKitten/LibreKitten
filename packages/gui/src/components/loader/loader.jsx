@@ -1,5 +1,5 @@
 import React from 'react';
-import {FormattedMessage, injectIntl, intlShape, defineMessages} from 'react-intl';
+import {FormattedMessage, injectIntl, defineMessages} from 'react-intl';
 import {connect} from 'react-redux';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
@@ -160,7 +160,7 @@ class LoaderComponent extends React.Component {
 }
 
 LoaderComponent.propTypes = {
-    intl: intlShape,
+    intl: PropTypes.any,
     isFullScreen: PropTypes.bool,
     isRemote: PropTypes.bool,
     messageId: PropTypes.string,

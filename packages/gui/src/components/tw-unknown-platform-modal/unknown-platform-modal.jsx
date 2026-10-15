@@ -1,4 +1,4 @@
-import {defineMessages, FormattedMessage, intlShape, injectIntl} from 'react-intl';
+import {defineMessages, FormattedMessage, injectIntl} from 'react-intl';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {APP_NAME} from '../../lib/brand.js';
@@ -78,7 +78,7 @@ const UnknownPlatformModal = props => (
 );
 
 UnknownPlatformModal.propTypes = {
-    intl: intlShape,
+    intl: PropTypes.any,
     onClose: PropTypes.func.isRequired,
     canClose: PropTypes.bool,
     platform: PropTypes.shape({

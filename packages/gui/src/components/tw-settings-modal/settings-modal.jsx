@@ -1,4 +1,4 @@
-import {defineMessages, FormattedMessage, intlShape, injectIntl} from 'react-intl';
+import {defineMessages, FormattedMessage, injectIntl} from 'react-intl';
 import PropTypes from 'prop-types';
 import React from 'react';
 import classNames from 'classnames';
@@ -108,7 +108,7 @@ class UnwrappedSetting extends React.Component {
     }
 }
 UnwrappedSetting.propTypes = {
-    intl: intlShape,
+    intl: PropTypes.any,
     active: PropTypes.bool,
     help: PropTypes.node,
     primary: PropTypes.node,
@@ -250,7 +250,7 @@ const CustomFPS = props => (
     />
 );
 CustomFPS.propTypes = {
-    intl: intlShape,
+    intl: PropTypes.any,
     framerate: PropTypes.number,
     onSetFramerate: PropTypes.func
 };
@@ -581,7 +581,7 @@ const SettingsModalComponent = props => (
 );
 
 SettingsModalComponent.propTypes = {
-    intl: intlShape,
+    intl: PropTypes.any,
     onClose: PropTypes.func,
     isEmbedded: PropTypes.bool,
     framerate: PropTypes.number,

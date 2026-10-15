@@ -1,6 +1,6 @@
 import paper from '@turbowarp/paper';
 import classNames from 'classnames';
-import {defineMessages, injectIntl, intlShape} from 'react-intl';
+import {defineMessages, injectIntl} from 'react-intl';
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -335,7 +335,7 @@ PaintEditorComponent.propTypes = {
     ]),
     imageFormat: PropTypes.string,
     imageId: PropTypes.string,
-    intl: intlShape,
+    intl: PropTypes.any,
     isEyeDropping: PropTypes.bool,
     name: PropTypes.string,
     onChangeTheme: PropTypes.func.isRequired,

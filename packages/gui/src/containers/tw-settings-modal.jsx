@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import {injectIntl, intlShape} from 'react-intl';
+import {injectIntl} from 'react-intl';
 import bindAll from 'lodash.bindall';
 import {connect} from 'react-redux';
 import {closeSettingsModal} from '../reducers/modals';
@@ -102,7 +102,7 @@ class UsernameModal extends React.Component {
 }
 
 UsernameModal.propTypes = {
-    intl: intlShape,
+    intl: PropTypes.any,
     onClose: PropTypes.func,
     vm: PropTypes.shape({
         renderer: PropTypes.shape({

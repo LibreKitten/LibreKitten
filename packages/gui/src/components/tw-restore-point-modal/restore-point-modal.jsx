@@ -1,4 +1,4 @@
-import {defineMessages, FormattedMessage, intlShape, injectIntl} from 'react-intl';
+import {defineMessages, FormattedMessage, injectIntl} from 'react-intl';
 import PropTypes from 'prop-types';
 import React from 'react';
 import Modal from '../../containers/modal.jsx';
@@ -73,7 +73,7 @@ const IntervalSelector = props => (
     </select>
 );
 IntervalSelector.propTypes = {
-    intl: intlShape,
+    intl: PropTypes.any,
     value: PropTypes.number.isRequired,
     onChange: PropTypes.func.isRequired
 };
@@ -216,7 +216,7 @@ const RestorePointModal = props => (
 );
 
 RestorePointModal.propTypes = {
-    intl: intlShape,
+    intl: PropTypes.any,
     interval: PropTypes.number.isRequired,
     onChangeInterval: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,

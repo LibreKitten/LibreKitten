@@ -4,7 +4,7 @@
  */
 import React from 'react';
 import renderer from 'react-test-renderer';
-import {IntlProvider, intlShape} from 'react-intl';
+import {IntlProvider} from 'react-intl';
 import {mount, shallow} from 'enzyme';
 
 const intlProvider = new IntlProvider({locale: 'en'}, {});
@@ -23,7 +23,7 @@ const mountWithIntl = (node, {context, childContextTypes} = {}) => mount(
     nodeWithIntlProp(node),
     {
         context: Object.assign({}, context, {intl}),
-        childContextTypes: Object.assign({}, {intl: intlShape}, childContextTypes)
+        childContextTypes: Object.assign({}, {intl: PropTypes.any}, childContextTypes)
     }
 );
 

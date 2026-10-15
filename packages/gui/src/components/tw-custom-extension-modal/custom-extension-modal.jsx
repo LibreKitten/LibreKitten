@@ -1,4 +1,4 @@
-import {defineMessages, FormattedMessage, intlShape, injectIntl} from 'react-intl';
+import {defineMessages, FormattedMessage, injectIntl} from 'react-intl';
 import PropTypes from 'prop-types';
 import React from 'react';
 import Box from '../box/box.jsx';
@@ -199,7 +199,7 @@ const CustomExtensionModal = props => (
 );
 
 CustomExtensionModal.propTypes = {
-    intl: intlShape,
+    intl: PropTypes.any,
     canLoadExtension: PropTypes.bool.isRequired,
     type: PropTypes.oneOf(['url', 'file', 'text']).isRequired,
     onSwitchToFile: PropTypes.func.isRequired,
