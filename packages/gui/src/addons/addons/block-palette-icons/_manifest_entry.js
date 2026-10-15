@@ -19,7 +19,7 @@ const manifest = {
       "link": "https://scratch.mit.edu/users/--Explosion--/"
     },
     {
-      "name": "RedGuy7",
+      "name": "cobalt",
       "link": "https://scratch.mit.edu/users/RedGuy7/"
     }
   ]

@@ -14,7 +14,8 @@ const manifest = {
       "link": "https://scratch.mit.edu/users/_nix/"
     },
     {
-      "name": "DNin01"
+      "name": "DNin01",
+      "link": "https://scratch.mit.edu/users/D-ScratchNinja/"
     }
   ],
   "userscripts": [

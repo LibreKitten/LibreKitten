@@ -32,7 +32,7 @@ export default {
   "custom-block-shape": () => import(/* webpackChunkName: "addon-entry-custom-block-shape" */ "../addons/custom-block-shape/_runtime_entry.js"),
   "editor-square-inputs": () => import(/* webpackChunkName: "addon-entry-editor-square-inputs" */ "../addons/editor-square-inputs/_runtime_entry.js"),
   "zebra-striping": () => import(/* webpackChunkName: "addon-entry-zebra-striping" */ "../addons/zebra-striping/_runtime_entry.js"),
-  "editor-compact": () => import(/* webpackuserscriptChunkName: "addon-entry-editor-compact" */ "../addons/editor-compact/_runtime_entry.js"),
+  "editor-compact": () => import(/* webpackChunkName: "addon-entry-editor-compact" */ "../addons/editor-compact/_runtime_entry.js"),
   "custom-menu-bar": () => import(/* webpackChunkName: "addon-entry-custom-menu-bar" */ "../addons/custom-menu-bar/_runtime_entry.js"),
   "editor-theme3": () => import(/* webpackChunkName: "addon-entry-editor-theme3" */ "../addons/editor-theme3/_runtime_entry.js"),
   "custom-block-text": () => import(/* webpackChunkName: "addon-entry-custom-block-text" */ "../addons/custom-block-text/_runtime_entry.js"),
@@ -81,5 +81,4 @@ export default {
   "tw-disable-cloud-variables": () => import(/* webpackChunkName: "addon-entry-tw-disable-cloud-variables" */ "../addons/tw-disable-cloud-variables/_runtime_entry.js"),
   "tw-disable-compiler": () => import(/* webpackChunkName: "addon-entry-tw-disable-compiler" */ "../addons/tw-disable-compiler/_runtime_entry.js"),
   "editor-stepping": () => import(/* webpackChunkName: "addon-entry-editor-stepping" */ "../addons/editor-stepping/_runtime_entry.js"),
-  "blocklydevtools": () => import(/* webpackChunkName: "blocklydevtools" */ "../addons/blocklydevtools/_runtime_entry.js"),
 };

@@ -13,13 +13,8 @@ const manifest = {
   "info": [
     {
       "type": "notice",
-      "text": "The \"experimental keys\" include equals, slash, semicolon and more. They may not work on all operating systems or keyboard layouts.",
-      "id": "experimentalKeysWarn"
-    },
-    {
-      "type": "notice",
-      "text": "The \"Shift keys\" include keys which typically require the Shift key and a number key, like hashtag, exclamation mark and more. These keys only work with the \"when () key pressed\" block and do not work on all operating systems or keyboard layouts.",
-      "id": "shiftKeysWarn"
+      "text": "Some of these keys may not work on all operating systems or keyboard layouts.",
+      "id": "OSWarn"
     },
     {
       "type": "warning",
@@ -32,6 +27,7 @@ const manifest = {
       "dynamic": true,
       "name": "Show experimental keys",
       "id": "experimentalKeys",
+      "description": "Includes keys such as equals, slash, semicolon and others that don't typically require holding Shift.",
       "type": "boolean",
       "default": false
     },
@@ -39,6 +35,7 @@ const manifest = {
       "dynamic": true,
       "name": "Show Shift keys",
       "id": "shiftKeys",
+      "description": "Includes keys which typically require the Shift key and a number key, like hashtag, exclamation mark and more. These keys only work with the \"when () key pressed\" block.",
       "type": "boolean",
       "default": false
     },

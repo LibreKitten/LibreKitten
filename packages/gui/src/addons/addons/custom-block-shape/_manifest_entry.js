@@ -26,6 +26,9 @@ const manifest = {
   "userscripts": [
     {
       "url": "userscript.js"
+    },
+    {
+      "url": "modern-blockly.js"
     }
   ],
   "info": [
@@ -51,7 +54,7 @@ const manifest = {
       "id": "cornerSize",
       "type": "integer",
       "min": 0,
-      "default": 225,
+      "default": 100,
       "max": 300
     },
     {

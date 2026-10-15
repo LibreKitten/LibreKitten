@@ -1,11 +1,5 @@
 import { setSnapFrom, setSnapTo, snapOn, snapFrom, snapTo, toggle, threshold, setThreshold } from "./state.js";
 
-import {
-    BLOCKS_TAB_INDEX,
-    COSTUMES_TAB_INDEX,
-    SOUNDS_TAB_INDEX
-} from '../../../reducers/editor-tab';
-
 /** @type {import("../../addon-api/content-script/typedef").UserscriptUtilities} */
 export function initUI({ addon, msg }) {
   const createGroup = () => {
@@ -35,9 +29,7 @@ export function initUI({ addon, msg }) {
   };
 
   const controlsGroup = createGroup();
-  addon.tab.displayNoneWhileDisabled(controlsGroup, {
-    display: "flex",
-  });
+  addon.tab.displayNoneWhileDisabled(controlsGroup);
 
   const settingPageWrapper = document.createElement("div");
   settingPageWrapper.className = "sa-paint-snap-settings-wrapper";
@@ -80,6 +72,7 @@ export function initUI({ addon, msg }) {
   const settingButton = createButton();
   settingButton.addEventListener("click", () => setSettingsOpen(!areSettingsOpen()));
   settingButton.title = msg("settings");
+  settingButton.classList.add("sa-paint-snap-arrow");
   settingButton.appendChild(createButtonImage("settings"));
   controlsGroup.appendChild(settingButton);
 
@@ -299,7 +292,7 @@ export function initUI({ addon, msg }) {
           "scratch-gui/targets/UPDATE_TARGET_LIST",
         ],
         reduxCondition: (state) =>
-          state.scratchGui.editorTab.activeTabIndex === COSTUMES_TAB_INDEX && !state.scratchGui.mode.isPlayerOnly,
+          state.scratchGui.editorTab.activeTabIndex === 1 && !state.scratchGui.mode.isPlayerOnly,
       });
       const zoomControlsContainer = canvasControls.querySelector("[class^='paint-editor_zoom-controls']");
       addon.tab.appendToSharedSpace({

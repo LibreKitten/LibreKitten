@@ -2,7 +2,7 @@
 const manifest = {
   "editorOnly": true,
   "name": "Block count",
-  "description": "Shows the total number of blocks in a project in the editor menu bar. Previously part of \"sprite and script count\".",
+  "description": "Shows the total number of blocks in a project in the editor menu bar.",
   "tags": [],
   "credits": [
     {
@@ -15,7 +15,6 @@ const manifest = {
     {
       "url": "blockcount.js"
     }
-  ],
-  "enabledByDefault": true
+  ]
 };
 export default manifest;

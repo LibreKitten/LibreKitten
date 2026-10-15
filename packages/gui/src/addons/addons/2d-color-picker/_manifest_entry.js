@@ -6,7 +6,8 @@ const manifest = {
   "tags": [],
   "credits": [
     {
-      "name": "Ucrash"
+      "name": "Ucrash",
+      "link": "https://scratch.mit.edu/users/UcrashReal/"
     }
   ],
   "userscripts": [

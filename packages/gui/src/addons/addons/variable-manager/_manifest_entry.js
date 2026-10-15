@@ -9,6 +9,10 @@ const manifest = {
     },
     {
       "name": "GarboMuffin"
+    },
+    {
+      "name": "Google",
+      "link": "https://fonts.google.com/icons?icon.set=Material+Icons"
     }
   ],
   "userscripts": [

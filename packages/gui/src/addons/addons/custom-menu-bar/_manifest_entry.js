@@ -26,7 +26,7 @@ const manifest = {
   "settings": [
     {
       "dynamic": true,
-      "name": "Show menu...",
+      "name": "Menu button appearance",
       "id": "menu-labels",
       "type": "select",
       "potentialValues": [

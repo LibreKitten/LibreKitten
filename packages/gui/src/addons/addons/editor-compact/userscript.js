@@ -2,12 +2,6 @@ import EventTarget from "../../event-target.js"; /* inserted by pull.js */
 
 import { eventTarget as tooltipUpdateEventTarget } from "./force-tooltip-update.js";
 
-import {
-    BLOCKS_TAB_INDEX,
-    COSTUMES_TAB_INDEX,
-    SOUNDS_TAB_INDEX
-} from '../../../reducers/editor-tab';
-
 export default async function ({ addon, global, console }) {
   // The workspace needs to be manually resized via a window resize event
   // whenever the addon modifies or stops modifying UI elements
@@ -59,7 +53,7 @@ export default async function ({ addon, global, console }) {
         "scratch-gui/locales/SELECT_LOCALE",
         "scratch-gui/targets/UPDATE_TARGET_LIST",
       ],
-      reduxCondition: (state) => !state.scratchGui.mode.isPlayerOnly && state.scratchGui.editorTab.activeTabIndex === SOUNDS_TAB_INDEX,
+      reduxCondition: (state) => !state.scratchGui.mode.isPlayerOnly && state.scratchGui.editorTab.activeTabIndex === 2,
     });
     updateTooltips();
   }

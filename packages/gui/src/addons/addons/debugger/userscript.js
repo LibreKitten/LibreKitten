@@ -2,14 +2,9 @@ import { isPaused, setPaused, onPauseChanged, setup } from "./module.js";
 import createLogsTab from "./logs.js";
 import createThreadsTab from "./threads.js";
 import createPerformanceTab from "./performance.js";
+import createTimingTab from "./timing/createTimingTab.js";
 import Utils from "../find-bar/blockly/Utils.js";
 import addSmallStageClass from "../../libraries/common/cs/small-stage.js";
-
-import {
-    BLOCKS_TAB_INDEX,
-    COSTUMES_TAB_INDEX,
-    SOUNDS_TAB_INDEX
-} from '../../../reducers/editor-tab';
 
 const removeAllChildren = (element) => {
   while (element.firstChild) {
@@ -21,6 +16,7 @@ export default async function ({ addon, console, msg }) {
   setup(addon);
 
   let logsTab;
+  let timingTab;
   const messagesLoggedBeforeLogsTabLoaded = [];
   const logMessage = (...args) => {
     if (logsTab) {
@@ -42,6 +38,12 @@ export default async function ({ addon, console, msg }) {
     setPaused(true);
     setInterfaceVisible(true);
   };
+
+  addon.tab.addBlock("sa-pause", {
+    args: [],
+    callback: pause,
+    hidden: true,
+  });
   addon.tab.addBlock("\u200B\u200Bbreakpoint\u200B\u200B", {
     args: [],
     displayName: msg("block-breakpoint"),
@@ -66,6 +68,20 @@ export default async function ({ addon, console, msg }) {
     displayName: msg("block-error"),
     callback: ({ content }, thread) => {
       logMessage(content, thread, "error");
+    },
+  });
+  addon.tab.addBlock("\u200B\u200Bstart timer\u200B\u200B %s", {
+    args: [{ name: "label", default: msg("default-timer-label") }],
+    displayName: msg("block-start-timer"),
+    callback: ({ label }, thread) => {
+      if (timingTab) timingTab.startTimer(label, thread.target.id, thread.peekStack());
+    },
+  });
+  addon.tab.addBlock("\u200B\u200Bstop timer\u200B\u200B %s", {
+    args: [{ name: "label", default: msg("default-timer-label") }],
+    displayName: msg("block-stop-timer"),
+    callback: ({ label }) => {
+      if (timingTab) timingTab.stopTimer(label);
     },
   });
 
@@ -110,7 +126,14 @@ export default async function ({ addon, console, msg }) {
   const tabContentContainer = Object.assign(document.createElement("div"), {
     className: "sa-debugger-tab-content",
   });
+  const interfaceFooter = Object.assign(document.createElement("div"), {
+    className: "sa-debugger-footer",
+  });
+  const footerButtonContainer = Object.assign(document.createElement("div"), {
+    className: "sa-debugger-footer-buttons",
+  });
 
+  // TW: add warning that compiler won't work as good
   const compilerWarning = document.createElement("a");
   compilerWarning.addEventListener("click", () => {
     addon.tab.redux.dispatch({
@@ -119,6 +142,7 @@ export default async function ({ addon, console, msg }) {
     });
   });
   compilerWarning.className = "sa-debugger-log sa-debugger-compiler-warning";
+  // TW: TODO: translate
   compilerWarning.textContent = "The debugger works best when the compiler is disabled.";
   const updateCompilerWarningVisibility = () => {
     compilerWarning.hidden = !vm.runtime.compilerOptions.enabled;
@@ -147,12 +171,12 @@ export default async function ({ addon, console, msg }) {
     mouseOffsetY = e.clientY - interfaceContainer.offsetTop;
     lastX = e.clientX;
     lastY = e.clientY;
-    document.addEventListener("mouseup", handleStopDrag);
-    document.addEventListener("mousemove", handleDragInterface);
+    document.addEventListener("pointerup", handleStopDrag);
+    document.addEventListener("pointermove", handleDragInterface);
   };
   const handleStopDrag = () => {
-    document.removeEventListener("mouseup", handleStopDrag);
-    document.removeEventListener("mousemove", handleDragInterface);
+    document.removeEventListener("pointerup", handleStopDrag);
+    document.removeEventListener("pointermove", handleDragInterface);
   };
   const moveInterface = (x, y) => {
     lastX = x;
@@ -171,13 +195,17 @@ export default async function ({ addon, console, msg }) {
   window.addEventListener("resize", () => {
     moveInterface(lastX, lastY);
   });
-  interfaceHeader.addEventListener("mousedown", handleStartDrag);
+  interfaceHeader.addEventListener("pointerdown", handleStartDrag);
+  interfaceHeader.addEventListener("touchmove", (e) => e.preventDefault());
 
   interfaceHeader.append(tabListElement, buttonContainerElement);
-  interfaceContainer.append(interfaceHeader, compilerWarning, tabContentContainer);
+  interfaceFooter.appendChild(footerButtonContainer);
+  // TW: append compilerWarning after interfaceHeader
+  interfaceContainer.append(interfaceHeader, compilerWarning, tabContentContainer, interfaceFooter);
   document.body.append(interfaceContainer);
+  moveInterface(0, 0); // necessary to initialize position if running scratch-gui locally
 
-  const createHeaderButton = ({ text, icon, description }) => {
+  const createIconButton = ({ text, icon, description }) => {
     const button = Object.assign(document.createElement("div"), {
       className: addon.tab.scratchClass("card_shrink-expand-button"),
       draggable: false,
@@ -185,14 +213,17 @@ export default async function ({ addon, console, msg }) {
     if (description) {
       button.title = description;
     }
-    const imageElement = Object.assign(document.createElement("img"), {
-      src: icon,
-      draggable: false,
-    });
+    let imageElement = null;
+    if (icon) {
+      imageElement = Object.assign(document.createElement("img"), {
+        src: icon,
+        draggable: false,
+      });
+      button.appendChild(imageElement);
+    }
     const textElement = Object.assign(document.createElement("span"), {
       textContent: text,
     });
-    button.appendChild(imageElement);
     button.appendChild(textElement);
     return {
       element: button,
@@ -203,7 +234,7 @@ export default async function ({ addon, console, msg }) {
 
   const createHeaderTab = ({ text, icon }) => {
     const tab = document.createElement("li");
-    const imageElement = Object.assign(addon.tab.recolorable(), {
+    const imageElement = Object.assign(document.createElement("img"), {
       src: icon,
       draggable: false,
     });
@@ -219,23 +250,41 @@ export default async function ({ addon, console, msg }) {
     };
   };
 
-  const unpauseButton = createHeaderButton({
+  const unpauseButton = createIconButton({
     text: msg("unpause"),
     icon: addon.self.getResource("/icons/play.svg") /* rewritten by pull.js */,
   });
   unpauseButton.element.classList.add("sa-debugger-unpause");
   unpauseButton.element.addEventListener("click", () => setPaused(false));
+
+  const unpauseContainer = Object.assign(document.createElement("div"), {
+    className: "sa-debugger-unpause-container",
+  });
+  unpauseContainer.appendChild(unpauseButton.element);
   const updateUnpauseVisibility = (paused) => {
-    unpauseButton.element.style.display = paused ? "" : "none";
+    unpauseContainer.style.display = paused ? "" : "none";
+    setTimeout(updateFooterVisibility, 0); // Have to wait for other modules to update their buttons
   };
   updateUnpauseVisibility(isPaused());
   onPauseChanged(updateUnpauseVisibility);
 
-  const closeButton = createHeaderButton({
-    text: msg("close"),
-    icon: addon.self.getResource("/icons/close.svg") /* rewritten by pull.js */,
+  // Close button structure copied from addon-api/content-script/modal.js
+  const closeContainer = Object.assign(document.createElement("div"), {
+    className: addon.tab.scratchClass("modal_header-item", "modal_header-item-close"),
   });
-  closeButton.element.addEventListener("click", () => setInterfaceVisible(false));
+  const closeButton = Object.assign(document.createElement("div"), {
+    className: addon.tab.scratchClass("close-button_close-button", "close-button_large"),
+    title: msg("close"),
+  });
+  closeContainer.appendChild(closeButton);
+  closeButton.appendChild(
+    Object.assign(document.createElement("img"), {
+      className: addon.tab.scratchClass("close-button_close-icon"),
+      src: addon.self.getResource("../../images/cs/close-s3.svg") /* rewritten by pull.js */,
+      draggable: false,
+    })
+  );
+  closeButton.addEventListener("click", () => setInterfaceVisible(false));
 
   const originalStep = vm.runtime._step;
   const afterStepCallbacks = [];
@@ -306,16 +355,16 @@ export default async function ({ addon, console, msg }) {
 
   const activateCodeTab = () => {
     const redux = addon.tab.redux;
-    if (redux.state.scratchGui.editorTab.activeTabIndex !== BLOCKS_TAB_INDEX) {
+    if (redux.state.scratchGui.editorTab.activeTabIndex !== 0) {
       redux.dispatch({
         type: "scratch-gui/navigation/ACTIVATE_TAB",
-        activeTabIndex: BLOCKS_TAB_INDEX,
+        activeTabIndex: 0,
       });
     }
   };
 
   const goToBlock = (blockId) => {
-    const workspace = Blockly.getMainWorkspace();
+    const workspace = addon.tab.traps.getWorkspace();
     const block = workspace.getBlockById(blockId);
     if (!block) return;
 
@@ -406,6 +455,7 @@ export default async function ({ addon, console, msg }) {
     let text;
     let category;
     let shape;
+    // TW: support custom extension colors
     let color;
     if (
       block.opcode === "data_variable" ||
@@ -440,10 +490,16 @@ export default async function ({ addon, console, msg }) {
         formatProcedureCode(proccode)
       );
       category = "more";
+    } else if (block.opcode === "control_stop") {
+      // Procedural block - jsonInit not called, so we can't handle it with the fakeBlock approach
+      text = ScratchBlocks.ScratchMsgs.translate("CONTROL_STOP", "stop");
+      category = "control";
+      shape = "stacked";
     } else {
       // Try to call things like https://github.com/scratchfoundation/scratch-blocks/blob/0bd1a17e66a779ec5d11f4a00c43784e3ac7a7b8/blocks_vertical/operators.js#L36
       var jsonData;
       const fakeBlock = {
+        workspace: addon.tab.traps.getWorkspace(),
         jsonInit(data) {
           jsonData = data;
         },
@@ -453,7 +509,7 @@ export default async function ({ addon, console, msg }) {
         try {
           blockConstructor.init.call(fakeBlock);
         } catch (e) {
-          // ignore
+          console.log(e);
         }
       }
       if (!jsonData) {
@@ -463,6 +519,8 @@ export default async function ({ addon, console, msg }) {
       if (!text) {
         return null;
       }
+      // jsonData.extensions is not guaranteed to exist
+      // TW: added different extension for default colors
       category = jsonData?.extensions.includes("default_extension_colors") ? "pen" : jsonData.category;
       const isStatement =
         (jsonData.extensions &&
@@ -472,9 +530,11 @@ export default async function ({ addon, console, msg }) {
         "previousStatement" in jsonData ||
         "nextStatement" in jsonData;
       shape = isStatement ? "stacked" : "round";
+      // TW: support custom extension colors
       color = jsonData.colour;
     }
 
+    // TW: support custom extensions
     if (!text) {
       return null;
     }
@@ -484,6 +544,7 @@ export default async function ({ addon, console, msg }) {
     element.textContent = text;
     element.dataset.shape = shape;
 
+    // TW: support custom extension colors
     const COLOR_CLASSES = [
       "motion",
       "looks",
@@ -510,7 +571,7 @@ export default async function ({ addon, console, msg }) {
 
   const api = {
     debug: {
-      createHeaderButton,
+      createIconButton: createIconButton,
       createHeaderTab,
       setHasUnreadMessage,
       addAfterStepCallback,
@@ -526,12 +587,25 @@ export default async function ({ addon, console, msg }) {
   logsTab = await createLogsTab(api);
   const threadsTab = await createThreadsTab(api);
   const performanceTab = await createPerformanceTab(api);
-  const allTabs = [logsTab, threadsTab, performanceTab];
+  timingTab = await createTimingTab(api);
+  const allTabs = [logsTab, threadsTab, performanceTab, timingTab];
 
   for (const message of messagesLoggedBeforeLogsTabLoaded) {
     logsTab.addLog(...message);
   }
   messagesLoggedBeforeLogsTabLoaded.length = 0;
+
+  function updateFooterVisibility() {
+    // Show footer only if buttons are visible
+    interfaceFooter.style.display = "none";
+    const allButtons = footerButtonContainer.children;
+    for (const button of allButtons) {
+      if (button.style.display !== "none") {
+        interfaceFooter.style.display = "";
+        return;
+      }
+    }
+  }
 
   let activeTab;
   const setActiveTab = (tab) => {
@@ -548,11 +622,15 @@ export default async function ({ addon, console, msg }) {
     tabContentContainer.appendChild(tab.content);
 
     removeAllChildren(buttonContainerElement);
-    buttonContainerElement.appendChild(unpauseButton.element);
+    buttonContainerElement.appendChild(closeContainer);
+
+    removeAllChildren(footerButtonContainer);
+    footerButtonContainer.appendChild(unpauseContainer);
     for (const button of tab.buttons) {
-      buttonContainerElement.appendChild(button.element);
+      footerButtonContainer.appendChild(button.element);
     }
-    buttonContainerElement.appendChild(closeButton.element);
+
+    updateFooterVisibility();
 
     if (isInterfaceVisible) {
       activeTab.show();
@@ -573,6 +651,7 @@ export default async function ({ addon, console, msg }) {
     if (addon.settings.get("log_clear_greenflag")) {
       logsTab.clearLogs();
     }
+    timingTab.clearTimers();
     if (addon.settings.get("log_greenflag")) {
       logsTab.addLog(msg("log-msg-flag-clicked"), null, "internal");
     }
@@ -611,8 +690,50 @@ export default async function ({ addon, console, msg }) {
     return ogStartHats.call(this, hat, optMatchFields, ...args);
   };
 
+  // TW: not supported in compiler so we just removed entirely for now
+  /*
+  const ogAddToList = vm.runtime._primitives.data_addtolist;
+  vm.runtime._primitives.data_addtolist = function (args, util) {
+    if (addon.settings.get("log_max_list_length")) {
+      const list = util.target.lookupOrCreateList(args.LIST.id, args.LIST.name);
+      if (list.value.length >= 200000) {
+        logsTab.addLog(msg("log-msg-list-append-too-long", { list: list.name }), util.thread, "internal-warn");
+      }
+    }
+    ogAddToList.call(this, args, util);
+  };
+
+  const ogInertAtList = vm.runtime._primitives.data_insertatlist;
+  vm.runtime._primitives.data_insertatlist = function (args, util) {
+    if (addon.settings.get("log_max_list_length")) {
+      const list = util.target.lookupOrCreateList(args.LIST.id, args.LIST.name);
+      if (list.value.length >= 200000) {
+        logsTab.addLog(msg("log-msg-list-insert-too-long", { list: list.name }), util.thread, "internal-warn");
+      }
+    }
+    ogInertAtList.call(this, args, util);
+  };
+
+  const ogSetVariableTo = vm.runtime._primitives.data_setvariableto;
+  vm.runtime._primitives.data_setvariableto = function (args, util) {
+    if (addon.settings.get("log_invalid_cloud_data")) {
+      const variable = util.target.lookupOrCreateVariable(args.VARIABLE.id, args.VARIABLE.name);
+      if (variable.isCloud) {
+        const value = args.VALUE.toString();
+        if (isNaN(value)) {
+          logsTab.addLog(msg("log-cloud-data-nan", { var: variable.name }), util.thread, "internal-warn");
+        } else if (value.length > 256) {
+          logsTab.addLog(msg("log-cloud-data-too-long", { var: variable.name }), util.thread, "internal-warn");
+        }
+      }
+    }
+    ogSetVariableTo.call(this, args, util);
+  };
+  */
+
   while (true) {
     await addon.tab.waitForElement(
+      // TW: changed structure of header
       '[class^="stage-header_stage-size-row"], [class^="stage-header_fullscreen-buttons-row_"]',
       {
         markAsSeen: true,

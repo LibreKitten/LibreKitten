@@ -2,7 +2,7 @@
 const manifest = {
   "editorOnly": true,
   "noTranslations": true,
-  "name": "Arrow key incrementation in editor",
+  "name": "Arrow key incrementation",
   "description": "Use the up and down arrow keys to increase or decrease number values in numeric input fields such as those in blocks or the sprite properties area.",
   "tags": [
     "recommended"

@@ -44,6 +44,11 @@ const manifest = {
       "default": 25
     }
   ],
+  "userscripts": [
+    {
+      "url": "userscript.js"
+    }
+  ],
   "userstyles": [
     {
       "url": "userstyle.css"

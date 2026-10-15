@@ -18,6 +18,11 @@ const manifest = {
       "url": "userscript.js"
     }
   ],
+  "userstyles": [
+    {
+      "url": "style.css"
+    }
+  ],
   "info": [
     {
       "type": "notice",
@@ -36,6 +41,6 @@ const manifest = {
   "tags": [
     "theme"
   ],
-  "enabledByDefault": false
+  "dynamicDisable": true
 };
 export default manifest;

@@ -43,8 +43,9 @@ const manifest = {
   "settings": [
     {
       "dynamic": true,
-      "name": "Automatically collapse when mouse leaves sprite panel",
+      "name": "Collapse automatically",
       "id": "autoCollapse",
+      "description": "Automatically collapse the sprite properties panel when the mouse cursor leaves the sprite pane.",
       "type": "boolean",
       "default": false
     },

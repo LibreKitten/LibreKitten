@@ -1,14 +1,9 @@
 // this script was happily stolen from the color-picker addon, developed by Richie Bendall and apple502j
 
-import {
-    BLOCKS_TAB_INDEX,
-    COSTUMES_TAB_INDEX,
-    SOUNDS_TAB_INDEX
-} from '../../../reducers/editor-tab';
-
 // import required libraries
 import { normalizeHex } from "../../libraries/common/cs/normalize-color.js";
 import RateLimiter from "../../libraries/common/cs/rate-limiter.js";
+// TW: tinycolor is now a module
 import tinycolor from "../../libraries/thirdparty/cs/tinycolor-min.js";
 
 export default async ({ addon, console, msg }) => {
@@ -33,6 +28,7 @@ export default async ({ addon, console, msg }) => {
     if (color === null || color === "scratch-paint/style-path/mixed") return;
     // This value can be arbitrary - it can be HEX, RGB, etc.
     // Use tinycolor to convert them.
+    // TW: support transparency
     return tinycolor(color).toHex8();
   };
 
@@ -71,7 +67,7 @@ export default async ({ addon, console, msg }) => {
     // wait for color dialog box appearance
     const element = await addon.tab.waitForElement('div[class*="color-picker_swatch-row"]', {
       markAsSeen: true,
-      reduxCondition: (state) => state.scratchGui.editorTab.activeTabIndex === COSTUMES_TAB_INDEX && !state.scratchGui.mode.isPlayerOnly,
+      reduxCondition: (state) => state.scratchGui.editorTab.activeTabIndex === 1 && !state.scratchGui.mode.isPlayerOnly,
     });
     rateLimiter.abort(false);
     if (!("colorIndex" in addon.tab.redux.state.scratchPaint.fillMode)) {
@@ -194,6 +190,7 @@ export default async ({ addon, console, msg }) => {
         let color = tinycolor(getColor(element)).toHsv();
         let s = ox / 150;
         let v = 1 - oy / 150;
+        // TW: support transparency
         let newColor = tinycolor({ h: color.h, s: s, v: v, a: color.a }).toHex8();
         setColor(newColor, element);
         updateHandleFinal(s, v);

@@ -13,6 +13,9 @@ const manifest = {
   "credits": [
     {
       "name": "GarboMuffin"
+    },
+    {
+      "name": "Valmontechno"
     }
   ],
   "userscripts": [

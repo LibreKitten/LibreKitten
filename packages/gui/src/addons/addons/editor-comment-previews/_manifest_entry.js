@@ -43,6 +43,7 @@ const manifest = {
       "dynamic": true,
       "name": "Hover custom blocks to preview definition comments",
       "id": "hover-view-procedure",
+      "description": "Hover over a custom block to preview the comment attached to its definition.",
       "type": "boolean",
       "default": true
     },
@@ -50,6 +51,7 @@ const manifest = {
       "dynamic": true,
       "name": "Delay duration",
       "id": "delay",
+      "description": "The delay before the preview is displayed.",
       "type": "select",
       "potentialValues": [
         {
@@ -71,6 +73,7 @@ const manifest = {
       "dynamic": true,
       "name": "Follow mouse",
       "id": "follow-mouse",
+      "description": "Comment previews will move with the mouse.",
       "type": "boolean",
       "default": true
     },

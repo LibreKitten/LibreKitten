@@ -8,10 +8,6 @@ const manifest = {
     {
       "text": "On macOS, use the Cmd key instead of the Ctrl key.",
       "id": "macContextDisabled"
-    },
-    {
-      "text": "If \"flip controls\" is enabled, grabbing blocks individually will be the default behavior. Hold Ctrl to drag the entire stack.",
-      "id": "flipControls"
     }
   ],
   "credits": [
@@ -33,6 +29,7 @@ const manifest = {
       "dynamic": true,
       "name": "Flip controls",
       "id": "invertDrag",
+      "description": "Make grabbing blocks individually the default behavior. Hold Ctrl to drag entire stacks.",
       "type": "boolean",
       "default": false
     }
