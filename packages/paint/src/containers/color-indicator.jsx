@@ -23,7 +23,7 @@ const makeColorIndicator = (label, isStroke) => {
             bindAll(this, [
                 'handleChangeColor',
                 'handleChangeGradientType',
-                'handleCloseColor',
+                'handleOpenChange',
                 'handleSwap'
             ]);
 
@@ -102,7 +102,10 @@ const makeColorIndicator = (label, isStroke) => {
             }
             if (this.props.onChangeGradientType) this.props.onChangeGradientType(gradientType);
         }
-        handleCloseColor () {
+        handleOpenChange (open) {
+            // lk: If open, do nothing.
+            if (open) return;
+
             // If the eyedropper is currently being used, don't
             // close the color menu.
             if (this.props.isEyeDropping) return;
@@ -138,7 +141,7 @@ const makeColorIndicator = (label, isStroke) => {
                     outline={isStroke}
                     onChangeColor={this.handleChangeColor}
                     onChangeGradientType={this.handleChangeGradientType}
-                    onCloseColor={this.handleCloseColor}
+                    onOpenChange={this.handleOpenChange}
                     onSwap={this.handleSwap}
                 />
             );
