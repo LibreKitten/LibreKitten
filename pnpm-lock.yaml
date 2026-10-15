@@ -283,21 +283,15 @@ importers:
       raw-loader:
         specifier: ^0.5.1
         version: 0.5.1
-      react:
-        specifier: ^16.0.0
-        version: 16.14.0
-      react-dom:
-        specifier: ^16.0.0
-        version: 16.14.0(react@16.14.0)
       react-draggable:
         specifier: ^4.7.2
-        version: 4.7.2(react-dom@16.14.0(react@16.14.0))(react@16.14.0)
+        version: 4.7.2(react-dom@18.3.1(react@18.3.1))(react@16.14.0)
       react-string-replace:
         specifier: ^2.0.1
         version: 2.0.1
       react-virtualized:
         specifier: 9.20.1
-        version: 9.20.1(react-dom@16.14.0(react@16.14.0))(react@16.14.0)
+        version: 9.20.1(react-dom@18.3.1(react@18.3.1))(react@16.14.0)
       redux-throttle:
         specifier: 0.1.1
         version: 0.1.1
@@ -388,7 +382,7 @@ importers:
         version: 3.10.0
       enzyme-adapter-react-16:
         specifier: 1.15.7
-        version: 1.15.7(enzyme@3.10.0)(react-dom@16.14.0(react@16.14.0))(react@16.14.0)
+        version: 1.15.7(enzyme@3.10.0)(react-dom@18.3.1(react@18.3.1))(react@16.14.0)
       eslint:
         specifier: 8.55.0
         version: 8.55.0(supports-color@6.1.0)
@@ -8604,11 +8598,6 @@ packages:
   raw-loader@0.5.1:
     resolution: {integrity: sha512-sf7oGoLuaYAScB4VGr0tzetsYlS8EJH6qnTCfQ/WVEa89hALQ4RQfCKt5xCyPQKPDUbVUAIP1QsxAwfAjlDp7Q==}
 
-  react-dom@16.14.0:
-    resolution: {integrity: sha512-1gCeQXDLoIqMgqD3IO2Ah9bnf0w9kzhwN5q4FGnHZ67hBm9yePzB5JJAIQCc8x3pFnNlwFq4RidZggNAAkzWWw==}
-    peerDependencies:
-      react: ^16.14.0
-
   react-dom@18.3.1:
     resolution: {integrity: sha512-5m4nQKp+rZRb09LNH59GM4BxTh9251/ylbKIbpe7TpGxfJ+9kv6BLkLBXIjjspbgbnIBNqlI23tRnTWT0snUIw==}
     peerDependencies:
@@ -16506,7 +16495,7 @@ snapshots:
       react-test-renderer: 16.14.0(react@16.14.0)
       semver: 5.7.2
 
-  enzyme-adapter-react-16@1.15.7(enzyme@3.10.0)(react-dom@16.14.0(react@16.14.0))(react@16.14.0):
+  enzyme-adapter-react-16@1.15.7(enzyme@3.10.0)(react-dom@18.3.1(react@18.3.1))(react@16.14.0):
     dependencies:
       enzyme: 3.10.0
       enzyme-adapter-utils: 1.14.2(react@16.14.0)
@@ -16516,7 +16505,7 @@ snapshots:
       object.values: 1.2.1
       prop-types: 15.8.1
       react: 16.14.0
-      react-dom: 16.14.0(react@16.14.0)
+      react-dom: 18.3.1(react@18.3.1)
       react-is: 16.13.1
       react-test-renderer: 16.14.0(react@16.14.0)
       semver: 5.7.2
@@ -21155,26 +21144,18 @@ snapshots:
 
   raw-loader@0.5.1: {}
 
-  react-dom@16.14.0(react@16.14.0):
-    dependencies:
-      loose-envify: 1.4.0
-      object-assign: 4.1.1
-      prop-types: 15.8.1
-      react: 16.14.0
-      scheduler: 0.19.1
-
   react-dom@18.3.1(react@18.3.1):
     dependencies:
       loose-envify: 1.4.0
       react: 18.3.1
       scheduler: 0.23.2
 
-  react-draggable@4.7.2(react-dom@16.14.0(react@16.14.0))(react@16.14.0):
+  react-draggable@4.7.2(react-dom@18.3.1(react@18.3.1))(react@16.14.0):
     dependencies:
       clsx: 2.1.1
       prop-types: 15.8.1
       react: 16.14.0
-      react-dom: 16.14.0(react@16.14.0)
+      react-dom: 18.3.1(react@18.3.1)
 
   react-intl-redux@2.0.0(react-intl@7.1.14(react@18.3.1)(typescript@3.9.10))(react-redux@9.3.0(@types/react@18.3.31)(react@18.3.1)(redux@5.0.1)):
     dependencies:
@@ -21279,7 +21260,7 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
-  react-virtualized@9.20.1(react-dom@16.14.0(react@16.14.0))(react@16.14.0):
+  react-virtualized@9.20.1(react-dom@18.3.1(react@18.3.1))(react@16.14.0):
     dependencies:
       babel-runtime: 6.26.0
       classnames: 2.2.6
@@ -21287,7 +21268,7 @@ snapshots:
       loose-envify: 1.4.0
       prop-types: 15.8.1
       react: 16.14.0
-      react-dom: 16.14.0(react@16.14.0)
+      react-dom: 18.3.1(react@18.3.1)
       react-lifecycles-compat: 3.0.4
 
   react@16.14.0:
