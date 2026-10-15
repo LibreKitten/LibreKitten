@@ -1,4 +1,4 @@
-import {createRoot} from 'react-dom';
+import {createRoot} from 'react-dom/client';
 
 // lk: Allow forcing the startup error screen, so we can debug and edit it more easily.
 const searchParams = new URLSearchParams(window.location.search);
