@@ -286,8 +286,10 @@ export default async function ({ addon, console, msg }) {
         typeof SpriteSelectorItem.prototype.setRef === "function" &&
         typeof SpriteSelectorItem.prototype.handleDrag === "function" &&
         typeof SpriteSelectorItem.prototype.handleDragEnd === "function" &&
+        /* lk: Commented these out as they don't seem to exist in LibreKitten.
         typeof SpriteSelectorItem.prototype.handleDeleteButtonClick === "function" &&
         typeof SpriteSelectorItem.prototype.handleDeleteSpriteModalConfirm === "function" &&
+        */
         typeof SpriteSelectorItem.prototype.handleDuplicate === "function" &&
         typeof SpriteSelectorItem.prototype.handleExport === "function"
       );

@@ -2,6 +2,10 @@ import BlockItem from "./blockly/BlockItem.js";
 import BlockInstance from "./blockly/BlockInstance.js";
 import Utils from "./blockly/Utils.js";
 
+const BLOCKS_TAB = 'codeTab'
+const COSTUMES_TAB = 'costumesTab'
+const SOUNDS_TAB = 'soundsTab';
+
 export default async function ({ addon, msg, console }) {
   const Blockly = await addon.tab.traps.getBlockly();
 
@@ -64,7 +68,7 @@ export default async function ({ addon, msg, console }) {
         return;
       }
       const tab = addon.tab.redux.state.scratchGui.editorTab.activeTabIndex;
-      const visible = tab === 0 || tab === 1 || tab === 2;
+      const visible = tab === BLOCKS_TAB || tab === COSTUMES_TAB || tab === SOUNDS_TAB;
       this.findBarOuter.hidden = !visible;
     }
 
@@ -148,7 +152,7 @@ export default async function ({ addon, msg, console }) {
           return;
         }
 
-        if (this.selectedTab === 0) {
+        if (this.selectedTab === BLOCKS_TAB) {
           this.utils.navigationHistory.goBack();
           e.cancelBubble = true;
           e.preventDefault();
@@ -162,7 +166,7 @@ export default async function ({ addon, msg, console }) {
           return;
         }
 
-        if (this.selectedTab === 0) {
+        if (this.selectedTab === BLOCKS_TAB) {
           this.utils.navigationHistory.goForward();
           e.cancelBubble = true;
           e.preventDefault();
@@ -202,11 +206,11 @@ export default async function ({ addon, msg, console }) {
 
       this.dropdownOut.classList.add("visible");
       let scratchBlocks =
-        this.selectedTab === 0
+        this.selectedTab === BLOCKS_TAB
           ? this.getScratchBlocks()
-          : this.selectedTab === 1
+          : this.selectedTab === COSTUMES_TAB
             ? this.getScratchCostumes()
-            : this.selectedTab === 2
+            : this.selectedTab === SOUNDS_TAB
               ? this.getScratchSounds()
               : [];
 
