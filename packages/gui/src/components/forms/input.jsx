@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import styles from './input.css';
 
 const Input = props => {
-    const {small, ...componentProps} = props;
+    const {small, componentRef, ...componentProps} = props;
     return (
         <input
             {...componentProps}
@@ -16,12 +16,18 @@ const Input = props => {
                     [styles.inputSmall]: small
                 }
             )}
+            // lk: Support binding a ref to the input.
+            ref={componentRef}
         />
     );
 };
 
 Input.propTypes = {
     className: PropTypes.string,
+    componentRef: PropTypes.oneOfType([
+        PropTypes.func,
+        PropTypes.shape({component: PropTypes.instanceOf(HTMLElement)})
+    ]),
     small: PropTypes.bool
 };
 

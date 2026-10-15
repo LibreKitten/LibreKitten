@@ -4,25 +4,34 @@ import React from 'react';
 
 import DirectionComponent, {RotationStyles} from '../components/direction-picker/direction-picker.jsx';
 
+/**
+ * @extends {React.Component}
+ */
 class DirectionPicker extends React.Component {
     constructor (props) {
         super(props);
         bindAll(this, [
-            'handleOpenPopover',
-            'handleClosePopover',
+            'handleOpenChange',
             'handleClickLeftRight',
             'handleClickDontRotate',
-            'handleClickAllAround'
+            'handleClickAllAround',
+            'handleInputFocus'
         ]);
         this.state = {
             popoverOpen: false
         };
     }
-    handleOpenPopover () {
-        this.setState({popoverOpen: true});
+    handleInputFocus () {
+        this.setState({
+            ...this.state,
+            popoverOpen: true
+        });
     }
-    handleClosePopover () {
-        this.setState({popoverOpen: false});
+    handleOpenChange (open) {
+        this.setState({
+            ...this.state,
+            popoverOpen: open
+        });
     }
     handleClickAllAround () {
         this.props.onChangeRotationStyle(RotationStyles.ALL_AROUND);
@@ -45,8 +54,8 @@ class DirectionPicker extends React.Component {
                 onClickAllAround={this.handleClickAllAround}
                 onClickDontRotate={this.handleClickDontRotate}
                 onClickLeftRight={this.handleClickLeftRight}
-                onClosePopover={this.handleClosePopover}
-                onOpenPopover={this.handleOpenPopover}
+                onOpenChange={this.handleOpenChange}
+                onInputFocus={this.handleInputFocus}
             />
         );
     }
