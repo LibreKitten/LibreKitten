@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {connect} from 'react-redux';
 import bindAll from 'lodash.bindall';
-import ReactTooltip from 'react-tooltip';
+import {Tooltip} from 'react-tooltip';
 import {defineMessages, injectIntl} from 'react-intl';
 import {defaultProjectId} from '../../reducers/project-state';
 import styles from './project-input.css';
@@ -69,13 +69,13 @@ class ProjectInput extends React.Component {
         if (this.state.projectId && this.state.projectId !== this.props.projectId) {
             this.props.setProjectId(this.state.projectId);
         }
-        ReactTooltip.hide(this.tooltip);
+        Tooltip.hide(this.tooltip);
     }
     handleFocus (e) {
         if (this.extractProjectId(e.target.value)) {
             e.target.select();
         }
-        ReactTooltip.show(this.tooltip);
+        Tooltip.show(this.tooltip);
     }
     inputRef (el) {
         this.input = el;
@@ -90,7 +90,7 @@ class ProjectInput extends React.Component {
                 ref={this.tooltipRef}
                 data-tip={this.props.intl.formatMessage(messages.tooltip)}
             >
-                <ReactTooltip
+                <Tooltip
                     className={styles.tooltip}
                     effect="solid"
                 />

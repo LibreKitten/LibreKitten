@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import {defineMessages, injectIntl, FormattedMessage} from 'react-intl';
 import PropTypes from 'prop-types';
 import React from 'react';
-import ReactTooltip from 'react-tooltip';
+import {Tooltip} from 'react-tooltip';
 
 import styles from './coming-soon.css';
 
@@ -69,7 +69,7 @@ class ComingSoonContent extends React.Component {
     }
     render () {
         return (
-            <ReactTooltip
+            <Tooltip
                 afterHide={this.setHide}
                 afterShow={this.setShow}
                 className={classNames(
