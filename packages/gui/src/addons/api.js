@@ -191,7 +191,155 @@ reduxInstance.addEventListener('statechanged', e => {
 });
 updateClasses();
 
-const getInternalKey = element => Object.keys(element).find(key => key.startsWith('__reactInternalInstance$'));
+/**
+ * Manages object trapping. Ported from:
+ * https://github.com/ScratchAddons/ScratchAddons/blob/5accf5ff12bcc1879e6b7b411a74a86ee959a3fd/addon-api/content-script/Trap.js
+ */
+export default class Trap {
+    constructor (tab) {
+        this._react_internal_key = void 0;
+        this._react_internal_container_key = void 0;
+        this._waitForElement = tab.waitForElement.bind(tab);
+        this._cache = Object.create(null);
+    }
+
+    /**
+     * scratch-vm instance.
+     * @throws when on non-project page.
+     * @type {object}
+     */
+    get vm () {
+        return reduxInstance.state.scratchGui.vm;
+    }
+
+    /**
+     * @private
+     */
+    get REACT_INTERNAL_PREFIXES () {
+        return ['__reactFiber$'];
+    }
+
+    /**
+     * @private
+     */
+    get REACT_INTERNAL_CONTAINER_PREFIXES () {
+        return ['__reactContainer$'];
+    }
+
+    _getBlocksComponent (wrapper) {
+        const internal = wrapper[this.getInternalKey(wrapper)];
+        let childable = internal;
+        /* eslint-disable no-empty */
+        while ((
+            (childable = childable.child),
+            !childable ||
+            !childable.stateNode ||
+            !childable.stateNode.ScratchBlocks)) { }
+        /* eslint-enable no-empty */
+        return childable;
+    }
+
+    _getBlocksWrapperComponentSync () {
+        const editorMode = this._getEditorMode();
+        if (!editorMode || editorMode === 'embed') {
+            throw new Error(`Cannot access Blockly on ${editorMode} page (${location.pathname})`);
+        }
+        const BLOCKS_CLASS = '[class*="gui_blocks-wrapper_"]';
+        const elem = document.querySelector(BLOCKS_CLASS);
+        if (!elem) {
+            throw new Error('Could not find workspace element, is the page in editor mode?');
+        }
+        return this._getBlocksComponent(elem);
+    }
+
+    async _getBlocksWrapperComponent () {
+        const editorMode = this._getEditorMode();
+        if (!editorMode || editorMode === 'embed') {
+            throw new Error(`Cannot access Blockly on ${editorMode} page (${location.pathname})`);
+        }
+        const BLOCKS_CLASS = '[class*="gui_blocks-wrapper_"]';
+        let elem = document.querySelector(BLOCKS_CLASS);
+        if (!elem) {
+            elem = await this._waitForElement(BLOCKS_CLASS, {
+                reduxCondition: state => !state.scratchGui.mode.isPlayerOnly
+            });
+        }
+        return this._getBlocksComponent(elem);
+    }
+
+    getBlockly () {
+        if (AddonHooks.blockly) {
+            return Promise.resolve(AddonHooks.blockly);
+        }
+        return new Promise(resolve => {
+            AddonHooks.blocklyCallbacks.push(() => resolve(AddonHooks.blockly));
+        });
+    }
+
+    getWorkspace () {
+        return AddonHooks.blocklyWorkspace;
+    }
+
+    /**
+     * Gets react internal key.
+     * @param {HTMLElement} elem - an element rendered by React
+     * @returns {string} the key
+     */
+    getInternalKey (elem) {
+        if (!this._react_internal_key) {
+            this._react_internal_key = Object.keys(elem).find(key =>
+                this.REACT_INTERNAL_PREFIXES.some(prefix => key.startsWith(prefix))
+            );
+        }
+        return this._react_internal_key;
+    }
+
+    /**
+     * Gets react internal container key.
+     * @param {HTMLElement} elem - the root element of the React app
+     * @returns {string} the key
+     */
+    getInternalContainerKey (elem) {
+        if (!this._react_internal_container_key) {
+            this._react_internal_container_key = Object.keys(elem).find(key =>
+                this.REACT_INTERNAL_CONTAINER_PREFIXES.some(prefix => key.startsWith(prefix))
+            );
+        }
+        return this._react_internal_container_key;
+    }
+
+    async getPaper () {
+        const modeSelector = await this._waitForElement("[class*='paint-editor_mode-selector']", {
+            reduxCondition: state => (
+                state.scratchGui.editorTab.activeTabIndex === COSTUMES_TAB_INDEX &&
+                !state.scratchGui.mode.isPlayerOnly
+            )
+        });
+        const reactInternalKey = Object.keys(modeSelector)
+            .find(key => key.startsWith('__reactInternalInstance$'));
+        const internalState = modeSelector[reactInternalKey].child;
+        // .tool or .blob.tool only exists on the selected tool
+        let toolState = internalState;
+        let tool;
+        while (toolState) {
+            const toolInstance = toolState.child.stateNode;
+            if (toolInstance.tool) {
+                tool = toolInstance.tool;
+                break;
+            }
+            if (toolInstance.blob && toolInstance.blob.tool) {
+                tool = toolInstance.blob.tool;
+                break;
+            }
+            toolState = toolState.sibling;
+        }
+        if (tool) {
+            const paperScope = tool._scope;
+            return paperScope;
+        }
+        throw new Error('cannot find paper :(');
+    }
+}
 
 class Tab extends EventTargetShim {
     constructor (id) {
@@ -199,52 +347,7 @@ class Tab extends EventTargetShim {
         this._id = id;
         this._seenElements = new WeakSet();
         // traps is public API
-        this.traps = {
-            get vm () {
-                return reduxInstance.state.scratchGui.vm;
-            },
-            getBlockly: () => {
-                if (AddonHooks.blockly) {
-                    return Promise.resolve(AddonHooks.blockly);
-                }
-                return new Promise(resolve => {
-                    AddonHooks.blocklyCallbacks.push(() => resolve(AddonHooks.blockly));
-                });
-            },
-            getWorkspace: () => AddonHooks.blocklyWorkspace,
-            getPaper: async () => {
-                const modeSelector = await this.waitForElement("[class*='paint-editor_mode-selector']", {
-                    reduxCondition: state => (
-                        state.scratchGui.editorTab.activeTabIndex === COSTUMES_TAB_INDEX &&
-                        !state.scratchGui.mode.isPlayerOnly
-                    )
-                });
-                const reactInternalKey = Object.keys(modeSelector)
-                    .find(key => key.startsWith('__reactInternalInstance$'));
-                const internalState = modeSelector[reactInternalKey].child;
-                // .tool or .blob.tool only exists on the selected tool
-                let toolState = internalState;
-                let tool;
-                while (toolState) {
-                    const toolInstance = toolState.child.stateNode;
-                    if (toolInstance.tool) {
-                        tool = toolInstance.tool;
-                        break;
-                    }
-                    if (toolInstance.blob && toolInstance.blob.tool) {
-                        tool = toolInstance.blob.tool;
-                        break;
-                    }
-                    toolState = toolState.sibling;
-                }
-                if (tool) {
-                    const paperScope = tool._scope;
-                    return paperScope;
-                }
-                throw new Error('cannot find paper :(');
-            },
-            getInternalKey
-        };
+        this.traps = new Trap(this);
     }
 
     get redux () {
