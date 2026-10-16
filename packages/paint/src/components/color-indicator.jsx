@@ -30,7 +30,10 @@ const ColorIndicatorComponent = props => (
                     />
                 </Popover.Trigger>
                 <Popover.Portal>
-                    <Popover.Content className="Popover">
+                    <Popover.Content
+                        className="Popover"
+                        sideOffset={4}
+                    >
                         <Box className="Popover-body">
                             <ColorPicker
                                 color={props.color}
@@ -42,6 +45,11 @@ const ColorIndicatorComponent = props => (
                                 onSwap={props.onSwap}
                             />
                         </Box>
+                        <Popover.Arrow
+                            className="Popover-tipShape"
+                            width={14}
+                            height={7}
+                        />
                     </Popover.Content>
                 </Popover.Portal>
             </Popover.Root>
