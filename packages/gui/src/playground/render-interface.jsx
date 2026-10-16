@@ -83,12 +83,14 @@ if (AddonChannels.changeChannel) {
     });
 }
 
-runAddons();
-
 class Interface extends React.Component {
     constructor (props) {
         super(props);
         this.handleUpdateProjectTitle = this.handleUpdateProjectTitle.bind(this);
+    }
+    componentDidMount () {
+        // lk: It's addon time... where it is monkeypatch galore!
+        runAddons();
     }
     componentDidUpdate (prevProps) {
         if (prevProps.isLoading && !this.props.isLoading) {
