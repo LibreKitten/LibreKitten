@@ -1,5 +1,6 @@
 const defaultsDeep = require('lodash.defaultsdeep');
 const path = require('path');
+const webpack = require('webpack');
 
 // Plugins
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -96,7 +97,11 @@ const base = {
             })
         ]
     },
-    plugins: []
+    plugins: [
+        new webpack.DefinePlugin({
+            'process.env.DEBUG': Boolean(process.env.DEBUG)
+        })
+    ]
 };
 
 module.exports = [
