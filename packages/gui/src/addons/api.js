@@ -315,9 +315,8 @@ export default class Trap {
                 !state.scratchGui.mode.isPlayerOnly
             )
         });
-        const reactInternalKey = Object.keys(modeSelector)
-            .find(key => key.startsWith('__reactInternalInstance$'));
-        const internalState = modeSelector[reactInternalKey].child;
+        const reactInternalKey = this.getInternalKey(modeSelector);
+        const internalState = modeSelector[reactInternalKey].child.child;
         // .tool or .blob.tool only exists on the selected tool
         let toolState = internalState;
         let tool;
