@@ -18,6 +18,8 @@ const messages = defineMessages({
     }
 });
 
+const LK_TOOLTIP_ID = `lk-tooltip-project-input-${Math.random()}`;
+
 class ProjectInput extends React.Component {
     constructor (props) {
         super(props);
@@ -26,8 +28,7 @@ class ProjectInput extends React.Component {
             'handleChange',
             'handleBlur',
             'handleFocus',
-            'inputRef',
-            'tooltipRef'
+            'inputRef'
         ]);
         this.state = {
             projectId: this.props.projectId
@@ -69,30 +70,25 @@ class ProjectInput extends React.Component {
         if (this.state.projectId && this.state.projectId !== this.props.projectId) {
             this.props.setProjectId(this.state.projectId);
         }
-        Tooltip.hide(this.tooltip);
     }
     handleFocus (e) {
         if (this.extractProjectId(e.target.value)) {
             e.target.select();
         }
-        Tooltip.show(this.tooltip);
     }
     inputRef (el) {
         this.input = el;
-    }
-    tooltipRef (el) {
-        this.tooltip = el;
     }
     render () {
         const projectId = this.state.projectId === defaultProjectId ? '' : this.state.projectId || '';
         return (
             <div
-                ref={this.tooltipRef}
-                data-tip={this.props.intl.formatMessage(messages.tooltip)}
+                data-tooltip-content={this.props.intl.formatMessage(messages.tooltip)}
+                data-tooltip-id={LK_TOOLTIP_ID}
             >
                 <Tooltip
                     className={styles.tooltip}
-                    effect="solid"
+                    id={LK_TOOLTIP_ID}
                 />
                 <input
                     ref={this.inputRef}
