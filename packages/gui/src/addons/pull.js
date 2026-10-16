@@ -152,8 +152,16 @@ const includeLibrariesJS = js => {
     //                                          ^^^^^^^^^^^^^^^   capture group 1
     // import "../../libraries/thirdparty/cs/chart.min.js";
     //                         ^^^^^^^^^^^^^^^^^^^^^^^^^^   capture group 1
+    // lk: This regular expression was edited to also match:
+    // import {
+    //    kombuchaMushroomPeople,
+    //    sitInDesolateRoom,
+    //    noLights,
+    //    noMusic
+    // } from "../../libraries/cs/soad/sugar.js"; /* cs/soad/sugar.js is match 1 */
+    // import { heyYeah } from "../../libraries/rob-zombie/superbeast.js"; /* rob-zombie/superbeast.js is match 2 */
     const matches = js.matchAll(
-        /import +(?:(?:{.*}|.*) +from +)?["']\.\.\/\.\.\/libraries\/([\w\d_./-]+(?:\.esm)?\.js)["'];/g
+        /import +(?:(?:{[\S\s]*?}|.*?) +from +)?["']\.\.\/\.\.\/libraries\/([\w\d_./-]+(?:\.esm)?\.js)["'];/g
     );
     for (const match of matches) {
         includeLibrary(match[1]);
