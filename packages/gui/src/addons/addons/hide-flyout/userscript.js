@@ -162,7 +162,7 @@ export default async function ({ addon, console, msg }) {
           // always 0, 1, 2
           const toggleSetting = getToggleSetting();
           if (
-            e.detail.action.activeTabIndex === 0 &&
+            e.detail.action.activeTabIndex === 'codeTab' &&
             !addon.self.disabled &&
             (toggleSetting === "hover" || toggleSetting === "cathover")
           ) {

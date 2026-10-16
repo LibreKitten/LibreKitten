@@ -797,7 +797,7 @@ export default async function ({ addon, console, msg }) {
           "scratch-gui/targets/UPDATE_TARGET_LIST",
         ],
         reduxCondition: (state) =>
-          state.scratchGui.editorTab.activeTabIndex === 1 && !state.scratchGui.mode.isPlayerOnly,
+          state.scratchGui.editorTab.activeTabIndex === 'costumesTab' && !state.scratchGui.mode.isPlayerOnly,
       });
       const zoomControlsContainer = canvasControls.querySelector("[class^='paint-editor_zoom-controls']");
 

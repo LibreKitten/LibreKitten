@@ -20,8 +20,10 @@ export default async function ({ addon, console }) {
   vm.runtime.ioDevices.mouse.__scratchX = vm.runtime.ioDevices.mouse._scratchX;
   vm.runtime.ioDevices.mouse.__scratchY = vm.runtime.ioDevices.mouse._scratchY;
 
-  var x = vm.runtime.ioDevices.mouse.__scratchX ? vm.runtime.ioDevices.mouse.__scratchX : 0;
-  var y = vm.runtime.ioDevices.mouse.__scratchY ? vm.runtime.ioDevices.mouse.__scratchY : 0;
+  // lk: Floor these so they don't look like a messy string of numbers due to TurboWarp's mouse position
+  // being more specific.
+  var x = vm.runtime.ioDevices.mouse.__scratchX ? Math.floor(vm.runtime.ioDevices.mouse.__scratchX) : 0;
+  var y = vm.runtime.ioDevices.mouse.__scratchY ? Math.floor(vm.runtime.ioDevices.mouse.__scratchY) : 0;
 
   const showUpdatedValue = () => {
     xPos.setAttribute("data-content", `${x},`);
@@ -33,7 +35,7 @@ export default async function ({ addon, console }) {
       return this.__scratchX;
     },
     set: function (setx) {
-      x = setx;
+      x = Math.floor(setx);
       showUpdatedValue();
       this.__scratchX = setx;
     },
@@ -44,7 +46,7 @@ export default async function ({ addon, console }) {
       return this.__scratchY;
     },
     set: function (sety) {
-      y = sety;
+      y = Math.floor(sety);
       showUpdatedValue();
       this.__scratchY = sety;
     },

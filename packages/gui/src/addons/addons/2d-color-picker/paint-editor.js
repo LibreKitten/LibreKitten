@@ -67,7 +67,7 @@ export default async ({ addon, console, msg }) => {
     // wait for color dialog box appearance
     const element = await addon.tab.waitForElement('div[class*="color-picker_swatch-row"]', {
       markAsSeen: true,
-      reduxCondition: (state) => state.scratchGui.editorTab.activeTabIndex === 1 && !state.scratchGui.mode.isPlayerOnly,
+      reduxCondition: (state) => state.scratchGui.editorTab.activeTabIndex === 'costumesTab' && !state.scratchGui.mode.isPlayerOnly,
     });
     rateLimiter.abort(false);
     if (!("colorIndex" in addon.tab.redux.state.scratchPaint.fillMode)) {

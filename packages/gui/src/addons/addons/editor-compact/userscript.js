@@ -53,7 +53,7 @@ export default async function ({ addon, global, console }) {
         "scratch-gui/locales/SELECT_LOCALE",
         "scratch-gui/targets/UPDATE_TARGET_LIST",
       ],
-      reduxCondition: (state) => !state.scratchGui.mode.isPlayerOnly && state.scratchGui.editorTab.activeTabIndex === 2,
+      reduxCondition: (state) => !state.scratchGui.mode.isPlayerOnly && state.scratchGui.editorTab.activeTabIndex === 'soundsTab',
     });
     updateTooltips();
   }
