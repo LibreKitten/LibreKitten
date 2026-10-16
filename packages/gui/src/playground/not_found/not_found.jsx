@@ -6,6 +6,7 @@ import './not_found.css';
 import 'modern-normalize/modern-normalize.css';
 import '../load-fonts.css';
 
+import wrapInfoPage from '../render-info-page.jsx';
 import {applyGuiColors} from '../../lib/themes/guiHelpers';
 import {detectTheme} from '../../lib/themes/themePersistance';
 
@@ -43,4 +44,4 @@ const FourOhFour = () => (
     </>
 );
 
-render(<FourOhFour />);
+render(wrapInfoPage(<FourOhFour />));

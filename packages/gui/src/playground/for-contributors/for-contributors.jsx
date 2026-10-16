@@ -5,6 +5,7 @@ import styles from '../../css/info-page.css';
 import 'modern-normalize/modern-normalize.css';
 import '../load-fonts.css';
 
+import wrapInfoPage from '../render-info-page.jsx';
 import {applyGuiColors} from '../../lib/themes/guiHelpers';
 import {detectTheme} from '../../lib/themes/themePersistance';
 
@@ -116,4 +117,4 @@ const ForContributors = () => (
     </>
 );
 
-render(<ForContributors />);
+render(wrapInfoPage(<ForContributors />));

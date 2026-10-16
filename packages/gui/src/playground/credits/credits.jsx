@@ -7,6 +7,7 @@ import myStyles from './credits.css';
 import 'modern-normalize/modern-normalize.css';
 import '../load-fonts.css';
 
+import wrapInfoPage from '../render-info-page.jsx';
 import {APP_NAME} from '../../lib/brand';
 import {applyGuiColors} from '../../lib/themes/guiHelpers';
 import {detectTheme} from '../../lib/themes/themePersistance';
@@ -189,4 +190,4 @@ const Credits = () => (
     </>
 );
 
-render(<Credits />);
+render(wrapInfoPage(<Credits />));

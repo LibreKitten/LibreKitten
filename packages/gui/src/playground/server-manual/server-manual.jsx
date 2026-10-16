@@ -7,6 +7,7 @@ import myStyles from './server-manual.css';
 import 'modern-normalize/modern-normalize.css';
 import '../load-fonts.css';
 
+import wrapInfoPage from '../render-info-page.jsx';
 import {applyGuiColors} from '../../lib/themes/guiHelpers.js';
 import {detectTheme} from '../../lib/themes/themePersistance.js';
 
@@ -104,4 +105,4 @@ const ServerManual = () => (
     </>
 );
 
-render(<ServerManual />);
+render(wrapInfoPage(<ServerManual />));

@@ -17,7 +17,7 @@
 
 import React from 'react';
 import {APP_NAME} from '../../lib/brand.js';
-import {FormattedMessage, defineMessages, injectIntl} from 'react-intl';
+import {FormattedMessage, defineMessages, injectIntl, intlShape} from 'react-intl';
 
 import styles from './footer.css';
 
