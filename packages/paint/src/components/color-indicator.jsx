@@ -15,40 +15,37 @@ const ColorIndicatorComponent = props => (
         className={props.className}
         disabled={props.disabled}
     >
-        <Popover.Root
-            open={props.colorModalVisible}
-            onOpenChange={props.onOpenChange}
-        >
-            <Popover.Trigger>
-                {/* lk: TODO: Temporary div to lower chance of breakage. */}
-                <div>
-                    <Label text={props.label}>
-                        <ColorButton
-                            color={props.color}
-                            color2={props.color2}
-                            gradientType={props.gradientType}
-                            onClick={props.onOpenColor}
-                            outline={props.outline}
-                        />
-                    </Label>
-                </div>
-            </Popover.Trigger>
-            <Popover.Portal>
-                <Popover.Content className="Popover">
-                    <Box className="Popover-body">
-                        <ColorPicker
-                            color={props.color}
-                            color2={props.color2}
-                            gradientType={props.gradientType}
-                            shouldShowGradientTools={props.shouldShowGradientTools}
-                            onChangeColor={props.onChangeColor}
-                            onChangeGradientType={props.onChangeGradientType}
-                            onSwap={props.onSwap}
-                        />
-                    </Box>
-                </Popover.Content>
-            </Popover.Portal>
-        </Popover.Root>
+        <Label text={props.label}>
+            <Popover.Root
+                open={props.colorModalVisible}
+                onOpenChange={props.onOpenChange}
+            >
+                <Popover.Trigger asChild>
+                    <ColorButton
+                        color={props.color}
+                        color2={props.color2}
+                        gradientType={props.gradientType}
+                        onClick={props.onOpenColor}
+                        outline={props.outline}
+                    />
+                </Popover.Trigger>
+                <Popover.Portal>
+                    <Popover.Content className="Popover">
+                        <Box className="Popover-body">
+                            <ColorPicker
+                                color={props.color}
+                                color2={props.color2}
+                                gradientType={props.gradientType}
+                                shouldShowGradientTools={props.shouldShowGradientTools}
+                                onChangeColor={props.onChangeColor}
+                                onChangeGradientType={props.onChangeGradientType}
+                                onSwap={props.onSwap}
+                            />
+                        </Box>
+                    </Popover.Content>
+                </Popover.Portal>
+            </Popover.Root>
+        </Label>
     </InputGroup>
 );
 

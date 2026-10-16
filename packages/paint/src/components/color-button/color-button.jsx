@@ -23,36 +23,40 @@ const colorToBackground = (color, color2, gradientType) => {
     }
 };
 
-const ColorButtonComponent = props => (
-    <div
-        className={styles.colorButton}
-        onClick={props.onClick}
-    >
+// eslint-disable-next-line prefer-arrow-callback
+const ColorButtonComponent = React.forwardRef(function ColorButtonComponent (props, ref) {
+    return (
         <div
-            className={classNames(styles.colorButtonSwatch, {
-                [styles.outlineSwatch]: props.outline && !(props.color === MIXED)
-            })}
-            style={{
-                background: colorToBackground(props.color, props.color2, props.gradientType)
-            }}
+            className={styles.colorButton}
+            onClick={props.onClick}
+            ref={ref}
         >
-            {props.color === null && (props.gradientType === GradientTypes.SOLID || props.color2 === null) ? (
-                <img
-                    className={styles.swatchIcon}
-                    draggable={false}
-                    src={noFillIcon}
-                />
-            ) : ((props.color === MIXED || (props.gradientType !== GradientTypes.SOLID && props.color2 === MIXED) ? (
-                <img
-                    className={styles.swatchIcon}
-                    draggable={false}
-                    src={mixedFillIcon}
-                />
-            ) : null))}
+            <div
+                className={classNames(styles.colorButtonSwatch, {
+                    [styles.outlineSwatch]: props.outline && !(props.color === MIXED)
+                })}
+                style={{
+                    background: colorToBackground(props.color, props.color2, props.gradientType)
+                }}
+            >
+                {props.color === null && (props.gradientType === GradientTypes.SOLID || props.color2 === null) ? (
+                    <img
+                        className={styles.swatchIcon}
+                        draggable={false}
+                        src={noFillIcon}
+                    />
+                ) : (props.color === MIXED || (props.gradientType !== GradientTypes.SOLID && props.color2 === MIXED) ? (
+                    <img
+                        className={styles.swatchIcon}
+                        draggable={false}
+                        src={mixedFillIcon}
+                    />
+                ) : null)}
+            </div>
+            <div className={styles.colorButtonArrow}>▾</div>
         </div>
-        <div className={styles.colorButtonArrow}>▾</div>
-    </div>
-);
+    );
+});
 
 ColorButtonComponent.propTypes = {
     color: PropTypes.string,
