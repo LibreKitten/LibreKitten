@@ -242,6 +242,11 @@ Blockly.DropDownDiv.show = function(owner, primaryX, primaryY, secondaryX, secon
   Blockly.DropDownDiv.container_ = opt_container instanceof HTMLElement ? opt_container : document.body;
   Blockly.DropDownDiv.onHide_ = opt_onHide;
   var div = Blockly.DropDownDiv.DIV_;
+
+  // lk: Move the widget DIV to the new container and show it.
+  Blockly.DropDownDiv.container_.appendChild(Blockly.DropDownDiv.DIV_);
+  div.showPopover();
+
   var metrics = Blockly.DropDownDiv.getPositionMetrics(primaryX, primaryY, secondaryX, secondaryY);
   // Update arrow CSS
   Blockly.DropDownDiv.arrow_.style.transform = 'translate(' +
@@ -263,10 +268,7 @@ Blockly.DropDownDiv.show = function(owner, primaryX, primaryY, secondaryX, secon
   // First apply initial translation.
   div.style.left = metrics.initialX + 'px';
   div.style.top = metrics.initialY + 'px';
-  // lk: Move the widget DIV to the new container.
-  Blockly.DropDownDiv.container_.appendChild(Blockly.DropDownDiv.DIV_);
   // Show the div.
-  div.showPopover();
   div.style.opacity = 1;
   // Add final translate, animated through `transition`.
   // Coordinates are relative to (initialX, initialY),
@@ -293,9 +295,6 @@ Blockly.DropDownDiv.getPositionMetrics = function(primaryX, primaryY, secondaryX
   var boundSize = goog.style.getSize(Blockly.DropDownDiv.boundsElement_);
   var divSize = goog.style.getSize(div);
 
-  // lk: Hack to fix an arrow separation bug.
-  var arrowPadding = Blockly.DropDownDiv.PADDING_Y - Blockly.DropDownDiv.ARROW_SIZE;
-
   // First decide if we will render at primary or secondary position
   // i.e., above or below
   // renderX, renderY will eventually be the final rendered position of the box.
@@ -311,7 +310,7 @@ Blockly.DropDownDiv.getPositionMetrics = function(primaryX, primaryY, secondaryX
     } else {
       // We can fit above, render secondary
       renderX = secondaryX;
-      renderY = secondaryY - divSize.height - Blockly.DropDownDiv.PADDING_Y + arrowPadding;
+      renderY = secondaryY - divSize.height - Blockly.DropDownDiv.PADDING_Y;
       renderedSecondary = true;
     }
   } else {
@@ -346,7 +345,7 @@ Blockly.DropDownDiv.getPositionMetrics = function(primaryX, primaryY, secondaryX
 
   // Calculate arrow Y. If we rendered secondary, add on bottom.
   // Extra pixels are added so that it covers the border of the div.
-  var arrowY = (renderedSecondary) ? divSize.height - Blockly.DropDownDiv.BORDER_SIZE - arrowPadding : 0;
+  var arrowY = (renderedSecondary) ? divSize.height - Blockly.DropDownDiv.BORDER_SIZE : 0;
   arrowY -= (Blockly.DropDownDiv.ARROW_SIZE / 2) + Blockly.DropDownDiv.BORDER_SIZE;
 
   // Initial position calculated without any padding to provide an animation point.
