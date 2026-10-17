@@ -91,7 +91,7 @@ LKDirectionInput.propTypes = {
 const DirectionPicker = props => (
     <Label
         secondary
-        above={props.labelAbove}
+        above={props.labelAbove ?? false}
         text={directionLabel}
     >
         <Popover.Root
@@ -168,10 +168,6 @@ DirectionPicker.propTypes = {
     onOpenChange: PropTypes.func.isRequired,
     popoverOpen: PropTypes.bool.isRequired,
     rotationStyle: PropTypes.string
-};
-
-DirectionPicker.defaultProps = {
-    labelAbove: false
 };
 
 const WrappedDirectionPicker = injectIntl(DirectionPicker);

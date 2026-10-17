@@ -10,7 +10,7 @@ import styles from './inline-message.css';
 const InlineMessageComponent = ({
     content,
     iconSpinner,
-    level
+    level = AlertLevels.INFO
 }) => (
     <div
         className={classNames(styles.inlineMessage, styles[level])}
@@ -31,10 +31,6 @@ InlineMessageComponent.propTypes = {
     content: PropTypes.element,
     iconSpinner: PropTypes.bool,
     level: PropTypes.string
-};
-
-InlineMessageComponent.defaultProps = {
-    level: AlertLevels.INFO
 };
 
 export default InlineMessageComponent;

@@ -7,10 +7,10 @@ import styles from './stop-all.css';
 
 const StopAllComponent = function (props) {
     const {
-        active,
+        active = false,
         className,
         onClick,
-        title,
+        title = 'Stop',
         ...componentProps
     } = props;
     return (
@@ -36,11 +36,6 @@ StopAllComponent.propTypes = {
     className: PropTypes.string,
     onClick: PropTypes.func.isRequired,
     title: PropTypes.string
-};
-
-StopAllComponent.defaultProps = {
-    active: false,
-    title: 'Stop'
 };
 
 export default StopAllComponent;

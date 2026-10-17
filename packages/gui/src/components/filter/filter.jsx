@@ -12,7 +12,7 @@ const FilterComponent = props => {
         className,
         onChange,
         onClear,
-        placeholderText,
+        placeholderText = 'Search',
         filterQuery,
         inputClassName
     } = props;
@@ -53,8 +53,5 @@ FilterComponent.propTypes = {
     onChange: PropTypes.func,
     onClear: PropTypes.func,
     placeholderText: PropTypes.string
-};
-FilterComponent.defaultProps = {
-    placeholderText: 'Search'
 };
 export default FilterComponent;

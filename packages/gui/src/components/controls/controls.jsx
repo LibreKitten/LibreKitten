@@ -25,15 +25,15 @@ const messages = defineMessages({
 
 const Controls = function (props) {
     const {
-        active,
+        active = false,
         className,
         intl,
         onGreenFlagClick,
         onStopAllClick,
-        turbo,
+        turbo = false,
         framerate,
         interpolation,
-        isSmall,
+        isSmall = false,
         ...componentProps
     } = props;
     return (
@@ -74,12 +74,6 @@ Controls.propTypes = {
     interpolation: PropTypes.bool,
     isSmall: PropTypes.bool,
     turbo: PropTypes.bool
-};
-
-Controls.defaultProps = {
-    active: false,
-    turbo: false,
-    isSmall: false
 };
 
 export default injectIntl(Controls);

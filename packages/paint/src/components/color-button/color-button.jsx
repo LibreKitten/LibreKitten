@@ -66,8 +66,4 @@ ColorButtonComponent.propTypes = {
     outline: PropTypes.bool.isRequired
 };
 
-ColorButtonComponent.defaultProps = {
-    outline: false
-};
-
 export default ColorButtonComponent;

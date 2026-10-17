@@ -1,3 +1,5 @@
+// lk: This file became like this to lower the chance of merge conflicts from when I dropped defaultProps. - cat
+
 import PropTypes from 'prop-types';
 import React from 'react';
 import classNames from 'classnames';
@@ -11,18 +13,30 @@ import backIconBlack from '../../lib/assets/icon--back-black.svg';
 
 let closeIcons = {};
 let backIcons = {};
+const closeValues = {};
 
-const CloseButton = props => (
+closeValues.SIZE_SMALL = 'small';
+closeValues.SIZE_LARGE = 'large';
+
+closeValues.COLOR_NEUTRAL = 'neutral';
+closeValues.COLOR_BLACK = 'black';
+closeValues.COLOR_GREEN = 'green';
+closeValues.COLOR_ORANGE = 'orange';
+
+closeValues.BACK_COLOR_NEUTRAL = 'neutral';
+closeValues.BACK_COLOR_BLACK = 'black';
+
+const CloseButtonInternal = props => (
     <div
         aria-label="Close"
         className={classNames(
             styles.closeButton,
             props.className,
             {
-                [styles.small]: props.size === CloseButton.SIZE_SMALL,
-                [styles.large]: props.size === CloseButton.SIZE_LARGE,
-                [styles.black]: props.color === CloseButton.COLOR_BLACK,
-                [styles.orange]: props.color === CloseButton.COLOR_ORANGE
+                [styles.small]: props.size === closeValues.SIZE_SMALL,
+                [styles.large]: props.size === closeValues.SIZE_LARGE,
+                [styles.black]: props.color === closeValues.COLOR_BLACK,
+                [styles.orange]: props.color === closeValues.COLOR_ORANGE
             }
         )}
         role="button"
@@ -42,7 +56,7 @@ const CloseButton = props => (
                 className={classNames(
                     styles.closeIcon,
                     {
-                        [styles[props.color]]: (props.color !== CloseButton.COLOR_NEUTRAL)
+                        [styles[props.color]]: (props.color !== closeValues.COLOR_NEUTRAL)
                     }
                 )}
                 src={(props.color && closeIcons[props.color]) ?
@@ -55,40 +69,36 @@ const CloseButton = props => (
     </div>
 );
 
-CloseButton.SIZE_SMALL = 'small';
-CloseButton.SIZE_LARGE = 'large';
-
-CloseButton.COLOR_NEUTRAL = 'neutral';
-CloseButton.COLOR_BLACK = 'black';
-CloseButton.COLOR_GREEN = 'green';
-CloseButton.COLOR_ORANGE = 'orange';
-
-CloseButton.BACK_COLOR_NEUTRAL = 'neutral';
-CloseButton.BACK_COLOR_BLACK = 'black';
-closeIcons = {
-    [CloseButton.COLOR_NEUTRAL]: closeIcon,
-    [CloseButton.COLOR_BLACK]: closeIconBlack,
-    [CloseButton.COLOR_GREEN]: closeIcon, // TODO: temporary, need green icon
-    [CloseButton.COLOR_ORANGE]: closeIconOrange
-};
-backIcons = {
-    [CloseButton.BACK_COLOR_NEUTRAL]: backIcon,
-    [CloseButton.BACK_COLOR_BLACK]: backIconBlack
-};
-
-
-CloseButton.propTypes = {
+CloseButtonInternal.propTypes = {
     buttonType: PropTypes.oneOf(['back', 'close']),
     className: PropTypes.string,
     color: PropTypes.string,
     onClick: PropTypes.func.isRequired,
-    size: PropTypes.oneOf([CloseButton.SIZE_SMALL, CloseButton.SIZE_LARGE])
+    size: PropTypes.oneOf([closeValues.SIZE_SMALL, closeValues.SIZE_LARGE])
 };
 
-CloseButton.defaultProps = {
-    color: CloseButton.COLOR_NEUTRAL,
-    size: CloseButton.SIZE_LARGE,
-    buttonType: 'close'
+closeIcons = {
+    [closeValues.COLOR_NEUTRAL]: closeIcon,
+    [closeValues.COLOR_BLACK]: closeIconBlack,
+    [closeValues.COLOR_GREEN]: closeIcon, // TODO: temporary, need green icon
+    [closeValues.COLOR_ORANGE]: closeIconOrange
+};
+backIcons = {
+    [closeValues.BACK_COLOR_NEUTRAL]: backIcon,
+    [closeValues.BACK_COLOR_BLACK]: backIconBlack
 };
 
+// eslint-disable-next-line prefer-arrow-callback
+const CloseButton = Object.assign(function CloseButton (props) {
+    const mergedProps = {
+        color: closeValues.COLOR_NEUTRAL,
+        size: closeValues.SIZE_LARGE,
+        buttonType: 'close',
+        ...props
+    };
+
+    return <CloseButtonInternal {...mergedProps} />;
+}, closeValues);
+
+CloseButton.propTypes = CloseButtonInternal.propTypes;
 export default CloseButton;

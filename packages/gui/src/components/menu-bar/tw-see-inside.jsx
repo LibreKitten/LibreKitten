@@ -9,7 +9,7 @@ import styles from './tw-see-inside.css';
 
 const SeeInsideButton = ({
     className,
-    onClick
+    onClick = () => {}
 }) => (
     <Button
         className={classNames(
@@ -33,10 +33,6 @@ const SeeInsideButton = ({
 SeeInsideButton.propTypes = {
     className: PropTypes.string,
     onClick: PropTypes.func
-};
-
-SeeInsideButton.defaultProps = {
-    onClick: () => {}
 };
 
 export default SeeInsideButton;

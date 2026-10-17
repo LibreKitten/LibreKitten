@@ -9,7 +9,7 @@ import styles from './community-button.css';
 
 const CommunityButton = ({
     className,
-    onClick
+    onClick = () => {}
 }) => (
     <Button
         className={classNames(
@@ -33,10 +33,6 @@ const CommunityButton = ({
 CommunityButton.propTypes = {
     className: PropTypes.string,
     onClick: PropTypes.func
-};
-
-CommunityButton.defaultProps = {
-    onClick: () => {}
 };
 
 export default CommunityButton;

@@ -78,7 +78,7 @@ const StageHeaderComponent = function (props) {
         onOpenSettings,
         isEmbedded,
         stageSize,
-        stageSizeMode,
+        stageSizeMode = STAGE_SIZE_MODES.large,
         vm
     } = props;
 
@@ -255,10 +255,6 @@ StageHeaderComponent.propTypes = {
     stageSize: PropTypes.oneOf(Object.keys(STAGE_DISPLAY_SIZES)),
     stageSizeMode: PropTypes.oneOf(Object.keys(STAGE_SIZE_MODES)),
     vm: PropTypes.instanceOf(VM).isRequired
-};
-
-StageHeaderComponent.defaultProps = {
-    stageSizeMode: STAGE_SIZE_MODES.large
 };
 
 export default injectIntl(connect(

@@ -7,10 +7,10 @@ import styles from './green-flag.css';
 
 const GreenFlagComponent = function (props) {
     const {
-        active,
+        active = false,
         className,
         onClick,
-        title,
+        title = 'Go',
         ...componentProps
     } = props;
     return (
@@ -37,9 +37,5 @@ GreenFlagComponent.propTypes = {
     className: PropTypes.string,
     onClick: PropTypes.func.isRequired,
     title: PropTypes.string
-};
-GreenFlagComponent.defaultProps = {
-    active: false,
-    title: 'Go'
 };
 export default GreenFlagComponent;

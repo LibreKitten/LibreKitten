@@ -18,7 +18,7 @@ const StageComponent = props => {
     const {
         canvas,
         customStageSize,
-        dragRef,
+        dragRef = () => {},
         isColorPicking,
         isFullScreen,
         isPlayerOnly,
@@ -170,8 +170,5 @@ StageComponent.propTypes = {
     question: PropTypes.string,
     stageSize: PropTypes.oneOf(Object.keys(STAGE_DISPLAY_SIZES)).isRequired,
     useEditorDragStyle: PropTypes.bool
-};
-StageComponent.defaultProps = {
-    dragRef: () => {}
 };
 export default StageComponent;

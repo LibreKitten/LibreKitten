@@ -6,10 +6,10 @@ import styles from './spinner.css';
 
 const SpinnerComponent = function (props) {
     const {
-        className,
-        level,
-        small,
-        large
+        className = '',
+        level = 'info',
+        small = false,
+        large = false
     } = props;
     return (
         <div
@@ -30,11 +30,5 @@ SpinnerComponent.propTypes = {
     large: PropTypes.bool,
     level: PropTypes.string,
     small: PropTypes.bool
-};
-SpinnerComponent.defaultProps = {
-    className: '',
-    large: false,
-    level: 'info',
-    small: false
 };
 export default SpinnerComponent;

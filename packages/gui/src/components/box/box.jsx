@@ -38,14 +38,14 @@ const Box = props => {
         className,
         componentRef,
         direction,
-        element,
+        element = 'div',
         grow,
         height,
         justifyContent,
         width,
         wrap,
         shrink,
-        style,
+        style = {},
         ...componentProps
     } = props;
     return React.createElement(element, {
@@ -131,9 +131,5 @@ Box.propTypes = {
     wrap: PropTypes.oneOf([
         'nowrap', 'wrap', 'wrap-reverse'
     ])
-};
-Box.defaultProps = {
-    element: 'div',
-    style: {}
 };
 export default Box;

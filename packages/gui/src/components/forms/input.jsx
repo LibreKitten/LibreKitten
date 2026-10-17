@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import styles from './input.css';
 
 const Input = props => {
-    const {small, componentRef, ...componentProps} = props;
+    const {small = false, componentRef, ...componentProps} = props;
     return (
         <input
             {...componentProps}
@@ -29,10 +29,6 @@ Input.propTypes = {
         PropTypes.shape({component: PropTypes.instanceOf(HTMLElement)})
     ]),
     small: PropTypes.bool
-};
-
-Input.defaultProps = {
-    small: false
 };
 
 export default Input;

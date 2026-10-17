@@ -8,7 +8,7 @@ import Button from '../button/button.jsx';
 import styles from './tag-button.css';
 
 const TagButtonComponent = ({
-    active,
+    active = false,
     iconClassName,
     className,
     tag, // eslint-disable-line no-unused-vars
@@ -46,10 +46,6 @@ TagButtonComponent.propTypes = {
         PropTypes.string
     ]).isRequired,
     tag: PropTypes.string.isRequired
-};
-
-TagButtonComponent.defaultProps = {
-    active: false
 };
 
 export default TagButtonComponent;

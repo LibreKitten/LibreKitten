@@ -24,27 +24,34 @@ const PHASES = keyMirror({
     updatePeripheral: null
 });
 
-const ConnectionModalComponent = props => (
-    <Modal
-        className={styles.modalContent}
-        contentLabel={props.name}
-        headerClassName={styles.header}
-        headerImage={props.connectionSmallIconURL}
-        id="connectionModal"
-        onHelp={props.onHelp}
-        onRequestClose={props.onCancel}
-    >
-        <Box className={styles.body}>
-            {props.phase === PHASES.scanning && !props.useAutoScan && <ScanningStep {...props} />}
-            {props.phase === PHASES.scanning && props.useAutoScan && <AutoScanningStep {...props} />}
-            {props.phase === PHASES.connecting && <ConnectingStep {...props} />}
-            {props.phase === PHASES.connected && <ConnectedStep {...props} />}
-            {props.phase === PHASES.error && <ErrorStep {...props} />}
-            {props.phase === PHASES.unavailable && <UnavailableStep {...props} />}
-            {props.phase === PHASES.updatePeripheral && <UpdatePeripheralStep {...props} />}
-        </Box>
-    </Modal>
-);
+const ConnectionModalComponent = props => {
+    const mergedProps = {
+        connectingMessage: 'Connecting',
+        ...props
+    };
+
+    return (
+        <Modal
+            className={styles.modalContent}
+            contentLabel={props.name}
+            headerClassName={styles.header}
+            headerImage={props.connectionSmallIconURL}
+            id="connectionModal"
+            onHelp={props.onHelp}
+            onRequestClose={props.onCancel}
+        >
+            <Box className={styles.body}>
+                {props.phase === PHASES.scanning && !props.useAutoScan && <ScanningStep {...mergedProps} />}
+                {props.phase === PHASES.scanning && props.useAutoScan && <AutoScanningStep {...mergedProps} />}
+                {props.phase === PHASES.connecting && <ConnectingStep {...mergedProps} />}
+                {props.phase === PHASES.connected && <ConnectedStep {...mergedProps} />}
+                {props.phase === PHASES.error && <ErrorStep {...mergedProps} />}
+                {props.phase === PHASES.unavailable && <UnavailableStep {...mergedProps} />}
+                {props.phase === PHASES.updatePeripheral && <UpdatePeripheralStep {...mergedProps} />}
+            </Box>
+        </Modal>
+    );
+};
 
 ConnectionModalComponent.propTypes = {
     connectingMessage: PropTypes.node.isRequired,
@@ -56,10 +63,6 @@ ConnectionModalComponent.propTypes = {
     phase: PropTypes.oneOf(Object.keys(PHASES)).isRequired,
     title: PropTypes.string.isRequired,
     useAutoScan: PropTypes.bool.isRequired
-};
-
-ConnectionModalComponent.defaultProps = {
-    connectingMessage: 'Connecting'
 };
 
 export {

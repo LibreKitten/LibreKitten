@@ -65,8 +65,8 @@ const MonitorComponent = props => (
                     data-id={props.id}
                     data-opcode={props.opcode}
                 >
-                    {React.createElement(modes[props.mode], {
-                        categoryColor: getCategoryColor(props.theme, props.category),
+                    {React.createElement(modes[props.mode ?? 'default'], {
+                        categoryColor: getCategoryColor(props.theme, props.category ?? 'extension'),
                         ...props
                     })}
                 </Box>
@@ -155,11 +155,6 @@ MonitorComponent.propTypes = {
     onSetModeToSlider: PropTypes.func,
     onSliderPromptOpen: PropTypes.func,
     theme: PropTypes.instanceOf(Theme).isRequired
-};
-
-MonitorComponent.defaultProps = {
-    category: 'extension',
-    mode: 'default'
 };
 
 export {
