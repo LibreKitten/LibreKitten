@@ -13,10 +13,7 @@ const messages = defineMessages({
     welcome: {
         id: 'lk.welcomeModal.label',
         defaultMessage: 'Welcome to {APP_NAME}!',
-        description: '',
-        values: {
-            APP_NAME
-        }
+        description: ''
     }
 });
 
@@ -28,7 +25,7 @@ const WelcomeModalComponent = ({intl, ...props}) => {
             centered
             className={styles.modalContent}
             headerClassName={styles.modalHeader}
-            contentLabel={intl.formatMessage(title)}
+            contentLabel={intl.formatMessage(title, {APP_NAME})}
             onRequestClose={props.onClose}
         >
             <div dir={props.isRtl ? 'rtl' : 'ltr'} >
@@ -43,7 +40,12 @@ const WelcomeModalComponent = ({intl, ...props}) => {
 
                 <Box className={styles.body}>
                     <h2 className={styles.title}>
-                        <FormattedMessage {...title} />
+                        <FormattedMessage
+                            {...title}
+                            values={{
+                                APP_NAME
+                            }}
+                        />
                     </h2>
 
                     {/* eslint-disable max-len */}
