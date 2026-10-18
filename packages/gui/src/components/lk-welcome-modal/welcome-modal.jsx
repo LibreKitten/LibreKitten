@@ -25,6 +25,7 @@ const WelcomeModalComponent = ({intl, ...props}) => {
             centered
             className={styles.modalContent}
             headerClassName={styles.modalHeader}
+            id="lk-welcomeModal"
             contentLabel={intl.formatMessage(title, {APP_NAME})}
             onRequestClose={props.onClose}
         >
