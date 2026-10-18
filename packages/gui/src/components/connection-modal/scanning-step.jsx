@@ -16,11 +16,13 @@ import warningIcon from './icons/warning.svg';
 import styles from './connection-modal.css';
 
 const ScanningStep = props => {
-    const showUpdate = !!(props.onUpdatePeripheral && !props.scanning);
+    const peripheralList = props.peripheralList ?? [];
+    const scanning = props.scanning ?? true;
+    const showUpdate = !!(props.onUpdatePeripheral && !scanning);
     return (<Box className={styles.body}>
         <Box className={styles.activityArea}>
-            {props.scanning ? (
-                props.peripheralList.length === 0 ? (
+            {scanning ? (
+                peripheralList.length === 0 ? (
                     <div className={styles.activityAreaInfo}>
                         <div className={styles.centeredRow}>
                             <img
@@ -37,7 +39,7 @@ const ScanningStep = props => {
                     </div>
                 ) : (
                     <div className={styles.peripheralTilePane}>
-                        {props.peripheralList.map(peripheral =>
+                        {peripheralList.map(peripheral =>
                             (<PeripheralTile
                                 connectionSmallIconURL={props.connectionSmallIconURL}
                                 key={peripheral.peripheralId}
@@ -67,7 +69,7 @@ const ScanningStep = props => {
         </Box>
         <Box className={styles.bottomArea}>
             <Box className={classNames(styles.bottomAreaItem, styles.instructions)}>
-                {(props.scanning || props.peripheralList.length > 0) && (
+                {(scanning || peripheralList.length > 0) && (
                     // Show this message if we're still scanning OR if we've found devices
                     <FormattedMessage
                         defaultMessage="Select your device in the list above."
@@ -78,7 +80,7 @@ const ScanningStep = props => {
                 {showUpdate && (
                     // Show this message if we're done scanning AND we can update
                     // Note that it's possible the list includes devices but does not include the desired device,
-                    // so don't limit this message to the (props.peripheralList.length === 0) case
+                    // so don't limit this message to the (peripheralList.length === 0) case
                     <BalancedFormattedMessage
                         defaultMessage="If you don't see your device, you may need to update it to work with Scratch."
                         description="Prompt for updating a peripheral device"
@@ -140,11 +142,6 @@ ScanningStep.propTypes = {
         peripheralId: PropTypes.string
     })),
     scanning: PropTypes.bool.isRequired
-};
-
-ScanningStep.defaultProps = {
-    peripheralList: [],
-    scanning: true
 };
 
 export default ScanningStep;
