@@ -13,89 +13,90 @@ let contextMenuId = 0;
 
 const SpriteSelectorItem = props => (
     <ContextMenu.Root>
-        <ContextMenu.Trigger
-            className={classNames(props.className, styles.spriteSelectorItem, {
-                [styles.isSelected]: props.selected
-            })}
-            onClick={props.onClick}
-            onMouseEnter={props.onMouseEnter}
-            onMouseLeave={props.onMouseLeave}
-            onMouseDown={props.onMouseDown}
-            onTouchStart={props.onMouseDown}
-            disabled={props.preventContextMenu}
-            id={`${props.name}-${contextMenuId}`}
-            ref={props.componentRef}
-        >
-            {typeof props.number === 'undefined' ? null : (
-                <div className={styles.number}>{props.number}</div>
-            )}
-            {props.costumeURL ? (
-                <div className={styles.spriteImageOuter}>
-                    <div className={styles.spriteImageInner}>
-                        <img
-                            className={styles.spriteImage}
-                            draggable={false}
-                            loading="lazy"
-                            src={props.costumeURL}
-                        />
+        <ContextMenu.Trigger disabled={props.preventContextMenu}>
+            <div
+                className={classNames(props.className, styles.spriteSelectorItem, {
+                    [styles.isSelected]: props.selected
+                })}
+                id={`${props.name}-${contextMenuId}`}
+                onClick={props.onClick}
+                onMouseEnter={props.onMouseEnter}
+                onMouseLeave={props.onMouseLeave}
+                onMouseDown={props.onMouseDown}
+                onTouchStart={props.onMouseDown}
+                ref={props.componentRef}
+            >
+                {typeof props.number === 'undefined' ? null : (
+                    <div className={styles.number}>{props.number}</div>
+                )}
+                {props.costumeURL ? (
+                    <div className={styles.spriteImageOuter}>
+                        <div className={styles.spriteImageInner}>
+                            <img
+                                className={styles.spriteImage}
+                                draggable={false}
+                                loading="lazy"
+                                src={props.costumeURL}
+                            />
+                        </div>
                     </div>
+                ) : null}
+                <div className={styles.spriteInfo}>
+                    <div className={styles.spriteName}>{props.name}</div>
+                    {props.details ? (
+                        <div className={styles.spriteDetails}>{props.details}</div>
+                    ) : null}
                 </div>
-            ) : null}
-            <div className={styles.spriteInfo}>
-                <div className={styles.spriteName}>{props.name}</div>
-                {props.details ? (
-                    <div className={styles.spriteDetails}>{props.details}</div>
+                {(props.selected && props.onDeleteButtonClick) ? (
+                    <DeleteButton
+                        className={styles.deleteButton}
+                        onClick={props.onDeleteButtonClick}
+                    />
                 ) : null}
             </div>
-            {(props.selected && props.onDeleteButtonClick) ? (
-                <DeleteButton
-                    className={styles.deleteButton}
-                    onClick={props.onDeleteButtonClick}
-                />
-            ) : null}
-            {props.onDuplicateButtonClick || props.onDeleteButtonClick || props.onExportButtonClick ? (
-                <ContextMenu.Portal>
-                    <StyledContextMenu id={`${props.name}-${contextMenuId++}`}>
-                        {props.onDuplicateButtonClick ? (
-                            <StyledMenuItem onClick={props.onDuplicateButtonClick}>
-                                <FormattedMessage
-                                    defaultMessage="duplicate"
-                                    description="Menu item to duplicate in the right click menu"
-                                    id="gui.spriteSelectorItem.contextMenuDuplicate"
-                                />
-                            </StyledMenuItem>
-                        ) : null}
-                        {props.onExportButtonClick ? (
-                            <StyledMenuItem onClick={props.onExportButtonClick}>
-                                <FormattedMessage
-                                    defaultMessage="export"
-                                    description="Menu item to export the selected item"
-                                    id="gui.spriteSelectorItem.contextMenuExport"
-                                />
-                            </StyledMenuItem>
-                        ) : null}
-                        {props.onRenameButtonClick ? (
-                            <StyledMenuItem onClick={props.onRenameButtonClick}>
-                                <FormattedMessage
-                                    defaultMessage="rename"
-                                    description="Menu item to rename an item"
-                                    id="tw.spriteSelectorItem.rename"
-                                />
-                            </StyledMenuItem>
-                        ) : null}
-                        {props.onDeleteButtonClick ? (
-                            <DangerousMenuItem onClick={props.onDeleteButtonClick}>
-                                <FormattedMessage
-                                    defaultMessage="delete"
-                                    description="Menu item to delete in the right click menu"
-                                    id="gui.spriteSelectorItem.contextMenuDelete"
-                                />
-                            </DangerousMenuItem>
-                        ) : null}
-                    </StyledContextMenu>
-                </ContextMenu.Portal>
-            ) : null}
         </ContextMenu.Trigger>
+        {props.onDuplicateButtonClick || props.onDeleteButtonClick || props.onExportButtonClick ? (
+            <ContextMenu.Portal>
+                <StyledContextMenu id={`${props.name}-${contextMenuId++}`}>
+                    {props.onDuplicateButtonClick ? (
+                        <StyledMenuItem onClick={props.onDuplicateButtonClick}>
+                            <FormattedMessage
+                                defaultMessage="duplicate"
+                                description="Menu item to duplicate in the right click menu"
+                                id="gui.spriteSelectorItem.contextMenuDuplicate"
+                            />
+                        </StyledMenuItem>
+                    ) : null}
+                    {props.onExportButtonClick ? (
+                        <StyledMenuItem onClick={props.onExportButtonClick}>
+                            <FormattedMessage
+                                defaultMessage="export"
+                                description="Menu item to export the selected item"
+                                id="gui.spriteSelectorItem.contextMenuExport"
+                            />
+                        </StyledMenuItem>
+                    ) : null}
+                    {props.onRenameButtonClick ? (
+                        <StyledMenuItem onClick={props.onRenameButtonClick}>
+                            <FormattedMessage
+                                defaultMessage="rename"
+                                description="Menu item to rename an item"
+                                id="tw.spriteSelectorItem.rename"
+                            />
+                        </StyledMenuItem>
+                    ) : null}
+                    {props.onDeleteButtonClick ? (
+                        <DangerousMenuItem onClick={props.onDeleteButtonClick}>
+                            <FormattedMessage
+                                defaultMessage="delete"
+                                description="Menu item to delete in the right click menu"
+                                id="gui.spriteSelectorItem.contextMenuDelete"
+                            />
+                        </DangerousMenuItem>
+                    ) : null}
+                </StyledContextMenu>
+            </ContextMenu.Portal>
+        ) : null}
     </ContextMenu.Root>
 );
 

@@ -121,7 +121,7 @@
     100% { box-shadow: none; }
 }
 
-.placeholder > .sprite {
+.placeholder .sprite {
     background: black;
     filter: opacity(15%) brightness(0%);
 }
