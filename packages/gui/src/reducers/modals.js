@@ -1,3 +1,5 @@
+import {sawWelcomeModal} from '../lib/lk-welcome-modal-utils.js';
+
 const OPEN_MODAL = 'scratch-gui/modals/OPEN_MODAL';
 const CLOSE_MODAL = 'scratch-gui/modals/CLOSE_MODAL';
 
@@ -38,8 +40,7 @@ const initialState = {
     [MODAL_FONTS]: false,
     [MODAL_UNKNOWN_PLATFORM]: false,
     [MODAL_INVALID_PROJECT]: false,
-    // lk: If you're looking for where this is intialized, see `src/reducers/gui.js` and `src/lib/app-state-hoc.jsx`.
-    [MODAL_WELCOME]: false
+    [MODAL_WELCOME]: !sawWelcomeModal()
 };
 
 const reducer = function (state, action) {
