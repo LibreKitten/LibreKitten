@@ -44,8 +44,8 @@ const MonitorComponent = props => (
     <ContextMenu.Root>
         <ContextMenu.Trigger
             // TW: if export is defined, we always show it, even outside of the editor
-            disable={!props.draggable && !props.onExport}
-            holdToDisplay={props.mode === 'slider' ? -1 : 1000}
+            disabled={!props.draggable && !props.onExport}
+            // holdToDisplay={props.mode === 'slider' ? -1 : 1000}
             id={`monitor-${props.id}`}
         >
             <Draggable
