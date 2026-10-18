@@ -25,16 +25,17 @@ const PHASES = keyMirror({
 });
 
 const AutoScanningStep = props => {
+    const phase = props.phase ?? PHASES.prescan;
     // Offer to update both during scan and after a failed scan, as long there's an update function.
     // It's possible the scan will find "some" device but not the desired device,
     // so don't limit the update offer to just the PHASES.notfound case.
     const showUpdate = !!(props.onUpdatePeripheral &&
-        (props.phase === PHASES.pressbutton || props.phase === PHASES.notfound));
+        (phase === PHASES.pressbutton || phase === PHASES.notfound));
     return (<Box className={styles.body}>
         <Box className={styles.activityArea}>
             <div className={styles.activityAreaInfo}>
                 <div className={styles.centeredRow}>
-                    {props.phase === PHASES.prescan && (
+                    {phase === PHASES.prescan && (
                         <React.Fragment>
                             <img
                                 className={styles.radarBig}
@@ -48,7 +49,7 @@ const AutoScanningStep = props => {
                             />
                         </React.Fragment>
                     )}
-                    {props.phase === PHASES.pressbutton && (
+                    {phase === PHASES.pressbutton && (
                         <React.Fragment>
                             <img
                                 className={classNames(styles.radarBig, styles.radarSpin)}
@@ -62,7 +63,7 @@ const AutoScanningStep = props => {
                             />
                         </React.Fragment>
                     )}
-                    {props.phase === PHASES.notfound && (
+                    {phase === PHASES.notfound && (
                         <React.Fragment>
                             <img
                                 className={styles.helpStepImage}
@@ -82,14 +83,14 @@ const AutoScanningStep = props => {
         </Box>
         <Box className={styles.bottomArea}>
             <Box className={classNames(styles.bottomAreaItem, styles.instructions)}>
-                {props.phase === PHASES.prescan && (
+                {phase === PHASES.prescan && (
                     <FormattedMessage
                         defaultMessage="Have your device nearby, then begin searching."
                         description="Prompt for beginning the search"
                         id="gui.connection.auto-scanning.prescan"
                     />
                 )}
-                {props.phase === PHASES.pressbutton && (
+                {phase === PHASES.pressbutton && (
                     <FormattedMessage
                         defaultMessage="Press the button on your device."
                         description="Prompt for pushing the button on the device"
@@ -112,7 +113,7 @@ const AutoScanningStep = props => {
                 total={3}
             />
             <Box className={classNames(styles.bottomAreaItem, styles.buttonRow)}>
-                {props.phase === PHASES.prescan && (
+                {phase === PHASES.prescan && (
                     <button
                         className={styles.connectionButton}
                         onClick={props.onStartScan}
@@ -124,7 +125,7 @@ const AutoScanningStep = props => {
                         />
                     </button>
                 )}
-                {props.phase === PHASES.pressbutton && (
+                {phase === PHASES.pressbutton && (
                     <div className={styles.segmentedButton}>
                         <button
                             disabled
@@ -148,7 +149,7 @@ const AutoScanningStep = props => {
                         </button>
                     </div>
                 )}
-                {props.phase === PHASES.notfound && (
+                {phase === PHASES.notfound && (
                     <button
                         className={styles.connectionButton}
                         onClick={props.onRefresh}
@@ -193,10 +194,6 @@ AutoScanningStep.propTypes = {
     onStartScan: PropTypes.func,
     onUpdatePeripheral: PropTypes.func,
     phase: PropTypes.oneOf(Object.keys(PHASES))
-};
-
-AutoScanningStep.defaultProps = {
-    phase: PHASES.prescan
 };
 
 export {
