@@ -686,11 +686,28 @@ class Tab extends EventTargetShim {
                     }
                 }
 
+                // lk: We need to convert the way that modern addons display separators to
+                // something that LibreKitten understands properly.
+                let itemI = 0;
+                while (itemI <= items.length) {
+                    const item = items[itemI];
+                    const itemAhead = items[itemI + 1];
+                    if (!item || !itemAhead) break;
+                    if (item.separator) {
+                        items.splice(itemI, 1); // Remove the item we're on.
+                        itemAhead.lkSeparator = true;
+                        // Stay on this iteration number, as we have deleted the original.
+                        continue;
+                    }
+                    itemI++; // Nothing to do. Moving on!
+                }
                 oldShow.call(this, event, items, rtl, opt_container);
 
                 const blocklyContextMenu = ScratchBlocks.WidgetDiv.DIV.firstChild;
                 items.forEach((item, i) => {
-                    if (i !== 0 && item.separator) {
+                    // lk: Check for a separator marked by LibreKitten instead of the raw
+                    // addon separator.
+                    if (i !== 0 && item.lkSeparator) {
                         const itemElt = blocklyContextMenu.children[i];
                         itemElt.style.paddingTop = '2px';
                         itemElt.classList.add('sa-blockly-menu-item-border');

@@ -18,11 +18,6 @@ const manifest = {
       "url": "userscript.js"
     }
   ],
-  "userstyles": [
-    {
-      "url": "../../libraries/common/cs/blockly-menu-separators.css"
-    }
-  ],
   "tags": [
     "recommended"
   ],
