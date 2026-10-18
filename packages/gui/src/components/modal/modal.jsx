@@ -115,7 +115,10 @@ ModalComponent.propTypes = {
         PropTypes.string,
         PropTypes.object
     ]).isRequired,
-    dialogRef: PropTypes.instanceOf(HTMLDialogElement),
+    dialogRef: PropTypes.oneOfType([
+        PropTypes.shape({current: PropTypes.instanceOf(HTMLDialogElement)}),
+        PropTypes.func
+    ]),
     fullScreen: PropTypes.bool,
     headerClassName: PropTypes.string,
     headerImage: PropTypes.string,
