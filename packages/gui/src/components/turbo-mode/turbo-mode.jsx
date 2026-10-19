@@ -6,7 +6,7 @@ import turboIcon from './icon--turbo.svg';
 
 import styles from './turbo-mode.css';
 
-const TurboMode = ({isSmall}) => (
+const TurboMode = ({isSmall = false}) => (
     <div className={styles.turboContainer}>
         <img
             className={styles.turboIcon}
@@ -29,10 +29,6 @@ const TurboMode = ({isSmall}) => (
 
 TurboMode.propTypes = {
     isSmall: PropTypes.bool
-};
-
-TurboMode.defaultProps = {
-    isSmall: false
 };
 
 export default TurboMode;

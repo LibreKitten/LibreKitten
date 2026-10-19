@@ -5,7 +5,7 @@ import {FormattedMessage} from 'react-intl';
 import styles from './monitor.css';
 import ListMonitorScroller from './list-monitor-scroller.jsx';
 
-const ListMonitor = ({draggable, label, width, height, value, onResizeMouseDown, onAdd, ...rowProps}) => (
+const ListMonitor = ({draggable, label, width = 110, height = 200, value, onResizeMouseDown, onAdd, ...rowProps}) => (
     <div
         className={styles.listMonitor}
         style={{
@@ -73,11 +73,6 @@ ListMonitor.propTypes = {
         ]))
     ]),
     width: PropTypes.number
-};
-
-ListMonitor.defaultProps = {
-    width: 110,
-    height: 200
 };
 
 export default ListMonitor;

@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 import styles from './monitor.css';
 
-const SliderMonitor = ({categoryColor, isDiscrete, label, min, max, value, onSliderUpdate}) => (
+const SliderMonitor = ({categoryColor, isDiscrete = true, label, min = 0, max = 100, value, onSliderUpdate}) => (
     <div className={styles.defaultMonitor}>
         <div className={styles.row}>
             <div className={styles.label}>
@@ -49,12 +49,6 @@ SliderMonitor.propTypes = {
         PropTypes.string,
         PropTypes.number
     ])
-};
-
-SliderMonitor.defaultProps = {
-    isDiscrete: true,
-    min: 0,
-    max: 100
 };
 
 export default SliderMonitor;

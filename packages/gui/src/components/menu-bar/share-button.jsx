@@ -9,7 +9,7 @@ import styles from './share-button.css';
 const ShareButton = ({
     className,
     isShared,
-    onClick
+    onClick = () => {}
 }) => (
     <Button
         className={classNames(
@@ -39,10 +39,6 @@ ShareButton.propTypes = {
     className: PropTypes.string,
     isShared: PropTypes.bool,
     onClick: PropTypes.func
-};
-
-ShareButton.defaultProps = {
-    onClick: () => {}
 };
 
 export default ShareButton;

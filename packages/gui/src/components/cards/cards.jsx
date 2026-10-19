@@ -292,7 +292,7 @@ const Cards = props => {
         onShowAll,
         onNextStep,
         onPrevStep,
-        showVideos,
+        showVideos = true,
         step,
         expanded,
         ...posProps
@@ -426,10 +426,6 @@ Cards.propTypes = {
     step: PropTypes.number.isRequired,
     x: PropTypes.number,
     y: PropTypes.number
-};
-
-Cards.defaultProps = {
-    showVideos: true
 };
 
 export {

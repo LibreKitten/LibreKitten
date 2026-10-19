@@ -106,8 +106,8 @@ const ComingSoon = injectIntl(ComingSoonContent);
 const ComingSoonTooltip = props => (
     <div className={props.className}>
         <div
-            data-delay-hide={props.delayHide}
-            data-delay-show={props.delayShow}
+            data-delay-hide={props.delayHide ?? 0}
+            data-delay-show={props.delayShow ?? 0}
             data-effect="solid"
             data-for={props.tooltipId}
             data-place={props.place}
@@ -131,11 +131,6 @@ ComingSoonTooltip.propTypes = {
     place: PropTypes.oneOf(['top', 'right', 'bottom', 'left']),
     tooltipClassName: PropTypes.string,
     tooltipId: PropTypes.string.isRequired
-};
-
-ComingSoonTooltip.defaultProps = {
-    delayHide: 0,
-    delayShow: 0
 };
 
 export {
