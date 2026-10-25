@@ -355,10 +355,10 @@ export default async function ({ addon, console, msg }) {
 
   const activateCodeTab = () => {
     const redux = addon.tab.redux;
-    if (redux.state.scratchGui.editorTab.activeTabIndex !== 0) {
+    if (redux.state.scratchGui.editorTab.activeTabIndex !== "codeTab") {
       redux.dispatch({
         type: "scratch-gui/navigation/ACTIVATE_TAB",
-        activeTabIndex: 0,
+        activeTabIndex: "codeTab",
       });
     }
   };

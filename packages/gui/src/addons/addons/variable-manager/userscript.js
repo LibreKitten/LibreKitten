@@ -330,7 +330,7 @@ export default async function ({ addon, console, msg }) {
   }
 
   varTab.addEventListener("click", (e) => {
-    addon.tab.redux.dispatch({ type: "scratch-gui/navigation/ACTIVATE_TAB", activeTabIndex: 3 });
+    addon.tab.redux.dispatch({ type: "scratch-gui/navigation/ACTIVATE_TAB", activeTabIndex: "soundsTab" });
   });
 
   function setVisible(visible) {
@@ -356,7 +356,7 @@ export default async function ({ addon, console, msg }) {
   addon.tab.redux.addEventListener("statechanged", ({ detail }) => {
     if (detail.action.type === "scratch-gui/navigation/ACTIVATE_TAB") {
       const varManagerWasSelected = document.body.contains(manager);
-      const switchedToVarManager = detail.action.activeTabIndex === 3;
+      const switchedToVarManager = detail.action.activeTabIndex === "soundsTab";
 
       if (varManagerWasSelected && !switchedToVarManager) {
         // Fixes #5773
@@ -365,7 +365,7 @@ export default async function ({ addon, console, msg }) {
 
       setVisible(switchedToVarManager);
     } else if (detail.action.type === "scratch-gui/mode/SET_PLAYER") {
-      if (!detail.action.isPlayerOnly && addon.tab.redux.state.scratchGui.editorTab.activeTabIndex === 3) {
+      if (!detail.action.isPlayerOnly && addon.tab.redux.state.scratchGui.editorTab.activeTabIndex === "soundsTab") {
         // DOM doesn't actually exist yet
         queueMicrotask(() => setVisible(true));
       }
@@ -399,8 +399,8 @@ export default async function ({ addon, console, msg }) {
   };
 
   addon.self.addEventListener("disabled", () => {
-    if (addon.tab.redux.state.scratchGui.editorTab.activeTabIndex === 3) {
-      addon.tab.redux.dispatch({ type: "scratch-gui/navigation/ACTIVATE_TAB", activeTabIndex: 2 });
+    if (addon.tab.redux.state.scratchGui.editorTab.activeTabIndex === "soundsTab") {
+      addon.tab.redux.dispatch({ type: "scratch-gui/navigation/ACTIVATE_TAB", activeTabIndex: "costumesTab" });
     }
   });
 

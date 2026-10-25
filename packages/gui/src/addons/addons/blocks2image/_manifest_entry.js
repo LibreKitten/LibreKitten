@@ -27,7 +27,7 @@ const manifest = {
       "url": "style.css"
     }
   ],
-  "enabledByDefault": false
+  "enabledByDefault": true
 };
 import {clipboardSupported} from "../../environment";
 if (!clipboardSupported) manifest.unsupported = true;

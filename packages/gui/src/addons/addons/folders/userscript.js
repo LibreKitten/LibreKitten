@@ -1489,7 +1489,7 @@ export default async function ({ addon, console, msg }) {
   // Costume and sound list
   {
     const selectorListItem = await addon.tab.waitForElement("[class*='selector_list-item']", {
-      reduxCondition: (state) => state.scratchGui.editorTab.activeTabIndex !== 0 && !state.scratchGui.mode.isPlayerOnly,
+      reduxCondition: (state) => state.scratchGui.editorTab.activeTabIndex !== "codeTab" && !state.scratchGui.mode.isPlayerOnly,
     });
     const sortableHOCInstance = getSortableHOCFromElement(selectorListItem);
     verifySortableHOC(sortableHOCInstance, false);
