@@ -101,7 +101,7 @@ const ModalComponent = props => {
                         )}
                     </div>
                 </div>
-                {props.children}
+                {props.mayRenderInner && props.children}
             </Box>
         </dialog>
     );
@@ -123,6 +123,7 @@ ModalComponent.propTypes = {
     headerClassName: PropTypes.string,
     headerImage: PropTypes.string,
     isRtl: PropTypes.bool,
+    mayRenderInner: PropTypes.bool.isRequired,
     onHelp: PropTypes.func,
     onRequestClose: PropTypes.func,
     theme: PropTypes.instanceOf(Theme)

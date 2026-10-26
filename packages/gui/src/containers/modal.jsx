@@ -17,15 +17,17 @@ class Modal extends React.Component {
             'addEventListeners',
             'removeEventListeners',
             'handlePopState',
+            'setRef',
             'pushHistory',
             'onRequestClose'
         ]);
         this.state = {
+            mayRenderInner: false,
             pressingOutside: false
         };
         this.addEventListeners();
         /** @type {React.RefObject<HTMLDialogElement>} */
-        this.dialogRef = React.createRef();
+        this.dialogRef = null;
     }
     componentDidMount () {
         // Add a history event only if it's not currently for our modal. This
@@ -33,9 +35,9 @@ class Modal extends React.Component {
         this.pushHistory(this.id, (history.state === null || history.state !== this.id));
 
         // lk: Bind dialog events.
-        this.dialogRef.current.addEventListener('close', () => this.props.onRequestClose());
-        this.dialogRef.current.addEventListener('pointerdown', e => {
-            if (e.target === this.dialogRef.current) {
+        this.dialogRef.addEventListener('close', () => this.props.onRequestClose());
+        this.dialogRef.addEventListener('pointerdown', e => {
+            if (e.target === this.dialogRef) {
                 this.setState({
                     ...this.state,
                     pressingOutside: true
@@ -47,8 +49,8 @@ class Modal extends React.Component {
                 });
             }
         });
-        this.dialogRef.current.addEventListener('pointerup', e => {
-            if (e.target === this.dialogRef.current && this.state.pressingOutside) {
+        this.dialogRef.addEventListener('pointerup', e => {
+            if (e.target === this.dialogRef && this.state.pressingOutside) {
                 this.onRequestClose();
             }
             this.setState({
@@ -56,12 +58,20 @@ class Modal extends React.Component {
                 pressingOutside: false
             });
         });
-
-        this.dialogRef.current.showModal();
     }
     componentWillUnmount () {
         this.removeEventListeners();
-        this.dialogRef.current.close();
+        this.dialogRef.close();
+    }
+    setRef (ref) {
+        const dialogExists = ref instanceof HTMLDialogElement;
+        this.dialogRef = ref;
+        if (dialogExists) ref.showModal();
+
+        // lk: We defer any possible rendering of the dialog contents until after the dialog gets to
+        // show, as to stop bugs from a child component possibly calculating element proportions while
+        // it is still hidden.
+        this.setState({mayRenderInner: dialogExists});
     }
     addEventListeners () {
         window.addEventListener('popstate', this.handlePopState);
@@ -81,14 +91,15 @@ class Modal extends React.Component {
         history.replaceState(state, this.id, null);
     }
     onRequestClose () {
-        this.dialogRef.current.close();
+        this.dialogRef.close();
         this.props.onRequestClose();
     }
     render () {
         return (
             <ModalComponent
                 {...this.props}
-                dialogRef={this.dialogRef}
+                dialogRef={this.setRef}
+                mayRenderInner={this.state.mayRenderInner}
                 requestClose={this.onRequestClose}
             />
         );
