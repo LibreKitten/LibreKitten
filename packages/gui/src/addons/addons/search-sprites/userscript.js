@@ -26,9 +26,9 @@ export default async function ({ addon, console, msg }) {
     for (const sprite of spritesContainer.children) {
       const visible =
         !query ||
-        containsQuery(sprite.children[0].children[1].innerText) ||
+        containsQuery(sprite.children[0].children[0].children[1].innerText) ||
         (sprite.children[0].classList.contains("sa-folders-folder") &&
-          containsQuery(sprite.children[0].children[2].children[0].innerText));
+          containsQuery(sprite.children[0].children[0].children[2].children[0].innerText));
       sprite.style.display = visible ? "" : "none";
     }
   };

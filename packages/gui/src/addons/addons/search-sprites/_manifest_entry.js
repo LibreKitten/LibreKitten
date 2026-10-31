@@ -30,6 +30,6 @@ const manifest = {
   "tags": [
     "recommended"
   ],
-  "enabledByDefault": false
+  "enabledByDefault": true
 };
 export default manifest;

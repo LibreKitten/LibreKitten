@@ -289,7 +289,7 @@ export default async function ({ addon, console, msg }) {
     }
 
     const newStepScrollAnimation = (oldStepScrollAnimation) =>
-      function () {
+      function (...args) {
         // scrolling should not be animated when opening the flyout in category click mode
         if (!scrollAnimation) {
           if (Blockly.registry)
@@ -299,7 +299,7 @@ export default async function ({ addon, console, msg }) {
           scrollAnimation = true;
           return;
         }
-        oldStepScrollAnimation.call(this);
+        oldStepScrollAnimation.call(this, ...args);
       };
     if (Blockly.registry) {
       // new Blockly
@@ -352,9 +352,11 @@ export default async function ({ addon, console, msg }) {
         "scratch-gui/locales/SELECT_LOCALE",
         "scratch-gui/settings/SET_COLOR_MODE",
         "scratch-gui/settings/SET_THEME",
+        "scratch-gui/navigation/ACTIVATE_TAB",
         "fontsLoaded/SET_FONTS_LOADED",
       ],
-      reduxCondition: (state) => !state.scratchGui.mode.isPlayerOnly,
+      reduxCondition: (state) => !state.scratchGui.mode.isPlayerOnly &&
+        state.scratchGui.editorTab.activeTabIndex === 'codeTab',
     });
     scrollBar = document.querySelector(".blocklyFlyoutScrollbar");
     const blocksWrapper = document.querySelector('[class*="gui_blocks-wrapper_"]');
@@ -402,7 +404,7 @@ export default async function ({ addon, console, msg }) {
     if (Blockly.registry) toolbox = document.querySelector(".blocklyToolbox");
     else toolbox = document.querySelector(".blocklyToolboxDiv");
 
-    const addExtensionButton = document.querySelector("[class*=extension-button_extension-button-container_]");
+    const addExtensionButton = document.querySelector("[class*=gui_extension-button-container_");
 
     for (let element of [toolbox, addExtensionButton, flyOut, scrollBar]) {
       element.onmouseenter = (e) => {
