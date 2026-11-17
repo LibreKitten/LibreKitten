@@ -20,7 +20,7 @@ export default {
   "mouse-pos": () => import(/* webpackChunkName: "addon-entry-mouse-pos" */ "../addons/mouse-pos/_runtime_entry.js"),
   "color-picker": () => import(/* webpackChunkName: "addon-default-entry" */ "../addons/color-picker/_runtime_entry.js"),
   "remove-sprite-confirm": () => import(/* webpackChunkName: "addon-entry-remove-sprite-confirm" */ "../addons/remove-sprite-confirm/_runtime_entry.js"),
-  "block-count": () => import(/* webpackChunkName: "addon-entry-block-count" */ "../addons/block-count/_runtime_entry.js"),
+  "block-count": () => import(/* webpackChunkName: "addon-default-entry" */ "../addons/block-count/_runtime_entry.js"),
   "onion-skinning": () => import(/* webpackChunkName: "addon-default-entry" */ "../addons/onion-skinning/_runtime_entry.js"),
   "paint-snap": () => import(/* webpackChunkName: "addon-entry-paint-snap" */ "../addons/paint-snap/_runtime_entry.js"),
   "default-costume-editor-color": () => import(/* webpackChunkName: "addon-entry-default-costume-editor-color" */ "../addons/default-costume-editor-color/_runtime_entry.js"),

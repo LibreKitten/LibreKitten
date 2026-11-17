@@ -114,27 +114,26 @@ export default async function ({ addon, console }) {
       capture: true,
     }
   );
-  document.body.addEventListener(
-    "mouseover",
-    (e) => {
-      const mainButton = e.target.closest('[class*="action-menu_main-button_"]');
-      if (!mainButton) {
-        return;
-      }
-      const tooltipElement = mainButton.parentElement.querySelector(".__react_component_tooltip");
-      const { tooltip } = getButtonToClick(mainButton);
-      const translatedTooltip = addon.tab.redux.state.locales.messages[tooltip];
-      const needToFixTooltipText = translatedTooltip && tooltipElement.textContent !== translatedTooltip;
-      if (needToFixTooltipText) {
-        tooltipElement.textContent = translatedTooltip;
-        setTimeout(() => {
-          tooltipElement.textContent = translatedTooltip;
-          mainButton.dispatchEvent(new Event("mouseenter"));
-        });
-      }
-    },
-    {
-      bubble: true,
-    }
-  );
+  // lk: This was reimplemented to patch the the tooltip content attribute instead of the tooltip directly.
+  const patchTooltip = async () => {
+    const mainButton = await addon.tab.waitForElement('[class*="action-menu_main-button_"]');
+    const { tooltip } = getButtonToClick(mainButton);
+    const translatedTooltip = addon.tab.redux.state.locales.messages[tooltip];
+    mainButton.setAttribute("data-tooltip-content", translatedTooltip);
+  }
+
+  addon.self.addEventListener("disabled", async () => {
+    const mainButton = await addon.tab.waitForElement('[class*="action-menu_main-button_"]');
+    const originalTooltip = addon.tab.redux.state.locales.messages["gui.spriteSelector.addSpriteFromLibrary"];
+    mainButton.setAttribute("data-tooltip-content", originalTooltip);
+  });
+  addon.self.addEventListener("reenabled", patchTooltip);
+
+  addon.tab.redux.addEventListener("statechanged", ({detail}) => {
+    const type = detail.action.type;
+    // lk: Patch only after the React black magic happens.
+    if (type === "scratch-gui/locales/SELECT_LOCALE") setTimeout(patchTooltip);
+  });
+
+  patchTooltip();
 }

@@ -38,7 +38,7 @@ export default async function ({ addon, console, msg }) {
     search(e.target.value);
   });
 
-  const searchIcon = document.createElement("img");
+  const searchIcon = addon.tab.recolorable();
   searchIcon.className = "sa-search-sprites-icon";
   searchIcon.src = addon.self.getResource("/search-icon.svg") /* rewritten by pull.js */;
   searchIcon.alt = "";
